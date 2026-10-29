@@ -1,0 +1,23 @@
+{
+  "workload": {
+    "namespace": "baseline-v1",
+    "seed": 17,
+    "accounts": ["alice", "bob", "carol"],
+    "rejectAccount": "reject",
+    "requestsPerSecond": 40000,
+    "warmupNanos": 5000000000,
+    "durationNanos": 20000000000,
+    "hotAccountPercent": 0,
+    "midPriceTicks": "1000000",
+    "priceStepTicks": "100",
+    "depth": 10,
+    "quantityLots": "1",
+    "seedQuantityLots": "100",
+    "mix": {"rest": 35, "marketable": 30, "cancel": 10, "duplicate": 15, "rejectProbe": 10}
+  },
+  "execution": {
+    "maxInFlight": 2048,
+    "requestTimeoutNanos": 5000000000,
+    "maxLatenessNanos": 50000000
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": 1,
+  "responseVersion": 1,
+  "symbol": "BTC-USDT",
+  "baseLotDecimals": 4,
+  "quoteAtomDecimals": 6,
+  "maxPriceTicks": "100000000",
+  "maxQuantityLots": "1000000",
+  "maxNotionalAtoms": "100000000000000",
+  "maxBaseSupplyLots": "1000000000000",
+  "maxQuoteSupplyAtoms": "1000000000000000000",
+  "maxCommands": "2000000",
+  "accounts": [
+    {"accountId": "alice", "baseLots": "1000000", "quoteAtoms": "1000000000000000"},
+    {"accountId": "bob", "baseLots": "1000000", "quoteAtoms": "1000000000000000"},
+    {"accountId": "carol", "baseLots": "1000000", "quoteAtoms": "1000000000000000"},
+    {"accountId": "reject", "baseLots": "0", "quoteAtoms": "0"}
+  ]
+}

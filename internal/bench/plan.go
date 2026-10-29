@@ -17,7 +17,7 @@ import (
 // the exchange's wire/rules versions. MaxAttempts bounds retained plans/results.
 const (
 	Version     = 1
-	MaxAttempts = 1_000_000
+	MaxAttempts = 2_000_000
 )
 
 // Phase separates preparation, warmup and the measured request cohort.

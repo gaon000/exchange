@@ -196,12 +196,22 @@ func TestPlanRejectsInvalidAndOversizedSpecifications(t *testing.T) {
 		t.Fatal("invalid run accepted")
 	}
 	s := testSpec()
-	s.Warmup, s.Duration, s.Rate = 0, time.Second, MaxAttempts
+	s.Warmup, s.Duration, s.Rate = 0, 2*time.Second, MaxAttempts/2
 	if err := s.Validate(); err != nil {
 		t.Fatal("exact attempt limit rejected", err)
 	}
 	s.Warmup = time.Nanosecond
 	if err := s.Validate(); err == nil {
 		t.Fatal("attempt limit ignored partial warmup interval")
+	}
+	// A fixed 5s warmup + 20s measurement must cover the observed saturation
+	// bracket without shrinking the duration at higher offered rates.
+	s.Warmup, s.Duration, s.Rate = 5*time.Second, 20*time.Second, 80000
+	if err := s.Validate(); err != nil {
+		t.Fatal("exact long-run limit rejected", err)
+	}
+	s.Rate++
+	if err := s.Validate(); err == nil {
+		t.Fatal("long-run limit ignored")
 	}
 }

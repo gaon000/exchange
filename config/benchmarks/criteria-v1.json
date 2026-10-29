@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "configFile": "config-v1.json",
+  "workloadFile": "workload-v1.json",
+  "p99LimitNanos": 20000000,
+  "windowNanos": 5000000000,
+  "minimumRepeats": 3,
+  "maxOperationalFailureRate": 0,
+  "maxGeneratorFailureRate": 0,
+  "maxLastWindowQueueMeanGrowth": 64,
+  "minimumMetricsPerWindow": 8,
+  "minimumSnapshotOverlaps": 2,
+  "metricsIntervalNanos": 500000000,
+  "snapshotIntervalNanos": 5000000000,
+  "rateResolution": 1000
+}
