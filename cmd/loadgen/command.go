@@ -15,6 +15,7 @@ import (
 	"github.com/gaon000/exchange/internal/buildinfo"
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/strictjson"
+	"github.com/gaon000/exchange/internal/telemetry"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -35,6 +36,7 @@ type serverReport struct {
 	Runtime    json.RawMessage `json:"runtime"`
 	HTTP       json.RawMessage `json:"http"`
 	Recovery   json.RawMessage `json:"recovery"`
+	Metrics    json.RawMessage `json:"metrics,omitempty"`
 }
 type manifest struct {
 	Version       int            `json:"version"`
@@ -44,6 +46,14 @@ type manifest struct {
 	InitialConfig d.Config       `json:"initialConfig"`
 	Server        serverReport   `json:"server"`
 	Generator     buildinfo.Info `json:"generator"`
+}
+
+type runReport struct {
+	bench.RunResult
+	GeneratorBeforeUTC time.Time         `json:"generatorBeforeUTC"`
+	GeneratorAfterUTC  time.Time         `json:"generatorAfterUTC"`
+	GeneratorBefore    telemetry.Process `json:"generatorBefore"`
+	GeneratorAfter     telemetry.Process `json:"generatorAfter"`
 }
 
 func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err error) {
@@ -143,7 +153,9 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 	if err := errors.Join(prepareErr, a.json("preparation.json", prep)); err != nil {
 		return fmt.Errorf("preparation failed; partial artifacts and server state preserved: %w", err)
 	}
+	beforeUTC, before := time.Now().UTC(), telemetry.ReadProcess()
 	result, runErr := bench.Run(ctx, p, options.Execution, e)
+	after, afterUTC := telemetry.ReadProcess(), time.Now().UTC()
 	// Persist all samples before summarizing, including aborted/invalid runs.
 	if err := a.write("samples.jsonl", func(w io.Writer) error {
 		encoder := json.NewEncoder(w)
@@ -156,7 +168,7 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 	}); err != nil {
 		return errors.Join(runErr, err)
 	}
-	if err := a.json("run.json", result); err != nil {
+	if err := a.json("run.json", runReport{result, beforeUTC, afterUTC, before, after}); err != nil {
 		return errors.Join(runErr, err)
 	}
 	summary, summaryErr := bench.Summarize(p, result)

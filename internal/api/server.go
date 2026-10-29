@@ -60,6 +60,7 @@ type Server struct {
 	http    *http.Server
 	slots   chan struct{}
 	closing atomic.Bool
+	metrics measurements
 }
 
 // New constructs the bounded handler and transport without opening a socket.
@@ -139,6 +140,8 @@ func loopbackHost(host string) bool {
 // holds it through response transmission. It never starts a background handler
 // that outlives the request or treats a disconnect as an order cancellation.
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	started := time.Now()
+	defer func() { s.metrics.handler.Observe(time.Since(started)) }()
 	// A body-free request already has net/http's disconnect reader running.
 	// Setting its read deadline would cancel a valid result wait too early.
 	if r.ContentLength != 0 || len(r.TransferEncoding) > 0 {
@@ -260,21 +263,43 @@ func (s *Server) runtimeFailure(w http.ResponseWriter, err error) {
 }
 
 func (s *Server) write(w http.ResponseWriter, status int, value any) {
+	started := time.Now()
 	body, err := encode(value)
+	s.metrics.encode.Observe(time.Since(started))
 	if err != nil {
+		s.metrics.encodeErrors.Add(1)
 		status, body = http.StatusServiceUnavailable, []byte(`{"error":{"code":"INTERNAL_FAILURE","outcome":"UNKNOWN"}}`)
 	}
 	if err := http.NewResponseController(w).SetWriteDeadline(time.Now().Add(s.opts.WriteTimeout)); err != nil && !errors.Is(err, http.ErrNotSupported) {
+		s.metrics.writeErrors.Add(1)
 		return // no success bytes can safely be delivered on this connection
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Cache-Control", "no-store")
 	w.Header().Set("X-Content-Type-Options", "nosniff")
 	w.Header().Set("Content-Length", strconv.Itoa(len(body)))
+	started = time.Now()
 	w.WriteHeader(status)
-	if _, err := w.Write(body); err == nil {
+	s.metrics.responses.Add(1)
+	switch {
+	case status >= 200 && status < 300:
+		s.metrics.success.Add(1)
+	case status >= 400 && status < 500:
+		s.metrics.clientErrors.Add(1)
+	case status >= 500:
+		s.metrics.serverErrors.Add(1)
+	}
+	n, writeErr := w.Write(body)
+	if n > 0 {
+		s.metrics.bytes.Add(uint64(n))
+	}
+	if writeErr == nil {
 		// net/http buffers small responses until after ServeHTTP returns. Flush
 		// here so the handler slot remains held through the final socket write.
-		_ = http.NewResponseController(w).Flush()
+		writeErr = http.NewResponseController(w).Flush()
 	} // a failed send never changes the persisted command result
+	s.metrics.write.Observe(time.Since(started))
+	if writeErr != nil {
+		s.metrics.writeErrors.Add(1)
+	}
 }

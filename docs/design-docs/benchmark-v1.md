@@ -2,7 +2,7 @@
 
 상태: Accepted (P6 구현 계약)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력 계획·스케줄러·집계·HTTP executor와 [loadgen CLI](../../cmd/loadgen/command.go)의 준비 검증·원본 파일 출력을 구현했다. 서버 내부 계측·기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
+구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 실행 조건 연결과 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
 
 ## 목적과 경계
 
@@ -68,7 +68,7 @@ worker로 전달된 뒤 CPU 실행이 지연된 경우도 전송 전에 lateness
 | plan.jsonl | 준비/워밍업/측정의 명령·본문·예정 시각·원래 phase, 한 줄당 요청 하나 |
 | preparation.json | 조회한 초기 잔고·실제 준비 시도의 시각/결과, 부분 실패도 보존 |
 | samples.jsonl | 모든 예정 인덱스의 실제 시각·응답 요약 또는 생성기 누락 원인 |
-| run.json | UTC 기준 시각·monotonic 경과 시간·실행 옵션·중단 여부 |
+| run.json | UTC 기준 시각·monotonic 경과 시간·실행 옵션·중단 여부·생성기 프로세스의 Run 전후 자원 관찰 |
 | summary.json | 원본 표본에서 계산한 지연·처리량·실패율과 측정 유효성 |
 | completed.json | 앞 여섯 파일의 SHA-256과 plan digest. 파일 쓰기/Sync/close 후 임시 표식을 rename하며 성능 목표 통과를 뜻하지 않음 |
 | failed.json | 준비/실행/출력/집계 실패 원인. 실패 시 남은 파일은 지우지 않음 |
@@ -77,9 +77,39 @@ worker로 전달된 뒤 CPU 실행이 지연된 경우도 전송 전에 lateness
 
 빌드 정보가 없는 바이너리는 revisionKnown=false로 기록하며 현재 checkout의 Git 값으로 대신하지 않는다. 수정 중인 바이너리는 modified=true다. 이 정보만으로 CPU 모델·RAM·파일 시스템·서버 구간 비용을 측정했다고 주장하지 않는다.
 
-## 남은 계측과 기준 측정
+## 서버 구간과 자원 계측
 
-- 서버 계측: 큐·배치·write/sync·적용·응답 비용, CPU/메모리/GC/WAL 증가량, snapshot 시간·메모리와 profiler 유무.
+[telemetry](../../internal/telemetry/histogram.go)는 고정 크기 히스토그램을 사용한다. 경계는 0과 1/2/5×10ⁿ ns, 마지막은 MaxInt64다. 빈 bucket은 출력에서 생략한다. 서버 분위수는 해당 bucket 상한으로 근사하며 클라이언트의 정확한 p99와 구분한다. count·sum·min/max·bucket count는 정수 문자열이다. 합계 overflow는 포화 값과 flag로, 음수 입력은 별도 건수로 기록한다.
+
+각 히스토그램의 사본은 일관되지만 여러 지표를 동시에 고정하지는 않는다. JSONL의 startedUTC~finishedUTC가 수집 구간이다. 누적 카운터는 해당 서버 프로세스 기동 이후 값이며 과거 명령 재생을 다시 세지 않는다. reset이나 계정/주문별 label은 없다.
+
+| 지표 | 관찰 경계와 분모 |
+| --- | --- |
+| commandQueueWait / queryQueueWait | 접수 직전부터 owner가 최초로 꺼낼 때까지. 다음 배치 이월 명령을 두 번 세지 않음 |
+| batchWait | 고유 명령의 batch 편입부터 WAL worker로 전달하기 직전까지, 고유 명령당 하나 |
+| append | WAL worker의 Append 전체. 검증·인코딩·write/sync·후처리를 포함하며 저장 실패 시간도 기록 |
+| WAL encode / write / sync | 실제 인코딩, short-write/EINTR 재시도를 포함한 writeAll, strict sync 호출. 초기화·복구 동기화 제외. 실패한 단계도 기록 |
+| apply / query | owner의 엔진 Apply 한 번 / 조회 한 번. 실패한 Apply와 정상 적용 수는 별도 |
+| snapshotCapture / snapshotPublish | owner의 성공한 사본 생성 / worker 게시 시도 전체. 게시 실패와 owner가 확인한 완료 수 별도 |
+| HTTP handler / encode / write | 전체 handler / JSON 인코딩 / WriteHeader부터 Write와 최종 Flush까지. health·조회·거절 응답도 포함 |
+
+배치 수·고유 명령 수·payload 합계/최대 개수, 접수·캐시/대기 중복·적용·fatal 실패·snapshot 완료/오류도 기록한다. 큐 현재 길이는 관찰 시점 값이며 observedCommandQueuePeak는 접수 직후 표본의 최대값이다. 빠른 dequeue를 놓칠 수 있어 진짜 최대 점유량과 구분한다. WAL encodedBytes는 시도한 frame 크기이므로 부분 쓰기 실패가 있으면 파일 증가량과 다르다. WAL groups/commands는 sync 성공 수이며 이후 Seek·owner 확인·엔진 적용과 구분한다. ioErrors는 Write/Sync 오류 수다.
+
+HTTP 상태/bytes는 서버가 시도하고 Write에서 반환받은 값이다. Flush 실패에도 2xx와 일부 bytes가 관찰될 수 있으므로 클라이언트 성공 수로 쓰지 않는다. 서로 다른 분모·중첩 구간의 시간을 그대로 더해 요청 지연으로 만들지 않는다.
+
+오류를 반환한 WAL 단계는 시간 표본을 남긴다. panic으로 중단된 세부 단계는 표본이 없을 수 있으며 worker에서 복구한 Append 전체 시간과 owner fatal 실패 수를 함께 확인한다. 성공한 capture 시간만 기록하므로 snapshot 복사 중 panic도 완료 표본으로 보지 않는다.
+
+`exchange serve --metrics-file <새 파일> --metrics-interval 1s`는 initial·periodic·final JSONL을 별도 worker에서 기록한다. 주기는 100ms~1m다. 파일 출력 기본값은 꺼짐이며 구간 계측은 항상 켜져 있다. ready의 metrics.enabled는 파일 출력 여부, instrumentation=true는 구간 계측 여부다. 파일 충돌은 복구 전에 거절한다. 수집/출력 실패는 일반 종료를 요청하고 접수된 명령과 HTTP를 drain한 뒤 오류를 반환한다. final은 drain 뒤 수집하며 기록 성공·정상 종료와 함께 확인한다. 파일 Sync는 종료 때 수행하며 거래 WAL의 전원 장애 보장이 아니다.
+
+[프로세스 관찰](../../internal/telemetry/process.go)은 현재 프로세스의 OS user/system CPU 누적 시간·peak RSS와 Go heap objects/live heap/전체 관리 메모리·GC 횟수/CPU/멈춤 분포·goroutine 수를 기록한다. Go runtime/metrics를 읽으며 강제 GC나 ReadMemStats를 호출하지 않는다. peak RSS는 프로세스 생애 최대값이고 현재 RSS가 아니다. Go 관리 메모리는 resident memory가 아니며 GC CPU는 Go의 추정치다. 지원 불가 지표는 unavailable로 표시한다. WALBytes는 실제 commands.wal 크기다.
+
+loadgen run.json에는 Plan/준비 완료 후 Run 전·후의 생성기 자원 관찰을 추가한다. worker 준비·워밍업·측정·drain을 포함하며 측정 phase만의 CPU가 아니다. 두 시점 heap 차이는 최대 메모리나 총할당이 아니다. 생성기와 서버 자원을 구분한다.
+
+주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음과 반복 비교 절차는 다음 실험 단계에서 연결한다.
+
+## 남은 실험 연결과 기준 측정
+
+- 정상·snapshot 생성 중·profiler 유무를 구분하는 실행 설정, snapshot 시간/메모리 비교와 전체 환경/원본 묶음.
 - 실제 기준 측정 뒤 p99 상한·허용 실패율·워밍업/지속 기간·반복 수·workload를 고정하고 P7에서 같은 조건으로 비교한다.
 
 현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.

@@ -14,7 +14,7 @@ import (
 )
 
 // Store holds the lifetime run lock and the append-only WAL. A single owner must
-// call its methods; it does not synchronize concurrent calls. After any storage
+// call its storage methods; only Statistics supports concurrent observation. After any storage
 // failure, close it and recover into a fresh engine before publishing results.
 type Store struct {
 	dir     string
@@ -27,6 +27,7 @@ type Store struct {
 	ops     fileOps
 	failed  bool
 	closed  bool
+	metrics measurements
 }
 
 // fileOps provides per-store fault injection without a mutable global hook.
@@ -128,7 +129,7 @@ func initStore(dir string, config d.Config, ops fileOps) (_ *Store, err error) {
 	}
 	s.info = Recovery{EndOffset: int64(len(data))}
 	s.valid = newValidator(g)
-	s.writer = &writer{sink: s.sink(s.file), validator: s.valid}
+	s.writer = &writer{sink: s.sink(s.file), validator: s.valid, metrics: &s.metrics}
 	return s, nil
 }
 
@@ -258,7 +259,7 @@ func (s *Store) ConfirmRecovery() error {
 		return err
 	}
 	s.info.TornTail = false
-	s.writer = &writer{sink: s.sink(s.file), validator: s.valid, last: s.info.LastSeq}
+	s.writer = &writer{sink: s.sink(s.file), validator: s.valid, last: s.info.LastSeq, metrics: &s.metrics}
 	return nil
 }
 

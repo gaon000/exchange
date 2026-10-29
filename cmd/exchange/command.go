@@ -118,10 +118,12 @@ type serveOptions struct {
 	runtime             rt.Options
 	http                api.Options
 	httpShutdownTimeout time.Duration
+	metricsFile         string
+	metricsInterval     time.Duration
 }
 
 func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
-	o := serveOptions{address: "127.0.0.1:8080", runtime: rt.DefaultOptions(), http: api.DefaultOptions(), httpShutdownTimeout: 15 * time.Second}
+	o := serveOptions{address: "127.0.0.1:8080", runtime: rt.DefaultOptions(), http: api.DefaultOptions(), httpShutdownTimeout: 15 * time.Second, metricsInterval: time.Second}
 	flags := flag.NewFlagSet("exchange serve", flag.ContinueOnError)
 	flags.SetOutput(stderr)
 	flags.StringVar(&o.dir, "data-dir", "", "required existing run directory; never initialized by serve")
@@ -138,6 +140,8 @@ func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
 	flags.DurationVar(&o.http.ResultTimeout, "result-timeout", o.http.ResultTimeout, "runtime result wait deadline; accepted work continues after timeout")
 	flags.DurationVar(&o.http.WriteTimeout, "write-timeout", o.http.WriteTimeout, "response transmission deadline")
 	flags.DurationVar(&o.httpShutdownTimeout, "http-shutdown-timeout", o.httpShutdownTimeout, "HTTP drain deadline before disconnecting clients; storage drain still waits")
+	flags.StringVar(&o.metricsFile, "metrics-file", "", "optional new JSONL metrics file under an existing parent")
+	flags.DurationVar(&o.metricsInterval, "metrics-interval", o.metricsInterval, "metrics sampling interval (100ms to 1m)")
 	if err := flags.Parse(args); err != nil {
 		return o, err
 	}
@@ -153,6 +157,9 @@ func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
 	}
 	if o.httpShutdownTimeout <= 0 || o.httpShutdownTimeout > time.Hour {
 		return o, errors.New("http-shutdown-timeout must be positive and at most 1h")
+	}
+	if o.metricsInterval < 100*time.Millisecond || o.metricsInterval > time.Minute {
+		return o, errors.New("metrics-interval must be between 100ms and 1m")
 	}
 	return o, nil
 }
@@ -180,6 +187,22 @@ func serveRun(ctx context.Context, args []string, stdout, stderr io.Writer) erro
 		return fmt.Errorf("listen: %w", err)
 	}
 	defer listener.Close()
+	var metricsFile *os.File
+	if o.metricsFile != "" {
+		o.metricsFile, err = filepath.Abs(o.metricsFile)
+		if err != nil {
+			return err
+		}
+		metricsFile, err = os.OpenFile(o.metricsFile, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
+		if err != nil {
+			return fmt.Errorf("create new metrics file: %w", err)
+		}
+		defer func() {
+			if metricsFile != nil {
+				_ = metricsFile.Close()
+			}
+		}()
+	}
 	runtime, err := rt.Open(dir, o.runtime)
 	if err != nil {
 		return fmt.Errorf("recover run: %w", err)
@@ -189,5 +212,16 @@ func serveRun(ctx context.Context, args []string, stdout, stderr io.Writer) erro
 		return errors.Join(err, runtime.Shutdown(context.Background()))
 	}
 	report := readyReportFor(runtime, dir, listener.Addr().String(), o)
-	return supervise(ctx, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
+	if metricsFile == nil {
+		return supervise(ctx, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
+	}
+	measured, cancel := context.WithCancel(ctx)
+	defer cancel()
+	sampler, err := startMetrics(metricsFile, o.metricsInterval, func(stage string) (metricsRecord, error) { return collectMetrics(stage, runtime, server, dir) }, cancel)
+	metricsFile = nil // ownership transferred to startMetrics, including its error path
+	if err != nil {
+		return errors.Join(fmt.Errorf("initialize metrics: %w", err), runtime.Shutdown(context.Background()))
+	}
+	err = supervise(measured, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
+	return errors.Join(err, sampler.Finish())
 }

@@ -108,6 +108,13 @@ func TestNativeCLIProducesReplayableHTTPArtifacts(t *testing.T) {
 	if err := json.Unmarshal(b, &result); err != nil {
 		t.Fatal(err)
 	}
+	var resource runReport
+	if err := json.Unmarshal(b, &resource); err != nil {
+		t.Fatal(err)
+	}
+	if resource.GeneratorBeforeUTC.IsZero() || resource.GeneratorAfterUTC.Before(resource.GeneratorBeforeUTC) || !resource.GeneratorBefore.OSAvailable || !resource.GeneratorAfter.OSAvailable || resource.GeneratorAfter.UserCPUNanos < resource.GeneratorBefore.UserCPUNanos || len(resource.GeneratorAfter.RuntimeUnavailable) != 0 {
+		t.Fatal("invalid generator resource evidence", resource)
+	}
 	f, err := os.Open(filepath.Join(dir, "samples.jsonl"))
 	if err != nil {
 		t.Fatal(err)

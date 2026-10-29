@@ -2,6 +2,7 @@ package runtime
 
 import (
 	d "github.com/gaon000/exchange/internal/domain"
+	"time"
 )
 
 func validateQuery(q Query) error {
@@ -30,6 +31,11 @@ func validateQuery(q Query) error {
 }
 
 func (r *Runtime) readOwner(req *queryRequest, pending map[d.Key]*pendingCommand) {
+	if !req.queuedAt.IsZero() {
+		r.metrics.queryQueue.Observe(time.Since(req.queuedAt))
+	}
+	started := time.Now()
+	defer func() { r.metrics.query.Observe(time.Since(started)) }()
 	q := req.query
 	v := View{RunID: r.genesis.RunID, AsOfSeq: r.engine.AppliedSeq()}
 	var err error

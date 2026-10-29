@@ -3,6 +3,7 @@ package runtime
 import (
 	"context"
 	"fmt"
+	"time"
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/snapshot"
@@ -75,7 +76,9 @@ func (o *owner) captureSnapshot(req *snapshotRequest) {
 	if seq < o.r.SnapshotSeq() || seq > o.durableSeq {
 		panic("snapshot sequence outside applied/durable boundary")
 	}
+	started := time.Now()
 	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.Capture()}
+	o.r.metrics.capture.Observe(time.Since(started))
 	if o.r.hooks.afterCapture != nil {
 		o.r.hooks.afterCapture(doc)
 	}
@@ -114,6 +117,7 @@ func (o *owner) completeSnapshot(reply snapshotWriteReply) bool {
 		return false
 	}
 	o.r.snapshotSeq.Store(int64(reply.seq))
+	o.r.metrics.snapshots.Add(1)
 	o.finishSnapshot(SnapshotResult{RunID: o.r.RunID(), SnapshotSeq: reply.seq}, nil)
 	return true
 }

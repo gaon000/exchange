@@ -4,6 +4,7 @@ import (
 	"errors"
 	"io"
 	"syscall"
+	"time"
 
 	d "github.com/gaon000/exchange/internal/domain"
 )
@@ -17,6 +18,7 @@ type writer struct {
 	validator *validator
 	last      d.Int
 	failed    bool
+	metrics   *measurements
 }
 
 func writeAll(w io.Writer, data []byte) error {
@@ -46,19 +48,46 @@ func (w *writer) append(records []Record) error {
 	if err := w.validator.check(records, w.last); err != nil {
 		return err
 	}
+	started := time.Now()
 	group, err := encodeGroup(records)
+	if w.metrics != nil {
+		w.metrics.encode.Observe(time.Since(started))
+	}
 	if err != nil {
 		return err
 	}
-	if err = writeAll(w.sink, group); err != nil {
+	if w.metrics != nil {
+		w.metrics.bytes.Add(uint64(len(group)))
+	}
+	started = time.Now()
+	err = writeAll(w.sink, group)
+	if w.metrics != nil {
+		w.metrics.write.Observe(time.Since(started))
+	}
+	if err != nil {
+		if w.metrics != nil {
+			w.metrics.errors.Add(1)
+		}
 		w.failed = true
 		return err
 	}
-	if err = w.sink.Sync(); err != nil {
+	started = time.Now()
+	err = w.sink.Sync()
+	if w.metrics != nil {
+		w.metrics.sync.Observe(time.Since(started))
+	}
+	if err != nil {
+		if w.metrics != nil {
+			w.metrics.errors.Add(1)
+		}
 		w.failed = true
 		return err
 	}
 	w.last = records[len(records)-1].Seq
 	w.validator.accept(records)
+	if w.metrics != nil {
+		w.metrics.groups.Add(1)
+		w.metrics.commands.Add(uint64(len(records)))
+	}
 	return nil
 }

@@ -86,6 +86,8 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | `--read-header-timeout`, `--read-body-timeout` | 각각 2s |
 | `--result-timeout`, `--write-timeout` | 각각 5s; 접수 후 결과 timeout이 명령을 취소하지 않음 |
 | `--http-shutdown-timeout` | 15s; HTTP 연결 대기 한도, 저장 drain의 제한 시간이 아님 |
+| `--metrics-file` | 기본 없음; 기존 parent 아래 새 JSONL 파일. 충돌 시 복구 전에 거절 |
+| `--metrics-interval` | 1s, 허용 100ms~1m; 별도 worker의 서버/프로세스 계측 주기 |
 
 시간 flag는 `1ms`, `5s`와 같은 Go duration 형식이다. 출력은 정규화된 문자열이며 `1h`는 `1h0m0s`가 된다. 잘못된 옵션·사용 중인 포트는 데이터 복구 전에 실패하므로 WAL tail을 변경하지 않는다. CLI에 자동 snapshot 주기는 없으며 현재는 Go `Runtime.Snapshot` API를 제공한다. HTTP 프로토콜·필드·계정 문맥은 [API 계약](design-docs/api-v1.md)이 소유한다.
 
@@ -97,7 +99,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 scripts/go build -o ./bin/ ./...
 mkdir -p var/runs var/measurements
 bin/exchange init --config config/examples/benchmark.json --data-dir var/runs/http-smoke
-bin/exchange serve --data-dir var/runs/http-smoke --listen 127.0.0.1:8080 > var/measurements/http-smoke-server.json
+bin/exchange serve --data-dir var/runs/http-smoke --listen 127.0.0.1:8080 --metrics-file var/measurements/http-smoke-metrics.jsonl > var/measurements/http-smoke-server.json
 ```
 
 서버 ready JSON이 기록된 뒤 다른 터미널에서 실행한다.
@@ -151,7 +153,7 @@ P5의 [HTTP 장애 통합](../internal/runtime/http_fault_native_test.go)은 실
 
 [고정 seed 동시 입력](../internal/runtime/http_concurrent_native_test.go)은 4개 생산자의 고유 명령 64개를 각각 두 번 보내고 64개 잔고 조회를 수행한다. 응답 순번으로 정렬한 원본 입력을 별도 순차 엔진에 적용해 최초 결과·각 asOfSeq 잔고·최종 checkpoint를 비교한다. 이는 전송·순서·재생의 검사이며 독립 매칭 모델은 P1 테스트에 있다. [명시적 거래 사례](../internal/runtime/http_rules_native_test.go)는 가격/FIFO·여러 가격 체결 후 자기 거래 차단과 동시 잔고 소진의 기대 정수 값을 별도로 확인한다. 테스트 bridge와 환경변수는 `_test.go`에만 있으며 실행 바이너리에 장애 설정을 추가하지 않는다.
 
-P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 계측·기준 지속 처리량 측정은 남아 있다.
+P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 구간·프로세스 자원 계측을 연결했다. [계측 계약](design-docs/benchmark-v1.md#서버-구간과-자원-계측)에서 지표의 분모·관찰 범위·근사 정밀도를 확인한다. `scripts/go test -race ./internal/telemetry ./internal/wal ./internal/runtime ./internal/api ./cmd/exchange -timeout=180s`는 저장 대기/실패 중 계측, snapshot 복사/게시, 전송 실패, 파일 출력 오류·정상 종료 후 최종 건수/파일 크기를 검증한다. 실험 조건 연결·기준 지속 처리량 측정은 남아 있다.
 
 ## CI와 릴리스
 

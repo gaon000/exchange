@@ -12,8 +12,9 @@ import (
 )
 
 type pendingCommand struct {
-	record  wal.Record
-	waiters []*commandRequest
+	record    wal.Record
+	waiters   []*commandRequest
+	batchedAt time.Time
 }
 type writeReply struct {
 	durable d.Int
@@ -52,7 +53,12 @@ func (r *Runtime) run() {
 	go func() {
 		defer close(o.snapshotDone)
 		for doc := range o.snapshotJobs {
+			started := time.Now()
 			reply := writeSnapshot(r.snapshots, doc)
+			r.metrics.publish.Observe(time.Since(started))
+			if reply.err != nil {
+				r.metrics.snapshotErrors.Add(1)
+			}
 			doc = snapshot.Document{} // release the full copy while waiting for the next job
 			o.snapshotWrites <- reply
 		}
@@ -60,7 +66,10 @@ func (r *Runtime) run() {
 	go func() {
 		defer close(o.writerDone)
 		for batch := range o.jobs {
-			o.writes <- writeGroup(r.store, batch)
+			started := time.Now()
+			reply := writeGroup(r.store, batch)
+			r.metrics.append.Observe(time.Since(started))
+			o.writes <- reply
 		}
 	}()
 	defer func() {
@@ -98,6 +107,14 @@ func (r *Runtime) run() {
 			if len(o.batch) > 0 && (len(o.batch) >= r.opts.BatchCommands || o.payloadBytes >= r.opts.BatchBytes || o.held != nil || o.draining || !time.Now().Before(o.deadline)) {
 				o.stopTimer()
 				o.busy = true
+				now := time.Now()
+				for _, record := range o.batch {
+					r.metrics.batchWait.Observe(now.Sub(o.pending[record.Command.Key()].batchedAt))
+				}
+				r.metrics.batches.Add(1)
+				r.metrics.batchCommands.Add(uint64(len(o.batch)))
+				r.metrics.batchBytes.Add(uint64(o.payloadBytes))
+				peak(&r.metrics.batchPeak, uint64(len(o.batch)))
 				o.jobs <- o.batch
 			} else if o.held != nil {
 				req := o.held
@@ -195,6 +212,12 @@ func (o *owner) stopTimer() {
 
 func (o *owner) admit(req *commandRequest) {
 	r := o.r
+	if !req.dequeued {
+		req.dequeued = true
+		if !req.queuedAt.IsZero() {
+			r.metrics.commandQueue.Observe(time.Since(req.queuedAt))
+		}
+	}
 	c := req.command
 	key := c.Key()
 	if p := o.pending[key]; p != nil {
@@ -218,6 +241,7 @@ func (o *owner) admit(req *commandRequest) {
 			return
 		}
 		p.waiters = append(p.waiters, req)
+		r.metrics.pending.Add(1)
 		return
 	}
 	result, found, err := r.engine.Lookup(c)
@@ -226,6 +250,7 @@ func (o *owner) admit(req *commandRequest) {
 		return
 	}
 	if found {
+		r.metrics.cached.Add(1)
 		replyCommand(req, result, nil)
 		return
 	}
@@ -244,11 +269,12 @@ func (o *owner) admit(req *commandRequest) {
 		o.held = req
 		return
 	}
-	p := &pendingCommand{record: record}
+	p := &pendingCommand{record: record, batchedAt: time.Now()}
 	if req.ctx.Err() == nil {
 		p.waiters = []*commandRequest{req}
 	}
 	o.pending[key] = p
+	r.metrics.unique.Add(1)
 	o.batch = append(o.batch, record)
 	o.payloadBytes += size
 	if len(o.batch) == 1 {
@@ -286,7 +312,9 @@ func (o *owner) apply(reply writeReply) bool {
 		if o.r.hooks.beforeApply != nil {
 			o.r.hooks.beforeApply(record)
 		}
+		started := time.Now()
 		result, err := o.r.engine.Apply(record.Seq, record.Command)
+		o.r.metrics.apply.Observe(time.Since(started))
 		if err != nil || o.r.engine.AppliedSeq() != record.Seq {
 			o.fail(failure("INTERNAL_FAILURE", Unknown, errors.Join(err, engine.ErrSequence)))
 			return false
@@ -294,6 +322,7 @@ func (o *owner) apply(reply writeReply) bool {
 		if o.r.hooks.afterApply != nil {
 			o.r.hooks.afterApply(record)
 		}
+		o.r.metrics.applied.Add(1)
 		p := o.pending[record.Command.Key()]
 		for _, waiter := range p.waiters {
 			replyCommand(waiter, result.Clone(), nil)
@@ -320,6 +349,7 @@ func replyCommand(req *commandRequest, result d.Result, err error) {
 }
 
 func (o *owner) fail(err *Failure) {
+	o.r.metrics.failures.Add(1)
 	o.r.stopAdmission()
 	o.r.terminal = err
 	o.failSnapshot(err)

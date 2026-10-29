@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계와 HTTP executor·부하 CLI·원본 기록을 구현했다. 서버 계측·기준 실측·CI는 아직 구현하지 않았다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계와 HTTP executor·부하 CLI·원본 기록을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 실험 조건 연결·기준 실측·CI는 아직 남아 있다.
 
 ## 현재 문서 지도
 
@@ -44,14 +44,15 @@ P4 모듈과 P5의 api·서버 CLI, P6의 bench·부하 CLI를 구현했다. 아
 | [internal/engine](internal/engine/engine.go) (구현) | 가격 정렬+FIFO, 잔고·주문·체결·최초 결과를 결정적으로 변경 | domain |
 | [internal/strictjson](internal/strictjson/strict.go) (구현) | 중복 키·정확한 필드명·필수 필드·깊이 검사 | 표준 라이브러리 |
 | [internal/durable](internal/durable/darwin.go) (구현) | APFS 확인·strict F_FULLFSYNC·FD 수명에 묶인 flock·exclusive rename | 시스템 cgo, 표준 라이브러리 |
-| [internal/wal](internal/wal/store.go) (구현) | Genesis·WAL 프레임/검사·Init/Open/Replay/ConfirmRecovery/Append | domain, strictjson, durable; engine 의존은 테스트만 |
+| [internal/wal](internal/wal/store.go) (구현) | Genesis·WAL 프레임/검사·Init/Open/Replay/ConfirmRecovery/Append | domain, strictjson, durable, telemetry; engine 의존은 테스트만 |
 | [internal/snapshot](internal/snapshot/codec.go) (구현) | envelope 스트리밍·파일 sync·exclusive 게시·정식 후보 열거/검증/재확인 | domain, strictjson, durable, 표준 파일 I/O; engine·wal 의존은 테스트만 |
-| [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot |
-| [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, 표준 HTTP |
+| [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot, telemetry |
+| [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, telemetry, 표준 HTTP |
 | [cmd/exchange](cmd/exchange/main.go) (구현) | init/serve·설정 검증·모듈 조립·기동 보고·signal 종료와 HTTP/runtime 합류 | 위 모듈의 공개 진입점 |
 | [internal/bench](internal/bench/plan.go) (구현) | 고정 seed 입력·open-loop 실행·초기 상태 확인·공개 HTTP 전송·표본/고유 결과 집계 | domain, strictjson, 표준 라이브러리; engine/runtime 직접 호출 없음 |
-| [cmd/loadgen](cmd/loadgen/command.go) (구현) | 설정/ready 보고서 대조·공개 HTTP 부하·측정 원본/완료/실패 파일 | bench, buildinfo, strictjson, wal의 설정 해시 계산; run 파일 접근 없음 |
+| [cmd/loadgen](cmd/loadgen/command.go) (구현) | 설정/ready 보고서 대조·공개 HTTP 부하·측정 원본/완료/실패 파일 | bench, buildinfo, strictjson, telemetry, wal의 설정 해시 계산; run 파일 접근 없음 |
 | [internal/buildinfo](internal/buildinfo/info.go) (구현) | 실행 바이너리의 Go/플랫폼·VCS revision/dirty 정보 | 표준 라이브러리 |
+| [internal/telemetry](internal/telemetry/histogram.go) (구현) | 고정 크기 지연 히스토그램·Go/OS 프로세스 자원 관찰 | 표준 라이브러리·OS 읽기 호출; 엔진/저장 상태 접근 없음 |
 
 API는 엔진 내부 맵을 직접 수정하지 않는다. 엔진은 HTTP·파일·벽시계·난수·외부 서비스에 의존하지 않는다. WAL은 거래 승인 여부를 결정하지 않는다. loadgen의 전체 경로 측정은 엔진 직접 호출을 우회 경로로 사용하지 않는다. 공통 타입은 실제 공유 계약에 한해 분리하고 순환 의존은 허용하지 않는다.
 

@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
@@ -37,6 +38,7 @@ type Runtime struct {
 	snapshotRequests chan *snapshotRequest
 	snapshotBusy     bool // admission mutex; remains set after a waiting caller times out
 	snapshotSeq      atomic.Int64
+	metrics          measurements
 }
 type hooks struct {
 	beforeApply   func(wal.Record)
@@ -45,17 +47,20 @@ type hooks struct {
 	afterCapture  func(snapshot.Document)
 }
 type commandRequest struct {
-	command d.Command
-	ctx     context.Context
-	reply   chan commandReply
+	command  d.Command
+	ctx      context.Context
+	reply    chan commandReply
+	queuedAt time.Time
+	dequeued bool
 }
 type commandReply struct {
 	result d.Result
 	err    error
 }
 type queryRequest struct {
-	query Query
-	reply chan queryReply
+	query    Query
+	reply    chan queryReply
+	queuedAt time.Time
 }
 type queryReply struct {
 	view View
@@ -181,8 +186,11 @@ func (r *Runtime) Submit(ctx context.Context, c d.Command) (d.Result, error) {
 		r.admission.Unlock()
 		return d.Result{}, err
 	}
+	req.queuedAt = time.Now()
 	select {
 	case r.commands <- req:
+		r.metrics.enqueued.Add(1)
+		peak(&r.metrics.queuePeak, uint64(len(r.commands)))
 		r.admission.Unlock()
 	default:
 		<-r.slots
@@ -217,6 +225,7 @@ func (r *Runtime) Read(ctx context.Context, q Query) (View, error) {
 		r.admission.Unlock()
 		return View{}, err
 	}
+	req.queuedAt = time.Now()
 	select {
 	case r.queries <- req:
 		r.admission.Unlock()

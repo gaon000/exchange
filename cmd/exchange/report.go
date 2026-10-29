@@ -24,6 +24,13 @@ type readyReport struct {
 	Runtime    runtimeSettings  `json:"runtime"`
 	HTTP       httpSettings     `json:"http"`
 	Recovery   recoverySettings `json:"recovery"`
+	Metrics    metricsSettings  `json:"metrics"`
+}
+type metricsSettings struct {
+	Enabled         bool   `json:"enabled"`
+	Instrumentation bool   `json:"instrumentation"`
+	File            string `json:"file"`
+	Interval        string `json:"interval"`
 }
 type runtimeSettings struct {
 	CommandQueue   int    `json:"commandQueue"`
@@ -62,5 +69,5 @@ func readyReportFor(r *rt.Runtime, dir, address string, o serveOptions) readyRep
 	return readyReport{Event: "ready", RunID: r.RunID(), ConfigHash: r.ConfigHash(), Build: buildinfo.Current(), DataDir: dir, Listen: address,
 		Runtime:  runtimeSettings{o.runtime.CommandQueue, o.runtime.QueryQueue, o.runtime.RequestLimit, o.runtime.PendingWaiters, o.runtime.BatchCommands, o.runtime.BatchBytes, o.runtime.BatchDelay.String()},
 		HTTP:     httpSettings{o.http.RequestLimit, o.http.ReadHeaderTimeout.String(), o.http.ReadBodyTimeout.String(), o.http.ResultTimeout.String(), o.http.WriteTimeout.String(), o.httpShutdownTimeout.String()},
-		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}}
+		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}, Metrics: metricsSettings{o.metricsFile != "", true, o.metricsFile, o.metricsInterval.String()}}
 }
