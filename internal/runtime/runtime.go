@@ -41,11 +41,10 @@ type Runtime struct {
 	metrics          measurements
 }
 type hooks struct {
-	beforeApply        func(wal.Record)
-	afterApply         func(wal.Record)
-	beforeCapture      func()
-	afterCapture       func(snapshot.Document)
-	beforeSnapshotSort func()
+	beforeApply   func(wal.Record)
+	afterApply    func(wal.Record)
+	beforeCapture func()
+	afterCapture  func(snapshot.Document)
 }
 type commandRequest struct {
 	command  d.Command

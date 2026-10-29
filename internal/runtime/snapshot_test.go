@@ -23,9 +23,16 @@ var panicPublisher = errors.New("panic in publisher")
 
 type controlledSnapshots struct {
 	*fakeCheckpoints
-	started   chan snapshot.Document
-	gate      chan error
-	published []snapshot.Document // inspect only after response synchronization or Shutdown
+	started    chan snapshot.Document
+	gate       chan error
+	published  []snapshot.Document // inspect only after response synchronization or Shutdown
+	beforeSort func()
+}
+
+func (f *controlledSnapshots) beforeSnapshotSort() {
+	if f.beforeSort != nil {
+		f.beforeSort()
+	}
 }
 
 func (f *controlledSnapshots) Publish(doc snapshot.Document) error {
@@ -166,10 +173,11 @@ func TestSnapshotSortingRunsOutsideOwnerAndShutdownJoinsIt(t *testing.T) {
 	f := fake(t)
 	o := DefaultOptions()
 	o.BatchCommands = 1
-	r, files := startSnapshotTest(t, f, o, hooks{beforeSnapshotSort: func() {
+	r, files := startSnapshotTest(t, f, o, hooks{}, false)
+	files.beforeSort = func() {
 		close(entered)
 		<-release
-	}}, false)
+	}
 	t.Cleanup(unblock)
 	first, err := r.Submit(ctx(t), buy("rest"))
 	if err != nil {
@@ -215,9 +223,10 @@ func TestSnapshotSortingRunsOutsideOwnerAndShutdownJoinsIt(t *testing.T) {
 
 func TestSnapshotSortingPanicFailsWithoutPublication(t *testing.T) {
 	f := fake(t)
-	r, files := startSnapshotTest(t, f, DefaultOptions(), hooks{beforeSnapshotSort: func() {
+	r, files := startSnapshotTest(t, f, DefaultOptions(), hooks{}, false)
+	files.beforeSort = func() {
 		panic("sorting failure")
-	}}, false)
+	}
 	if _, err := r.Submit(ctx(t), buy("initial")); err != nil {
 		t.Fatal(err)
 	}

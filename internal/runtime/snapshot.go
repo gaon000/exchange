@@ -87,7 +87,7 @@ func (o *owner) captureSnapshot(req *snapshotRequest) {
 	o.snapshotJobs <- doc // transfer exclusive ownership of the detached copy
 }
 
-func writeSnapshot(files checkpoints, doc snapshot.Document, beforeSort func()) (reply snapshotWriteReply) {
+func writeSnapshot(files checkpoints, doc snapshot.Document) (reply snapshotWriteReply) {
 	reply.seq, reply.code = doc.SnapshotSeq, "STORAGE_UNAVAILABLE"
 	defer func() {
 		if p := recover(); p != nil {
@@ -95,8 +95,10 @@ func writeSnapshot(files checkpoints, doc snapshot.Document, beforeSort func()) 
 			reply.code = "INTERNAL_FAILURE"
 		}
 	}()
-	if beforeSort != nil {
-		beforeSort()
+	// Test adapters can pause this cold path without adding a callback field to
+	// Runtime and changing the memory layout of normal command processing.
+	if hook, ok := files.(interface{ beforeSnapshotSort() }); ok {
+		hook.beforeSnapshotSort()
 	}
 	engine.CanonicalizeCheckpoint(&doc.State)
 	reply.err = files.Publish(doc)

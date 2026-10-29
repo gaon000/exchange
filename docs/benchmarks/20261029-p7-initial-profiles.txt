@@ -1,0 +1,126 @@
+Source: var/p7-snapshot-sorting-kyynt605/profiles/snapshot-profile-29000-1-allocs.txt
+SHA256: 7a65924097a486cf1901e780b0238adb248a78c2eb93f441a23fdcf66894f27c
+File: exchange
+Type: alloc_space
+Time: 2026-10-29 21:35:16 KST
+Showing nodes accounting for 11641.60MB, 76.68% of 15182.67MB total
+Dropped 142 nodes (cum <= 75.91MB)
+Showing top 16 nodes out of 84
+      flat  flat%   sum%        cum   cum%
+ 3841.17MB 25.30% 25.30%  3841.17MB 25.30%  bytes.Clone (inline)
+ 2032.16MB 13.38% 38.68%  2032.16MB 13.38%  reflect.unsafe_New
+  918.51MB  6.05% 44.73%  2519.04MB 16.59%  github.com/gaon000/exchange/internal/domain.Int.MarshalJSON
+  662.72MB  4.36% 49.10%  1104.96MB  7.28%  github.com/gaon000/exchange/internal/wal.encodeGroup
+  518.08MB  3.41% 52.51%   702.04MB  4.62%  github.com/gaon000/exchange/internal/engine.(*Engine).CopyCheckpoint
+  398.59MB  2.63% 55.14%   409.59MB  2.70%  net/textproto.readMIMEHeader
+  385.20MB  2.54% 57.67%   781.84MB  5.15%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  374.56MB  2.47% 60.14%  3813.32MB 25.12%  github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand "json:\"command\""; Response github.com/gaon000/exchange/internal/domain.Result "json:\"response\"" }]
+  372.07MB  2.45% 62.59%   827.13MB  5.45%  github.com/gaon000/exchange/internal/runtime.(*owner).admit
+  362.05MB  2.38% 64.98%   362.05MB  2.38%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+  352.05MB  2.32% 67.29%  2178.32MB 14.35%  github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string "json:\"accountId\""; Order github.com/gaon000/exchange/internal/domain.Order "json:\"order\"" }]
+  321.66MB  2.12% 69.41%   329.16MB  2.17%  io.ReadAll
+  317.55MB  2.09% 71.50%   390.06MB  2.57%  github.com/gaon000/exchange/internal/runtime.(*Runtime).Submit
+  288.08MB  1.90% 73.40%   288.08MB  1.90%  net/http.Header.Clone
+  252.08MB  1.66% 75.06%   252.08MB  1.66%  reflect.mapassign_faststr0
+  245.07MB  1.61% 76.68%   245.07MB  1.61%  net/textproto.MIMEHeader.Set
+
+Source: var/p7-snapshot-sorting-kyynt605/profiles/snapshot-profile-29000-1-cpu-copy.txt
+SHA256: e04b741673291232816fc819ce1ac0ca39cc3c403b0cfba07cb3dc470132b621
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:34:33 KST
+Duration: 43.43s, Total samples = 63.70s (146.67%)
+Active filters:
+   focus=engine.*CopyCheckpoint
+Showing nodes accounting for 0.40s, 0.63% of 63.70s total
+      flat  flat%   sum%        cum   cum%
+     0.31s  0.49%  0.49%      0.40s  0.63%  github.com/gaon000/exchange/internal/engine.(*Engine).CopyCheckpoint
+         0     0%  0.49%      0.40s  0.63%  github.com/gaon000/exchange/internal/runtime.(*Runtime).run
+         0     0%  0.49%      0.40s  0.63%  github.com/gaon000/exchange/internal/runtime.(*owner).captureSnapshot
+     0.04s 0.063%  0.55%      0.04s 0.063%  runtime.bulkBarrierPreWrite
+         0     0%  0.55%      0.04s 0.063%  runtime.wbMove
+     0.03s 0.047%   0.6%      0.03s 0.047%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+     0.01s 0.016%  0.61%      0.01s 0.016%  github.com/gaon000/exchange/internal/engine.captureBook
+     0.01s 0.016%  0.63%      0.01s 0.016%  internal/runtime/maps.(*Iter).Next
+         0     0%  0.63%      0.01s 0.016%  runtime.mapIterNext
+
+Source: var/p7-snapshot-sorting-kyynt605/profiles/snapshot-profile-29000-1-cpu-sort.txt
+SHA256: dd0203d78e195d9f9714933a8de10efce2f4e1ae4a6373f782f2bc8d9c50d6c7
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:34:33 KST
+Duration: 43.43s, Total samples = 63.70s (146.67%)
+Active filters:
+   focus=engine.*CanonicalizeCheckpoint
+Showing nodes accounting for 1.07s, 1.68% of 63.70s total
+Showing top 16 nodes out of 32
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      1.31s  2.06%  github.com/gaon000/exchange/internal/engine.CanonicalizeCheckpoint
+         0     0%     0%      1.31s  2.06%  github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1
+         0     0%     0%      1.31s  2.06%  github.com/gaon000/exchange/internal/runtime.writeSnapshot
+         0     0%     0%      1.31s  2.06%  sort.Slice
+         0     0%     0%      1.31s  2.06%  sort.pdqsort_func
+     0.25s  0.39%  0.39%      1.11s  1.74%  sort.partition_func
+     0.14s  0.22%  0.61%      0.42s  0.66%  github.com/gaon000/exchange/internal/engine.CanonicalizeCheckpoint.func3
+     0.07s  0.11%  0.72%      0.35s  0.55%  github.com/gaon000/exchange/internal/engine.CanonicalizeCheckpoint.func2
+     0.29s  0.46%  1.18%      0.29s  0.46%  cmpbody
+     0.03s 0.047%  1.22%      0.29s  0.46%  internal/reflectlite.Swapper.func9
+     0.03s 0.047%  1.27%      0.28s  0.44%  github.com/gaon000/exchange/internal/engine.orderLess (inline)
+     0.03s 0.047%  1.32%      0.28s  0.44%  github.com/gaon000/exchange/internal/engine.resultLess (inline)
+     0.03s 0.047%  1.37%      0.26s  0.41%  internal/reflectlite.typedmemmove
+         0     0%  1.37%      0.23s  0.36%  reflect.typedmemmove (inline)
+         0     0%  1.37%      0.23s  0.36%  runtime.typedmemmove
+     0.20s  0.31%  1.68%      0.20s  0.31%  runtime.memequal
+
+Source: var/p7-snapshot-sorting-kyynt605/profiles/snapshot-profile-29000-1-cpu.txt
+SHA256: 88589b810a67442ab18efbca4ff3237ebf5c2382e805151720dd38e86c527812
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:34:33 KST
+Duration: 43.43s, Total samples = 63.70s (146.67%)
+Showing nodes accounting for 52.54s, 82.48% of 63.70s total
+Dropped 599 nodes (cum <= 0.32s)
+Showing top 16 nodes out of 154
+      flat  flat%   sum%        cum   cum%
+    27.75s 43.56% 43.56%     27.75s 43.56%  syscall.rawsyscalln
+     5.69s  8.93% 52.50%      5.69s  8.93%  runtime.kevent
+     4.22s  6.62% 59.12%      5.42s  8.51%  runtime.tryDeferToSpanScan
+     2.52s  3.96% 63.08%      2.52s  3.96%  runtime.madvise
+     1.98s  3.11% 66.19%      1.98s  3.11%  runtime.pthread_cond_signal
+     1.96s  3.08% 69.26%      1.96s  3.08%  runtime.memclrNoHeapPointers
+     1.78s  2.79% 72.06%      4.51s  7.08%  runtime.scanObject
+     1.63s  2.56% 74.62%      1.63s  2.56%  runtime.pthread_cond_wait
+     1.14s  1.79% 76.41%      3.22s  5.05%  runtime.scanObjectsSmall
+     1.01s  1.59% 77.99%      1.01s  1.59%  runtime.usleep
+     0.55s  0.86% 78.85%      1.93s  3.03%  runtime.scanObjectSmall
+     0.51s   0.8% 79.65%      0.51s   0.8%  runtime.(*gcBits).bytep
+     0.50s  0.78% 80.44%      0.50s  0.78%  reflect.Value.String
+     0.44s  0.69% 81.13%      0.44s  0.69%  runtime.(*spanInlineMarkBits).init
+     0.44s  0.69% 81.82%      0.44s  0.69%  runtime.(*spanScanOwnership).or (inline)
+     0.42s  0.66% 82.48%      0.44s  0.69%  runtime.(*mspan).moveInlineMarks
+
+Source: var/p7-snapshot-sorting-kyynt605/profiles/snapshot-profile-29000-1-heap.txt
+SHA256: 5a8fe72704e306edacdcaae8c14198cc488bbf52a4ae2219857168b80c0e317c
+File: exchange
+Type: inuse_space
+Time: 2026-10-29 21:35:16 KST
+Showing nodes accounting for 618.84MB, 99.20% of 623.86MB total
+Dropped 47 nodes (cum <= 3.12MB)
+Showing top 16 nodes out of 35
+      flat  flat%   sum%        cum   cum%
+  235.73MB 37.79% 37.79%   484.71MB 77.70%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  134.35MB 21.54% 59.32%   161.96MB 25.96%  github.com/gaon000/exchange/internal/engine.(*Engine).place
+   87.01MB 13.95% 73.27%    87.01MB 13.95%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+   82.63MB 13.25% 86.51%    82.63MB 13.25%  github.com/gaon000/exchange/internal/wal.(*validator).accept
+      33MB  5.29% 91.80%       33MB  5.29%  net/textproto.readMIMEHeader
+   19.61MB  3.14% 94.95%    23.11MB  3.70%  github.com/gaon000/exchange/internal/engine.(*Engine).fill
+   11.50MB  1.84% 96.79%    11.50MB  1.84%  encoding/json/v2.makeString
+    4.50MB  0.72% 97.51%     4.50MB  0.72%  container/list.(*List).insertValue (inline)
+    3.50MB  0.56% 98.07%     3.50MB  0.56%  runtime.mallocgc
+    3.50MB  0.56% 98.64%     3.50MB  0.56%  fmt.Sprintf
+    3.50MB  0.56% 99.20%     3.50MB  0.56%  encoding/json/jsontext.(*Value).UnmarshalJSON
+         0     0% 99.20%     4.50MB  0.72%  container/list.(*List).PushBack (inline)
+         0     0% 99.20%       15MB  2.40%  encoding/json.Unmarshal
+         0     0% 99.20%       15MB  2.40%  encoding/json/v2.Unmarshal
+         0     0% 99.20%     3.50MB  0.56%  encoding/json/v2.makeMapArshaler.func3
+         0     0% 99.20%        4MB  0.64%  encoding/json/v2.makeMethodArshaler.func6
