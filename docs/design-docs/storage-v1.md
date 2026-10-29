@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·스트리밍 코덱·snapshot 파일 게시를 구현했다. 후보 선택·fallback·WAL 대조와 runtime 연결은 진행 전이다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·스트리밍 코덱·파일 게시와 runtime 기동 시 후보 선택·fallback·WAL 대조를 구현했다. 실행 중 owner의 사본 생성과 snapshot worker 연결은 남아 있다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -54,7 +54,7 @@ Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot payload 최대
 
 Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
 
-ErrCorrupt는 손상·비정규형 후보로 후속 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단해야 한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 caller가 Restore와 WAL 대조를 수행한다. 파일 게시는 아래 API로 구현했고 복구 선택·runtime 연결은 남아 있다.
+ErrCorrupt는 손상·비정규형 후보로 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 runtime의 복구 계층이 Restore와 WAL 대조를 수행한다.
 
 Genesis와 WAL header는 서로 일치해야 한다. 비어 있는 WAL도 유효한 헤더는 필요하다. 완성되지 않았거나 checksum이 다른 Genesis/header를 정상 새 실험으로 취급하지 않는다.
 
@@ -117,6 +117,14 @@ Darwin [RenameExclusive](../../internal/durable/rename_darwin.go)는 [Apple rena
 ## 6. 복구 판정
 
 잠금 → Genesis/WAL header 확인 → 전체 WAL 프레임/연속성 검사 → 정상 snapshot 선택 → 후속 command 재생 → 불변식 검사 → 남길 WAL 및 변경 메타데이터 엄격한 sync → ready 순이다. v1은 WAL을 전부 보존하므로 snapshotSeq 이전 그룹도 구조와 checksum을 검사한다. snapshotSeq는 실제 유효 WAL 끝을 넘을 수 없다.
+
+[runtime.Open의 복구 계층](../../internal/runtime/recovery.go)은 다음과 같이 동작한다.
+
+1. wal.Open이 잠금과 전체 WAL 검증을 마친 뒤 [snapshot.List/Load](../../internal/snapshot/files.go)를 호출한다. 정식 20자리 이름을 순번 내림차순으로 검사하며 `.snapshot-*.tmp`는 후보가 아니다. `snapshot-*.bin`이지만 이름이 비정규형이면 조용히 무시하지 않고 중단한다.
+2. 검토하는 후보의 envelope·identity·파일명/본문 순번을 확인한 뒤 engine.Restore로 업무 상태를 직접 구성한다. 비정규 파일·내용 손상·상태 불변식 오류는 후보를 보존하고 이전 후보로 넘어간다. 읽기·닫기 I/O 오류와 실험/버전 불일치는 중단한다.
+3. 전체 WAL을 다시 순서대로 읽는다. snapshotSeq 이하 명령은 최초 결과의 원래 입력·순번과 대조하고, 이후 명령만 Apply한다. 후보 불일치는 visitor 밖에 보관하여 정상 WAL 핸들을 실패 상태로 만들지 않는다. 동시에 발견한 WAL 오류는 fallback보다 우선하여 중단한다.
+4. 최종 순번·불변식이 맞으면 선택한 snapshot의 bytes를 재확인하고 파일·디렉터리를 엄격한 sync한다. 이어 WAL ConfirmRecovery가 허용된 tail 절단과 WAL/Genesis/잠금/디렉터리 동기화를 마친 뒤 readiness를 연다. 선택한 파일이 사라지면 자동 재생성하지 않는다.
+5. `Runtime.Recovery()`는 선택 파일·snapshotSeq·실제로 Apply한 후속 명령 수·건너뛴 후보의 진단을 사본으로 제공한다. 정상 후보가 없으면 Genesis부터 재생한다. seq=0 snapshot과 snapshot 부재는 파일명 유무로 구분한다. 정상 후보가 선택되면 더 오래된 snapshot은 읽지 않는다.
 
 - 다음 그룹의 36-byte header를 물리 EOF 때문에 끝까지 읽지 못하면 마지막 미완성 그룹이다.
 - header 전체를 읽었는데 magic/길이/CRC/seq/버전이 틀리면 EOF 근처여도 손상으로 기동 중단한다.

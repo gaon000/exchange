@@ -92,6 +92,8 @@ Go 코드는 gofmt 형식을 사용하고 공개 함수·타입에 Go 문서 주
 
 P4 snapshot은 상태 직접 복원, 독립 golden bytes와 스트리밍 코덱, 파일 게시 오류를 검사한다. [실제 게시 테스트](../internal/snapshot/publish_darwin_test.go)는 APFS에서 별도 자식 프로세스만 7개 저장 경계에서 강제 종료하고 이전 파일 보존·재게시를 확인한다. 부모 개발 프로세스나 OS를 종료하지 않는다. 이 시험은 실제 전원 장애와 runtime snapshot 복구 연결의 증거가 아니다. 새 코덱 fuzz는 `scripts/go test ./internal/snapshot -run '^$' -fuzz '^FuzzSnapshotReader$' -fuzztime=30s -parallel=2`다.
 
+[runtime 복구 통합 테스트](../internal/runtime/recovery_native_test.go)는 실제 APFS의 최신·이전·Genesis 복구, 손상/입력 불일치 fallback, 기존 WAL 손상·잘못된 실험/버전 거절과 복구 후 재시도를 별도로 확인한다. 해당 검증은 `scripts/go test ./...`와 race 실행에 포함된다. 실행 중 snapshot 생성 worker와 HTTP API는 아직 연결 전이다.
+
 ## CI와 릴리스
 
 origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.

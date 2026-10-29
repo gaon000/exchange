@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"path/filepath"
 	"sync"
 	"sync/atomic"
 
@@ -30,6 +31,8 @@ type Runtime struct {
 	closing   bool
 	terminal  error // written before done closes; readers wait for done
 	hooks     hooks
+	recovery  RecoveryReport
+	snapshots checkpoints
 }
 type hooks struct {
 	beforeApply func(wal.Record)
@@ -58,14 +61,22 @@ func Open(dir string, options Options) (*Runtime, error) {
 	if err := options.validate(); err != nil {
 		return nil, err
 	}
+	dir, err := filepath.Abs(dir)
+	if err != nil {
+		return nil, err
+	}
 	s, err := wal.Open(dir)
 	if err != nil {
 		return nil, err
 	}
-	return start(s, options, hooks{})
+	return startWithSnapshots(s, diskCheckpoints{dir}, options, hooks{})
 }
 
-func start(s journal, options Options, h hooks) (_ *Runtime, err error) {
+func start(s journal, options Options, h hooks) (*Runtime, error) {
+	return startWithSnapshots(s, nil, options, h)
+}
+
+func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) (_ *Runtime, err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			err = fmt.Errorf("runtime recovery panic: %v", p)
@@ -78,34 +89,8 @@ func start(s journal, options Options, h hooks) (_ *Runtime, err error) {
 		return nil, err
 	}
 	g := s.Genesis()
-	e, err := engine.New(g.RunID, g.Config)
+	e, report, err := recoverState(s, files)
 	if err != nil {
-		return nil, err
-	}
-	err = s.Replay(func(record wal.Record) error {
-		if record.Seq != e.AppliedSeq()+1 {
-			return engine.ErrSequence
-		}
-		if _, found, err := e.Lookup(record.Command); err != nil {
-			return err
-		} else if found {
-			return fmt.Errorf("repeated WAL request key")
-		}
-		if _, err := e.Apply(record.Seq, record.Command); err != nil {
-			return err
-		}
-		if e.AppliedSeq() != record.Seq {
-			return engine.ErrSequence
-		}
-		return nil
-	})
-	if err != nil {
-		return nil, err
-	}
-	if e.AppliedSeq() != s.Recovery().LastSeq {
-		return nil, engine.ErrSequence
-	}
-	if err := e.CheckInvariants(); err != nil {
 		return nil, err
 	}
 	if err := s.ConfirmRecovery(); err != nil {
@@ -115,6 +100,7 @@ func start(s journal, options Options, h hooks) (_ *Runtime, err error) {
 		return nil, fmt.Errorf("recovery durable sequence mismatch")
 	}
 	r := &Runtime{genesis: g, accounts: make(map[string]bool), opts: options, engine: e, store: s, commands: make(chan *commandRequest, options.CommandQueue), queries: make(chan *queryRequest, options.QueryQueue), slots: make(chan struct{}, options.RequestLimit), stop: make(chan struct{}), done: make(chan struct{}), hooks: h}
+	r.recovery, r.snapshots = report, files
 	for _, a := range g.Config.Accounts {
 		r.accounts[a.AccountID] = true
 	}
