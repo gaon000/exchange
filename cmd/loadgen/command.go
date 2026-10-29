@@ -27,16 +27,17 @@ type settings struct {
 // These are the server CLI's recorded fields. Preserve the full nested settings
 // as raw JSON instead of inventing server defaults in the experiment manifest.
 type serverReport struct {
-	Event      string          `json:"event"`
-	RunID      string          `json:"runId"`
-	ConfigHash string          `json:"configHash"`
-	DataDir    string          `json:"dataDir"`
-	Listen     string          `json:"listen"`
-	Build      buildinfo.Info  `json:"build"`
-	Runtime    json.RawMessage `json:"runtime"`
-	HTTP       json.RawMessage `json:"http"`
-	Recovery   json.RawMessage `json:"recovery"`
-	Metrics    json.RawMessage `json:"metrics,omitempty"`
+	Event       string          `json:"event"`
+	RunID       string          `json:"runId"`
+	ConfigHash  string          `json:"configHash"`
+	DataDir     string          `json:"dataDir"`
+	Listen      string          `json:"listen"`
+	Build       buildinfo.Info  `json:"build"`
+	Runtime     json.RawMessage `json:"runtime"`
+	HTTP        json.RawMessage `json:"http"`
+	Recovery    json.RawMessage `json:"recovery"`
+	Metrics     json.RawMessage `json:"metrics,omitempty"`
+	Experiments json.RawMessage `json:"experiments,omitempty"`
 }
 type manifest struct {
 	Version       int            `json:"version"`

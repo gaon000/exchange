@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	goruntime "runtime"
 	"time"
 
 	"github.com/gaon000/exchange/internal/api"
@@ -120,6 +121,9 @@ type serveOptions struct {
 	httpShutdownTimeout time.Duration
 	metricsFile         string
 	metricsInterval     time.Duration
+	snapshotInterval    time.Duration
+	snapshotLog         string
+	profileDir          string
 }
 
 func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
@@ -142,6 +146,9 @@ func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
 	flags.DurationVar(&o.httpShutdownTimeout, "http-shutdown-timeout", o.httpShutdownTimeout, "HTTP drain deadline before disconnecting clients; storage drain still waits")
 	flags.StringVar(&o.metricsFile, "metrics-file", "", "optional new JSONL metrics file under an existing parent")
 	flags.DurationVar(&o.metricsInterval, "metrics-interval", o.metricsInterval, "metrics sampling interval (100ms to 1m)")
+	flags.DurationVar(&o.snapshotInterval, "snapshot-interval", 0, "optional periodic snapshot interval (100ms to 1h); zero disables")
+	flags.StringVar(&o.snapshotLog, "snapshot-log", "", "new JSONL file required with snapshot-interval")
+	flags.StringVar(&o.profileDir, "profile-dir", "", "optional new directory for CPU, final heap and allocation profiles")
 	if err := flags.Parse(args); err != nil {
 		return o, err
 	}
@@ -161,10 +168,16 @@ func parseServe(args []string, stderr io.Writer) (serveOptions, error) {
 	if o.metricsInterval < 100*time.Millisecond || o.metricsInterval > time.Minute {
 		return o, errors.New("metrics-interval must be between 100ms and 1m")
 	}
+	if o.snapshotInterval != 0 && (o.snapshotInterval < 100*time.Millisecond || o.snapshotInterval > time.Hour) {
+		return o, errors.New("snapshot-interval must be zero or between 100ms and 1h")
+	}
+	if (o.snapshotInterval != 0) != (o.snapshotLog != "") {
+		return o, errors.New("snapshot-interval and snapshot-log must be specified together")
+	}
 	return o, nil
 }
 
-func serveRun(ctx context.Context, args []string, stdout, stderr io.Writer) error {
+func serveRun(ctx context.Context, args []string, stdout, stderr io.Writer) (retErr error) {
 	o, err := parseServe(args, stderr)
 	if errors.Is(err, flag.ErrHelp) {
 		return nil
@@ -187,41 +200,87 @@ func serveRun(ctx context.Context, args []string, stdout, stderr io.Writer) erro
 		return fmt.Errorf("listen: %w", err)
 	}
 	defer listener.Close()
-	var metricsFile *os.File
-	if o.metricsFile != "" {
-		o.metricsFile, err = filepath.Abs(o.metricsFile)
+	measured, cancel := context.WithCancel(ctx)
+	var metricsFile, snapshotFile *os.File
+	var runtime *rt.Runtime
+	var sampler *metricsSampler
+	var snapshots *snapshotSchedule
+	var profile *profiles
+	// Also covers failures before supervise takes ownership. Keep the final
+	// resource sample after storage drain and profile finalization.
+	defer func() {
+		cancel()
+		if runtime != nil {
+			retErr = errors.Join(retErr, runtime.Shutdown(context.Background()))
+		}
+		if snapshots != nil {
+			retErr = errors.Join(retErr, snapshots.Wait())
+		}
+		if profile != nil {
+			retErr = errors.Join(retErr, profile.Finish())
+		}
+		// The final heap profile must retain the exchange state even when file
+		// metrics are disabled and no other future closure references runtime.
+		goruntime.KeepAlive(runtime)
+		if sampler != nil {
+			retErr = errors.Join(retErr, sampler.Finish())
+		}
+		for _, file := range []*os.File{metricsFile, snapshotFile} {
+			if file != nil {
+				retErr = errors.Join(retErr, file.Close())
+			}
+		}
+	}()
+	for _, output := range []struct {
+		path *string
+		file **os.File
+	}{{&o.metricsFile, &metricsFile}, {&o.snapshotLog, &snapshotFile}} {
+		if *output.path == "" {
+			continue
+		}
+		*output.path, err = filepath.Abs(*output.path)
 		if err != nil {
 			return err
 		}
-		metricsFile, err = os.OpenFile(o.metricsFile, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
+		*output.file, err = os.OpenFile(*output.path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
 		if err != nil {
-			return fmt.Errorf("create new metrics file: %w", err)
+			return fmt.Errorf("create new experiment log: %w", err)
 		}
-		defer func() {
-			if metricsFile != nil {
-				_ = metricsFile.Close()
-			}
-		}()
 	}
-	runtime, err := rt.Open(dir, o.runtime)
+	if o.profileDir != "" {
+		o.profileDir, err = filepath.Abs(o.profileDir)
+		if err != nil {
+			return err
+		}
+		profile, err = openProfiles(o.profileDir, cancel)
+		if err != nil {
+			return fmt.Errorf("create profiles: %w", err)
+		}
+	}
+	runtime, err = rt.Open(dir, o.runtime)
 	if err != nil {
 		return fmt.Errorf("recover run: %w", err)
 	}
 	server, err := api.New(runtime, o.http)
 	if err != nil {
-		return errors.Join(err, runtime.Shutdown(context.Background()))
+		return err
 	}
 	report := readyReportFor(runtime, dir, listener.Addr().String(), o)
-	if metricsFile == nil {
-		return supervise(ctx, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
+	if metricsFile != nil {
+		sampler, err = startMetrics(metricsFile, o.metricsInterval, func(stage string) (metricsRecord, error) { return collectMetrics(stage, runtime, server, dir) }, cancel)
+		metricsFile = nil // ownership includes startMetrics' error path
+		if err != nil {
+			return fmt.Errorf("initialize metrics: %w", err)
+		}
 	}
-	measured, cancel := context.WithCancel(ctx)
-	defer cancel()
-	sampler, err := startMetrics(metricsFile, o.metricsInterval, func(stage string) (metricsRecord, error) { return collectMetrics(stage, runtime, server, dir) }, cancel)
-	metricsFile = nil // ownership transferred to startMetrics, including its error path
-	if err != nil {
-		return errors.Join(fmt.Errorf("initialize metrics: %w", err), runtime.Shutdown(context.Background()))
+	if profile != nil {
+		if err := profile.Start(); err != nil {
+			return err
+		}
 	}
-	err = supervise(measured, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
-	return errors.Join(err, sampler.Finish())
+	if snapshotFile != nil {
+		snapshots = startSnapshots(measured, runtime, o.snapshotInterval, snapshotFile, cancel)
+		snapshotFile = nil
+	}
+	return supervise(measured, runtime, server, listener, report, stdout, o.httpShutdownTimeout)
 }

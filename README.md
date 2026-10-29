@@ -13,7 +13,7 @@
 - [전체 구조](ARCHITECTURE.md): 구현한 모듈과 예정 모듈의 책임.
 - [개발 기준](docs/development.md): 도구·명령의 구성 상태와 개발 규칙.
 
-개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·bench·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. [HTTP 부하 생성기](docs/design-docs/benchmark-v1.md)는 준비 검증·원본 기록까지 구현했다. 실행은 [HTTP 부하 실행](docs/development.md#http-부하-실행)을 따른다. 서버 구간·CPU/메모리/GC 계측은 `--metrics-file`로 기록한다. 실험 조건 연결·CI와 실제 전원 장애·기준 성능 검증은 남아 있다.
+개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·bench·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. [HTTP 부하 생성기](docs/design-docs/benchmark-v1.md)는 준비 검증·원본 기록까지 구현했다. 실행은 [HTTP 부하 실행](docs/development.md#http-부하-실행)을 따른다. 서버 구간·CPU/메모리/GC 계측은 `--metrics-file`로 기록한다. 스냅샷 주기·프로파일 수집은 선택 옵션이다. 환경/원본 묶음·CI와 실제 전원 장애·기준 성능 검증은 남아 있다.
 
 ## 로컬 실행
 

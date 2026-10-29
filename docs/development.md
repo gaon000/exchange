@@ -88,8 +88,10 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | `--http-shutdown-timeout` | 15s; HTTP 연결 대기 한도, 저장 drain의 제한 시간이 아님 |
 | `--metrics-file` | 기본 없음; 기존 parent 아래 새 JSONL 파일. 충돌 시 복구 전에 거절 |
 | `--metrics-interval` | 1s, 허용 100ms~1m; 별도 worker의 서버/프로세스 계측 주기 |
+| `--snapshot-interval`, `--snapshot-log` | 기본 비활성; 주기 100ms~1h와 새 JSONL 경로를 함께 지정. 한 번에 하나, 최대 1,000회 |
+| `--profile-dir` | 기본 없음; CPU·종료 시 heap/allocs와 시각 metadata를 담는 새 디렉터리 |
 
-시간 flag는 `1ms`, `5s`와 같은 Go duration 형식이다. 출력은 정규화된 문자열이며 `1h`는 `1h0m0s`가 된다. 잘못된 옵션·사용 중인 포트는 데이터 복구 전에 실패하므로 WAL tail을 변경하지 않는다. CLI에 자동 snapshot 주기는 없으며 현재는 Go `Runtime.Snapshot` API를 제공한다. HTTP 프로토콜·필드·계정 문맥은 [API 계약](design-docs/api-v1.md)이 소유한다.
+시간 flag는 `1ms`, `5s`와 같은 Go duration 형식이다. 출력은 정규화된 문자열이며 `1h`는 `1h0m0s`가 된다. 잘못된 옵션·사용 중인 포트는 데이터 복구 전에 실패하므로 WAL tail을 변경하지 않는다. 선택적인 주기 snapshot은 Go `Runtime.Snapshot` API를 호출하며 별도 HTTP 제어 경로는 없다. HTTP 프로토콜·필드·계정 문맥은 [API 계약](design-docs/api-v1.md)이 소유한다.
 
 ## HTTP 부하 실행
 
@@ -111,6 +113,8 @@ bin/loadgen --config config/examples/benchmark.json --workload config/examples/w
 끝나면 서버 터미널에서 Ctrl+C로 정상 종료한다. 이 예시 이름이 이미 존재하면 새로운 이름으로 바꾼다. 같은 run을 다시 측정하려 하면 asOfSeq=0 사전 검사가 거절한다. loadgen은 서버를 초기화·종료하지 않는다. `benchmark.json`의 등록 계정/초기 잔고와 `workload.json`의 요청률·seed·워밍업/측정 시간·비율·worker/deadline을 함께 기록한다. 시간 JSON 필드는 나노초, 금액/수량은 정수 문자열이다.
 
 서버 ready 보고서는 build 정보와 configHash를 포함한 현재 버전의 파일이어야 한다. CLI는 설정 hash와 공개 API 초기 잔고를 대조하고 준비 주문 후 측정을 시작한다. 출력 파일·완료/실패 판정·지표 의미는 [측정 계약](design-docs/benchmark-v1.md#http-전송과-실행-파일)을 따른다. `completed.json`은 파일/측정 유효성 표식이며 성능 목표 통과가 아니다. SIGINT/SIGTERM 중단은 표본을 저장하고 실패로 종료한다. 출력 위치와 서버 데이터는 실패 후에도 보존한다.
+
+프로파일/스냅샷 비교에는 serve에 `--snapshot-interval 1s --snapshot-log var/measurements/snapshot-events.jsonl` 또는 `--profile-dir var/measurements/profiles`를 추가한다. 두 옵션을 함께 사용할 수도 있다. 모두 새 경로만 허용한다. 프로파일 범위는 서버 준비 전부터 거래/HTTP drain까지이며, heap profile을 위한 강제 GC는 CPU 수집 종료 후 수행한다. 설정만으로 측정 구간 중 snapshot이 완료됐다고 단정하지 않고 이벤트 시각을 대조한다. 상세 의미는 [실험 옵션 계약](design-docs/benchmark-v1.md#스냅샷과-프로파일-실험-옵션)을 따른다.
 
 ## 코드 기준
 

@@ -4,6 +4,7 @@ import (
 	"github.com/gaon000/exchange/internal/buildinfo"
 	d "github.com/gaon000/exchange/internal/domain"
 	rt "github.com/gaon000/exchange/internal/runtime"
+	"runtime"
 )
 
 type initializedReport struct {
@@ -15,16 +16,24 @@ type initializedReport struct {
 	MaxCommands d.Int  `json:"maxCommands"`
 }
 type readyReport struct {
-	Event      string           `json:"event"`
-	RunID      string           `json:"runId"`
-	ConfigHash string           `json:"configHash"`
-	Build      buildinfo.Info   `json:"build"`
-	DataDir    string           `json:"dataDir"`
-	Listen     string           `json:"listen"`
-	Runtime    runtimeSettings  `json:"runtime"`
-	HTTP       httpSettings     `json:"http"`
-	Recovery   recoverySettings `json:"recovery"`
-	Metrics    metricsSettings  `json:"metrics"`
+	Event       string             `json:"event"`
+	RunID       string             `json:"runId"`
+	ConfigHash  string             `json:"configHash"`
+	Build       buildinfo.Info     `json:"build"`
+	DataDir     string             `json:"dataDir"`
+	Listen      string             `json:"listen"`
+	Runtime     runtimeSettings    `json:"runtime"`
+	HTTP        httpSettings       `json:"http"`
+	Recovery    recoverySettings   `json:"recovery"`
+	Metrics     metricsSettings    `json:"metrics"`
+	Experiments experimentSettings `json:"experiments"`
+}
+type experimentSettings struct {
+	SnapshotInterval string `json:"snapshotInterval"`
+	SnapshotLog      string `json:"snapshotLog"`
+	SnapshotLimit    int    `json:"snapshotLimit"`
+	ProfileDir       string `json:"profileDir"`
+	MemProfileRate   int    `json:"memProfileRate"`
 }
 type metricsSettings struct {
 	Enabled         bool   `json:"enabled"`
@@ -69,5 +78,6 @@ func readyReportFor(r *rt.Runtime, dir, address string, o serveOptions) readyRep
 	return readyReport{Event: "ready", RunID: r.RunID(), ConfigHash: r.ConfigHash(), Build: buildinfo.Current(), DataDir: dir, Listen: address,
 		Runtime:  runtimeSettings{o.runtime.CommandQueue, o.runtime.QueryQueue, o.runtime.RequestLimit, o.runtime.PendingWaiters, o.runtime.BatchCommands, o.runtime.BatchBytes, o.runtime.BatchDelay.String()},
 		HTTP:     httpSettings{o.http.RequestLimit, o.http.ReadHeaderTimeout.String(), o.http.ReadBodyTimeout.String(), o.http.ResultTimeout.String(), o.http.WriteTimeout.String(), o.httpShutdownTimeout.String()},
-		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}, Metrics: metricsSettings{o.metricsFile != "", true, o.metricsFile, o.metricsInterval.String()}}
+		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}, Metrics: metricsSettings{o.metricsFile != "", true, o.metricsFile, o.metricsInterval.String()},
+		Experiments: experimentSettings{o.snapshotInterval.String(), o.snapshotLog, 1000, o.profileDir, runtime.MemProfileRate}}
 }

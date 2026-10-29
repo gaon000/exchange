@@ -59,6 +59,8 @@ func TestCommandUsageAndOptionValidation(t *testing.T) {
 		{"--batch-commands", "257"}, {"--batch-bytes", "4096"}, {"--batch-delay", "0"}, {"--batch-delay", "not-time"},
 		{"--read-header-timeout", "0"}, {"--read-body-timeout", "-1s"}, {"--result-timeout", "2h"}, {"--write-timeout", "0"}, {"--http-shutdown-timeout", "0"}, {"--http-shutdown-timeout", "2h"},
 		{"--metrics-interval", "0"}, {"--metrics-interval", "99ms"}, {"--metrics-interval", "61s"},
+		{"--snapshot-interval", "99ms", "--snapshot-log", "unused"}, {"--snapshot-interval", "2h", "--snapshot-log", "unused"},
+		{"--snapshot-interval", "1s"}, {"--snapshot-log", "unused"}, {"--snapshot-interval", "-1s", "--snapshot-log", "unused"},
 	} {
 		args = append([]string{"--data-dir", "unused"}, args...)
 		if _, err := parseServe(args, io.Discard); err == nil {

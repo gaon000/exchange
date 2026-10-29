@@ -2,7 +2,7 @@
 
 상태: Accepted (P6 구현 계약)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 실행 조건 연결과 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
+구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 서버 옵션을 연결했다. 환경/원본 묶음과 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
 
 ## 목적과 경계
 
@@ -107,9 +107,21 @@ loadgen run.json에는 Plan/준비 완료 후 Run 전·후의 생성기 자원 �
 
 주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음과 반복 비교 절차는 다음 실험 단계에서 연결한다.
 
+## 스냅샷과 프로파일 실험 옵션
+
+[서버 실험 옵션](../../cmd/exchange/experiments.go)은 기본 비활성이다. ready 보고서의 experiments는 실제 snapshotInterval·snapshotLog·snapshotLimit·profileDir·MemProfileRate를 기록하며 loadgen manifest도 이를 보존한다. 모든 출력 파일/디렉터리는 복구 전에 새 경로로 확보한다. 기존 경로와 충돌하면 WAL 복구를 시작하지 않고, 생성하다 실패한 부분 파일도 보존한다.
+
+`--snapshot-interval`과 `--snapshot-log`는 함께 지정한다. 주기는 100ms~1h이며 서버 시작 시점에 맞춰 첫 주기 후 요청한다. 앞 게시가 끝나야 다음 요청을 하고 지나간 주기는 skippedIntervals로 남겨 누적 대기열을 만들지 않는다. 최대 1,000회 이후에는 서버를 정상 drain하고 실험 실패로 종료한다. 각 JSONL에 예정·호출 시작·응답 시각, runId·snapshotSeq·outcome·오류를 기록한다. 단순히 옵션을 켰다는 사실과 측정 구간에서 완료한 snapshot을 구분하며 실제 시각의 교집합으로 확인한다.
+
+서버 종료는 주기 worker의 대기를 취소한다. 이미 접수된 게시 작업은 runtime 종료가 끝까지 기다린다. 따라서 취소된 waiter가 기록한 UNKNOWN은 게시 실패나 파일 부재의 증거가 아니다. 예상하지 않은 snapshot 실패·로그 출력 실패는 서버 종료를 요청하고 오류를 반환한다. 파일 Sync·Close 결과도 종료 성공 판정에 포함한다.
+
+`--profile-dir`은 cpu.pprof·heap.pprof·allocs.pprof·profile.json을 생성한다. CPU 수집은 복구 후 HTTP 준비 전부터 HTTP/runtime drain 후까지여서 준비·워밍업·측정·drain을 모두 포함한다. CPU 수집을 종료한 뒤 강제 GC 한 번으로 종료 시 live heap을 관찰하고, heap/allocs를 기록한다. 엔진 상태는 이 시점까지 유지한다. allocation profile은 현재 MemProfileRate에 따른 표본이며 모든 할당의 정확한 로그가 아니다. profile.json은 수집 시작·CPU 종료·파일 기록 시각, 표본율과 postDrainGC를 기록한다.
+
+CPU profile의 비동기 쓰기 실패도 보존해 일반 종료를 요청한다. 모든 profile을 Sync·Close하고 마지막 metrics를 남기므로 final 프로세스 CPU/GC에는 종료 시 강제 GC와 profile 기록 비용도 포함된다. 이는 측정 구간만의 비용이 아니다. 정상 성능 실행과 profile 실행을 구분하고, 두 실행에서 snapshot·주기 계측 설정을 같게 유지한다. 프로파일 없이도 Go의 기본 메모리 표본 수집은 켜져 있을 수 있으며 실제 표본율을 함께 기록한다. 전원 장애 내구성은 이 관찰 파일의 보장 범위가 아니다.
+
 ## 남은 실험 연결과 기준 측정
 
-- 정상·snapshot 생성 중·profiler 유무를 구분하는 실행 설정, snapshot 시간/메모리 비교와 전체 환경/원본 묶음.
+- 구현한 정상·snapshot·profiling 설정을 연결하는 반복 실행 도구와 전체 환경/원본 묶음, snapshot 시간/메모리 비교.
 - 실제 기준 측정 뒤 p99 상한·허용 실패율·워밍업/지속 기간·반복 수·workload를 고정하고 P7에서 같은 조건으로 비교한다.
 
 현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
