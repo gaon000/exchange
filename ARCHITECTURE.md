@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버 계층과 실제 거래·재시작 테스트를 추가했다. 초기화/서버 실행 CLI·부하 생성기·CI는 아직 구현하지 않았다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·종료·재시작 테스트를 추가했다. 부하 생성기·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -26,7 +26,7 @@
 | [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
-| [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder 제공. CLI loader는 P5 예정 |
+| [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder를 CLI init에 연결 |
 
 ## 합의한 구현 목표
 
@@ -36,7 +36,7 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 모듈과 의존 방향
 
-P4 모듈과 P5의 api를 구현했다. 아래에서 나머지 예정 경로와 구분한다.
+P4 모듈과 P5의 api·서버 CLI를 구현했다. 아래에서 나머지 예정 경로와 구분한다.
 
 | 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |
@@ -48,7 +48,7 @@ P4 모듈과 P5의 api를 구현했다. 아래에서 나머지 예정 경로와 
 | [internal/snapshot](internal/snapshot/codec.go) (구현) | envelope 스트리밍·파일 sync·exclusive 게시·정식 후보 열거/검증/재확인 | domain, strictjson, durable, 표준 파일 I/O; engine·wal 의존은 테스트만 |
 | [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot |
 | [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, 표준 HTTP |
-| `cmd/exchange/` | 설정 로딩·모듈 조립·프로세스 생명주기 | 위 모듈의 공개 진입점 |
+| [cmd/exchange](cmd/exchange/main.go) (구현) | init/serve·설정 검증·모듈 조립·기동 보고·signal 종료와 HTTP/runtime 합류 | 위 모듈의 공개 진입점 |
 | `cmd/loadgen/`, `internal/bench/` | 네트워크 부하·측정·재현 설정 | 공개 API 계약, 측정 도구 |
 
 API는 엔진 내부 맵을 직접 수정하지 않는다. 엔진은 HTTP·파일·벽시계·난수·외부 서비스에 의존하지 않는다. WAL은 거래 승인 여부를 결정하지 않는다. loadgen의 전체 경로 측정은 엔진 직접 호출을 우회 경로로 사용하지 않는다. 공통 타입은 실제 공유 계약에 한해 분리하고 순환 의존은 허용하지 않는다.

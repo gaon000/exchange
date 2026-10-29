@@ -52,7 +52,9 @@ type Options struct {
 func DefaultOptions() Options {
 	return Options{8192, 1024, 16384, 16, 256, wal.MaxGroupPayload, time.Millisecond}
 }
-func (o Options) validate() error {
+
+// Validate checks resource bounds without opening or changing a data directory.
+func (o Options) Validate() error {
 	if o.CommandQueue < 1 || o.CommandQueue > 1<<20 || o.QueryQueue < 1 || o.QueryQueue > 1<<20 || o.RequestLimit < 1 || o.RequestLimit > 1<<20 || o.PendingWaiters < 1 || o.PendingWaiters > o.RequestLimit || o.BatchCommands < 1 || o.BatchCommands > wal.MaxGroupCommands || o.BatchBytes < wal.MaxRecordBytes+4 || o.BatchBytes > wal.MaxGroupPayload || o.BatchDelay <= 0 {
 		return d.ErrInvalid
 	}

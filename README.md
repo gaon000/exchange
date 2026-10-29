@@ -2,7 +2,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍의 지정가 주문·부분 체결·취소를 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime과 스냅샷 생성·재시작 복구를 구현했다. P5의 HTTP 계층을 연결해 실제 loopback에서 거래·중복·timeout·재시작을 검증했다. 최종 결과물은 거래 API, 부하 생성기와 성능 보고서이며 실거래·실행 중 입출금·수수료·웹 화면은 첫 버전에서 제외한다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime과 스냅샷 생성·재시작 복구를 구현했다. P5의 HTTP 계층과 초기화·실행 CLI를 연결해 실제 loopback에서 거래·중복·timeout·종료·재시작을 검증했다. 최종 결과물은 거래 API, 부하 생성기와 성능 보고서이며 실거래·실행 중 입출금·수수료·웹 화면은 첫 버전에서 제외한다.
 
 - [제품 명세](docs/product-specs/exchange.md): 거래 규칙과 성능 목표.
 - [상세 설계](docs/design-docs/exchange-v1.md): 주문 상태, 잔고 예약, 로그 재생과 중복 처리.
@@ -13,4 +13,17 @@
 - [전체 구조](ARCHITECTURE.md): 구현한 모듈과 예정 모듈의 책임.
 - [개발 기준](docs/development.md): 도구·명령의 구성 상태와 개발 규칙.
 
-개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경과 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. 서버 실행 CLI·부하 생성기·CI는 아직 없으며 전체 HTTP 장애 행렬·실제 전원 장애·전체 성능 검증이 남아 있다.
+개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. 부하 생성기·CI와 추가 HTTP 장애 행렬·실제 전원 장애·전체 성능 검증은 남아 있다.
+
+## 로컬 실행
+
+저장소 루트에서 빌드하고 새 실험을 한 번 초기화한다. `demo`가 이미 있으면 다른 새 이름을 사용한다.
+
+```sh
+scripts/go build -o ./bin/ ./...
+mkdir -p var/runs
+bin/exchange init --config config/examples/local.json --data-dir var/runs/demo
+bin/exchange serve --data-dir var/runs/demo --listen 127.0.0.1:8080
+```
+
+`init`은 새 runId와 초기 잔고를 저장하고 기존 디렉터리는 덮어쓰지 않는다. `serve`는 기존 상태를 복구하고 준비가 끝나면 runId·실제 주소·설정·복구 결과를 JSON 한 줄로 출력한다. 이 runId로 [API 요청](docs/design-docs/api-v1.md#4-변경-api)을 보낸다. 종료는 Ctrl+C 또는 SIGTERM이며 접수된 명령의 저장과 응답을 기다린다. 재시작할 때는 같은 `serve` 명령만 실행한다. 추가 옵션과 HTTP 종료 제한은 [CLI 사용법](docs/development.md#cli-초기화실행종료)을 따른다.

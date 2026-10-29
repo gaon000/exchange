@@ -32,9 +32,9 @@ scripts/go run ./tools/storageprobe -dir .
 
 setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버전이 있으면 재설치하지 않는다. 자동 버전 선택 대신 [scripts/go](../scripts/go)가 정확한 버전을 확인하고 `GOTOOLCHAIN=local`, `GOENV=off`, `GOWORK=off`로 실행한다. 캐시와 GOPATH는 `.cache/` 아래다. `.tools/`, `.cache/`, 실험 데이터 `var/`와 빌드 출력 `bin/`은 Git에서 제외한다. [Go toolchain 문서](https://go.dev/doc/toolchain)의 go directive 자체는 최소 버전이므로 재현 실행에는 wrapper를 사용한다.
 
-현재 실행 진입점은 개발 probe다. Go runtime API와 HTTP 서버 라이브러리를 제공하지만 서버 CLI는 아직 없다. HTTP 계층은 테스트에서 실제 loopback listener와 runtime을 조립해 실행한다. probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
+실행 진입점은 거래 서버 CLI와 개발 probe다. 서버 CLI는 아래 절차로 초기화·기동하며, probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
 
-거래 서버의 환경변수 loader는 아직 없다. P1은 [local.json](../config/examples/local.json) fixture를 읽는 도메인 테스트와 명시적인 Config를 받는 엔진을 제공한다. P2의 wal.DecodeConfig와 wal.Init/Open은 설정 파싱과 저장소 수명주기를 제공한다. 실제 서버 CLI loader는 P5에서 연결한다. fixture에는 비밀값이 없다. 실제 credential이 필요해지면 안전한 별도 경로로 관리한다.
+CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사용하며 환경변수 loader는 없다. init은 wal.DecodeConfig로 설정을 검증하고 wal.Init으로 새 Genesis를 저장한다. serve는 저장된 설정으로 runtime.Open을 호출한다. fixture에는 비밀값이 없다. 실제 credential이 필요해지면 안전한 별도 경로로 관리한다.
 
 ## 명령
 
@@ -45,11 +45,11 @@ setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버�
 | 개발 toolchain 준비 | `sh scripts/setup-go.sh` (macOS arm64) |
 | toolchain 확인 | `scripts/go version`; `scripts/go env GOVERSION GOOS GOARCH CGO_ENABLED CC` |
 | Go 의존성 | go.mod만 존재, 외부 require/go.sum 없음. 추가 production dependency는 승인 전 설치하지 않음 |
-| 로컬 실행 | HTTP 서버 CLI 미구성; runtime.Open/Submit/Read/Snapshot/Shutdown Go API 제공 |
+| 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 정적 분석 | `scripts/go vet ./...` |
-| 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l internal tools`; 출력이 비어 있어야 함 |
-| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
-| 기본 테스트 | `scripts/go test ./...` (api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
+| 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
+| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
+| 기본 테스트 | `scripts/go test ./...` (CLI·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
 | race 검사 | `scripts/go test -race ./...` |
 | cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
 | 실제 저장 호출 확인 | `scripts/go run ./tools/storageprobe -dir .` |
@@ -61,10 +61,31 @@ setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버�
 | 실제 프로세스 강제 종료/복구 | `scripts/go test ./internal/runtime -run '^TestNativeDurableReplayAfterProcessKill$' -v` (macOS/cgo, 전원 장애 실험 아님) |
 | runtime snapshot 생성·종료·프로세스 복구 | `scripts/go test ./internal/runtime -run 'TestSnapshot|TestQueuedSnapshot|TestShutdownWaitsForBoth|TestWALFailureJoins|TestNativeSnapshot' -v` (native 사례는 macOS/cgo) |
 | HTTP 입력·전송·거래/복구 | `scripts/go test ./internal/api -v` (loopback 권한 필요, APFS 통합 사례는 macOS/cgo) |
+| CLI 실제 프로세스·signal·재시작 | `scripts/go test ./cmd/exchange -run '^TestNativeCLI' -v` (macOS/cgo·loopback, 개발 컴퓨터를 종료하지 않음) |
 | 추적된 변경의 공백 검사 | `git diff --check`; staged 변경은 `git diff --cached --check` |
 | 새 문서의 공백 검사 | `git diff --no-index --check -- /dev/null <새 문서 경로>`; 각 파일에 실행하며 `<새 문서 경로>`는 실제 경로로 교체 |
 
 `git diff --check`만으로 untracked 새 파일은 검사되지 않는다. `--no-index --check`는 정상 새 파일에도 차이가 있으면 종료 코드 1을 반환할 수 있으므로 공백 오류 진단과 종료 코드를 함께 확인한다. 문서 검증에는 상대 링크·제목 앵커·경로 대소문자·설명과 실제 설정의 일치 여부를 포함한다. 프로젝트 설명에는 미치환 입력 항목을 남기지 않고, 복사해서 쓸 `template.md`의 작업별 입력 안내는 유지한다. 현재 프로젝트 전용 자동 문서 검사 명령은 미구성이다.
+
+## CLI 초기화·실행·종료
+
+`scripts/go build -o ./bin/ ./...`로 `bin/exchange`를 만든다. [README의 실행 예시](../README.md#로컬-실행)는 기존 parent 아래 새 실험을 만들고 이어서 서버를 시작한다. 전체 flag는 `bin/exchange init -h`와 `bin/exchange serve -h`로 확인한다.
+
+- `init --config ... --data-dir ...`: 4 MiB 이하 일반 JSON 파일을 엄격하게 검증한다. 일반 파일을 가리키는 symlink는 허용하지만 디렉터리·pipe·장치는 거절한다. 빈 디렉터리도 기존 대상이면 재사용하지 않으며 parent를 자동 생성하지 않는다. 성공 시 저장소를 닫은 뒤 `event=initialized`, runId, 절대 dataDir, configHash, 계정 수, maxCommands를 stdout의 JSON 한 줄로 출력한다. 저장 또는 출력 실패 뒤에도 생성된 데이터는 보존한다.
+- `serve --data-dir ...`: 기존 Genesis/WAL/snapshot을 복구한다. 새 잔고나 Config를 받지 않는다. 모든 옵션을 검사하고 loopback listener를 확보한 후 복구하며, 검증·복구 동기화가 끝나야 HTTP 처리를 시작한다. stdout의 `event=ready` 한 줄에 runId, 절대 dataDir, 실제 listen 주소, runtime/HTTP 설정, 선택 snapshot·재생 명령 수·건너뛴 후보의 사유를 기록한다. port 0을 쓰면 이 주소로 접속한다.
+- Ctrl+C/SIGINT·SIGTERM은 새 접수를 닫고 runtime의 접수된 명령과 HTTP 응답을 함께 기다린다. HTTP 종료 제한을 넘으면 연결을 닫고 실패로 종료하지만 저장 작업은 계속 기다린다. WAL·snapshot worker가 끝나기 전에 잠금을 해제하지 않는다. 저장 오류·예기치 않은 HTTP 종료·기동 보고 출력 실패에도 정리를 수행한다. 정상 종료 코드는 0, 오류는 stderr와 종료 코드 1로 보고한다.
+
+| serve 옵션 | 기본값·의미 |
+| --- | --- |
+| `--listen` | `127.0.0.1:8080`; 숫자 loopback IPv4/IPv6만 허용, port 0 가능 |
+| `--command-queue`, `--query-queue` | 각각 8,192 / 1,024 |
+| `--request-limit`, `--pending-waiters` | 16,384 / 16; request-limit는 HTTP와 runtime 각각에 같은 한도를 설정 |
+| `--batch-commands`, `--batch-bytes`, `--batch-delay` | 256 / 1,048,576 / 1ms |
+| `--read-header-timeout`, `--read-body-timeout` | 각각 2s |
+| `--result-timeout`, `--write-timeout` | 각각 5s; 접수 후 결과 timeout이 명령을 취소하지 않음 |
+| `--http-shutdown-timeout` | 15s; HTTP 연결 대기 한도, 저장 drain의 제한 시간이 아님 |
+
+시간 flag는 `1ms`, `5s`와 같은 Go duration 형식이다. 출력은 정규화된 문자열이며 `1h`는 `1h0m0s`가 된다. 잘못된 옵션·사용 중인 포트는 데이터 복구 전에 실패하므로 WAL tail을 변경하지 않는다. CLI에 자동 snapshot 주기는 없으며 현재는 Go `Runtime.Snapshot` API를 제공한다. HTTP 프로토콜·필드·계정 문맥은 [API 계약](design-docs/api-v1.md)이 소유한다.
 
 ## 코드 기준
 
@@ -83,7 +104,7 @@ Go 코드는 gofmt 형식을 사용하고 공개 함수·타입에 Go 문서 주
 
 [도메인 테스트](../internal/domain/domain_test.go)는 정수 경계·JSON 정수 문자열·ID·초기 공급량을, [엔진 사례](../internal/engine/engine_test.go)는 거래 규칙·잔고·취소·중복·조회 사본을 검증한다. [독립 모델](../internal/engine/reference_test.go)은 총소유량에서 활성 주문 예약분을 다시 계산하고 후보 주문 전체를 정렬한다. 가격별 FIFO와 예약분 증감을 쓰는 실제 엔진과 다른 계산 경로로 결과·잔고·호가·체결·최초 결과를 매 명령 비교한다. 고정 시드 100개×128시도와 bounded fuzz, 동일 입력을 새 엔진에 다시 적용하는 결정성 검사를 포함한다.
 
-[storageprobe 테스트](../tools/storageprobe/main_test.go)는 실제 파일 sync·부모 파일 보존·닫힌 FD 오류·프로세스 간 잠금과 해제를 검증한다. [지원 불가 테스트](../tools/storageprobe/unsupported_test.go)는 cgo를 끄면 성공으로 보고하지 않고 자기 임시 파일을 정리하는지 검사한다. P2의 [WAL 테스트](../internal/wal/codec_test.go)는 독립 golden bytes·모든 바이트 절단·모든 단일 비트 손상·정규화·순번/키 유일성을 확인한다. [I/O 오류 주입](../internal/wal/store_test.go)은 초기화·복구의 각 파일/디렉터리 호출, 실패 후 중단과 불변 최초 결과 재생을 검증한다. [실제 APFS 테스트](../internal/wal/store_darwin_test.go)는 strict sync·두 프로세스 잠금·같은 lock inode 유지·잘린 꼬리 복구를 확인한다. API·실제 전원 장애 검증은 후속 단계다. 테스트 수집이 없는 패키지를 통과 실적으로 세지 않는다.
+[storageprobe 테스트](../tools/storageprobe/main_test.go)는 실제 파일 sync·부모 파일 보존·닫힌 FD 오류·프로세스 간 잠금과 해제를 검증한다. [지원 불가 테스트](../tools/storageprobe/unsupported_test.go)는 cgo를 끄면 성공으로 보고하지 않고 자기 임시 파일을 정리하는지 검사한다. P2의 [WAL 테스트](../internal/wal/codec_test.go)는 독립 golden bytes·모든 바이트 절단·모든 단일 비트 손상·정규화·순번/키 유일성을 확인한다. [I/O 오류 주입](../internal/wal/store_test.go)은 초기화·복구의 각 파일/디렉터리 호출, 실패 후 중단과 불변 최초 결과 재생을 검증한다. [실제 APFS 테스트](../internal/wal/store_darwin_test.go)는 strict sync·두 프로세스 잠금·같은 lock inode 유지·잘린 꼬리 복구를 확인한다. HTTP 검증은 아래 P5에 기록하며 실제 전원 장애는 별도 미완료 항목이다. 테스트 수집이 없는 패키지를 통과 실적으로 세지 않는다.
 
 불변식·독립 기준 모델·재생 비교는 엔진 검증, 실제 파일·프로세스 종료는 저장/복구 검증, OS·전원 장애는 별도 환경 검증으로 구분한다. 데이터 디렉터리와 runId는 실험별로 격리한다. race/fuzz/profiler가 켜진 수치를 일반 성능 결과에 섞지 않는다.
 
@@ -97,10 +118,12 @@ P4 snapshot은 상태 직접 복원, 독립 golden bytes와 스트리밍 코덱,
 
 P5의 [HTTP handler 검사](../internal/api/server_test.go)는 엄격한 JSON·헤더/계정 문맥·크기·오류/조회 DTO와 전송 슬롯을 검사한다. [실제 TCP 검사](../internal/api/network_test.go)는 헤더 8,192/8,193-byte 경계, 본문 4,096/4,097-byte 경계, 읽기/쓰기 timeout, 연결 단절과 포화를 확인한다. 읽지 않는 클라이언트의 송수신 버퍼를 줄여 실제 write timeout도 관찰한다. [APFS 통합](../internal/api/native_test.go)은 HTTP→runtime→WAL의 거래·잔고·중복·계정 범위·체결 페이지·동시 취소/체결·snapshot 재시작을 검증한다. timeout/연결 종료 뒤에도 이미 접수한 명령이 처리되고 최초 결과를 재조회할 수 있다.
 
-HTTP 테스트는 127.0.0.1의 임의 포트를 열고 종료 시 서버·클라이언트·runtime을 정리한다. 샌드박스에서 bind가 거절되면 loopback 소켓을 허용하는 실행 권한으로 검사한다. 테스트를 skip하거나 recorder만 통과한 결과로 실제 네트워크 검증을 대신하지 않는다. 서버 CLI·HTTP부터 큐 포화/저장 오류/프로세스 종료까지의 추가 통합 행렬·실제 전원 장애는 P5의 남은 작업이다.
+HTTP 테스트는 127.0.0.1의 임의 포트를 열고 종료 시 서버·클라이언트·runtime을 정리한다. 샌드박스에서 bind가 거절되면 loopback 소켓을 허용하는 실행 권한으로 검사한다. 테스트를 skip하거나 recorder만 통과한 결과로 실제 네트워크 검증을 대신하지 않는다. HTTP부터 큐 포화/저장 오류/추가 프로세스 종료 지점까지의 통합 행렬·실제 전원 장애는 P5의 남은 작업이다.
+
+[CLI 수명주기 검사](../cmd/exchange/lifecycle_test.go)는 HTTP/runtime의 완료 순서·HTTP 종료 timeout·runtime 오류·출력 실패 시 정리를 검사한다. [실제 자식 프로세스 검사](../cmd/exchange/native_test.go)는 테스트 실행 파일의 전용 TestMain 경로로 실제 main을 호출해 init·SIGINT/SIGTERM·접수 명령 drain·같은 포트/데이터 재시작·성공 응답 후 kill·잠금 경합·손상 기동 거절을 확인한다. 전용 진입 환경변수는 테스트 파일에만 있으며 일반 바이너리에 없다. 별도로 빌드한 `bin/exchange`에서도 초기화→HTTP 주문→SIGTERM→재시작→동일 응답/잔고를 확인했다. 두 경우 모두 자식 프로세스 시험이며 전원 장애 증거가 아니다.
 
 ## CI와 릴리스
 
 origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
 
-P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P4의 실제 결과는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
+P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P5의 실제 결과는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.

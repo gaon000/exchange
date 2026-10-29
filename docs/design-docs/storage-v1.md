@@ -8,7 +8,7 @@
 
 ## 1. 데이터 디렉터리와 초기화
 
-예정 CLI 계약은 `exchange init --config config/examples/local.json --data-dir var/runs/run-1`과 `exchange serve --data-dir var/runs/run-1`이다. 아직 실행 파일은 없다. 초기화와 시작을 별도 명령으로 유지한다.
+[서버 CLI](../../cmd/exchange/command.go)는 `bin/exchange init --config config/examples/local.json --data-dir var/runs/run-1`과 `bin/exchange serve --data-dir var/runs/run-1`을 제공한다. 빌드와 parent 준비는 [개발 기준](../development.md#cli-초기화실행종료)을 따른다. 초기화와 시작을 별도 명령으로 유지하며 serve에는 초기 설정을 덮어쓰는 옵션이 없다.
 
 ```text
 run-1/
@@ -23,6 +23,7 @@ run-1/
 - `.lock`은 같은 inode를 유지한다. open 후 `flock(LOCK_EX|LOCK_NB)`을 획득한 프로세스만 파일을 읽어 복구하거나 기록한다. lock FD는 종료까지 보유하고, 잠금 파일을 unlink/재생성하지 않는다. PID 문자열만으로 소유권을 판정하지 않는다.
 - v1은 단일 `commands.wal`을 append한다. 세그먼트 회전·WAL 삭제·결과 만료는 구현하지 않는다. 정리 범위를 줄여 먼저 복구를 검증한다.
 - init 완료 전 Genesis와 WAL 헤더의 파일 동기화, run 디렉터리 동기화, run을 생성한 parent 디렉터리 동기화를 모두 확인한다. 일반 serve는 Genesis를 수정하거나 초기 잔고를 다시 지급하지 않는다.
+- CLI는 설정·자원 한도를 먼저 검사하고 serve의 loopback 주소를 확보한 뒤 복구한다. 잘못된 옵션이나 이미 사용 중인 포트 때문에 실패한 기동은 WAL tail을 변경하지 않는다. HTTP 처리는 복구 검증·strict sync 완료 뒤 시작한다. 정상 종료는 HTTP 연결과 runtime 저장 작업을 함께 기다리며 HTTP 대기 제한이 저장 작업을 취소하지 않는다.
 - 운영 파일/디렉터리 권한은 각각 0600/0700으로 시작한다. run 디렉터리는 서버만 변경하는 로컬 실험 경계다. 외부 프로세스가 파일을 교체하는 환경은 지원하지 않는다.
 
 ## 2. 버전과 canonical JSON

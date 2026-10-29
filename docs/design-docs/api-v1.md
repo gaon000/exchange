@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P5의 [HTTP 계층](../../internal/api/server.go)을 runtime에 연결했다. 엄격한 입력·계정/run 문맥·오류 구분·최초 응답·조회·체결 페이지와 실제 loopback 거래/재시작을 검증했다. 초기화·서버 실행 CLI와 남은 장애 통합 검증은 진행 중이다.
+구현 상태: P5의 [HTTP 계층](../../internal/api/server.go)을 runtime에 연결했다. 엄격한 입력·계정/run 문맥·오류 구분·최초 응답·조회·체결 페이지와 실제 loopback 거래/재시작을 검증했다. 초기화·서버 실행 CLI와 signal 종료·프로세스 재시작을 검증했다. 추가 HTTP 장애 통합과 실제 전원 장애 검증은 남아 있다.
 
 [제품 명세](../product-specs/exchange.md)의 정책과 [처리 설계](exchange-v1.md)를 구체화한다. 여기서 정하는 숫자는 재현용 모의 거래 설정이며 실제 시장 규칙·시세가 아니다. 변경 시 Genesis의 설정 식별값과 규칙 버전을 함께 검토한다.
 
@@ -30,7 +30,7 @@ v1 거래쌍은 `BTC-USDT`다. 내부 가격·수량·잔고·대금은 부호 �
 
 예: BTC당 60,000 USDT는 `priceTicks="6000000"`, 0.01 BTC는 `quantityLots="100"`다. 최대 예약 대금은 600,000,000 atoms = 600 USDT다. 표시값 환산을 엔진의 정수 계산에 역으로 끼워 넣거나 float로 반올림하지 않는다.
 
-[로컬 초기 설정 예시](../../config/examples/local.json)는 alice/bob/carol 각 1 BTC와 100,000 USDT를 지급한다. 합계는 base 30,000 lots (=3 BTC), quote 300,000,000,000 atoms (=300,000 USDT)다. `reserved=0`에서 시작한다. P1 도메인 테스트에서 이 fixture의 값·한도를 확인한다. P2는 엄격한 Config decoder와 Genesis 초기화 API를 제공한다. 서버 설정 CLI loader는 P5에서 연결한다. 계정 수·잔고는 허용 한도 안에서 새 실험마다 바꿀 수 있고, 단위와 주문 한도는 v1 규칙이다.
+[로컬 초기 설정 예시](../../config/examples/local.json)는 alice/bob/carol 각 1 BTC와 100,000 USDT를 지급한다. 합계는 base 30,000 lots (=3 BTC), quote 300,000,000,000 atoms (=300,000 USDT)다. `reserved=0`에서 시작한다. P1 도메인 테스트에서 이 fixture의 값·한도를 확인한다. P2는 엄격한 Config decoder와 Genesis 초기화 API를 제공한다. P5의 init CLI가 이 decoder로 파일을 읽으며 serve는 저장된 Genesis를 사용한다. 계정 수·잔고는 허용 한도 안에서 새 실험마다 바꿀 수 있고, 단위와 주문 한도는 v1 규칙이다.
 
 ## 2. 로컬 전송과 계정 문맥
 
@@ -163,4 +163,4 @@ nextCursor는 페이지가 limit에 도달하면 마지막 체결의 `{afterSeq,
 
 P1은 단위·정수 overflow·초기 공급량·잔고 계산을 검증한다. P3/P5는 엄격한 JSON·계정 문맥·큐 한도·중복·UNKNOWN·불변 최초 응답·조회 경계·페이지 고정 시점에 테스트를 붙인다. 특히 `"000100"` 재시도, 같은 키의 다른 가격, JSON 중복 키/키 대소문자, float/지수 입력, 4,097-byte 본문, 명령 한도 뒤 재시도, 접수 직후 disconnect를 포함한다.
 
-P5의 [handler 검사](../../internal/api/server_test.go), [실제 소켓 경계](../../internal/api/network_test.go), [APFS/runtime 통합](../../internal/api/native_test.go)이 구현되어 있다. HTTP 전역 한도·오류 매핑과 P3 runtime의 큐/저장 오류 검증을 구분한다. HTTP 요청부터 큐 포화·저장 실패·프로세스 종료까지의 추가 장애 행렬, 서버 CLI와 실제 전원 장애 검증은 남아 있다.
+P5의 [handler 검사](../../internal/api/server_test.go), [실제 소켓 경계](../../internal/api/network_test.go), [APFS/runtime 통합](../../internal/api/native_test.go)이 구현되어 있다. HTTP 전역 한도·오류 매핑과 P3 runtime의 큐/저장 오류 검증을 구분한다. CLI의 실제 signal 종료·성공 응답 후 프로세스 kill·재시작은 [자식 프로세스 검사](../../cmd/exchange/native_test.go)로 확인했다. HTTP 요청부터 큐 포화·저장 실패·추가 종료 지점까지의 장애 행렬과 실제 전원 장애 검증은 남아 있다.

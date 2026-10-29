@@ -2,7 +2,7 @@
 
 상태: Accepted
 합의 반영일: 2026-10-29 (Asia/Seoul)
-구현·실측 상태: P4까지 도메인·엔진·WAL·runtime·snapshot 생성 및 재시작 복구를 구현했다. P5 HTTP 계층을 추가해 입력·전송 한도·중복·timeout·동시 취소/체결과 실제 파일 재시작을 검증했다. 서버 CLI·추가 HTTP 장애 행렬·전체 성능·실제 전원 장애 검증은 남아 있다.
+구현·실측 상태: P4까지 도메인·엔진·WAL·runtime·snapshot 생성 및 재시작 복구를 구현했다. P5 HTTP 계층을 추가해 입력·전송 한도·중복·timeout·동시 취소/체결과 실제 파일 재시작을 검증했다. 초기화/실행 CLI·signal 종료·재시작을 연결했다. 추가 HTTP 장애 행렬·전체 성능·실제 전원 장애 검증은 남아 있다.
 
 ## 문제와 목표
 
@@ -45,7 +45,7 @@ v1은 한 배치를 저장·적용한 뒤 다음 배치를 처리한다. 요청 
 
 ### P3 runtime 구현과 호출 계약
 
-[runtime.Open](../../internal/runtime/runtime.go)은 기존 데이터 디렉터리의 WAL을 검증·재생하고 불변식·복구 동기화까지 확인한 뒤 owner와 WAL worker를 시작한다. 새 실험은 `wal.Init`으로 별도 생성한다. 아직 HTTP 서버 진입점은 없다.
+[runtime.Open](../../internal/runtime/runtime.go)은 기존 데이터 디렉터리의 WAL을 검증·재생하고 불변식·복구 동기화까지 확인한 뒤 owner와 WAL worker를 시작한다. 새 실험은 `wal.Init`으로 별도 생성한다. P5의 [CLI](../../cmd/exchange/command.go)가 init/serve를 분리하고 HTTP 서버·runtime 수명주기를 연결한다.
 
 - 외부 명령·조회는 동시 호출 가능한 `Submit(ctx, command)`와 `Read(ctx, query)`로 전달한다. 업무 엔진은 owner 하나가 독점한다. 짧은 admission mutex는 큐 진입과 종료 경계를 정하며 업무 상태를 변경하지 않는다.
 - `Options`의 기본값은 command/query queue=8,192/1,024, 응답 대기 요청=16,384, pending 키당 대기자=16, 배치=256명령/1 MiB/첫 명령부터 1ms다. HTTP 송신까지 포함한 요청 제한은 P5 어댑터가 같은 설정으로 유지한다. runtime 슬롯은 Go 호출의 응답/timeout까지다.
@@ -55,6 +55,7 @@ v1은 한 배치를 저장·적용한 뒤 다음 배치를 처리한다. 요청 
 - `Read`는 계정별 주문·잔고·최초 결과, 가격별 호가와 고정 throughSeq 체결 페이지를 복사한다. 체결 cursor는 실제 체결 위치여야 하며 새 체결이 이전 페이지 범위로 들어오지 않는다. 전체 엔진 State를 매 query마다 복사하지 않는다.
 - 큐 포화·중복 충돌·대기자 한도는 NOT_ADMITTED, 접수 뒤 context 종료는 UNKNOWN이다. write/sync 실패·내부 panic·durable 순번 불일치에서는 readiness를 닫고 처리 중단 후 모든 미응답 요청에 오류를 게시한다. 손상된 엔진으로 계속 처리하지 않는다.
 - `Shutdown(ctx)`는 신규 접수를 막고 이미 접수한 명령을 drain한다. 종료 대기 timeout은 작업 취소가 아니며 같은 종료를 다시 기다릴 수 있다. 실행 중 WAL write가 끝나기 전에 파일이나 잠금을 닫지 않는다.
+- `Done()`은 owner와 저장 worker가 모두 종료하고 store.Close를 호출한 뒤 닫힌다. `Wait(ctx)`는 접수를 바꾸지 않고 종료 오류를 관찰하며, 대기 timeout은 실행에 영향을 주지 않는다. CLI는 signal과 runtime 종료를 감시하고 HTTP/runtime 종료를 함께 기다린다. 구체적인 옵션·종료 제한은 [개발 기준](../development.md#cli-초기화실행종료)을 따른다.
 
 이 구조는 현재 기준 구현이다. P7 최적화에서 배치 겹치기·동시 캐시를 도입한다면 같은 응답·조회·복구 경계를 다시 검증한다.
 
@@ -282,7 +283,7 @@ API에서 완료 캐시를 봤더라도 처리 고루틴에서 재확인하여 �
 
 ## 11. 검증 시나리오와 영향
 
-[구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)의 단계별 완료 조건에 연결한다. P1은 V01~V06의 메모리 의미를 검증했다. P2는 V07/V08/V12의 파일 저장 경계를 검증했다. P3는 동시 접수·조회·중복·오류 응답과 프로세스 재시작을 검증했다. P4는 V07~V10/V12의 snapshot 생성·게시·대체 복구와 종료 경합을 검증했다. 네트워크·실제 전원 장애 검증은 P5에 남아 있다.
+[구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)의 단계별 완료 조건에 연결한다. P1은 V01~V06의 메모리 의미를 검증했다. P2는 V07/V08/V12의 파일 저장 경계를 검증했다. P3는 동시 접수·조회·중복·오류 응답과 프로세스 재시작을 검증했다. P4는 V07~V10/V12의 snapshot 생성·게시·대체 복구와 종료 경합을 검증했다. P5는 HTTP 거래·CLI 종료·재시작을 검증했고 추가 HTTP 장애 행렬·실제 전원 장애 검증이 남아 있다.
 
 | ID | 시나리오 | 관찰할 결과 |
 | --- | --- | --- |

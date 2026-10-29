@@ -64,7 +64,7 @@ type queryReply struct {
 
 // Open recovers an existing run without reinitializing it, then starts its owner.
 func Open(dir string, options Options) (*Runtime, error) {
-	if err := options.validate(); err != nil {
+	if err := options.Validate(); err != nil {
 		return nil, err
 	}
 	dir, err := filepath.Abs(dir)
@@ -91,7 +91,7 @@ func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) 
 			err = errors.Join(err, s.Close())
 		}
 	}()
-	if err := options.validate(); err != nil {
+	if err := options.Validate(); err != nil {
 		return nil, err
 	}
 	g := s.Genesis()
@@ -122,6 +122,21 @@ func (r *Runtime) Ready() bool { return r.ready.Load() }
 
 // RunID returns the immutable run identity required on requests.
 func (r *Runtime) RunID() string { return r.genesis.RunID }
+
+// Done closes after the owner and both file workers stop and the run lock is
+// released. It does not initiate shutdown; use Wait to inspect the terminal error.
+func (r *Runtime) Done() <-chan struct{} { return r.done }
+
+// Wait observes completion without changing admission or cancelling accepted
+// work. A waiting context may expire while the runtime keeps serving requests.
+func (r *Runtime) Wait(ctx context.Context) error {
+	select {
+	case <-r.done:
+		return r.terminal
+	case <-ctx.Done():
+		return ctx.Err()
+	}
+}
 
 func (r *Runtime) identity(runID, accountID string) error {
 	if runID != r.genesis.RunID {
@@ -222,12 +237,7 @@ func (r *Runtime) Read(ctx context.Context, q Query) (View, error) {
 // the same completion.
 func (r *Runtime) Shutdown(ctx context.Context) error {
 	r.stopAdmission()
-	select {
-	case <-r.done:
-		return r.terminal
-	case <-ctx.Done():
-		return ctx.Err()
-	}
+	return r.Wait(ctx)
 }
 
 func (r *Runtime) stopAdmission() {

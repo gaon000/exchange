@@ -39,6 +39,19 @@ func DefaultOptions() Options {
 	return Options{16384, 2 * time.Second, 2 * time.Second, 5 * time.Second, 5 * time.Second}
 }
 
+// Validate checks transport bounds before the application opens any run files.
+func (o Options) Validate() error {
+	if o.RequestLimit < 1 || o.RequestLimit > 1<<20 {
+		return d.ErrInvalid
+	}
+	for _, timeout := range []time.Duration{o.ReadHeaderTimeout, o.ReadBodyTimeout, o.ResultTimeout, o.WriteTimeout} {
+		if timeout <= 0 || timeout > time.Hour {
+			return d.ErrInvalid
+		}
+	}
+	return nil
+}
+
 // Server serves HTTP/1.1 on a numeric loopback address. It does not own Backend's
 // lifetime: the caller must also drain the runtime before exiting the process.
 type Server struct {
@@ -51,13 +64,11 @@ type Server struct {
 
 // New constructs the bounded handler and transport without opening a socket.
 func New(backend Backend, opts Options) (*Server, error) {
-	if backend == nil || opts.RequestLimit < 1 || opts.RequestLimit > 1<<20 {
+	if backend == nil {
 		return nil, d.ErrInvalid
 	}
-	for _, timeout := range []time.Duration{opts.ReadHeaderTimeout, opts.ReadBodyTimeout, opts.ResultTimeout, opts.WriteTimeout} {
-		if timeout <= 0 || timeout > time.Hour {
-			return nil, d.ErrInvalid
-		}
+	if err := opts.Validate(); err != nil {
+		return nil, err
 	}
 	s := &Server{backend: backend, opts: opts, slots: make(chan struct{}, opts.RequestLimit)}
 	// Pinned Go 1.27.3 adds 4096 bytes of bufio slack to MaxHeaderBytes.
