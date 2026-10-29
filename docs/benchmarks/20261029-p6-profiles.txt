@@ -1,0 +1,207 @@
+Source: var/p6-baseline-4gm7mz4t/profiles/profile-29000-1-allocs.txt
+SHA256: 34a21ea3048d126339977c4c435b8018eb1a15377518d7ea24133c6884836589
+File: exchange
+Type: alloc_space
+Time: 2026-10-29 21:12:12 KST
+Showing nodes accounting for 6226.99MB, 71.70% of 8685.30MB total
+Dropped 117 nodes (cum <= 43.43MB)
+Showing top 18 nodes out of 81
+      flat  flat%   sum%        cum   cum%
+  854.24MB  9.84%  9.84%   854.24MB  9.84%  bytes.Clone (inline)
+  709.42MB  8.17% 18.00%  1178.09MB 13.56%  github.com/gaon000/exchange/internal/wal.encodeGroup
+  447.03MB  5.15% 23.15%   447.03MB  5.15%  reflect.unsafe_New
+  432.78MB  4.98% 28.13%   926.84MB 10.67%  github.com/gaon000/exchange/internal/runtime.(*owner).admit
+  426.38MB  4.91% 33.04%   860.97MB  9.91%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  423.59MB  4.88% 37.92%   433.09MB  4.99%  net/textproto.readMIMEHeader
+  373.68MB  4.30% 42.22%   385.68MB  4.44%  io.ReadAll
+  329.06MB  3.79% 46.01%   404.06MB  4.65%  github.com/gaon000/exchange/internal/runtime.(*Runtime).Submit
+  328.09MB  3.78% 49.79%   328.09MB  3.78%  net/http.Header.Clone
+  280.08MB  3.22% 53.01%   280.08MB  3.22%  net/textproto.MIMEHeader.Set
+  226.58MB  2.61% 55.62%   226.58MB  2.61%  reflect.mapassign_faststr0
+  215.07MB  2.48% 58.10%   835.67MB  9.62%  net/http.readRequestLimit
+  211.56MB  2.44% 60.53%   211.56MB  2.44%  encoding/json/jsontext.NewDecoder
+  208.33MB  2.40% 62.93%   333.07MB  3.83%  github.com/gaon000/exchange/internal/engine.(*Engine).place
+  199.54MB  2.30% 65.23%  1122.23MB 12.92%  net/http.(*conn).readRequest
+  198.53MB  2.29% 67.52%   198.53MB  2.29%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+  183.53MB  2.11% 69.63%   251.54MB  2.90%  context.(*cancelCtx).propagateCancel
+  179.51MB  2.07% 71.70%   933.11MB 10.74%  github.com/gaon000/exchange/internal/wal.encodeRecord
+
+Source: var/p6-baseline-4gm7mz4t/profiles/profile-29000-1-cpu.txt
+SHA256: 2731fb3be222e62b35a0a63ea6103127505e951274bdc9e62ed7de3221754499
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:11:38 KST
+Duration: 33.06s, Total samples = 42.92s (129.84%)
+Showing nodes accounting for 37.98s, 88.49% of 42.92s total
+Dropped 535 nodes (cum <= 0.21s)
+Showing top 18 nodes out of 116
+      flat  flat%   sum%        cum   cum%
+    19.87s 46.30% 46.30%     19.87s 46.30%  syscall.rawsyscalln
+     5.39s 12.56% 58.85%      5.39s 12.56%  runtime.kevent
+     2.65s  6.17% 65.03%      3.34s  7.78%  runtime.tryDeferToSpanScan
+     2.59s  6.03% 71.06%      2.59s  6.03%  runtime.pthread_cond_wait
+     2.15s  5.01% 76.07%      2.15s  5.01%  runtime.pthread_cond_signal
+     1.26s  2.94% 79.01%      1.26s  2.94%  runtime.madvise
+     1.01s  2.35% 81.36%      1.01s  2.35%  runtime.usleep
+     0.75s  1.75% 83.11%      1.86s  4.33%  runtime.scanObjectsSmall
+     0.60s  1.40% 84.51%      2.30s  5.36%  runtime.scanObject
+     0.43s  1.00% 85.51%      0.43s  1.00%  runtime.memclrNoHeapPointers
+     0.41s  0.96% 86.46%      1.42s  3.31%  runtime.scanObjectSmall
+     0.24s  0.56% 87.02%      0.24s  0.56%  runtime.(*mspan).moveInlineMarks
+     0.24s  0.56% 87.58%      3.60s  8.39%  runtime.scanSpan
+     0.21s  0.49% 88.07%      0.40s  0.93%  runtime.(*spanInlineMarkBits).tryAcquire
+     0.06s  0.14% 88.21%      0.37s  0.86%  github.com/gaon000/exchange/internal/engine.(*Engine).CheckInvariants
+     0.04s 0.093% 88.30%      9.32s 21.71%  runtime.gcDrain
+     0.04s 0.093% 88.40%      0.32s  0.75%  runtime.mallocgcSmallScanNoHeader
+     0.04s 0.093% 88.49%      0.74s  1.72%  runtime.stealWork
+
+Source: var/p6-baseline-4gm7mz4t/profiles/profile-29000-1-heap.txt
+SHA256: a7f174d74a115a46a5af303e93eeb43b1f2c66f8271f05f0cc14a1f505f07cff
+File: exchange
+Type: inuse_space
+Time: 2026-10-29 21:12:12 KST
+Showing nodes accounting for 678.89MB, 99.34% of 683.40MB total
+Dropped 29 nodes (cum <= 3.42MB)
+Showing top 18 nodes out of 38
+      flat  flat%   sum%        cum   cum%
+  265.88MB 38.91% 38.91%   541.86MB 79.29%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  153.85MB 22.51% 61.42%   183.96MB 26.92%  github.com/gaon000/exchange/internal/engine.(*Engine).place
+   92.01MB 13.46% 74.88%    92.01MB 13.46%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+   81.01MB 11.85% 86.74%    81.01MB 11.85%  github.com/gaon000/exchange/internal/wal.(*validator).accept
+   27.50MB  4.02% 90.76%    28.50MB  4.17%  net/textproto.readMIMEHeader
+   19.61MB  2.87% 93.63%    25.61MB  3.75%  github.com/gaon000/exchange/internal/engine.(*Engine).fill
+      16MB  2.34% 95.97%       16MB  2.34%  encoding/json/v2.makeString
+       6MB  0.88% 96.85%        6MB  0.88%  fmt.Sprintf
+    4.51MB  0.66% 97.51%     4.51MB  0.66%  bufio.NewWriterSize
+    4.50MB  0.66% 98.17%     4.50MB  0.66%  container/list.(*List).insertValue (inline)
+    4.50MB  0.66% 98.83%     4.50MB  0.66%  encoding/json/jsontext.(*Value).UnmarshalJSON
+    3.51MB  0.51% 99.34%     3.51MB  0.51%  bufio.NewReaderSize (inline)
+         0     0% 99.34%     3.51MB  0.51%  bufio.NewReader
+         0     0% 99.34%     4.50MB  0.66%  container/list.(*List).PushBack (inline)
+         0     0% 99.34%    20.50MB  3.00%  encoding/json.Unmarshal
+         0     0% 99.34%    20.50MB  3.00%  encoding/json/v2.Unmarshal
+         0     0% 99.34%     4.50MB  0.66%  encoding/json/v2.makeMapArshaler.func3
+         0     0% 99.34%     4.50MB  0.66%  encoding/json/v2.makeMethodArshaler.func6
+
+Source: var/p6-baseline-4gm7mz4t/profiles/snapshot-profile-29000-1-allocs.txt
+SHA256: f8afbd03eb6cfd71752a24e39205f741c8fd6edb12afa6d635fd8f0dcaf124c4
+File: exchange
+Type: alloc_space
+Time: 2026-10-29 21:16:19 KST
+Showing nodes accounting for 10212.14MB, 78.75% of 12968.49MB total
+Dropped 153 nodes (cum <= 64.84MB)
+Showing top 20 nodes out of 93
+      flat  flat%   sum%        cum   cum%
+ 2887.22MB 22.26% 22.26%  2887.22MB 22.26%  bytes.Clone (inline)
+ 1547.12MB 11.93% 34.19%  1547.12MB 11.93%  reflect.unsafe_New
+  665.51MB  5.13% 39.32%  1900.53MB 14.65%  github.com/gaon000/exchange/internal/domain.Int.MarshalJSON
+  609.96MB  4.70% 44.03%  1058.27MB  8.16%  github.com/gaon000/exchange/internal/wal.encodeGroup
+  434.09MB  3.35% 47.38%   445.59MB  3.44%  net/textproto.readMIMEHeader
+  389.36MB  3.00% 50.38%   840.91MB  6.48%  github.com/gaon000/exchange/internal/runtime.(*owner).admit
+  375.15MB  2.89% 53.27%   774.26MB  5.97%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  342.62MB  2.64% 55.91%   448.39MB  3.46%  github.com/gaon000/exchange/internal/engine.(*Engine).Capture
+  337.66MB  2.60% 58.52%   350.17MB  2.70%  io.ReadAll
+  290.58MB  2.24% 60.76%   290.58MB  2.24%  net/http.Header.Clone
+  289.55MB  2.23% 62.99%   358.06MB  2.76%  github.com/gaon000/exchange/internal/runtime.(*Runtime).Submit
+  283.04MB  2.18% 65.17%   283.04MB  2.18%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+  275.04MB  2.12% 67.29%  2635.91MB 20.33%  github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand "json:\"command\""; Response github.com/gaon000/exchange/internal/domain.Result "json:\"response\"" }]
+  267.57MB  2.06% 69.36%   267.57MB  2.06%  net/textproto.MIMEHeader.Set
+  231.04MB  1.78% 71.14%  1533.73MB 11.83%  github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string "json:\"accountId\""; Order github.com/gaon000/exchange/internal/domain.Order "json:\"order\"" }]
+  210.06MB  1.62% 72.76%   832.17MB  6.42%  net/http.readRequestLimit
+  204.56MB  1.58% 74.34%   204.56MB  1.58%  encoding/json/jsontext.NewDecoder
+  199.57MB  1.54% 75.87%   199.57MB  1.54%  reflect.mapassign_faststr0
+  187.04MB  1.44% 77.32%  1093.75MB  8.43%  net/http.(*conn).readRequest
+  185.40MB  1.43% 78.75%   308.59MB  2.38%  github.com/gaon000/exchange/internal/engine.(*Engine).place
+
+Source: var/p6-baseline-4gm7mz4t/profiles/snapshot-profile-29000-1-cpu-capture.txt
+SHA256: 968f8dbeed1bfd9651d4dcddad5aa6c6e1bcad847bcafab583b8e98a6d21692d
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:15:45 KST
+Duration: 33.58s, Total samples = 56.19s (167.34%)
+Active filters:
+   focus=engine.*Capture
+Showing nodes accounting for 0.96s, 1.71% of 56.19s total
+Showing top 20 nodes out of 33
+      flat  flat%   sum%        cum   cum%
+     0.26s  0.46%  0.46%         1s  1.78%  github.com/gaon000/exchange/internal/engine.(*Engine).Capture
+         0     0%  0.46%         1s  1.78%  github.com/gaon000/exchange/internal/runtime.(*Runtime).run
+         0     0%  0.46%         1s  1.78%  github.com/gaon000/exchange/internal/runtime.(*owner).captureSnapshot
+         0     0%  0.46%      0.69s  1.23%  sort.Slice
+         0     0%  0.46%      0.69s  1.23%  sort.pdqsort_func
+     0.15s  0.27%  0.73%      0.62s  1.10%  sort.partition_func
+     0.07s  0.12%  0.85%      0.21s  0.37%  github.com/gaon000/exchange/internal/engine.(*Engine).Capture.func3
+     0.07s  0.12%  0.98%      0.19s  0.34%  github.com/gaon000/exchange/internal/engine.(*Engine).Capture.func2
+     0.05s 0.089%  1.07%      0.14s  0.25%  github.com/gaon000/exchange/internal/engine.resultLess (inline)
+     0.04s 0.071%  1.14%      0.12s  0.21%  github.com/gaon000/exchange/internal/engine.orderLess (inline)
+         0     0%  1.14%      0.12s  0.21%  internal/reflectlite.Swapper.func9
+     0.03s 0.053%  1.19%      0.12s  0.21%  internal/reflectlite.typedmemmove
+     0.11s   0.2%  1.39%      0.11s   0.2%  cmpbody
+         0     0%  1.39%      0.09s  0.16%  reflect.typedmemmove (inline)
+     0.09s  0.16%  1.55%      0.09s  0.16%  runtime.memmove
+     0.01s 0.018%  1.57%      0.09s  0.16%  runtime.typedmemmove
+     0.06s  0.11%  1.67%      0.06s  0.11%  runtime.memequal
+     0.01s 0.018%  1.69%      0.05s 0.089%  sort.insertionSort_func
+     0.01s 0.018%  1.71%      0.03s 0.053%  runtime.bulkBarrierPreWrite
+         0     0%  1.71%      0.03s 0.053%  runtime.wbMove
+
+Source: var/p6-baseline-4gm7mz4t/profiles/snapshot-profile-29000-1-cpu.txt
+SHA256: 27148963120bfa94a18419f5396f83b50640fa1e6bd2f54092eb2924979cffd1
+File: exchange
+Type: cpu
+Time: 2026-10-29 21:15:45 KST
+Duration: 33.58s, Total samples = 56.19s (167.34%)
+Showing nodes accounting for 47.87s, 85.19% of 56.19s total
+Dropped 564 nodes (cum <= 0.28s)
+Showing top 20 nodes out of 149
+      flat  flat%   sum%        cum   cum%
+    23.23s 41.34% 41.34%     23.24s 41.36%  syscall.rawsyscalln
+     6.12s 10.89% 52.23%      6.12s 10.89%  runtime.kevent
+     3.07s  5.46% 57.70%      3.91s  6.96%  runtime.tryDeferToSpanScan
+     2.36s  4.20% 61.90%      2.36s  4.20%  runtime.madvise
+     2.30s  4.09% 65.99%      2.30s  4.09%  runtime.pthread_cond_signal
+     2.03s  3.61% 69.60%      2.03s  3.61%  runtime.pthread_cond_wait
+     1.43s  2.54% 72.15%      1.43s  2.54%  runtime.memclrNoHeapPointers
+     1.13s  2.01% 74.16%      1.13s  2.01%  runtime.usleep
+     1.06s  1.89% 76.05%      3.08s  5.48%  runtime.scanObject
+     1.06s  1.89% 77.93%      2.51s  4.47%  runtime.scanObjectsSmall
+     0.67s  1.19% 79.12%      0.67s  1.19%  reflect.Value.String
+     0.58s  1.03% 80.16%      1.63s  2.90%  runtime.scanObjectSmall
+     0.48s  0.85% 81.01%      0.54s  0.96%  runtime.(*mspan).moveInlineMarks
+     0.38s  0.68% 81.69%      0.43s  0.77%  encoding/json/internal/jsonwire.AppendQuote
+     0.38s  0.68% 82.36%      4.02s  7.15%  encoding/json/v2.makeStructArshaler.func2
+     0.36s  0.64% 83.00%      0.36s  0.64%  runtime.memmove
+     0.32s  0.57% 83.57%      2.48s  4.41%  github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string "json:\"accountId\""; Order github.com/gaon000/exchange/internal/domain.Order "json:\"order\"" }]
+     0.32s  0.57% 84.14%      0.32s  0.57%  runtime.(*spanInlineMarkBits).init
+     0.30s  0.53% 84.68%      0.30s  0.53%  runtime.extractHeapBitsSmall
+     0.29s  0.52% 85.19%      0.29s  0.52%  runtime.(*spanScanOwnership).or (inline)
+
+Source: var/p6-baseline-4gm7mz4t/profiles/snapshot-profile-29000-1-heap.txt
+SHA256: dee8cfa423ef63c20a381aa9de1f380101ddf26339914ac98d0e9391a2ad68d2
+File: exchange
+Type: inuse_space
+Time: 2026-10-29 21:16:19 KST
+Showing nodes accounting for 614.79MB, 99.19% of 619.80MB total
+Dropped 43 nodes (cum <= 3.10MB)
+Showing top 20 nodes out of 36
+      flat  flat%   sum%        cum   cum%
+  223.97MB 36.14% 36.14%   472.13MB 76.18%  github.com/gaon000/exchange/internal/engine.(*Engine).Apply
+  133.54MB 21.55% 57.68%   166.65MB 26.89%  github.com/gaon000/exchange/internal/engine.(*Engine).place
+   82.09MB 13.24% 70.93%    82.09MB 13.24%  github.com/gaon000/exchange/internal/wal.(*validator).accept
+   81.51MB 13.15% 84.08%    81.51MB 13.15%  github.com/gaon000/exchange/internal/domain.Result.Clone (inline)
+      33MB  5.32% 89.40%       33MB  5.32%  net/textproto.readMIMEHeader
+   19.61MB  3.16% 92.57%    27.61MB  4.45%  github.com/gaon000/exchange/internal/engine.(*Engine).fill
+       9MB  1.45% 94.02%        9MB  1.45%  encoding/json/v2.makeString
+    8.53MB  1.38% 95.40%     8.53MB  1.38%  bufio.NewWriterSize
+       8MB  1.29% 96.69%        8MB  1.29%  fmt.Sprintf
+    6.02MB  0.97% 97.66%     6.02MB  0.97%  bufio.NewReaderSize (inline)
+    5.50MB  0.89% 98.55%     5.50MB  0.89%  container/list.(*List).insertValue (inline)
+       4MB  0.65% 99.19%        4MB  0.65%  runtime.mallocgc
+         0     0% 99.19%     6.02MB  0.97%  bufio.NewReader
+         0     0% 99.19%     5.50MB  0.89%  container/list.(*List).PushBack (inline)
+         0     0% 99.19%       11MB  1.77%  encoding/json.Unmarshal (inline)
+         0     0% 99.19%       11MB  1.77%  encoding/json/v2.Unmarshal
+         0     0% 99.19%        9MB  1.45%  encoding/json/v2.makeStringArshaler.func2
+         0     0% 99.19%        9MB  1.45%  encoding/json/v2.makeStructArshaler.func3
+         0     0% 99.19%       11MB  1.77%  encoding/json/v2.unmarshalDecode
+         0     0% 99.19%    13.01MB  2.10%  github.com/gaon000/exchange/internal/api.(*Server).ServeHTTP

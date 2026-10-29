@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계와 HTTP executor·부하 CLI·원본 기록을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/원본 묶음을 연결했다. 기준 실측·CI는 아직 남아 있다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 부하 실행·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준 처리량과 snapshot 조건의 목표 미달을 기록했다. P7 개선·최종 비교, 실제 전원 장애 검증과 CI는 아직 남아 있다.
 
 ## 현재 문서 지도
 

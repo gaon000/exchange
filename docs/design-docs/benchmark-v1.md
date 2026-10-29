@@ -2,7 +2,7 @@
 
 상태: Accepted (P6 구현 계약)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 서버 옵션을 연결했다. [experiment CLI](../../cmd/experiment/command.go)의 환경/바이너리/원본 묶음을 연결했다. 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
+구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 서버 옵션과 [experiment CLI](../../cmd/experiment/command.go)의 환경/바이너리/원본 묶음을 연결했다. [benchreport](../../tools/benchreport/main.go)로 원본을 재검증한 [P6 기준 측정](../benchmarks/p6-baseline.md)을 완료했다. 이 문서는 지표 정의를 소유하며 성능 목표값과 실측 결과는 기준 보고서에서 관리한다.
 
 ## 목적과 경계
 
@@ -150,9 +150,9 @@ CPU profile의 비동기 쓰기 실패도 보존해 일반 종료를 요청한�
 
 실행기의 완료는 재현 자료가 준비됐다는 의미다. p99 상한·허용 실패율·지속 기간/반복 수의 성능 판정과 최대 지속 처리량은 별도 기준 측정에서 결정한다. 한 머신의 생성기와 서버가 자원을 함께 쓰는 한계도 결과에 기록한다.
 
-## 남은 기준 측정
+## 기준 측정과 후속 비교
 
-- 구현한 실행기로 정상·snapshot·profiling을 반복 측정하고 snapshot 시간/메모리를 비교.
-- 초기 탐색 후 [고정 비교 조건 v1](../benchmarks/p6-baseline.md#고정-비교-조건-v1)을 확정했다. 판정 도구와 반복 baseline을 연결하고 P7에서 같은 조건으로 비교한다.
+- 구현한 실행기로 정상·snapshot·profiling을 반복 측정하고 snapshot 시간/메모리를 비교했다. 정상 조건은 세 번 통과했으며 snapshot 조건의 지연·생성기 누락은 실패 원본과 함께 기록했다.
+- 초기 탐색 후 [고정 비교 조건 v1](../benchmarks/p6-baseline.md#고정-비교-조건-v1)을 확정했고 판정 도구와 반복 baseline을 연결했다. P7에서 같은 조건으로 비교한다.
 
 현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
