@@ -269,6 +269,11 @@ func compareStream(t testing.TB, data []byte) {
 		if !reflect.DeepEqual(got, again) || fmt.Sprint(err) != fmt.Sprint(againErr) || !reflect.DeepEqual(e.State(), replay.State()) {
 			t.Fatalf("nondeterministic replay at step %d", i/6)
 		}
+		if (i/6)%13 == 0 {
+			// Resume the next commands from a directly restored checkpoint while
+			// the independent model and full-replay engine retain their histories.
+			e = restore(t, e, c)
+		}
 	}
 }
 

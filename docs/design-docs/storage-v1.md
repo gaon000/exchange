@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. snapshot은 P4다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·복사·직접 복원까지 구현했으며 snapshot 파일 I/O와 runtime 연결은 진행 전이다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -88,7 +88,16 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 | trades | commandSeq/matchIndex 순, 가격·수량·양쪽 주문/계정 참조 |
 | results | accountId/kind/requestId 순. canonical 원래 command와 불변 최초 response |
 
-DTO의 정확한 Go 필드 선언과 golden snapshot fixture는 P4 구현에서 위 API/도메인 필드에 맞춰 고정하고, 실험 데이터를 쓰기 전에 formatVersion=1 검증을 완료한다. P0에서 아직 없는 snapshot decoder의 호환성을 주장하지 않는다. 복구 시 book과 orders, 예약 잔고, results의 누락·불일치를 검사한다. results에는 REJECTED·취소 no-op 결과도 들어간다.
+상태 DTO의 필드 순서는 [domain.Checkpoint](../../internal/domain/checkpoint.go)의 선언과 [독립 Python 생성기](../../internal/engine/testdata/generate_checkpoint.py)의 [golden JSON](../../internal/engine/testdata/checkpoint-v1.json)으로 고정한다. 아직 envelope 파일 fixture와 파일 decoder는 구현 전이다.
+
+- accounts 항목은 accountId, availableBaseLots, reservedBaseLots, availableQuoteAtoms, reservedQuoteAtoms다.
+- orders 항목은 accountId, order다. order와 response는 API의 전체 Order/Result 형식을 재사용한다. reason은 미설정 시 null이며 빈 문자열이나 알 수 없는 문자열은 허용하지 않는다.
+- book은 bids, asks를 갖는다. 각 level은 priceTicks, orders이고 orders의 참조는 accountId, clientOrderId다.
+- trades 항목은 tradeId, commandSeq, matchIndex, maker, taker, takerSide, priceTicks, quantityLots다. maker/taker는 같은 주문 참조 형식이다.
+- results 항목은 command, response다. command는 accountId, kind와 해당 종류의 place 또는 cancel 하나만 포함한다. runId는 envelope에서 공급하며 response에도 보존한다. 거절과 취소 no-op도 보존한다.
+- 모든 배열은 빈 경우에도 `[]`다. 정수는 API와 같은 십진 문자열이며 JSON 필드명·필수 필드·중복 키 검사는 strictjson을 사용한다.
+
+[engine.Capture/Restore](../../internal/engine/checkpoint.go)는 사본과 복원된 상태 사이의 가변 참조를 공유하지 않는다. Restore는 과거 명령을 다시 매칭하지 않고 인덱스와 FIFO를 직접 구성한다. 순번·주문·체결·최초 결과 관계, 예약액·총공급량·Genesis와 체결에서 계산한 계정별 보유량을 검증하고 모순된 후보를 거절한다. 특히 취소 이후 체결, 최초 응답 변경, 누락된 활성 주문을 허용하지 않는다. 파일 복구 계층은 여기에 더해 저장된 command 입력/순번을 보존된 WAL과 대조해야 한다. 이 상태 검증만으로 파일 게시·재시작 복구가 완료된 것은 아니다.
 
 명령 경계 S에서 owner가 사본을 만든다. 파일명은 S를 20자리 0-padding한 `snapshot-S.bin`이다. 같은 디렉터리의 고유 임시 파일을 O_EXCL로 만들고, envelope 전체 쓰기 → 파일 엄격한 sync → close → 정식 이름으로 rename → 디렉터리 엄격한 sync 순으로 게시한다. 정식 이름이 이미 있으면 무조건 덮어쓰지 않고 같은 S의 정상 파일인지 확인한다. 기존 정상 snapshot은 보존한다. 재시작 시 임시 파일은 후보로 쓰지 않으며 임의로 정리할 필요도 없다.
 

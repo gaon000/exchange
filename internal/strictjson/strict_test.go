@@ -66,3 +66,22 @@ func TestRawPayloadStillRejectsDuplicates(t *testing.T) {
 		}
 	}
 }
+
+func TestNullableReasonDoesNotWeakenIntegerOrStringNullChecks(t *testing.T) {
+	type fields struct {
+		Reason   d.Reason `json:"reason"`
+		Quantity d.Int    `json:"quantity"`
+		ID       string   `json:"id"`
+	}
+	for _, value := range []string{`null`, `"USER_CANCEL"`, `"SELF_TRADE_PREVENTION"`, `"INSUFFICIENT_BALANCE"`} {
+		var v fields
+		if err := strictjson.Decode([]byte(`{"reason":`+value+`,"quantity":"0","id":"a"}`), &v); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, body := range []string{`{"reason":null,"quantity":null,"id":"a"}`, `{"reason":null,"quantity":"0","id":null}`, `{"reason":"OTHER","quantity":"0","id":"a"}`, `{"reason":"","quantity":"0","id":"a"}`, `{"reason":7,"quantity":"0","id":"a"}`} {
+		if err := strictjson.Decode([]byte(body), &fields{}); err == nil {
+			t.Fatalf("invalid nullable field accepted: %s", body)
+		}
+	}
+}

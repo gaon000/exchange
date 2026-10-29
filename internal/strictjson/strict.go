@@ -13,8 +13,9 @@ import (
 
 // Decode requires valid UTF-8, one JSON value, unique object keys, and exact
 // struct field names. Required fields must be present; omitempty marks optional
-// fields. Null is allowed only for pointer and RawMessage fields. Callers still
-// validate semantic ranges and impose a byte limit.
+// fields. Null is allowed for pointer/RawMessage fields and types whose custom
+// UnmarshalJSON explicitly accepts it. Callers still validate semantic ranges
+// and impose a byte limit.
 func Decode(data []byte, dst any) error {
 	if !utf8.Valid(data) {
 		return fmt.Errorf("invalid UTF-8")
@@ -81,7 +82,7 @@ func walk(dec *json.Decoder, depth int) error {
 
 func shape(data []byte, t reflect.Type) error {
 	if bytes.Equal(bytes.TrimSpace(data), []byte("null")) {
-		if t.Kind() == reflect.Pointer || t == reflect.TypeOf(json.RawMessage{}) {
+		if t.Kind() == reflect.Pointer || t == reflect.TypeOf(json.RawMessage{}) || reflect.PointerTo(t).Implements(reflect.TypeOf((*json.Unmarshaler)(nil)).Elem()) {
 			return nil
 		}
 		return fmt.Errorf("null value")

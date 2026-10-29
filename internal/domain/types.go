@@ -1,6 +1,9 @@
 package domain
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+)
 
 const (
 	Version                 = 1
@@ -67,6 +70,25 @@ func (r Reason) MarshalJSON() ([]byte, error) {
 		return []byte("null"), nil
 	}
 	return json.Marshal(string(r))
+}
+
+// UnmarshalJSON accepts the nullable reason used by persisted Order responses.
+func (r *Reason) UnmarshalJSON(data []byte) error {
+	if bytes.Equal(bytes.TrimSpace(data), []byte("null")) {
+		*r = ""
+		return nil
+	}
+	var value string
+	if err := json.Unmarshal(data, &value); err != nil {
+		return ErrInvalid
+	}
+	switch Reason(value) {
+	case SelfTradePrevention, UserCancel, InsufficientFunds:
+		*r = Reason(value)
+		return nil
+	default:
+		return ErrInvalid
+	}
 }
 
 // Place is the normalized, comparable limit-order payload.
@@ -169,18 +191,18 @@ type Balances struct {
 
 // OrderRef scopes a client order ID to its owning account.
 type OrderRef struct {
-	AccountID     string
-	ClientOrderID string
+	AccountID     string `json:"accountId"`
+	ClientOrderID string `json:"clientOrderId"`
 }
 
 // Trade identifies both counterparties without nondeterministic timestamps.
 type Trade struct {
-	TradeID      string
-	CommandSeq   Int
-	MatchIndex   Int
-	Maker        OrderRef
-	Taker        OrderRef
-	TakerSide    Side
-	PriceTicks   Int
-	QuantityLots Int
+	TradeID      string   `json:"tradeId"`
+	CommandSeq   Int      `json:"commandSeq"`
+	MatchIndex   Int      `json:"matchIndex"`
+	Maker        OrderRef `json:"maker"`
+	Taker        OrderRef `json:"taker"`
+	TakerSide    Side     `json:"takerSide"`
+	PriceTicks   Int      `json:"priceTicks"`
+	QuantityLots Int      `json:"quantityLots"`
 }

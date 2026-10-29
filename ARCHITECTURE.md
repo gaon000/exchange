@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진, P2 Genesis/WAL·공유 내구성 어댑터와 P3 단일 소유자 runtime이 존재한다. snapshot·HTTP 서버·CI는 아직 구현하지 않았다.
+2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진, P2 Genesis/WAL·공유 내구성 어댑터와 P3 단일 소유자 runtime이 존재한다. P4의 snapshot 상태 DTO·복사·직접 복원을 추가했다. snapshot 파일 I/O·runtime 연결·HTTP 서버·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -53,7 +53,7 @@ P3까지 domain·engine·strictjson·durable·wal·runtime을 구현했다. 아�
 
 API는 엔진 내부 맵을 직접 수정하지 않는다. 엔진은 HTTP·파일·벽시계·난수·외부 서비스에 의존하지 않는다. WAL은 거래 승인 여부를 결정하지 않는다. loadgen의 전체 경로 측정은 엔진 직접 호출을 우회 경로로 사용하지 않는다. 공통 타입은 실제 공유 계약에 한해 분리하고 순환 의존은 허용하지 않는다.
 
-P1의 engine은 자체 고루틴·잠금 없이 한 소유자가 순차 호출한다. New/Lookup/Apply와 값 복사 조회를 제공하며, State는 안정된 순서의 진단용 사본이다. State를 snapshot 파일 형식으로 직접 직렬화하지 않는다. 자료구조·순번·오류 경계의 구체적인 연결 계약은 [상세 설계](docs/design-docs/exchange-v1.md#p1-구현과-호출-계약)를 따른다.
+P1의 engine은 자체 고루틴·잠금 없이 한 소유자가 순차 호출한다. New/Lookup/Apply와 값 복사 조회를 제공하며, State는 안정된 순서의 진단용 사본이다. State를 snapshot 파일 형식으로 직접 직렬화하지 않는다. P4의 [Capture/Restore](internal/engine/checkpoint.go)는 별도 [Checkpoint DTO](internal/domain/checkpoint.go)를 복사하고, 과거 매칭을 다시 수행하지 않고 검증된 상태를 직접 구성한다. 파일 게시·선택과 WAL 대조는 후속 연결 작업이다. 자료구조·순번·오류 경계의 구체적인 연결 계약은 [상세 설계](docs/design-docs/exchange-v1.md#p1-구현과-호출-계약)를 따른다.
 
 ## 시스템과 데이터 경계
 
