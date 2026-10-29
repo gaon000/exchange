@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "sourceDirectory": "var/p7-snapshot-capacity-6a5f8szg",
+  "archive": "var/archives/p7-snapshot-capacity-6a5f8szg.tar.gz",
+  "archiveSHA256": "2a2b77aba3c4988b30e1f2b2b1bd6d398f679c84e023403be2343cde5f0e2758",
+  "archiveBytes": 167322522,
+  "verifiedMembers": 202,
+  "receipt": "var/archives/p7-snapshot-capacity-6a5f8szg.tar.receipt.json",
+  "receiptSHA256": "5a67e7e70a2abd9de4516c45a71aaac5d2ad4753e69070d2d71db5bde2db81a8",
+  "restoreParent": "var",
+  "originalUncompressedBytes": 1481440672,
+  "verification": "Every member type, mode, size and file SHA-256 matched before removal; original path set, inode, size and mtime were unchanged."
+}
