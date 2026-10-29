@@ -1,6 +1,6 @@
 # 작업 안내: exchange
 
-학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P4까지 실행 중 snapshot 생성과 재시작 복구를 구현했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6 부하 생성·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준과 스냅샷 조건의 목표 미달을 구분한다. P7 개선·최종 비교와 별도 장비가 필요한 실제 전원 장애 검증은 남아 있다.
+학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P4까지 실행 중 snapshot 생성과 재시작 복구를 구현했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6 부하 생성·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준과 스냅샷 조건의 목표 미달을 구분한다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)의 정렬 이동 후보는 반복 기준 미달로 미채택하고 P6 구현을 유지한다. 스냅샷 부하의 지연 목표와 별도 장비가 필요한 실제 전원 장애 검증은 미완료다.
 
 ## 먼저 읽을 문서
 

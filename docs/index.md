@@ -15,7 +15,7 @@
 
 ## 작업별 읽기
 
-v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4까지 완료했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6의 [HTTP 부하 생성·집계·원본 기록](design-docs/benchmark-v1.md)을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/바이너리/원본 묶음을 연결했다. 반복 기준 측정을 완료했고 P7 개선·최종 비교와 실제 전원 장애 검증은 남아 있다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이다. [P6 기준과 결과](benchmarks/p6-baseline.md)는 전체 경로 초기 탐색·고정 조건·14개 실행의 재검증과 정상 조건의 반복 baseline을 기록한다. [P7 정렬 이동](benchmarks/p7-snapshot-sorting.md)은 구현·회귀 검증을 마쳤고 반복 성능 비교는 남아 있다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
+v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4까지 완료했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6의 [HTTP 부하 생성·집계·원본 기록](design-docs/benchmark-v1.md)을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/바이너리/원본 묶음을 연결했다. 반복 기준 측정을 완료했고 P7 정렬 이동 후보의 비교를 마쳤다. 후보는 미채택했으며 스냅샷 부하의 지연 목표와 실제 전원 장애 검증은 미완료다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이다. [P6 기준과 결과](benchmarks/p6-baseline.md)는 전체 경로 초기 탐색·고정 조건·14개 실행의 재검증과 정상 조건의 반복 baseline을 기록한다. [P7 정렬 이동 비교](benchmarks/p7-snapshot-sorting.md)는 25회 실행과 미채택 판정·기준 구현 복원을 기록한다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
 
 ## 선택 문서
 

@@ -6,7 +6,6 @@ import (
 	"time"
 
 	d "github.com/gaon000/exchange/internal/domain"
-	"github.com/gaon000/exchange/internal/engine"
 	"github.com/gaon000/exchange/internal/snapshot"
 )
 
@@ -78,13 +77,13 @@ func (o *owner) captureSnapshot(req *snapshotRequest) {
 		panic("snapshot sequence outside applied/durable boundary")
 	}
 	started := time.Now()
-	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.CopyCheckpoint()}
+	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.Capture()}
 	o.r.metrics.capture.Observe(time.Since(started))
 	if o.r.hooks.afterCapture != nil {
 		o.r.hooks.afterCapture(doc)
 	}
 	o.snapshotSequence = seq
-	o.snapshotJobs <- doc // transfer exclusive ownership of the detached copy
+	o.snapshotJobs <- doc // one bounded slot; publisher never reads the engine
 }
 
 func writeSnapshot(files checkpoints, doc snapshot.Document) (reply snapshotWriteReply) {
@@ -95,12 +94,6 @@ func writeSnapshot(files checkpoints, doc snapshot.Document) (reply snapshotWrit
 			reply.code = "INTERNAL_FAILURE"
 		}
 	}()
-	// Test adapters can pause this cold path without adding a callback field to
-	// Runtime and changing the memory layout of normal command processing.
-	if hook, ok := files.(interface{ beforeSnapshotSort() }); ok {
-		hook.beforeSnapshotSort()
-	}
-	engine.CanonicalizeCheckpoint(&doc.State)
 	reply.err = files.Publish(doc)
 	if reply.err == snapshot.ErrInvalid {
 		reply.code = "INTERNAL_FAILURE"

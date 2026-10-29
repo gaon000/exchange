@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "sourceDirectory": "var/p7-snapshot-sorting-kyynt605",
+  "archive": "var/archives/p7-snapshot-sorting-kyynt605.tar.gz",
+  "archiveSHA256": "553072c1e9dc0bd4384957f9f03ff89cef551c6f18752aeaf69b90f0a86f8daa",
+  "archiveBytes": 2425106517,
+  "verifiedMembers": 756,
+  "receipt": "var/archives/p7-snapshot-sorting-kyynt605.tar.receipt.json",
+  "receiptSHA256": "91bc53d1321072ed8b8125a63b28b71f1a8027af0c2abb9c2df3974bd1564f42",
+  "restoreParent": "var",
+  "originalUncompressedBytes": 22358847115,
+  "verification": "Every member type, mode, size and file SHA-256 matched before removal; original path set, inode, size and mtime were unchanged."
+}

@@ -2,7 +2,7 @@
 
 상태: Accepted
 합의 반영일: 2026-10-29 (Asia/Seoul)
-구현 상태: P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime·snapshot 생성 및 재시작 복구 완료. P5 HTTP 계층·초기화/실행 CLI와 실제 거래·과부하·저장 오류·종료·재시작 검증을 추가했다. P6의 [기준 측정](../benchmarks/p6-baseline.md)은 완료했으며 P7 개선·최종 비교와 실제 전원 장애 검증은 남아 있다.
+구현 상태: P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime·snapshot 생성 및 재시작 복구 완료. P5 HTTP 계층·초기화/실행 CLI와 실제 거래·과부하·저장 오류·종료·재시작 검증을 추가했다. P6의 [기준 측정](../benchmarks/p6-baseline.md)을 완료했다. [P7 정렬 이동 비교](../benchmarks/p7-snapshot-sorting.md)는 반복 기준 미달로 후보를 미채택하고 P6 구현을 유지했다. 스냅샷 부하의 지연 목표와 실제 전원 장애 검증은 미완료다.
 
 ## 목적과 사용자
 

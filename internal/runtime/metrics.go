@@ -22,8 +22,8 @@ type Statistics struct {
 	Append                   telemetry.Distribution `json:"append"`
 	Apply                    telemetry.Distribution `json:"apply"`
 	Query                    telemetry.Distribution `json:"query"`
-	SnapshotCapture          telemetry.Distribution `json:"snapshotCapture"` // detached copying on owner
-	SnapshotPublish          telemetry.Distribution `json:"snapshotPublish"` // canonical sorting and publication on worker
+	SnapshotCapture          telemetry.Distribution `json:"snapshotCapture"`
+	SnapshotPublish          telemetry.Distribution `json:"snapshotPublish"`
 	Enqueued                 uint64                 `json:"enqueued,string"`
 	Unique                   uint64                 `json:"unique,string"`
 	Applied                  uint64                 `json:"applied,string"`

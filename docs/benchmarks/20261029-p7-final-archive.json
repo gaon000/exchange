@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "sourceDirectory": "var/p7-final-pqepq5wq",
+  "archive": "var/archives/p7-final-pqepq5wq.tar.gz",
+  "archiveSHA256": "17be8c114e5236d556de1b25fb3eeeacd4d6d561ce5abaf9ca0473bfbc15c798",
+  "archiveBytes": 310112929,
+  "verifiedMembers": 105,
+  "receipt": "var/archives/p7-final-pqepq5wq.tar.receipt.json",
+  "receiptSHA256": "a2b01d2541211eabc90f7aa0d88fd54689587f709a3a3b71fe9d56a2c2f9826b",
+  "restoreParent": "var",
+  "originalUncompressedBytes": 2605371397,
+  "verification": "Every member type, mode, size and file SHA-256 matched before removal; original path set, inode, size and mtime were unchanged."
+}

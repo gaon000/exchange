@@ -7,19 +7,9 @@ import (
 	d "github.com/gaon000/exchange/internal/domain"
 )
 
-// Capture returns a detached checkpoint in canonical storage order.
+// Capture copies every persisted state field at the owner's command boundary.
+// The caller may hand this detached value to a background snapshot writer.
 func (e *Engine) Capture() d.Checkpoint {
-	c := e.CopyCheckpoint()
-	CanonicalizeCheckpoint(&c)
-	return c
-}
-
-// CopyCheckpoint copies every persisted field at the owner's command boundary.
-// Accounts, Orders, and Results retain unspecified map iteration order. Their
-// detached slices may be canonicalized by another goroutine while the engine
-// continues processing commands. Only that goroutine may access the copy until
-// canonicalization finishes; it must finish before publication or Restore.
-func (e *Engine) CopyCheckpoint() d.Checkpoint {
 	c := d.Checkpoint{Accounts: make([]d.CheckpointAccount, 0, len(e.accounts)), Orders: make([]d.CheckpointOrder, 0, len(e.orders)), Book: d.CheckpointBook{Bids: captureBook(&e.bids), Asks: captureBook(&e.asks)}, Trades: append([]d.Trade{}, e.trades...), Results: make([]d.CheckpointResult, 0, len(e.results))}
 	for id, b := range e.accounts {
 		c.Accounts = append(c.Accounts, d.CheckpointAccount{AccountID: id, AvailableBaseLots: b.Base.Available, ReservedBaseLots: b.Base.Reserved, AvailableQuoteAtoms: b.Quote.Available, ReservedQuoteAtoms: b.Quote.Reserved})
@@ -38,16 +28,10 @@ func (e *Engine) CopyCheckpoint() d.Checkpoint {
 		}
 		c.Results = append(c.Results, d.CheckpointResult{Command: command, Response: r.result.Clone()})
 	}
-	return c
-}
-
-// CanonicalizeCheckpoint sorts the three unordered collections of an exclusively
-// owned copy in place. It neither changes FIFO/trade order nor validates or
-// repairs state. Recovery must validate stored order rather than call this.
-func CanonicalizeCheckpoint(c *d.Checkpoint) {
 	sort.Slice(c.Accounts, func(i, j int) bool { return c.Accounts[i].AccountID < c.Accounts[j].AccountID })
 	sort.Slice(c.Orders, func(i, j int) bool { return orderLess(c.Orders[i], c.Orders[j]) })
 	sort.Slice(c.Results, func(i, j int) bool { return resultLess(c.Results[i], c.Results[j]) })
+	return c
 }
 
 func orderLess(a, b d.CheckpointOrder) bool {

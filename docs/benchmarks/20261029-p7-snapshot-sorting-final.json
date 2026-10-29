@@ -1,0 +1,4085 @@
+{
+  "version": 1,
+  "sourceReport": {
+    "path": "var/p7-final-pqepq5wq/final-comparison-report.json",
+    "sha256": "825ac2a0a5c722b89cd854972b716ff1edf18047657fbd3b14a0b91161de0e92",
+    "normalization": "report cases[].bundle changed to repository-relative paths; other report fields unchanged"
+  },
+  "trials": [
+    {
+      "name": "normal-29000-1",
+      "scenario": "normal",
+      "rate": 29000,
+      "startedUTC": "2026-10-29T13:11:18.483228+00:00",
+      "status": "reported",
+      "experimentExit": 0,
+      "passed": true,
+      "reasons": []
+    },
+    {
+      "name": "normal-29000-2",
+      "scenario": "normal",
+      "rate": 29000,
+      "startedUTC": "2026-10-29T13:12:32.197482+00:00",
+      "status": "reported",
+      "experimentExit": 0,
+      "passed": false,
+      "reasons": [
+        "WINDOW_0_P99"
+      ]
+    },
+    {
+      "name": "normal-29000-3",
+      "scenario": "normal",
+      "rate": 29000,
+      "startedUTC": "2026-10-29T13:13:46.627655+00:00",
+      "status": "reported",
+      "experimentExit": 0,
+      "passed": false,
+      "reasons": [
+        "WINDOW_1_P99"
+      ]
+    }
+  ],
+  "report": {
+    "version": 1,
+    "createdUTC": "2026-10-29T13:15:02.566896Z",
+    "build": {
+      "goVersion": "go1.27.3",
+      "goos": "darwin",
+      "goarch": "arm64",
+      "revision": "58836215ccbdf5171ac351d6b633b692366e0a17",
+      "revisionKnown": true,
+      "modified": false
+    },
+    "criteriaSHA256": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+    "inputSHA256": {
+      "config-v1.json": "aea894a634d8fa7d37d9c0f342e43d50abb368bab62f495689851c70540b8695",
+      "workload-v1.json": "13473954df0bdf39ed0f060335601760909f2db3c14efa02e090138c880b5adb"
+    },
+    "cases": [
+      {
+        "bundle": "var/p7-final-pqepq5wq/normal-29000-1",
+        "runId": "fdd9c030-ffcd-478b-b0f6-3cc2304fc17b",
+        "scenario": "normal",
+        "requestsPerSecond": 29000,
+        "series": "2e054213ea352aa0bd95dfc603f7bfebdca6cc93c95c5dbcfc8e9dcc50514194",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "798f3b3ce34a3f1d3482051a58e386db734c3c64",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "f6cb816bcf52a4f2016dbb17f3a82f0360a34d78193e9652a250c4f7233b6aa3",
+        "generatorSHA256": "c39f8af5d8044acd0219b93d57f5abeac356851846b000cfdb07e79a9bf90d4f",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "summary": {
+          "version": 1,
+          "planDigest": "fe6fba3d667b2fb44058db9961fc0ee5d930715e9792d6299eaf79d0d79282f8",
+          "measurementValid": true,
+          "invalidReasons": [],
+          "warmup": {
+            "phase": "WARMUP",
+            "durationNanos": 5000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 14822,
+              "DUPLICATE": 21723,
+              "MARKETABLE": 43417,
+              "REJECT_PROBE": 14289,
+              "REST": 50749
+            },
+            "responses": {
+              "BUSINESS": 145000
+            },
+            "codes": {
+              "ACCEPTED": 110843,
+              "ALREADY_CANCELLED": 3361,
+              "ALREADY_FILLED": 10114,
+              "CANCELLED": 3890,
+              "INSUFFICIENT_BALANCE": 16786,
+              "ORDER_NOT_FOUND": 6
+            },
+            "repeatedResults": 21707,
+            "uniqueBusinessResults": 123277,
+            "uniqueAcceptedOrders": 94166,
+            "uniqueMatchedOrders": 28847,
+            "uniqueSuccessfulCancels": 3248,
+            "uniqueBusinessRejections": 14289,
+            "uniqueTrades": "28847",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 94095,
+            "cancelsFinishedWithinWindow": 3247,
+            "tradesFinishedWithinWindow": "28814",
+            "newOrdersPerSecond": 18819,
+            "cancelsPerSecond": 649.4,
+            "tradesPerSecond": 5762.8,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 145000,
+              "minNanos": 724,
+              "p50Nanos": 16701,
+              "p95Nanos": 148716,
+              "p99Nanos": 1113546,
+              "maxNanos": 6124143
+            },
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54500,
+              "p50Nanos": 5173209,
+              "p95Nanos": 8603125,
+              "p99Nanos": 12978125,
+              "maxNanos": 27816875
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 57259,
+              "p50Nanos": 5206388,
+              "p95Nanos": 8746475,
+              "p99Nanos": 13357865,
+              "maxNanos": 27819451
+            },
+            "transportWriteDelay": {
+              "count": 145000,
+              "minNanos": 3584,
+              "p50Nanos": 5209,
+              "p95Nanos": 53875,
+              "p99Nanos": 785208,
+              "maxNanos": 11148916
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 94166,
+              "minNanos": 1776201,
+              "p50Nanos": 5559671,
+              "p95Nanos": 8927331,
+              "p99Nanos": 13656727,
+              "maxNanos": 27819451
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 14822,
+                "minNanos": 1816917,
+                "p50Nanos": 5524500,
+                "p95Nanos": 8866042,
+                "p99Nanos": 13733792,
+                "maxNanos": 27574208
+              },
+              "DUPLICATE": {
+                "count": 21723,
+                "minNanos": 54500,
+                "p50Nanos": 1668500,
+                "p95Nanos": 4356042,
+                "p99Nanos": 7767833,
+                "maxNanos": 24555584
+              },
+              "MARKETABLE": {
+                "count": 43417,
+                "minNanos": 1841375,
+                "p50Nanos": 5538041,
+                "p95Nanos": 8753792,
+                "p99Nanos": 13146041,
+                "maxNanos": 27816875
+              },
+              "REJECT_PROBE": {
+                "count": 14289,
+                "minNanos": 1897750,
+                "p50Nanos": 5553916,
+                "p95Nanos": 8756541,
+                "p99Nanos": 13117667,
+                "maxNanos": 27595500
+              },
+              "REST": {
+                "count": 50749,
+                "minNanos": 1760917,
+                "p50Nanos": 5525750,
+                "p95Nanos": 8801667,
+                "p99Nanos": 13160292,
+                "maxNanos": 27648833
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 145000,
+                "minNanos": 54500,
+                "p50Nanos": 5173209,
+                "p95Nanos": 8603125,
+                "p99Nanos": 12978125,
+                "maxNanos": 27816875
+              }
+            }
+          },
+          "measurement": {
+            "phase": "MEASURE",
+            "durationNanos": 20000000000,
+            "scheduled": 580000,
+            "started": 580000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 57532,
+              "DUPLICATE": 86895,
+              "MARKETABLE": 173894,
+              "REJECT_PROBE": 58337,
+              "REST": 203342
+            },
+            "responses": {
+              "BUSINESS": 580000
+            },
+            "codes": {
+              "ACCEPTED": 443740,
+              "ALREADY_CANCELLED": 12763,
+              "ALREADY_FILLED": 41231,
+              "CANCELLED": 13740,
+              "INSUFFICIENT_BALANCE": 68524,
+              "ORDER_NOT_FOUND": 2
+            },
+            "repeatedResults": 86894,
+            "uniqueBusinessResults": 493105,
+            "uniqueAcceptedOrders": 377236,
+            "uniqueMatchedOrders": 115696,
+            "uniqueSuccessfulCancels": 11632,
+            "uniqueBusinessRejections": 58337,
+            "uniqueTrades": "115696",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 377155,
+            "cancelsFinishedWithinWindow": 11632,
+            "tradesFinishedWithinWindow": "115665",
+            "newOrdersPerSecond": 18857.75,
+            "cancelsPerSecond": 581.6,
+            "tradesPerSecond": 5783.25,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 580000,
+              "minNanos": 680,
+              "p50Nanos": 16711,
+              "p95Nanos": 179214,
+              "p99Nanos": 1577198,
+              "maxNanos": 15018828
+            },
+            "requestLatency": {
+              "count": 580000,
+              "minNanos": 53667,
+              "p50Nanos": 5146500,
+              "p95Nanos": 8981750,
+              "p99Nanos": 13086000,
+              "maxNanos": 41047375
+            },
+            "scheduledAttemptLatency": {
+              "count": 580000,
+              "minNanos": 54930,
+              "p50Nanos": 5178785,
+              "p95Nanos": 9258535,
+              "p99Nanos": 13779067,
+              "maxNanos": 41964853
+            },
+            "transportWriteDelay": {
+              "count": 580000,
+              "minNanos": 3583,
+              "p50Nanos": 5250,
+              "p95Nanos": 47958,
+              "p99Nanos": 322500,
+              "maxNanos": 25975375
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 377236,
+              "minNanos": 1670039,
+              "p50Nanos": 5520443,
+              "p95Nanos": 9633607,
+              "p99Nanos": 14199905,
+              "maxNanos": 41964853
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 57532,
+                "minNanos": 1705542,
+                "p50Nanos": 5479625,
+                "p95Nanos": 9308542,
+                "p99Nanos": 13393458,
+                "maxNanos": 29953458
+              },
+              "DUPLICATE": {
+                "count": 86895,
+                "minNanos": 53667,
+                "p50Nanos": 1665709,
+                "p95Nanos": 4642209,
+                "p99Nanos": 7969125,
+                "maxNanos": 25997625
+              },
+              "MARKETABLE": {
+                "count": 173894,
+                "minNanos": 1654125,
+                "p50Nanos": 5495792,
+                "p95Nanos": 9302333,
+                "p99Nanos": 13528583,
+                "maxNanos": 30710167
+              },
+              "REJECT_PROBE": {
+                "count": 58337,
+                "minNanos": 1657416,
+                "p50Nanos": 5492250,
+                "p95Nanos": 9284875,
+                "p99Nanos": 13443458,
+                "maxNanos": 41047375
+              },
+              "REST": {
+                "count": 203342,
+                "minNanos": 1692542,
+                "p50Nanos": 5494417,
+                "p95Nanos": 9312375,
+                "p99Nanos": 13515417,
+                "maxNanos": 39398208
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 580000,
+                "minNanos": 53667,
+                "p50Nanos": 5146500,
+                "p95Nanos": 8981750,
+                "p99Nanos": 13086000,
+                "maxNanos": 41047375
+              }
+            }
+          }
+        },
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 53667,
+              "p50Nanos": 5167375,
+              "p95Nanos": 9057959,
+              "p99Nanos": 12891875,
+              "maxNanos": 30710167
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 54930,
+              "p50Nanos": 5200650,
+              "p95Nanos": 9342272,
+              "p99Nanos": 13878475,
+              "maxNanos": 35158205
+            },
+            "metricSamples": 10,
+            "queueMean": 27.2,
+            "queueMax": 102
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54500,
+              "p50Nanos": 5178917,
+              "p95Nanos": 8781042,
+              "p99Nanos": 12697333,
+              "maxNanos": 29885375
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 57302,
+              "p50Nanos": 5213442,
+              "p95Nanos": 9003604,
+              "p99Nanos": 13554193,
+              "maxNanos": 39916882
+            },
+            "metricSamples": 10,
+            "queueMean": 48.6,
+            "queueMax": 290
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54750,
+              "p50Nanos": 5178916,
+              "p95Nanos": 9094959,
+              "p99Nanos": 13725375,
+              "maxNanos": 21700750
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 58828,
+              "p50Nanos": 5208410,
+              "p95Nanos": 9396927,
+              "p99Nanos": 13992913,
+              "maxNanos": 21752209
+            },
+            "metricSamples": 10,
+            "queueMean": 37.3,
+            "queueMax": 74
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54708,
+              "p50Nanos": 5064625,
+              "p95Nanos": 9030167,
+              "p99Nanos": 12925916,
+              "maxNanos": 41047375
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 58492,
+              "p50Nanos": 5093016,
+              "p95Nanos": 9305345,
+              "p99Nanos": 13627733,
+              "maxNanos": 41964853
+            },
+            "metricSamples": 10,
+            "queueMean": 50.4,
+            "queueMax": 129
+          }
+        ],
+        "snapshotOverlaps": 0,
+        "snapshotCaptureTotalNanos": "0",
+        "snapshotPublishTotalNanos": "0",
+        "walBytes": "136174555",
+        "peakRssBytes": "1360609280",
+        "serverCpuSeconds": 45.358295
+      },
+      {
+        "bundle": "var/p7-final-pqepq5wq/normal-29000-2",
+        "runId": "60560398-1778-48b8-8368-9519a21fd8ad",
+        "scenario": "normal",
+        "requestsPerSecond": 29000,
+        "series": "2e054213ea352aa0bd95dfc603f7bfebdca6cc93c95c5dbcfc8e9dcc50514194",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "798f3b3ce34a3f1d3482051a58e386db734c3c64",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "f6cb816bcf52a4f2016dbb17f3a82f0360a34d78193e9652a250c4f7233b6aa3",
+        "generatorSHA256": "c39f8af5d8044acd0219b93d57f5abeac356851846b000cfdb07e79a9bf90d4f",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": false,
+        "reasons": [
+          "WINDOW_0_P99"
+        ],
+        "summary": {
+          "version": 1,
+          "planDigest": "453fa38ba2f0e2e42ec61e3c01516e3d95de71f501cedd529a89600ec0720848",
+          "measurementValid": true,
+          "invalidReasons": [],
+          "warmup": {
+            "phase": "WARMUP",
+            "durationNanos": 5000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 14822,
+              "DUPLICATE": 21723,
+              "MARKETABLE": 43417,
+              "REJECT_PROBE": 14289,
+              "REST": 50749
+            },
+            "responses": {
+              "BUSINESS": 145000
+            },
+            "codes": {
+              "ACCEPTED": 110843,
+              "ALREADY_CANCELLED": 3437,
+              "ALREADY_FILLED": 10011,
+              "CANCELLED": 3913,
+              "INSUFFICIENT_BALANCE": 16786,
+              "ORDER_NOT_FOUND": 10
+            },
+            "repeatedResults": 21708,
+            "uniqueBusinessResults": 123277,
+            "uniqueAcceptedOrders": 94166,
+            "uniqueMatchedOrders": 28742,
+            "uniqueSuccessfulCancels": 3267,
+            "uniqueBusinessRejections": 14289,
+            "uniqueTrades": "28742",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 94037,
+            "cancelsFinishedWithinWindow": 3264,
+            "tradesFinishedWithinWindow": "28696",
+            "newOrdersPerSecond": 18807.4,
+            "cancelsPerSecond": 652.8,
+            "tradesPerSecond": 5739.2,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 145000,
+              "minNanos": 814,
+              "p50Nanos": 16760,
+              "p95Nanos": 184773,
+              "p99Nanos": 1138142,
+              "maxNanos": 5074432
+            },
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54708,
+              "p50Nanos": 5462875,
+              "p95Nanos": 8983041,
+              "p99Nanos": 12983250,
+              "maxNanos": 23795125
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 56522,
+              "p50Nanos": 5494207,
+              "p95Nanos": 9151167,
+              "p99Nanos": 13334885,
+              "maxNanos": 23828497
+            },
+            "transportWriteDelay": {
+              "count": 145000,
+              "minNanos": 3500,
+              "p50Nanos": 5208,
+              "p95Nanos": 53834,
+              "p99Nanos": 557458,
+              "maxNanos": 7153875
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 94166,
+              "minNanos": 1853557,
+              "p50Nanos": 5849595,
+              "p95Nanos": 9408601,
+              "p99Nanos": 13649169,
+              "maxNanos": 23828497
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 14822,
+                "minNanos": 1803500,
+                "p50Nanos": 5793416,
+                "p95Nanos": 9164625,
+                "p99Nanos": 13664375,
+                "maxNanos": 22216291
+              },
+              "DUPLICATE": {
+                "count": 21723,
+                "minNanos": 54708,
+                "p50Nanos": 1831583,
+                "p95Nanos": 4655792,
+                "p99Nanos": 7892583,
+                "maxNanos": 21206584
+              },
+              "MARKETABLE": {
+                "count": 43417,
+                "minNanos": 1839000,
+                "p50Nanos": 5827292,
+                "p95Nanos": 9192834,
+                "p99Nanos": 13427167,
+                "maxNanos": 22192000
+              },
+              "REJECT_PROBE": {
+                "count": 14289,
+                "minNanos": 1978375,
+                "p50Nanos": 5822000,
+                "p95Nanos": 9098000,
+                "p99Nanos": 13099875,
+                "maxNanos": 22076291
+              },
+              "REST": {
+                "count": 50749,
+                "minNanos": 1831750,
+                "p50Nanos": 5822291,
+                "p95Nanos": 9192208,
+                "p99Nanos": 13394708,
+                "maxNanos": 23795125
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 145000,
+                "minNanos": 54708,
+                "p50Nanos": 5462875,
+                "p95Nanos": 8983041,
+                "p99Nanos": 12983250,
+                "maxNanos": 23795125
+              }
+            }
+          },
+          "measurement": {
+            "phase": "MEASURE",
+            "durationNanos": 20000000000,
+            "scheduled": 580000,
+            "started": 580000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 57532,
+              "DUPLICATE": 86895,
+              "MARKETABLE": 173894,
+              "REJECT_PROBE": 58337,
+              "REST": 203342
+            },
+            "responses": {
+              "BUSINESS": 580000
+            },
+            "codes": {
+              "ACCEPTED": 443740,
+              "ALREADY_CANCELLED": 12788,
+              "ALREADY_FILLED": 41182,
+              "CANCELLED": 13763,
+              "INSUFFICIENT_BALANCE": 68524,
+              "ORDER_NOT_FOUND": 3
+            },
+            "repeatedResults": 86893,
+            "uniqueBusinessResults": 493105,
+            "uniqueAcceptedOrders": 377236,
+            "uniqueMatchedOrders": 115718,
+            "uniqueSuccessfulCancels": 11645,
+            "uniqueBusinessRejections": 58337,
+            "uniqueTrades": "115718",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 377065,
+            "cancelsFinishedWithinWindow": 11644,
+            "tradesFinishedWithinWindow": "115661",
+            "newOrdersPerSecond": 18853.25,
+            "cancelsPerSecond": 582.2,
+            "tradesPerSecond": 5783.05,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 580000,
+              "minNanos": 674,
+              "p50Nanos": 16700,
+              "p95Nanos": 176053,
+              "p99Nanos": 1667021,
+              "maxNanos": 24108280
+            },
+            "requestLatency": {
+              "count": 580000,
+              "minNanos": 53000,
+              "p50Nanos": 5068958,
+              "p95Nanos": 8714334,
+              "p99Nanos": 13455833,
+              "maxNanos": 44390959
+            },
+            "scheduledAttemptLatency": {
+              "count": 580000,
+              "minNanos": 56258,
+              "p50Nanos": 5098345,
+              "p95Nanos": 8939687,
+              "p99Nanos": 13907505,
+              "maxNanos": 63531385
+            },
+            "transportWriteDelay": {
+              "count": 580000,
+              "minNanos": 3500,
+              "p50Nanos": 5250,
+              "p95Nanos": 50958,
+              "p99Nanos": 354750,
+              "maxNanos": 16200209
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 377236,
+              "minNanos": 1644002,
+              "p50Nanos": 5433402,
+              "p95Nanos": 9238410,
+              "p99Nanos": 14278017,
+              "maxNanos": 59767974
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 57532,
+                "minNanos": 1746917,
+                "p50Nanos": 5408041,
+                "p95Nanos": 8974541,
+                "p99Nanos": 14046417,
+                "maxNanos": 42787125
+              },
+              "DUPLICATE": {
+                "count": 86895,
+                "minNanos": 53000,
+                "p50Nanos": 1626958,
+                "p95Nanos": 4454375,
+                "p99Nanos": 8481834,
+                "maxNanos": 39924625
+              },
+              "MARKETABLE": {
+                "count": 173894,
+                "minNanos": 1615750,
+                "p50Nanos": 5413917,
+                "p95Nanos": 8972208,
+                "p99Nanos": 13822041,
+                "maxNanos": 44390959
+              },
+              "REJECT_PROBE": {
+                "count": 58337,
+                "minNanos": 1766834,
+                "p50Nanos": 5408750,
+                "p95Nanos": 8989875,
+                "p99Nanos": 13909833,
+                "maxNanos": 43957000
+              },
+              "REST": {
+                "count": 203342,
+                "minNanos": 1755667,
+                "p50Nanos": 5406083,
+                "p95Nanos": 8955000,
+                "p99Nanos": 13913667,
+                "maxNanos": 44319208
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 580000,
+                "minNanos": 53000,
+                "p50Nanos": 5068958,
+                "p95Nanos": 8714334,
+                "p99Nanos": 13455833,
+                "maxNanos": 44390959
+              }
+            }
+          }
+        },
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54625,
+              "p50Nanos": 5160917,
+              "p95Nanos": 9254041,
+              "p99Nanos": 17104542,
+              "maxNanos": 44390959
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 57229,
+              "p50Nanos": 5191819,
+              "p95Nanos": 9575724,
+              "p99Nanos": 21635453,
+              "maxNanos": 63531385
+            },
+            "metricSamples": 10,
+            "queueMean": 18.5,
+            "queueMax": 66
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 53000,
+              "p50Nanos": 4962583,
+              "p95Nanos": 8232750,
+              "p99Nanos": 10953625,
+              "maxNanos": 18351833
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 56258,
+              "p50Nanos": 4990499,
+              "p95Nanos": 8456353,
+              "p99Nanos": 11416568,
+              "maxNanos": 19202462
+            },
+            "metricSamples": 10,
+            "queueMean": 25,
+            "queueMax": 78
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54542,
+              "p50Nanos": 5225459,
+              "p95Nanos": 9440792,
+              "p99Nanos": 18413958,
+              "maxNanos": 39977042
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 56881,
+              "p50Nanos": 5252883,
+              "p95Nanos": 9651221,
+              "p99Nanos": 19896937,
+              "maxNanos": 40918177
+            },
+            "metricSamples": 10,
+            "queueMean": 31.9,
+            "queueMax": 114
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 55209,
+              "p50Nanos": 4936333,
+              "p95Nanos": 7994416,
+              "p99Nanos": 10630375,
+              "maxNanos": 27310125
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 58446,
+              "p50Nanos": 4966312,
+              "p95Nanos": 8254552,
+              "p99Nanos": 11119691,
+              "maxNanos": 27313785
+            },
+            "metricSamples": 10,
+            "queueMean": 24.7,
+            "queueMax": 59
+          }
+        ],
+        "snapshotOverlaps": 0,
+        "snapshotCaptureTotalNanos": "0",
+        "snapshotPublishTotalNanos": "0",
+        "walBytes": "136175491",
+        "peakRssBytes": "1340801024",
+        "serverCpuSeconds": 45.809379
+      },
+      {
+        "bundle": "var/p7-final-pqepq5wq/normal-29000-3",
+        "runId": "7152feff-a4f8-444b-88d1-da0692a95571",
+        "scenario": "normal",
+        "requestsPerSecond": 29000,
+        "series": "2e054213ea352aa0bd95dfc603f7bfebdca6cc93c95c5dbcfc8e9dcc50514194",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "798f3b3ce34a3f1d3482051a58e386db734c3c64",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "f6cb816bcf52a4f2016dbb17f3a82f0360a34d78193e9652a250c4f7233b6aa3",
+        "generatorSHA256": "c39f8af5d8044acd0219b93d57f5abeac356851846b000cfdb07e79a9bf90d4f",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": false,
+        "reasons": [
+          "WINDOW_1_P99"
+        ],
+        "summary": {
+          "version": 1,
+          "planDigest": "7bac28a217ac174f4d069e983b33ade38d8b38327ea97197bcf956eddba46e64",
+          "measurementValid": true,
+          "invalidReasons": [],
+          "warmup": {
+            "phase": "WARMUP",
+            "durationNanos": 5000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 14822,
+              "DUPLICATE": 21723,
+              "MARKETABLE": 43417,
+              "REJECT_PROBE": 14289,
+              "REST": 50749
+            },
+            "responses": {
+              "BUSINESS": 145000
+            },
+            "codes": {
+              "ACCEPTED": 110843,
+              "ALREADY_CANCELLED": 3369,
+              "ALREADY_FILLED": 10103,
+              "CANCELLED": 3894,
+              "INSUFFICIENT_BALANCE": 16786,
+              "ORDER_NOT_FOUND": 5
+            },
+            "repeatedResults": 21707,
+            "uniqueBusinessResults": 123277,
+            "uniqueAcceptedOrders": 94166,
+            "uniqueMatchedOrders": 28879,
+            "uniqueSuccessfulCancels": 3251,
+            "uniqueBusinessRejections": 14289,
+            "uniqueTrades": "28879",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 93953,
+            "cancelsFinishedWithinWindow": 3244,
+            "tradesFinishedWithinWindow": "28799",
+            "newOrdersPerSecond": 18790.6,
+            "cancelsPerSecond": 648.8,
+            "tradesPerSecond": 5759.8,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 145000,
+              "minNanos": 795,
+              "p50Nanos": 16660,
+              "p95Nanos": 129744,
+              "p99Nanos": 616776,
+              "maxNanos": 5338947
+            },
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 53834,
+              "p50Nanos": 5015000,
+              "p95Nanos": 7986125,
+              "p99Nanos": 10528917,
+              "maxNanos": 15898458
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 56144,
+              "p50Nanos": 5042009,
+              "p95Nanos": 8073197,
+              "p99Nanos": 10963007,
+              "maxNanos": 18386799
+            },
+            "transportWriteDelay": {
+              "count": 145000,
+              "minNanos": 3500,
+              "p50Nanos": 5167,
+              "p95Nanos": 38291,
+              "p99Nanos": 228375,
+              "maxNanos": 2479166
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 94166,
+              "minNanos": 1760575,
+              "p50Nanos": 5380346,
+              "p95Nanos": 8295713,
+              "p99Nanos": 11226026,
+              "maxNanos": 18386799
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 14822,
+                "minNanos": 1913875,
+                "p50Nanos": 5364792,
+                "p95Nanos": 8235833,
+                "p99Nanos": 10606166,
+                "maxNanos": 15898458
+              },
+              "DUPLICATE": {
+                "count": 21723,
+                "minNanos": 53834,
+                "p50Nanos": 1562333,
+                "p95Nanos": 3954584,
+                "p99Nanos": 6300709,
+                "maxNanos": 12680375
+              },
+              "MARKETABLE": {
+                "count": 43417,
+                "minNanos": 1805875,
+                "p50Nanos": 5364209,
+                "p95Nanos": 8215709,
+                "p99Nanos": 10842542,
+                "maxNanos": 15226458
+              },
+              "REJECT_PROBE": {
+                "count": 14289,
+                "minNanos": 1797750,
+                "p50Nanos": 5357375,
+                "p95Nanos": 8075959,
+                "p99Nanos": 10647250,
+                "maxNanos": 14284083
+              },
+              "REST": {
+                "count": 50749,
+                "minNanos": 1744917,
+                "p50Nanos": 5349584,
+                "p95Nanos": 8185958,
+                "p99Nanos": 10759291,
+                "maxNanos": 15465375
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 145000,
+                "minNanos": 53834,
+                "p50Nanos": 5015000,
+                "p95Nanos": 7986125,
+                "p99Nanos": 10528917,
+                "maxNanos": 15898458
+              }
+            }
+          },
+          "measurement": {
+            "phase": "MEASURE",
+            "durationNanos": 20000000000,
+            "scheduled": 580000,
+            "started": 580000,
+            "localFailures": {},
+            "intents": {
+              "CANCEL": 57532,
+              "DUPLICATE": 86895,
+              "MARKETABLE": 173894,
+              "REJECT_PROBE": 58337,
+              "REST": 203342
+            },
+            "responses": {
+              "BUSINESS": 580000
+            },
+            "codes": {
+              "ACCEPTED": 443740,
+              "ALREADY_CANCELLED": 12686,
+              "ALREADY_FILLED": 41364,
+              "CANCELLED": 13686,
+              "INSUFFICIENT_BALANCE": 68524
+            },
+            "repeatedResults": 86894,
+            "uniqueBusinessResults": 493105,
+            "uniqueAcceptedOrders": 377236,
+            "uniqueMatchedOrders": 116048,
+            "uniqueSuccessfulCancels": 11580,
+            "uniqueBusinessRejections": 58337,
+            "uniqueTrades": "116048",
+            "unknownLogicalCommands": 0,
+            "newOrdersFinishedWithinWindow": 377114,
+            "cancelsFinishedWithinWindow": 11579,
+            "tradesFinishedWithinWindow": "116009",
+            "newOrdersPerSecond": 18855.7,
+            "cancelsPerSecond": 578.95,
+            "tradesPerSecond": 5800.45,
+            "generatorDropRateOfScheduled": 0,
+            "timeoutRateOfStarted": 0,
+            "overloadRateOfStarted": 0,
+            "schedulerDelay": {
+              "count": 580000,
+              "minNanos": 735,
+              "p50Nanos": 16688,
+              "p95Nanos": 165005,
+              "p99Nanos": 1082096,
+              "maxNanos": 6108700
+            },
+            "requestLatency": {
+              "count": 580000,
+              "minNanos": 53125,
+              "p50Nanos": 5008833,
+              "p95Nanos": 8715125,
+              "p99Nanos": 12755125,
+              "maxNanos": 39210875
+            },
+            "scheduledAttemptLatency": {
+              "count": 580000,
+              "minNanos": 55690,
+              "p50Nanos": 5037454,
+              "p95Nanos": 8924617,
+              "p99Nanos": 13074423,
+              "maxNanos": 39275398
+            },
+            "transportWriteDelay": {
+              "count": 580000,
+              "minNanos": 3500,
+              "p50Nanos": 5209,
+              "p95Nanos": 45708,
+              "p99Nanos": 268708,
+              "maxNanos": 9769542
+            },
+            "uniqueNewOrderScheduledLatency": {
+              "count": 377236,
+              "minNanos": 1728231,
+              "p50Nanos": 5373022,
+              "p95Nanos": 9255165,
+              "p99Nanos": 13365192,
+              "maxNanos": 38379962
+            },
+            "requestLatencyByIntent": {
+              "CANCEL": {
+                "count": 57532,
+                "minNanos": 1732709,
+                "p50Nanos": 5346250,
+                "p95Nanos": 9032375,
+                "p99Nanos": 13043125,
+                "maxNanos": 39210875
+              },
+              "DUPLICATE": {
+                "count": 86895,
+                "minNanos": 53125,
+                "p50Nanos": 1575750,
+                "p95Nanos": 4444542,
+                "p99Nanos": 8133375,
+                "maxNanos": 33828875
+              },
+              "MARKETABLE": {
+                "count": 173894,
+                "minNanos": 1724916,
+                "p50Nanos": 5348000,
+                "p95Nanos": 9016084,
+                "p99Nanos": 13090375,
+                "maxNanos": 38375750
+              },
+              "REJECT_PROBE": {
+                "count": 58337,
+                "minNanos": 1685458,
+                "p50Nanos": 5369791,
+                "p95Nanos": 9042084,
+                "p99Nanos": 13116833,
+                "maxNanos": 38024416
+              },
+              "REST": {
+                "count": 203342,
+                "minNanos": 1763250,
+                "p50Nanos": 5348958,
+                "p95Nanos": 8970875,
+                "p99Nanos": 13036125,
+                "maxNanos": 38170292
+              }
+            },
+            "requestLatencyByClass": {
+              "BUSINESS": {
+                "count": 580000,
+                "minNanos": 53125,
+                "p50Nanos": 5008833,
+                "p95Nanos": 8715125,
+                "p99Nanos": 12755125,
+                "maxNanos": 39210875
+              }
+            }
+          }
+        },
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54375,
+              "p50Nanos": 5050084,
+              "p95Nanos": 8468416,
+              "p99Nanos": 11301375,
+              "maxNanos": 16852417
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 55690,
+              "p50Nanos": 5082684,
+              "p95Nanos": 8644675,
+              "p99Nanos": 11687325,
+              "maxNanos": 16855118
+            },
+            "metricSamples": 10,
+            "queueMean": 28.3,
+            "queueMax": 75
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 53125,
+              "p50Nanos": 4893375,
+              "p95Nanos": 8490416,
+              "p99Nanos": 20058625,
+              "maxNanos": 39210875
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 57804,
+              "p50Nanos": 4922160,
+              "p95Nanos": 8697246,
+              "p99Nanos": 20137057,
+              "maxNanos": 39275398
+            },
+            "metricSamples": 10,
+            "queueMean": 36.5,
+            "queueMax": 82
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 53959,
+              "p50Nanos": 5104667,
+              "p95Nanos": 8827666,
+              "p99Nanos": 13074250,
+              "maxNanos": 23117291
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 58257,
+              "p50Nanos": 5135837,
+              "p95Nanos": 9031045,
+              "p99Nanos": 13344291,
+              "maxNanos": 25463223
+            },
+            "metricSamples": 10,
+            "queueMean": 60.3,
+            "queueMax": 182
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 145000,
+            "started": 145000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 145000,
+              "minNanos": 54417,
+              "p50Nanos": 4982166,
+              "p95Nanos": 9079958,
+              "p99Nanos": 12176208,
+              "maxNanos": 17404958
+            },
+            "scheduledAttemptLatency": {
+              "count": 145000,
+              "minNanos": 57884,
+              "p50Nanos": 5008157,
+              "p95Nanos": 9333967,
+              "p99Nanos": 12624300,
+              "maxNanos": 18530574
+            },
+            "metricSamples": 10,
+            "queueMean": 28.9,
+            "queueMax": 87
+          }
+        ],
+        "snapshotOverlaps": 0,
+        "snapshotCaptureTotalNanos": "0",
+        "snapshotPublishTotalNanos": "0",
+        "walBytes": "136181523",
+        "peakRssBytes": "1393983488",
+        "serverCpuSeconds": 46.410303
+      }
+    ],
+    "groups": [
+      {
+        "series": "2e054213ea352aa0bd95dfc603f7bfebdca6cc93c95c5dbcfc8e9dcc50514194",
+        "scenario": "normal",
+        "requestsPerSecond": 29000,
+        "runs": 3,
+        "passed": 1,
+        "qualified": false,
+        "minNewOrdersPerSecond": 18853.25,
+        "maxNewOrdersPerSecond": 18857.75,
+        "worstRequestP99Nanos": 13455833,
+        "worstScheduledP99Nanos": 14278017
+      }
+    ]
+  },
+  "observations": [
+    {
+      "bundle": "var/p7-final-pqepq5wq/normal-29000-1",
+      "artifactSHA256": {
+        "loadgen/manifest.json": "5b5b12116477fa05e68ebb4985d4655c5059d5b0251b0f88aa607078879f2b96",
+        "loadgen/plan.jsonl": "3f83190d5470f3b49af0442044c1b36febaf37407c081ed3ab153e09b8d2df41",
+        "loadgen/samples.jsonl": "058eeeb5186c0f9ca4dee176b619d24a38eae9f64ad079c4c6a7fe191a46c313",
+        "loadgen/run.json": "15f35c90ed60232ed2db4eb73266f4a00cceef77d710265f82e3852a62bb4f0b",
+        "loadgen/summary.json": "91a8c628e855207b468b24ff825224e560d0aecdacf200af10c4a1534385576a",
+        "server-metrics.jsonl": "9da549b08b5458dc1e279bebd63fe1663b055d9c50fc0eb938f6123fa0fd57f6",
+        "environment.json": "0203b3d16ac3484ffae0941d2874148fbeed3f96359d795e9e69c15b6fc279e9",
+        "manifest.json": "92d8a46f0cb9869eb23b94bd5266f133a82b8a82bfd8403dfabdd6bdf9efe2ce",
+        "completed.json": "3c80b667d7ba0c6cb93d408168b5fb52ee72e4912915dd22c58a667fe38dccff"
+      },
+      "serverFinal": {
+        "version": 1,
+        "stage": "final",
+        "runId": "fdd9c030-ffcd-478b-b0f6-3cc2304fc17b",
+        "startedUTC": "2026-10-29T13:11:54.293805Z",
+        "finishedUTC": "2026-10-29T13:11:54.293843Z",
+        "runtime": {
+          "commandQueueWait": {
+            "count": "725020",
+            "sumNanos": "1017412397054",
+            "minNanos": "166",
+            "maxNanos": "12437459",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "45"
+              },
+              {
+                "upperNanos": "500",
+                "count": "21852"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "72350"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "23631"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "24162"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "10550"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "11008"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "11363"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "6445"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "8105"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "39768"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "90848"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "184909"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "209916"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "9578"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "490"
+              }
+            ]
+          },
+          "queryQueueWait": {
+            "count": "4",
+            "sumNanos": "5833",
+            "minNanos": "708",
+            "maxNanos": "3292",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "1000",
+                "count": "2"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "1"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "1"
+              }
+            ]
+          },
+          "batchWait": {
+            "count": "616402",
+            "sumNanos": "465767340107",
+            "minNanos": "166",
+            "maxNanos": "3412584",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "23"
+              },
+              {
+                "upperNanos": "500",
+                "count": "3318"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "282"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "151"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "205"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "444"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "820"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "5131"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "10295"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "23210"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "81252"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "446865"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "43912"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "494"
+              }
+            ]
+          },
+          "append": {
+            "count": "6277",
+            "sumNanos": "17120692960",
+            "minNanos": "1235458",
+            "maxNanos": "10835709",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000000",
+                "count": "1426"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "4829"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "21"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "1"
+              }
+            ]
+          },
+          "apply": {
+            "count": "616402",
+            "sumNanos": "1039138163",
+            "minNanos": "291",
+            "maxNanos": "2814833",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "500",
+                "count": "4987"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "342360"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "217810"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "39363"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "6856"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "1974"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "790"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1572"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "444"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "210"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "32"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "3"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "1"
+              }
+            ]
+          },
+          "query": {
+            "count": "4",
+            "sumNanos": "5291",
+            "minNanos": "84",
+            "maxNanos": "4833",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "100",
+                "count": "1"
+              },
+              {
+                "upperNanos": "200",
+                "count": "1"
+              },
+              {
+                "upperNanos": "500",
+                "count": "1"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "1"
+              }
+            ]
+          },
+          "snapshotCapture": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "snapshotPublish": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "enqueued": "725020",
+          "unique": "616402",
+          "applied": "616402",
+          "cachedRetries": "108525",
+          "pendingRetries": "93",
+          "batches": "6277",
+          "batchCommands": "616402",
+          "batchPayloadBytes": "135847934",
+          "batchPeak": "256",
+          "observedCommandQueuePeak": "501",
+          "commandQueueDepth": 0,
+          "queryQueueDepth": 0,
+          "awaitingCalls": 0,
+          "failures": "0",
+          "snapshots": "0",
+          "snapshotErrors": "0",
+          "wal": {
+            "encode": {
+              "count": "6277",
+              "sumNanos": "997500930",
+              "minNanos": "2458",
+              "maxNanos": "1843166",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "5000",
+                  "count": "13"
+                },
+                {
+                  "upperNanos": "10000",
+                  "count": "5"
+                },
+                {
+                  "upperNanos": "20000",
+                  "count": "5"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "2"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "837"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "4870"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "369"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "167"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "9"
+                }
+              ]
+            },
+            "write": {
+              "count": "6277",
+              "sumNanos": "789380198",
+              "minNanos": "9667",
+              "maxNanos": "3597209",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "10000",
+                  "count": "2"
+                },
+                {
+                  "upperNanos": "20000",
+                  "count": "17"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "970"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "2193"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "1977"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "1070"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "39"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "8"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "1"
+                }
+              ]
+            },
+            "sync": {
+              "count": "6277",
+              "sumNanos": "14892130910",
+              "minNanos": "1013084",
+              "maxNanos": "9294041",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "2000000",
+                  "count": "1617"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "4648"
+                },
+                {
+                  "upperNanos": "10000000",
+                  "count": "12"
+                }
+              ]
+            },
+            "groups": "6277",
+            "commands": "616402",
+            "encodedBytes": "136174338",
+            "ioErrors": "0"
+          }
+        },
+        "http": {
+          "handler": {
+            "count": "725024",
+            "sumNanos": "3395784305955",
+            "minNanos": "11750",
+            "maxNanos": "21533583",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "20000",
+                "count": "12480"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "8407"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "4260"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "1851"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "5266"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "12086"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "31324"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "326777"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "311950"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "10619"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "4"
+              }
+            ]
+          },
+          "encode": {
+            "count": "725024",
+            "sumNanos": "3638503233",
+            "minNanos": "1167",
+            "maxNanos": "8615875",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000",
+                "count": "6"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "519905"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "163525"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "32438"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "7058"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1170"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "395"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "271"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "192"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "56"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "7"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "1"
+              }
+            ]
+          },
+          "write": {
+            "count": "725024",
+            "sumNanos": "5543024501",
+            "minNanos": "2375",
+            "maxNanos": "3825750",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "5000",
+                "count": "406606"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "155755"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "144795"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "14639"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1659"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "658"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "533"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "291"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "76"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "12"
+              }
+            ]
+          },
+          "responses": "725024",
+          "status2xx": "725024",
+          "status4xx": "0",
+          "status5xx": "0",
+          "writeErrors": "0",
+          "encodeErrors": "0",
+          "bytes": "348913344",
+          "active": 0
+        },
+        "process": {
+          "osAvailable": true,
+          "userCpuNanos": "33735147000",
+          "systemCpuNanos": "11623148000",
+          "peakRssBytes": "1360609280",
+          "goHeapObjectsBytes": "1172059608",
+          "goLiveHeapBytes": "728423784",
+          "goTotalMemoryBytes": "1364746312",
+          "goGcCycles": "70",
+          "goGoroutines": "22",
+          "goGcCpuSeconds": 13.048417228,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "10"
+            },
+            {
+              "upperSeconds": "4.096e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "8"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "10"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "3.2768e-05",
+              "count": "10"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "17"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "13"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "9.8304e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "0.000229376",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000262144",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.00032768",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000393216",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "0.000458752",
+              "count": "4"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "walBytes": "136174555"
+      },
+      "generatorRun": {
+        "scheduleEpoch": "2026-10-29T13:11:24.936116Z",
+        "finishedUTC": "2026-10-29T13:11:49.944049Z",
+        "elapsedNanos": 25008099334,
+        "aborted": false,
+        "options": {
+          "maxInFlight": 2048,
+          "requestTimeoutNanos": 5000000000,
+          "maxLatenessNanos": 50000000
+        },
+        "generatorBeforeUTC": "2026-10-29T13:11:24.890894Z",
+        "generatorAfterUTC": "2026-10-29T13:11:49.944072Z",
+        "generatorBefore": {
+          "osAvailable": true,
+          "userCpuNanos": "3232058000",
+          "systemCpuNanos": "2185581000",
+          "peakRssBytes": "694255616",
+          "goHeapObjectsBytes": "418628760",
+          "goLiveHeapBytes": "312555920",
+          "goTotalMemoryBytes": "697647528",
+          "goGcCycles": "6",
+          "goGoroutines": "24",
+          "goGcCpuSeconds": 0.422225007,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "generatorAfter": {
+          "osAvailable": true,
+          "userCpuNanos": "38130307000",
+          "systemCpuNanos": "14091370000",
+          "peakRssBytes": "1165918208",
+          "goHeapObjectsBytes": "926538456",
+          "goLiveHeapBytes": "525366576",
+          "goTotalMemoryBytes": "1172516888",
+          "goGcCycles": "29",
+          "goGoroutines": "2114",
+          "goGcCpuSeconds": 4.594643848,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.096e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "8"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000131072",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "0.000229376",
+              "count": "3"
+            }
+          ],
+          "runtimeUnavailable": []
+        }
+      },
+      "snapshotEvents": []
+    },
+    {
+      "bundle": "var/p7-final-pqepq5wq/normal-29000-2",
+      "artifactSHA256": {
+        "loadgen/manifest.json": "20c2620cad1f9fd05296c85b6da1a9a013c174da82cb18a77b8a5231c4112e52",
+        "loadgen/plan.jsonl": "05e46152baeda61ff685f55477f163f2f695c17ffc2bfcbb3559f5571788a3df",
+        "loadgen/samples.jsonl": "6754e300ef93b710943ebd0a478e9339c6c020224f10b4819d646e9666ecf88e",
+        "loadgen/run.json": "226ab79f12f82a297d1f1c74adda4e5afba1bca954fb91daa80830b72448bd2f",
+        "loadgen/summary.json": "5a327eba41b2869ea29d0dde3e636bff47ca13e4ab46776257e964241cae92f6",
+        "server-metrics.jsonl": "076815ed98bccbab00821becb61887cdbc11a92ac754b1ad1b26649fa5b3d86e",
+        "environment.json": "56a65ccc95c0e015248ba4644149d306bb78570faf3480c393ca1bbcab687357",
+        "manifest.json": "49e62cb298721de667d666b69bb9f0be35b364dddcaf07894bde540e6dcd6702",
+        "completed.json": "f83ceee529c393c4a91d57dac955dc476ebfe5909a13a9b7c6fddbbe3f3902cf"
+      },
+      "serverFinal": {
+        "version": 1,
+        "stage": "final",
+        "runId": "60560398-1778-48b8-8368-9519a21fd8ad",
+        "startedUTC": "2026-10-29T13:13:08.082923Z",
+        "finishedUTC": "2026-10-29T13:13:08.082974Z",
+        "runtime": {
+          "commandQueueWait": {
+            "count": "725020",
+            "sumNanos": "1023635826756",
+            "minNanos": "125",
+            "maxNanos": "20860708",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "101"
+              },
+              {
+                "upperNanos": "500",
+                "count": "21714"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "71180"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "24357"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "24587"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "10110"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "10415"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "11381"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "6838"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "8636"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "39877"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "91518"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "185667"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "208928"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "7455"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "2223"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "33"
+              }
+            ]
+          },
+          "queryQueueWait": {
+            "count": "4",
+            "sumNanos": "7583",
+            "minNanos": "1042",
+            "maxNanos": "4042",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000",
+                "count": "3"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "1"
+              }
+            ]
+          },
+          "batchWait": {
+            "count": "616402",
+            "sumNanos": "467690178170",
+            "minNanos": "166",
+            "maxNanos": "19340584",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "32"
+              },
+              {
+                "upperNanos": "500",
+                "count": "3256"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "285"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "184"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "182"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "508"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "940"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "5353"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "10385"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "23726"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "80298"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "445671"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "45228"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "233"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "121"
+              }
+            ]
+          },
+          "append": {
+            "count": "6295",
+            "sumNanos": "17095243796",
+            "minNanos": "1257792",
+            "maxNanos": "10446792",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000000",
+                "count": "1453"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "4815"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "24"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "3"
+              }
+            ]
+          },
+          "apply": {
+            "count": "616402",
+            "sumNanos": "1030697920",
+            "minNanos": "333",
+            "maxNanos": "6913583",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "500",
+                "count": "4792"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "343195"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "217315"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "39456"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "6714"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "1875"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "803"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1702"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "343"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "171"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "25"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "9"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "1"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "1"
+              }
+            ]
+          },
+          "query": {
+            "count": "4",
+            "sumNanos": "2501",
+            "minNanos": "167",
+            "maxNanos": "1959",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "2"
+              },
+              {
+                "upperNanos": "500",
+                "count": "1"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "1"
+              }
+            ]
+          },
+          "snapshotCapture": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "snapshotPublish": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "enqueued": "725020",
+          "unique": "616402",
+          "applied": "616402",
+          "cachedRetries": "108513",
+          "pendingRetries": "105",
+          "batches": "6295",
+          "batchCommands": "616402",
+          "batchPayloadBytes": "135847934",
+          "batchPeak": "256",
+          "observedCommandQueuePeak": "687",
+          "commandQueueDepth": 0,
+          "queryQueueDepth": 0,
+          "awaitingCalls": 0,
+          "failures": "0",
+          "snapshots": "0",
+          "snapshotErrors": "0",
+          "wal": {
+            "encode": {
+              "count": "6295",
+              "sumNanos": "1010069541",
+              "minNanos": "2416",
+              "maxNanos": "2543334",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "5000",
+                  "count": "16"
+                },
+                {
+                  "upperNanos": "20000",
+                  "count": "2"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "2"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "896"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "4787"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "413"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "167"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "10"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "2"
+                }
+              ]
+            },
+            "write": {
+              "count": "6295",
+              "sumNanos": "637507447",
+              "minNanos": "10291",
+              "maxNanos": "5204417",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "20000",
+                  "count": "18"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "819"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "3994"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "733"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "676"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "48"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "6"
+                },
+                {
+                  "upperNanos": "10000000",
+                  "count": "1"
+                }
+              ]
+            },
+            "sync": {
+              "count": "6295",
+              "sumNanos": "15018492292",
+              "minNanos": "1046791",
+              "maxNanos": "10122958",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "2000000",
+                  "count": "1629"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "4652"
+                },
+                {
+                  "upperNanos": "10000000",
+                  "count": "13"
+                },
+                {
+                  "upperNanos": "20000000",
+                  "count": "1"
+                }
+              ]
+            },
+            "groups": "6295",
+            "commands": "616402",
+            "encodedBytes": "136175274",
+            "ioErrors": "0"
+          }
+        },
+        "http": {
+          "handler": {
+            "count": "725024",
+            "sumNanos": "3396133880518",
+            "minNanos": "11875",
+            "maxNanos": "29119084",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "20000",
+                "count": "12244"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "8601"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "4298"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "1972"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "5172"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "12026"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "31622"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "327431"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "311229"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "9477"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "952"
+              }
+            ]
+          },
+          "encode": {
+            "count": "725024",
+            "sumNanos": "3646264553",
+            "minNanos": "1042",
+            "maxNanos": "8382708",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000",
+                "count": "9"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "519444"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "163711"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "32421"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "7009"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1392"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "501"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "362"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "124"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "32"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "18"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "1"
+              }
+            ]
+          },
+          "write": {
+            "count": "725024",
+            "sumNanos": "5645001427",
+            "minNanos": "2292",
+            "maxNanos": "4630708",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "5000",
+                "count": "407202"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "156562"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "142965"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "14570"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1913"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "777"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "611"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "292"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "113"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "19"
+              }
+            ]
+          },
+          "responses": "725024",
+          "status2xx": "725024",
+          "status4xx": "0",
+          "status5xx": "0",
+          "writeErrors": "0",
+          "encodeErrors": "0",
+          "bytes": "348914855",
+          "active": 0
+        },
+        "process": {
+          "osAvailable": true,
+          "userCpuNanos": "34265784000",
+          "systemCpuNanos": "11543595000",
+          "peakRssBytes": "1340801024",
+          "goHeapObjectsBytes": "826655944",
+          "goLiveHeapBytes": "706232120",
+          "goTotalMemoryBytes": "1342480456",
+          "goGcCycles": "73",
+          "goGoroutines": "22",
+          "goGcCpuSeconds": 14.059429843,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "4.096e-06",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "5.12e-06",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "7.168e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "9"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "3.2768e-05",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "15"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "14"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "9"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "9.8304e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000131072",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "0.000229376",
+              "count": "8"
+            },
+            {
+              "upperSeconds": "0.000262144",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000393216",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "0.000458752",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000524288",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "walBytes": "136175491"
+      },
+      "generatorRun": {
+        "scheduleEpoch": "2026-10-29T13:12:38.459051Z",
+        "finishedUTC": "2026-10-29T13:13:03.483264Z",
+        "elapsedNanos": 25023805833,
+        "aborted": false,
+        "options": {
+          "maxInFlight": 2048,
+          "requestTimeoutNanos": 5000000000,
+          "maxLatenessNanos": 50000000
+        },
+        "generatorBeforeUTC": "2026-10-29T13:12:38.414912Z",
+        "generatorAfterUTC": "2026-10-29T13:13:03.483311Z",
+        "generatorBefore": {
+          "osAvailable": true,
+          "userCpuNanos": "3312884000",
+          "systemCpuNanos": "2419029000",
+          "peakRssBytes": "697696256",
+          "goHeapObjectsBytes": "410486552",
+          "goLiveHeapBytes": "312447544",
+          "goTotalMemoryBytes": "697663912",
+          "goGcCycles": "6",
+          "goGoroutines": "24",
+          "goGcCpuSeconds": 0.513939411,
+          "gcPauses": [
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "generatorAfter": {
+          "osAvailable": true,
+          "userCpuNanos": "37974696000",
+          "systemCpuNanos": "14133759000",
+          "peakRssBytes": "1154940928",
+          "goHeapObjectsBytes": "539405320",
+          "goLiveHeapBytes": "515254696",
+          "goTotalMemoryBytes": "1155169816",
+          "goGcCycles": "30",
+          "goGoroutines": "2182",
+          "goGcCpuSeconds": 4.917759744,
+          "gcPauses": [
+            {
+              "upperSeconds": "4.096e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "5.12e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "3.2768e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "9.8304e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.000131072",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000229376",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.00032768",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000786432",
+              "count": "2"
+            }
+          ],
+          "runtimeUnavailable": []
+        }
+      },
+      "snapshotEvents": []
+    },
+    {
+      "bundle": "var/p7-final-pqepq5wq/normal-29000-3",
+      "artifactSHA256": {
+        "loadgen/manifest.json": "28d0abfd92c00aa33e6e2aa9b3696afb3d63a6e21285228f0047eeed940e198c",
+        "loadgen/plan.jsonl": "d8da57207283b1f941b16516e5f08fc67cfc2298050972bea6712b707cdedbc9",
+        "loadgen/samples.jsonl": "457a1b6891d0213eed7000dc5a609ad875589188c5431494ac2d66fedeb199bc",
+        "loadgen/run.json": "a901812cfe9f671269760537a1892a9d89f6297afc5a0c0ccc179cb465f0c77f",
+        "loadgen/summary.json": "2bf0b3c1c17198c4a77936ebac34c3aad7ecb822123eaf7168f40a70b1cdda6c",
+        "server-metrics.jsonl": "a9a2ed3fb9d3ec8235c34c9531e0547a7192fe8b5bd676f6d130fd2c1388251f",
+        "environment.json": "1d1d115ba32d0cc066ad266f441929d29d021df2f29eb515ad90e9f5a666ad6b",
+        "manifest.json": "20a1718e3e2f36e0cdbbb515f5f54dae11ea514749bc22d3bd88b44432566849",
+        "completed.json": "7d18279d8a3abf4e2def0a12eb7f179d186679782f753b95bf91e723c2215be9"
+      },
+      "serverFinal": {
+        "version": 1,
+        "stage": "final",
+        "runId": "7152feff-a4f8-444b-88d1-da0692a95571",
+        "startedUTC": "2026-10-29T13:14:23.274256Z",
+        "finishedUTC": "2026-10-29T13:14:23.274316Z",
+        "runtime": {
+          "commandQueueWait": {
+            "count": "725020",
+            "sumNanos": "1009454144230",
+            "minNanos": "125",
+            "maxNanos": "31669792",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "33"
+              },
+              {
+                "upperNanos": "500",
+                "count": "24957"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "74962"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "25426"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "23994"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "10329"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "9975"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "10874"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "6729"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "8138"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "41998"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "94180"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "185076"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "197038"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "8824"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "1670"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "817"
+              }
+            ]
+          },
+          "queryQueueWait": {
+            "count": "4",
+            "sumNanos": "10249",
+            "minNanos": "667",
+            "maxNanos": "7666",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "1000",
+                "count": "2"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "1"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "1"
+              }
+            ]
+          },
+          "batchWait": {
+            "count": "616402",
+            "sumNanos": "468276224136",
+            "minNanos": "166",
+            "maxNanos": "3197042",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "200",
+                "count": "7"
+              },
+              {
+                "upperNanos": "500",
+                "count": "3387"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "290"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "149"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "170"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "402"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "804"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "4915"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "9918"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "21819"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "81077"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "448226"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "44961"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "277"
+              }
+            ]
+          },
+          "append": {
+            "count": "6411",
+            "sumNanos": "17101398055",
+            "minNanos": "1250625",
+            "maxNanos": "11272584",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000000",
+                "count": "1584"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "4805"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "21"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "1"
+              }
+            ]
+          },
+          "apply": {
+            "count": "616402",
+            "sumNanos": "1011406260",
+            "minNanos": "333",
+            "maxNanos": "23950166",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "500",
+                "count": "5773"
+              },
+              {
+                "upperNanos": "1000",
+                "count": "358497"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "207165"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "34570"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "6102"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "1442"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "655"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1658"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "319"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "188"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "27"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "3"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "2"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "1"
+              }
+            ]
+          },
+          "query": {
+            "count": "4",
+            "sumNanos": "2041",
+            "minNanos": "83",
+            "maxNanos": "1625",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "100",
+                "count": "1"
+              },
+              {
+                "upperNanos": "200",
+                "count": "1"
+              },
+              {
+                "upperNanos": "500",
+                "count": "1"
+              },
+              {
+                "upperNanos": "2000",
+                "count": "1"
+              }
+            ]
+          },
+          "snapshotCapture": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "snapshotPublish": {
+            "count": "0",
+            "sumNanos": "0",
+            "minNanos": "0",
+            "maxNanos": "0",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": []
+          },
+          "enqueued": "725020",
+          "unique": "616402",
+          "applied": "616402",
+          "cachedRetries": "108528",
+          "pendingRetries": "90",
+          "batches": "6411",
+          "batchCommands": "616402",
+          "batchPayloadBytes": "135847934",
+          "batchPeak": "256",
+          "observedCommandQueuePeak": "914",
+          "commandQueueDepth": 0,
+          "queryQueueDepth": 0,
+          "awaitingCalls": 0,
+          "failures": "0",
+          "snapshots": "0",
+          "snapshotErrors": "0",
+          "wal": {
+            "encode": {
+              "count": "6411",
+              "sumNanos": "1004594351",
+              "minNanos": "3333",
+              "maxNanos": "1381709",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "5000",
+                  "count": "7"
+                },
+                {
+                  "upperNanos": "20000",
+                  "count": "8"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "9"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "1033"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "4820"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "331"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "194"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "9"
+                }
+              ]
+            },
+            "write": {
+              "count": "6411",
+              "sumNanos": "713040335",
+              "minNanos": "12500",
+              "maxNanos": "4169583",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "20000",
+                  "count": "8"
+                },
+                {
+                  "upperNanos": "50000",
+                  "count": "266"
+                },
+                {
+                  "upperNanos": "100000",
+                  "count": "4438"
+                },
+                {
+                  "upperNanos": "200000",
+                  "count": "691"
+                },
+                {
+                  "upperNanos": "500000",
+                  "count": "949"
+                },
+                {
+                  "upperNanos": "1000000",
+                  "count": "46"
+                },
+                {
+                  "upperNanos": "2000000",
+                  "count": "8"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "5"
+                }
+              ]
+            },
+            "sync": {
+              "count": "6411",
+              "sumNanos": "14951963022",
+              "minNanos": "1036333",
+              "maxNanos": "11179500",
+              "negativeSamples": "0",
+              "sumOverflow": false,
+              "buckets": [
+                {
+                  "upperNanos": "2000000",
+                  "count": "1685"
+                },
+                {
+                  "upperNanos": "5000000",
+                  "count": "4714"
+                },
+                {
+                  "upperNanos": "10000000",
+                  "count": "11"
+                },
+                {
+                  "upperNanos": "20000000",
+                  "count": "1"
+                }
+              ]
+            },
+            "groups": "6411",
+            "commands": "616402",
+            "encodedBytes": "136181306",
+            "ioErrors": "0"
+          }
+        },
+        "http": {
+          "handler": {
+            "count": "725024",
+            "sumNanos": "3336266793481",
+            "minNanos": "11750",
+            "maxNanos": "36868833",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "20000",
+                "count": "12991"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "9048"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "4233"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "1971"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "5284"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "12723"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "31807"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "342236"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "293183"
+              },
+              {
+                "upperNanos": "20000000",
+                "count": "10168"
+              },
+              {
+                "upperNanos": "50000000",
+                "count": "1380"
+              }
+            ]
+          },
+          "encode": {
+            "count": "725024",
+            "sumNanos": "3654516305",
+            "minNanos": "1167",
+            "maxNanos": "2722125",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "2000",
+                "count": "7"
+              },
+              {
+                "upperNanos": "5000",
+                "count": "526729"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "155242"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "32308"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "7858"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1842"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "532"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "285"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "171"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "49"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "1"
+              }
+            ]
+          },
+          "write": {
+            "count": "725024",
+            "sumNanos": "5459135338",
+            "minNanos": "2375",
+            "maxNanos": "7036125",
+            "negativeSamples": "0",
+            "sumOverflow": false,
+            "buckets": [
+              {
+                "upperNanos": "5000",
+                "count": "410041"
+              },
+              {
+                "upperNanos": "10000",
+                "count": "161134"
+              },
+              {
+                "upperNanos": "20000",
+                "count": "137507"
+              },
+              {
+                "upperNanos": "50000",
+                "count": "12795"
+              },
+              {
+                "upperNanos": "100000",
+                "count": "1872"
+              },
+              {
+                "upperNanos": "200000",
+                "count": "692"
+              },
+              {
+                "upperNanos": "500000",
+                "count": "613"
+              },
+              {
+                "upperNanos": "1000000",
+                "count": "298"
+              },
+              {
+                "upperNanos": "2000000",
+                "count": "67"
+              },
+              {
+                "upperNanos": "5000000",
+                "count": "4"
+              },
+              {
+                "upperNanos": "10000000",
+                "count": "1"
+              }
+            ]
+          },
+          "responses": "725024",
+          "status2xx": "725024",
+          "status4xx": "0",
+          "status5xx": "0",
+          "writeErrors": "0",
+          "encodeErrors": "0",
+          "bytes": "348904332",
+          "active": 0
+        },
+        "process": {
+          "osAvailable": true,
+          "userCpuNanos": "34399735000",
+          "systemCpuNanos": "12010568000",
+          "peakRssBytes": "1393983488",
+          "goHeapObjectsBytes": "899289264",
+          "goLiveHeapBytes": "739567264",
+          "goTotalMemoryBytes": "1398612040",
+          "goGcCycles": "83",
+          "goGoroutines": "22",
+          "goGcCpuSeconds": 13.06659838,
+          "gcPauses": [
+            {
+              "upperSeconds": "2.56e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "7"
+            },
+            {
+              "upperSeconds": "5.12e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "6.144e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "8.192e-06",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "1.024e-05",
+              "count": "8"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "9"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "10"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "9"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "12"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "3.2768e-05",
+              "count": "9"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "13"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "11"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "11"
+            },
+            {
+              "upperSeconds": "9.8304e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "0.000131072",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "0.000262144",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.00032768",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.000393216",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "0.00065536",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "walBytes": "136181523"
+      },
+      "generatorRun": {
+        "scheduleEpoch": "2026-10-29T13:13:53.570804Z",
+        "finishedUTC": "2026-10-29T13:14:18.575122Z",
+        "elapsedNanos": 25003911291,
+        "aborted": false,
+        "options": {
+          "maxInFlight": 2048,
+          "requestTimeoutNanos": 5000000000,
+          "maxLatenessNanos": 50000000
+        },
+        "generatorBeforeUTC": "2026-10-29T13:13:53.48649Z",
+        "generatorAfterUTC": "2026-10-29T13:14:18.575137Z",
+        "generatorBefore": {
+          "osAvailable": true,
+          "userCpuNanos": "3391578000",
+          "systemCpuNanos": "2720865000",
+          "peakRssBytes": "696893440",
+          "goHeapObjectsBytes": "413647176",
+          "goLiveHeapBytes": "311944176",
+          "goTotalMemoryBytes": "697647528",
+          "goGcCycles": "6",
+          "goGoroutines": "24",
+          "goGcCpuSeconds": 0.582155162,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        },
+        "generatorAfter": {
+          "osAvailable": true,
+          "userCpuNanos": "38538013000",
+          "systemCpuNanos": "15067534000",
+          "peakRssBytes": "1149583360",
+          "goHeapObjectsBytes": "570076168",
+          "goLiveHeapBytes": "519538592",
+          "goTotalMemoryBytes": "1155165704",
+          "goGcCycles": "30",
+          "goGoroutines": "2164",
+          "goGcCpuSeconds": 4.673167954,
+          "gcPauses": [
+            {
+              "upperSeconds": "3.072e-06",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "3.584e-06",
+              "count": "6"
+            },
+            {
+              "upperSeconds": "1.2288e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "1.4336e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "1.6384e-05",
+              "count": "8"
+            },
+            {
+              "upperSeconds": "2.048e-05",
+              "count": "5"
+            },
+            {
+              "upperSeconds": "2.4576e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "2.8672e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.096e-05",
+              "count": "1"
+            },
+            {
+              "upperSeconds": "4.9152e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "5.7344e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "6.5536e-05",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "8.192e-05",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "9.8304e-05",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000114688",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000131072",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.00016384",
+              "count": "4"
+            },
+            {
+              "upperSeconds": "0.000196608",
+              "count": "3"
+            },
+            {
+              "upperSeconds": "0.000229376",
+              "count": "2"
+            },
+            {
+              "upperSeconds": "0.000393216",
+              "count": "1"
+            }
+          ],
+          "runtimeUnavailable": []
+        }
+      },
+      "snapshotEvents": []
+    }
+  ],
+  "baselineEvidence": {
+    "path": "docs/benchmarks/20261029-p6-baseline.json",
+    "sha256": "305f703d0ffe905952ded18811ba51b04194474179b72f491e0e7f50318be5da"
+  },
+  "protocol": {
+    "writtenUTC": "2026-10-29T13:10:38.535979+00:00",
+    "sourceCommit": "798f3b3ce34a3f1d3482051a58e386db734c3c64",
+    "serverSHA256": "f6cb816bcf52a4f2016dbb17f3a82f0360a34d78193e9652a250c4f7233b6aa3",
+    "pinnedTools": {
+      "experiment": "22dd9f643117646fbf7ead1e0c6dfd4f45b5b30705c10e8bf5b31acf0013d44e",
+      "loadgen": "c39f8af5d8044acd0219b93d57f5abeac356851846b000cfdb07e79a9bf90d4f",
+      "benchreport": "2b51d0696d442b5494ecfc0e7fc2c0e481924c4e5a35bf0d7893c1193deed79e"
+    },
+    "normalRate": 29000,
+    "normalRepeats": 3,
+    "quietSecondsBeforeEach": 30,
+    "acceptance": "All three normal runs must pass unchanged P6 criteria; then compare three snapshot runs and one profile diagnostic. Otherwise reject candidate and restore baseline implementation. Preserve all failures."
+  },
+  "decision": "rejected: 1/3 normal repeats pass unchanged criteria; retain P6 implementation"
+}
