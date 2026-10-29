@@ -32,7 +32,7 @@ scripts/go run ./tools/storageprobe -dir .
 
 setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버전이 있으면 재설치하지 않는다. 자동 버전 선택 대신 [scripts/go](../scripts/go)가 정확한 버전을 확인하고 `GOTOOLCHAIN=local`, `GOENV=off`, `GOWORK=off`로 실행한다. 캐시와 GOPATH는 `.cache/` 아래다. `.tools/`, `.cache/`, 실험 데이터 `var/`와 빌드 출력 `bin/`은 Git에서 제외한다. [Go toolchain 문서](https://go.dev/doc/toolchain)의 go directive 자체는 최소 버전이므로 재현 실행에는 wrapper를 사용한다.
 
-실행 진입점은 거래 서버 CLI·HTTP 부하 CLI와 개발 probe다. 서버 CLI는 아래 절차로 초기화·기동하며, probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
+실행 진입점은 거래 서버·HTTP 부하·실험 실행기 CLI와 개발 probe다. 서버 CLI는 아래 절차로 초기화·기동하며, probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
 
 CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사용하며 환경변수 loader는 없다. init은 wal.DecodeConfig로 설정을 검증하고 wal.Init으로 새 Genesis를 저장한다. serve는 저장된 설정으로 runtime.Open을 호출한다. fixture에는 비밀값이 없다. 실제 credential이 필요해지면 안전한 별도 경로로 관리한다.
 
@@ -48,7 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
-| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
+| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
 | 기본 테스트 | `scripts/go test ./...` (CLI·bench·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
 | race 검사 | `scripts/go test -race ./...` |
 | cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
@@ -116,6 +116,21 @@ bin/loadgen --config config/examples/benchmark.json --workload config/examples/w
 
 프로파일/스냅샷 비교에는 serve에 `--snapshot-interval 1s --snapshot-log var/measurements/snapshot-events.jsonl` 또는 `--profile-dir var/measurements/profiles`를 추가한다. 두 옵션을 함께 사용할 수도 있다. 모두 새 경로만 허용한다. 프로파일 범위는 서버 준비 전부터 거래/HTTP drain까지이며, heap profile을 위한 강제 GC는 CPU 수집 종료 후 수행한다. 설정만으로 측정 구간 중 snapshot이 완료됐다고 단정하지 않고 이벤트 시각을 대조한다. 상세 의미는 [실험 옵션 계약](design-docs/benchmark-v1.md#스냅샷과-프로파일-실험-옵션)을 따른다.
 
+## 묶음 실험 실행
+
+서버 init/serve와 loadgen을 한 번에 실행하고 환경·바이너리·전체 원본을 보존하려면 다음을 사용한다. 기존 parent 아래 새 출력만 허용하며, 서버와 생성기는 같은 호스트의 자식 프로세스로 실행한다.
+
+```sh
+scripts/go build -o ./bin/ ./...
+mkdir -p var/experiments
+bin/experiment --config config/examples/benchmark.json --workload config/examples/workload.json --output var/experiments/smoke-normal
+bin/experiment --config config/examples/benchmark.json --workload config/examples/workload.json --output var/experiments/smoke-snapshot-profile --scenario snapshot-profile --snapshot-interval 1s
+```
+
+첫 명령은 normal, 두 번째는 snapshot과 profiler를 함께 켠 짧은 기능 실행이다. 두 실행이 각각 새 runId·잔고·호가에서 시작한다. 다른 실행 조건은 `bin/experiment -h`로 확인한다. 기본 binary 경로는 bin/exchange·bin/loadgen이고 `--exchange`·`--loadgen`으로 변경할 수 있다. `--server-arg=--batch-delay=2ms`처럼 runtime/HTTP 설정을 전달한다. 데이터·listen·metrics/snapshot/profile 경로는 실행기가 관리한다. 중단 시에는 자식 종료와 파일 정리를 기다린다. 원본 파일을 삭제하지 않으며 미완료/성능 실패를 통과로 표시하지 않는다.
+
+완료 해시와 해석 경계는 [원본 묶음 계약](design-docs/benchmark-v1.md#재현-실험-실행기와-원본-묶음)을 따른다. 프로파일은 `scripts/go tool pprof -top var/experiments/smoke-snapshot-profile/bin/exchange var/experiments/smoke-snapshot-profile/profiles/cpu.pprof`로 읽는다. heap/allocs 파일도 같은 방식이다. 실제 전체 실행·중단·오류·기존 디렉터리 보존 검사는 `scripts/go test -race ./cmd/experiment -timeout=120s`이며 native 사례에는 macOS/APFS/cgo·loopback 권한이 필요하다.
+
 ## 코드 기준
 
 Go 코드는 gofmt 형식을 사용하고 공개 함수·타입에 Go 문서 주석을 작성한다. 명령 재생의 결정성과 업무 상태의 단일 소유권은 [상세 설계](design-docs/exchange-v1.md)를 따른다.
@@ -157,7 +172,7 @@ P5의 [HTTP 장애 통합](../internal/runtime/http_fault_native_test.go)은 실
 
 [고정 seed 동시 입력](../internal/runtime/http_concurrent_native_test.go)은 4개 생산자의 고유 명령 64개를 각각 두 번 보내고 64개 잔고 조회를 수행한다. 응답 순번으로 정렬한 원본 입력을 별도 순차 엔진에 적용해 최초 결과·각 asOfSeq 잔고·최종 checkpoint를 비교한다. 이는 전송·순서·재생의 검사이며 독립 매칭 모델은 P1 테스트에 있다. [명시적 거래 사례](../internal/runtime/http_rules_native_test.go)는 가격/FIFO·여러 가격 체결 후 자기 거래 차단과 동시 잔고 소진의 기대 정수 값을 별도로 확인한다. 테스트 bridge와 환경변수는 `_test.go`에만 있으며 실행 바이너리에 장애 설정을 추가하지 않는다.
 
-P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 구간·프로세스 자원 계측을 연결했다. [계측 계약](design-docs/benchmark-v1.md#서버-구간과-자원-계측)에서 지표의 분모·관찰 범위·근사 정밀도를 확인한다. `scripts/go test -race ./internal/telemetry ./internal/wal ./internal/runtime ./internal/api ./cmd/exchange -timeout=180s`는 저장 대기/실패 중 계측, snapshot 복사/게시, 전송 실패, 파일 출력 오류·정상 종료 후 최종 건수/파일 크기를 검증한다. 실험 조건 연결·기준 지속 처리량 측정은 남아 있다.
+P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 구간·프로세스 자원 계측을 연결했다. [계측 계약](design-docs/benchmark-v1.md#서버-구간과-자원-계측)에서 지표의 분모·관찰 범위·근사 정밀도를 확인한다. `scripts/go test -race ./internal/telemetry ./internal/wal ./internal/runtime ./internal/api ./cmd/exchange -timeout=180s`는 저장 대기/실패 중 계측, snapshot 복사/게시, 전송 실패, 파일 출력 오류·정상 종료 후 최종 건수/파일 크기를 검증한다. 실험 조건·환경/원본 묶음은 experiment CLI로 연결했다. 기준 지속 처리량 측정은 남아 있다.
 
 ## CI와 릴리스
 

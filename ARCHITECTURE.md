@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계와 HTTP executor·부하 CLI·원본 기록을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 실험 조건 연결·기준 실측·CI는 아직 남아 있다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계와 HTTP executor·부하 CLI·원본 기록을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/원본 묶음을 연결했다. 기준 실측·CI는 아직 남아 있다.
 
 ## 현재 문서 지도
 
@@ -51,6 +51,7 @@ P4 모듈과 P5의 api·서버 CLI, P6의 bench·부하 CLI를 구현했다. 아
 | [cmd/exchange](cmd/exchange/main.go) (구현) | init/serve·설정 검증·모듈 조립·기동 보고·signal 종료와 HTTP/runtime 합류 | 위 모듈의 공개 진입점 |
 | [internal/bench](internal/bench/plan.go) (구현) | 고정 seed 입력·open-loop 실행·초기 상태 확인·공개 HTTP 전송·표본/고유 결과 집계 | domain, strictjson, 표준 라이브러리; engine/runtime 직접 호출 없음 |
 | [cmd/loadgen](cmd/loadgen/command.go) (구현) | 설정/ready 보고서 대조·공개 HTTP 부하·측정 원본/완료/실패 파일 | bench, buildinfo, strictjson, telemetry, wal의 설정 해시 계산; run 파일 접근 없음 |
+| [cmd/experiment](cmd/experiment/command.go) (구현) | 새 서버/생성기 프로세스 수명·환경 수집·복사 바이너리/설정·원본 해시 묶음 | bench 입력 타입, strictjson, wal 설정 decoder, buildinfo, 표준 파일/프로세스/OS 읽기; 엔진 직접 호출 없음 |
 | [internal/buildinfo](internal/buildinfo/info.go) (구현) | 실행 바이너리의 Go/플랫폼·VCS revision/dirty 정보 | 표준 라이브러리 |
 | [internal/telemetry](internal/telemetry/histogram.go) (구현) | 고정 크기 지연 히스토그램·Go/OS 프로세스 자원 관찰 | 표준 라이브러리·OS 읽기 호출; 엔진/저장 상태 접근 없음 |
 

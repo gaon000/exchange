@@ -2,7 +2,7 @@
 
 상태: Accepted (P6 구현 계약)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 서버 옵션을 연결했다. 환경/원본 묶음과 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
+구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력·실행·집계와 [loadgen CLI](../../cmd/loadgen/command.go)의 원본 출력, 서버 구간·프로세스 자원 계측을 구현했다. 스냅샷/프로파일 서버 옵션을 연결했다. [experiment CLI](../../cmd/experiment/command.go)의 환경/바이너리/원본 묶음을 연결했다. 기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
 
 ## 목적과 경계
 
@@ -105,7 +105,7 @@ HTTP 상태/bytes는 서버가 시도하고 Write에서 반환받은 값이다. 
 
 loadgen run.json에는 Plan/준비 완료 후 Run 전·후의 생성기 자원 관찰을 추가한다. worker 준비·워밍업·측정·drain을 포함하며 측정 phase만의 CPU가 아니다. 두 시점 heap 차이는 최대 메모리나 총할당이 아니다. 생성기와 서버 자원을 구분한다.
 
-주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음과 반복 비교 절차는 다음 실험 단계에서 연결한다.
+주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음은 아래 실험 실행기로 연결하며 반복 기준 측정은 남아 있다.
 
 ## 스냅샷과 프로파일 실험 옵션
 
@@ -119,9 +119,40 @@ loadgen run.json에는 Plan/준비 완료 후 Run 전·후의 생성기 자원 �
 
 CPU profile의 비동기 쓰기 실패도 보존해 일반 종료를 요청한다. 모든 profile을 Sync·Close하고 마지막 metrics를 남기므로 final 프로세스 CPU/GC에는 종료 시 강제 GC와 profile 기록 비용도 포함된다. 이는 측정 구간만의 비용이 아니다. 정상 성능 실행과 profile 실행을 구분하고, 두 실행에서 snapshot·주기 계측 설정을 같게 유지한다. 프로파일 없이도 Go의 기본 메모리 표본 수집은 켜져 있을 수 있으며 실제 표본율을 함께 기록한다. 전원 장애 내구성은 이 관찰 파일의 보장 범위가 아니다.
 
-## 남은 실험 연결과 기준 측정
+## 재현 실험 실행기와 원본 묶음
 
-- 구현한 정상·snapshot·profiling 설정을 연결하는 반복 실행 도구와 전체 환경/원본 묶음, snapshot 시간/메모리 비교.
+[experiment CLI](../../cmd/experiment/command.go)는 지원 환경인 로컬 macOS/APFS에서 새 디렉터리를 만들고 서버 init→serve→loadgen→서버 종료를 실행한다. 기존 run이나 출력 디렉터리를 재사용하지 않는다. 서버/생성기 바이너리와 초기 설정·workload를 복사하고, 복사본을 실행한다. 일반 파일만 복사하며 설정은 4 MiB, 각 바이너리는 128 MiB 이하로 제한한다. 외부 production dependency는 없다.
+
+`--scenario`는 normal·snapshot·profile·snapshot-profile이다. 기본 주기는 metrics 1s·snapshot 5s이며 모든 실제 인자를 manifest.json에 기록한다. `--server-arg=--batch-delay=2ms`처럼 runtime/HTTP 옵션만 반복 지정할 수 있고 같은 옵션 중복이나 데이터/포트/기록 경로 재정의는 거절한다. 일반 성능 비교도 같은 metrics 설정을 유지한다.
+
+환경은 거래 시작 전에 읽는다. environment.json은 runner 바이너리의 build 정보, 논리 CPU 수, runner GOMAXPROCS, 명시된 GOMAXPROCS/GOGC/GOMEMLIMIT/GODEBUG, CPU 모델·RAM·장치 모델·macOS 버전, 파일 시스템 종류/로컬 여부·allocation block·당시 가용 bytes를 포함한다. 시스템 명령 조회가 실패하면 해당 항목에 오류를 남긴다. 전체 환경변수나 자격 증명은 수집하지 않는다. 서버/생성기의 build 정보는 각각 ready와 loadgen manifest에 별도로 남는다. 가용 공간은 초기 관찰이며 실행 중 공간 보장이 아니다.
+
+| 묶음 경로 | 내용 |
+| --- | --- |
+| bin/exchange, bin/loadgen | 실제 사용한 복사 바이너리 |
+| config.json, workload.json | 복사 후 다시 검증한 입력 bytes |
+| environment.json, manifest.json | 실행 환경·시나리오·단계별 실제 argv |
+| initialized.json, server-ready.json | 초기화와 복구/서버 설정 보고 |
+| init.stderr, server.stderr, loadgen.stdout, loadgen.stderr | 직접 파일로 연결한 자식 출력 |
+| server-metrics.jsonl | 서버 initial~final 지표 |
+| snapshot-events.jsonl, profiles/ | 켠 시나리오에서만 생성하는 snapshot 이벤트·CPU/heap/allocs/metadata |
+| loadgen/ | 앞서 정의한 전체 입력·표본·집계·완료/실패 파일 |
+| run/ | 해당 실험의 Genesis·WAL·snapshot·잠금 파일. 거래 이력을 임의 삭제하지 않음 |
+| verification.json | run/plan identity, 측정 시간, 계측 수와 측정에 겹친 완료 snapshot 수 |
+| completed.json | 자식 정상 종료·검증 후 전체 일반 파일의 SHA-256. 이 표식 자체는 해시 목록에서 제외 |
+| failed.json | 실패 원인/시각. 부분 결과를 보존하며 completed를 만들지 않음 |
+
+서버 준비에는 30초, 초기화에는 30초, 부하 생성기에는 준비 주문 deadline 합+워밍업+측정+2분의 한도를 둔다. SIGINT/SIGTERM 또는 실패 시 자신이 만든 자식만 SIGTERM으로 종료하고 30초 동안 합류한다. 제한을 넘으면 해당 자식만 kill하고 실험을 실패 처리한다. 개발 컴퓨터나 다른 서버를 종료하지 않는다. 서버의 저장 drain에 실패한 실행을 정상으로 보지 않는다.
+
+완료 전에 loadgen의 정해진 6개 파일과 완료 해시, summary의 유효성·plan digest·run/config identity·시간 범위, 서버 initial/final을 확인한다. snapshot 시나리오는 실제 완료 이벤트의 시작~끝과 측정 구간이 겹쳐야 한다. UNKNOWN 이벤트는 성공 건수에 포함하지 않으며 서버가 너무 빨리 끝나 snapshot이 없으면 설정을 켰더라도 실패다. profile 시나리오는 수집 시각이 Run 전체를 덮는지와 압축 파일 무결성을 검사한다. 이는 protobuf 전체 의미 검증을 대체하지 않으며 별도 `go tool pprof` 해석 증거를 기록한다.
+
+마지막으로 symlink/특수 파일을 거절하고 최대 1,200개 파일의 해시를 계산해 임시 완료 표식을 rename한다. 파일 Sync/Close와 자식 exit 성공을 요구하지만 거래 WAL의 strict sync/전원 장애 보장을 관찰 파일에 확대하지 않는다. 강제 kill·디스크 오류에서는 failed.json조차 없을 수 있으므로 완료 표식이 없는 디렉터리는 미완료다. 완료 이후 stdout 출력 실패는 CLI 오류가 되지만 이미 검증한 completed 묶음을 무효화하지 않는다. 완료 묶음을 직접 변경하거나 같은 run을 재사용하면 원래 해시와 달라진다.
+
+실행기의 완료는 재현 자료가 준비됐다는 의미다. p99 상한·허용 실패율·지속 기간/반복 수의 성능 판정과 최대 지속 처리량은 별도 기준 측정에서 결정한다. 한 머신의 생성기와 서버가 자원을 함께 쓰는 한계도 결과에 기록한다.
+
+## 남은 기준 측정
+
+- 구현한 실행기로 정상·snapshot·profiling을 반복 측정하고 snapshot 시간/메모리를 비교.
 - 실제 기준 측정 뒤 p99 상한·허용 실패율·워밍업/지속 기간·반복 수·workload를 고정하고 P7에서 같은 조건으로 비교한다.
 
 현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
