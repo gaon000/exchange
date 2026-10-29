@@ -62,6 +62,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | runtime snapshot 생성·종료·프로세스 복구 | `scripts/go test ./internal/runtime -run 'TestSnapshot|TestQueuedSnapshot|TestShutdownWaitsForBoth|TestWALFailureJoins|TestNativeSnapshot' -v` (native 사례는 macOS/cgo) |
 | HTTP 입력·전송·거래/복구 | `scripts/go test ./internal/api -v` (loopback 권한 필요, APFS 통합 사례는 macOS/cgo) |
 | CLI 실제 프로세스·signal·재시작 | `scripts/go test ./cmd/exchange -run '^TestNativeCLI' -v` (macOS/cgo·loopback, 개발 컴퓨터를 종료하지 않음) |
+| HTTP 장애·과부하·프로세스 복구 | `scripts/go test ./internal/runtime -run '^TestNativeHTTP' -v -timeout=120s` (macOS/cgo·loopback, 테스트 소유 자식 프로세스만 kill) |
 | 추적된 변경의 공백 검사 | `git diff --check`; staged 변경은 `git diff --cached --check` |
 | 새 문서의 공백 검사 | `git diff --no-index --check -- /dev/null <새 문서 경로>`; 각 파일에 실행하며 `<새 문서 경로>`는 실제 경로로 교체 |
 
@@ -118,9 +119,15 @@ P4 snapshot은 상태 직접 복원, 독립 golden bytes와 스트리밍 코덱,
 
 P5의 [HTTP handler 검사](../internal/api/server_test.go)는 엄격한 JSON·헤더/계정 문맥·크기·오류/조회 DTO와 전송 슬롯을 검사한다. [실제 TCP 검사](../internal/api/network_test.go)는 헤더 8,192/8,193-byte 경계, 본문 4,096/4,097-byte 경계, 읽기/쓰기 timeout, 연결 단절과 포화를 확인한다. 읽지 않는 클라이언트의 송수신 버퍼를 줄여 실제 write timeout도 관찰한다. [APFS 통합](../internal/api/native_test.go)은 HTTP→runtime→WAL의 거래·잔고·중복·계정 범위·체결 페이지·동시 취소/체결·snapshot 재시작을 검증한다. timeout/연결 종료 뒤에도 이미 접수한 명령이 처리되고 최초 결과를 재조회할 수 있다.
 
-HTTP 테스트는 127.0.0.1의 임의 포트를 열고 종료 시 서버·클라이언트·runtime을 정리한다. 샌드박스에서 bind가 거절되면 loopback 소켓을 허용하는 실행 권한으로 검사한다. 테스트를 skip하거나 recorder만 통과한 결과로 실제 네트워크 검증을 대신하지 않는다. HTTP부터 큐 포화/저장 오류/추가 프로세스 종료 지점까지의 통합 행렬·실제 전원 장애는 P5의 남은 작업이다.
+HTTP 테스트는 127.0.0.1의 임의 포트를 열고 종료 시 서버·클라이언트·runtime을 정리한다. 샌드박스에서 bind가 거절되면 loopback 소켓을 허용하는 실행 권한으로 검사한다. 테스트를 skip하거나 recorder만 통과한 결과로 실제 네트워크 검증을 대신하지 않는다. HTTP부터 큐 포화·저장 오류·프로세스 종료까지의 통합 행렬은 아래 검사로 연결했다. 실제 전원 장애는 P5의 필수 미완료 항목이다.
 
 [CLI 수명주기 검사](../cmd/exchange/lifecycle_test.go)는 HTTP/runtime의 완료 순서·HTTP 종료 timeout·runtime 오류·출력 실패 시 정리를 검사한다. [실제 자식 프로세스 검사](../cmd/exchange/native_test.go)는 테스트 실행 파일의 전용 TestMain 경로로 실제 main을 호출해 init·SIGINT/SIGTERM·접수 명령 drain·같은 포트/데이터 재시작·성공 응답 후 kill·잠금 경합·손상 기동 거절을 확인한다. 전용 진입 환경변수는 테스트 파일에만 있으며 일반 바이너리에 없다. 별도로 빌드한 `bin/exchange`에서도 초기화→HTTP 주문→SIGTERM→재시작→동일 응답/잔고를 확인했다. 두 경우 모두 자식 프로세스 시험이며 전원 장애 증거가 아니다.
+
+P5의 [HTTP 장애 통합](../internal/runtime/http_fault_native_test.go)은 실제 loopback과 runtime을 사용한다. 명령/조회 큐·runtime 요청 한도, 적용 전후 panic, snapshot 저장 오류와 readiness 해제를 검사한다. WAL 실패 요청에 한해 테스트 adapter가 쓰기 전·부분 기록·완전한 기록/동기화 전·실제 strict sync 후 오류의 파일 상태를 만든다. 정상 실행에서 따로 얻은 동일 프레임 bytes를 사용하며 저장 실패 호출을 실제 Store.Append로 실행했다고 주장하지 않는다. 실제 WAL write/sync 함수의 오류 주입은 앞의 wal/store_test.go가 담당한다. 두 검증의 경계를 함께 기록한다.
+
+[프로세스 통합](../internal/runtime/http_process_native_test.go)은 저장 결과 4종·적용 전후·응답 전/실제 본문 일부 전송 후·snapshot 사본 생성 전후/게시 전후의 12개 지점에서 자식만 종료한다. 재시작 시 기존 snapshot+WAL에서 허용한 순번을 확인하고, 재시도한 최초 응답·주문·잔고·호가·체결과 최종 WAL bytes를 정상 실행과 비교한다. snapshot 파일의 개별 write/sync/rename 호출은 P4의 파일 계층 7개 지점 검사와 구분한다. 사본 복사 내부나 매칭 내부의 특정 CPU 명령에서 kill한 것으로 표현하지 않는다.
+
+[고정 seed 동시 입력](../internal/runtime/http_concurrent_native_test.go)은 4개 생산자의 고유 명령 64개를 각각 두 번 보내고 64개 잔고 조회를 수행한다. 응답 순번으로 정렬한 원본 입력을 별도 순차 엔진에 적용해 최초 결과·각 asOfSeq 잔고·최종 checkpoint를 비교한다. 이는 전송·순서·재생의 검사이며 독립 매칭 모델은 P1 테스트에 있다. [명시적 거래 사례](../internal/runtime/http_rules_native_test.go)는 가격/FIFO·여러 가격 체결 후 자기 거래 차단과 동시 잔고 소진의 기대 정수 값을 별도로 확인한다. 테스트 bridge와 환경변수는 `_test.go`에만 있으며 실행 바이너리에 장애 설정을 추가하지 않는다.
 
 ## CI와 릴리스
 

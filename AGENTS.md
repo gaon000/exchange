@@ -1,6 +1,6 @@
 # 작업 안내: exchange
 
-학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P4까지 실행 중 snapshot 생성과 재시작 복구를 구현했고 P5 HTTP 계층과 초기화·실행 CLI를 연결했다. 추가 HTTP 장애 행렬·부하 측정·실제 전원 장애 검증은 남아 있다.
+학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P4까지 실행 중 snapshot 생성과 재시작 복구를 구현했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. 부하 측정과 실제 전원 장애 검증은 남아 있다.
 
 ## 먼저 읽을 문서
 
