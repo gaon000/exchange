@@ -15,7 +15,7 @@
 
 ## 작업별 읽기
 
-v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4 snapshot 생성·재시작 복구까지 완료했고 HTTP API·부하 측정·실제 전원 장애 검증이 남아 있다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이며 전체 거래 경로 성능과 구분한다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
+v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4까지 완료했고 P5 HTTP 계층을 연결했다. 서버 CLI·추가 HTTP 장애 행렬·부하 측정·실제 전원 장애 검증은 남아 있다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이며 전체 거래 경로 성능과 구분한다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
 
 ## 선택 문서
 

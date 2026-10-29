@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진, P2 Genesis/WAL·공유 내구성 어댑터와 P3 단일 소유자 runtime이 존재한다. P4의 snapshot 상태 DTO·직접 복원·스트리밍 코덱·파일 게시·기동 시 대체 복구와 실행 중 snapshot worker를 연결했다. HTTP 서버·부하 생성기·CI는 아직 구현하지 않았다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버 계층과 실제 거래·재시작 테스트를 추가했다. 초기화/서버 실행 CLI·부하 생성기·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -36,7 +36,7 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 모듈과 의존 방향
 
-P4까지 domain·engine·strictjson·durable·wal·snapshot·runtime을 구현했다. 아래에서 나머지 예정 경로와 구분한다.
+P4 모듈과 P5의 api를 구현했다. 아래에서 나머지 예정 경로와 구분한다.
 
 | 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |
@@ -47,7 +47,7 @@ P4까지 domain·engine·strictjson·durable·wal·snapshot·runtime을 구현�
 | [internal/wal](internal/wal/store.go) (구현) | Genesis·WAL 프레임/검사·Init/Open/Replay/ConfirmRecovery/Append | domain, strictjson, durable; engine 의존은 테스트만 |
 | [internal/snapshot](internal/snapshot/codec.go) (구현) | envelope 스트리밍·파일 sync·exclusive 게시·정식 후보 열거/검증/재확인 | domain, strictjson, durable, 표준 파일 I/O; engine·wal 의존은 테스트만 |
 | [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot |
-| `internal/api/` | 요청 정규화·계정 식별·응답·조회 | runtime의 command/query 인터페이스 |
+| [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, 표준 HTTP |
 | `cmd/exchange/` | 설정 로딩·모듈 조립·프로세스 생명주기 | 위 모듈의 공개 진입점 |
 | `cmd/loadgen/`, `internal/bench/` | 네트워크 부하·측정·재현 설정 | 공개 API 계약, 측정 도구 |
 

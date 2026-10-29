@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P3 runtime의 명령·계정/run 문맥·오류 구분·일관된 조회·체결 페이지까지 Go API로 구현했다. HTTP 헤더·본문 크기·응답 직렬화·네트워크 검증은 P5에서 연결한다.
+구현 상태: P5의 [HTTP 계층](../../internal/api/server.go)을 runtime에 연결했다. 엄격한 입력·계정/run 문맥·오류 구분·최초 응답·조회·체결 페이지와 실제 loopback 거래/재시작을 검증했다. 초기화·서버 실행 CLI와 남은 장애 통합 검증은 진행 중이다.
 
 [제품 명세](../product-specs/exchange.md)의 정책과 [처리 설계](exchange-v1.md)를 구체화한다. 여기서 정하는 숫자는 재현용 모의 거래 설정이며 실제 시장 규칙·시세가 아니다. 변경 시 Genesis의 설정 식별값과 규칙 버전을 함께 검토한다.
 
@@ -37,11 +37,13 @@ v1 거래쌍은 `BTC-USDT`다. 내부 가격·수량·잔고·대금은 부호 �
 - HTTP/1.1 + JSON, 기본 주소 `127.0.0.1:8080`. v1은 loopback 바인딩만 허용한다. 외부 접속·TLS·실서비스 인증은 범위 밖이다.
 - `/v1/` 요청은 `X-Run-ID`와 `X-Account-ID`가 각각 하나씩 필요하다. 계정은 현재 Genesis의 등록 ID와 대조하고, 본문에 accountId를 받지 않는다.
 - 헤더 기반 테스트 계정 선택은 같은 컴퓨터의 신뢰한 CLI/loadgen을 위한 것이다. 다른 로컬 프로그램의 사칭을 막는 인증으로 설명하지 않는다.
-- Host는 loopback 주소만 허용하고, 브라우저 Origin 헤더가 있는 요청은 거절한다. CORS를 열지 않는다.
+- Host는 숫자 IPv4/IPv6 loopback 주소만 허용한다. `127.0.0.1:8080`, `[::1]:8080`은 가능하며 DNS 이름·zone·wildcard는 받지 않는다. listen도 같은 규칙이며 hostname을 해석하지 않는다. 브라우저 Origin 헤더가 있는 요청은 빈 값이어도 거절한다. CORS를 열지 않는다.
 - JSON 요청의 Content-Type은 `application/json` (선택적인 charset=utf-8 허용). Content-Encoding은 없거나 identity만 허용한다.
-- 기본 연결 요청 제한: 헤더 8 KiB, 본문 4 KiB, 헤더 읽기 2초, 본문 읽기 2초, 결과 대기 5초, 응답 쓰기 5초. 이는 서버 자원 한도이며 p99 성능 목표가 아니다.
+- 기본 연결 요청 제한: 요청 줄과 초기 헤더/종료 개행 합계 8 KiB, 디코딩한 본문 4 KiB, 헤더 읽기 2초, 본문 읽기 2초, 결과 대기 5초, 응답 쓰기 5초. 고정 Go 1.27.3의 net/http가 더하는 4 KiB 읽기 여유분을 보정하고 8,192/8,193-byte 실제 경계로 검사한다. 이는 서버 자원 한도이며 p99 성능 목표가 아니다.
 - command queue 기본 8,192개, 동시에 대기/송신하는 HTTP 요청 최대 16,384개, 고유 pending 키당 대기자 최대 16개. query도 전역 요청 한도를 공유하며 업무 고루틴용 별도 query queue 기본 1,024개를 둔다. P3의 runtime.Options로 노출했으며 P6 측정에 기록한다.
 - 포화 거절과 연결 timeout이 이미 접수한 명령의 처리 취소를 뜻하지 않는다. 준비 완료 전에는 변경 요청·업무 조회·완료 캐시 응답을 제공하지 않는다.
+
+[api.New](../../internal/api/server.go)는 소켓을 열지 않고 handler와 전송 한도를 구성한다. `ListenLoopback`과 `Server.Serve`로 연결하고 `Server.Shutdown`으로 HTTP 접수를 닫는다. 프로세스를 조립하는 호출자는 별도로 runtime도 종료해야 한다. HTTP 요청 한도는 본문 검사·결과 대기·응답의 마지막 flush까지 유지하고 포화 시 즉시 429를 반환한다. body가 없는 조회의 연결 감지 읽기에 본문 deadline을 설정하여 결과 대기를 단축하지 않는다. 본문을 받는 메서드는 POST 두 개뿐이며 GET 본문은 거절한다.
 
 ## 3. 정규화와 중복 키
 
@@ -114,6 +116,7 @@ X-Account-ID: alice
 | HTTP | code | outcome |
 | --- | --- | --- |
 | 400 | INVALID_REQUEST (필드·단위·범위·잘못된 JSON) | NOT_ADMITTED |
+| 404 / 405 | ROUTE_NOT_FOUND / METHOD_NOT_ALLOWED (405에는 Allow 헤더) | NOT_ADMITTED |
 | 403 | UNKNOWN_ACCOUNT / ORIGIN_FORBIDDEN / HOST_FORBIDDEN | NOT_ADMITTED |
 | 409 | RUN_MISMATCH / IDEMPOTENCY_CONFLICT / RUN_LIMIT_REACHED | NOT_ADMITTED |
 | 413 / 415 | BODY_TOO_LARGE / UNSUPPORTED_MEDIA_TYPE | NOT_ADMITTED |
@@ -121,8 +124,10 @@ X-Account-ID: alice
 | 503 | NOT_READY (접수 전) | NOT_ADMITTED |
 | 503 | STORAGE_UNAVAILABLE / INTERNAL_FAILURE (접수 후) | UNKNOWN, fail-stop |
 | 504 | RESULT_TIMEOUT (접수 후) | UNKNOWN |
+| 408 | REQUEST_TIMEOUT (본문 읽기·접수 전 context 만료) | NOT_ADMITTED |
+| 505 | PROTOCOL_UNSUPPORTED (HTTP/1.1 이외) | NOT_ADMITTED |
 
-형식/계정/runId/범위 검사는 WAL 이전, 가용 잔고·취소 대상 상태 검사는 저장 후 순차 적용 단계다. 본문 검사 중 timeout·응답 연결 단절처럼 JSON 오류 body를 전달할 수 없는 경우도 있으므로 클라이언트는 네트워크 실패 자체를 확정 업무 거절로 바꾸지 않는다.
+형식/계정/runId/범위 검사는 WAL 이전, 가용 잔고·취소 대상 상태 검사는 저장 후 순차 적용 단계다. HTTP 파서가 handler 호출 전에 거절하는 잘못된 프레임·중복 Host·헤더 초과(431), 헤더 읽기 timeout은 JSON 오류 형식을 보장하지 않는다. 본문 검사 중 timeout·응답 연결 단절처럼 JSON 오류 body를 전달할 수 없는 경우도 있으므로 클라이언트는 네트워크 실패 자체를 확정 업무 거절로 바꾸지 않는다. 내부 원인·파일 경로 등 진단은 오류 body에 포함하지 않는다.
 
 ## 6. 조회 API와 일관성
 
@@ -143,6 +148,19 @@ X-Account-ID: alice
 
 체결 페이지는 첫 조회의 asOfSeq를 `throughSeq`로 고정하고 다음 요청에 전달한다. `afterSeq`, `afterIndex`는 마지막 체결의 위치이며 둘 다 있어야 한다. 최초에는 생략한다. 이후 페이지는 `commandSeq <= throughSeq` 안에서만 조회하여 새 체결 유입으로 페이지 경계가 바뀌지 않는다. tradeId는 `runId:commandSeq:matchIndex`, matchIndex는 명령 내 1부터 시작한다. v1은 체결을 삭제하지 않는다. 잘못된 cursor나 현재 appliedSeq보다 큰 throughSeq는 400이다.
 
+조회 wire DTO는 [api response 타입](../../internal/api/response.go)에 고정한다. 정수는 모두 문자열이며 빈 bids/asks/trades는 `[]`다. 미지·중복 query parameter, 빈 숫자·부호·소수·지수는 400이다. limit을 생략하면 book은 20, trades는 100이다.
+
+| 조회 | JSON 필드 |
+| --- | --- |
+| 현재 주문 | runId, asOfSeq, order (전체 Order) |
+| 잔고 | runId, asOfSeq, BTC {availableLots, reservedLots}, USDT {availableAtoms, reservedAtoms} |
+| 호가 | runId, asOfSeq, bids/asks [{priceTicks, quantityLots}] |
+| 체결 | runId, asOfSeq, throughSeq, trades [{tradeId, priceTicks, quantityLots, takerSide}], nextCursor |
+
+nextCursor는 페이지가 limit에 도달하면 마지막 체결의 `{afterSeq, afterIndex}`이며, 나머지는 null이다. 마지막 페이지의 크기가 limit과 같으면 다음 요청이 빈 배열을 반환할 수 있다. 다음 요청에는 cursor의 양수 두 값과 응답의 throughSeq를 함께 보낸다. 첫 페이지에 cursor를 쓰지 않으며 `0/0` cursor는 거절한다. public 체결에는 maker/taker의 계정·주문 ID를 노출하지 않는다. health 성공 body는 각각 `{"state":"LIVE"}`, `{"state":"READY"}`이며 ready 실패는 NOT_READY 오류다. 모든 handler JSON 응답은 `Cache-Control: no-store`다.
+
 ## 7. 검증 연결
 
 P1은 단위·정수 overflow·초기 공급량·잔고 계산을 검증한다. P3/P5는 엄격한 JSON·계정 문맥·큐 한도·중복·UNKNOWN·불변 최초 응답·조회 경계·페이지 고정 시점에 테스트를 붙인다. 특히 `"000100"` 재시도, 같은 키의 다른 가격, JSON 중복 키/키 대소문자, float/지수 입력, 4,097-byte 본문, 명령 한도 뒤 재시도, 접수 직후 disconnect를 포함한다.
+
+P5의 [handler 검사](../../internal/api/server_test.go), [실제 소켓 경계](../../internal/api/network_test.go), [APFS/runtime 통합](../../internal/api/native_test.go)이 구현되어 있다. HTTP 전역 한도·오류 매핑과 P3 runtime의 큐/저장 오류 검증을 구분한다. HTTP 요청부터 큐 포화·저장 실패·프로세스 종료까지의 추가 장애 행렬, 서버 CLI와 실제 전원 장애 검증은 남아 있다.
