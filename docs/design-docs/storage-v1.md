@@ -1,0 +1,122 @@
+# v1 저장 형식과 플랫폼 계약
+
+상태: Accepted (P0 구현 기준)
+결정일: 2026-10-29 (Asia/Seoul)
+구현 상태: 저장 API probe만 존재. Genesis·WAL·snapshot 구현은 P2~P4다.
+
+[상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
+
+## 1. 데이터 디렉터리와 초기화
+
+예정 CLI 계약은 `exchange init --config config/examples/local.json --data-dir var/runs/run-1`과 `exchange serve --data-dir var/runs/run-1`이다. 아직 실행 파일은 없다. 초기화와 시작을 별도 명령으로 유지한다.
+
+```text
+run-1/
+  .lock
+  genesis.bin
+  commands.wal
+  snapshot-00000000000000001024.bin
+```
+
+- init은 기존 parent 아래 새 run 디렉터리를 단일 mkdir로 생성한다. 대상이 존재하면 비어 있어도 거절하고 덮어쓰거나 자동 초기화하지 않는다. parent는 미리 준비한다.
+- 새 runId를 생성하고, 설정 검증·정규화 후 Genesis를 한 번 작성한다. 초기 잔고는 전부 available, reserved=0이다. 내부 오류나 저장 실패로 미완성 디렉터리가 남으면 그 사실을 보고하고 보존한다.
+- `.lock`은 같은 inode를 유지한다. open 후 `flock(LOCK_EX|LOCK_NB)`을 획득한 프로세스만 파일을 읽어 복구하거나 기록한다. lock FD는 종료까지 보유하고, 잠금 파일을 unlink/재생성하지 않는다. PID 문자열만으로 소유권을 판정하지 않는다.
+- v1은 단일 `commands.wal`을 append한다. 세그먼트 회전·WAL 삭제·결과 만료는 구현하지 않는다. 정리 범위를 줄여 먼저 복구를 검증한다.
+- init 완료 전 Genesis와 WAL 헤더의 파일 동기화, run 디렉터리 동기화, run을 생성한 parent 디렉터리 동기화를 모두 확인한다. 일반 serve는 Genesis를 수정하거나 초기 잔고를 다시 지급하지 않는다.
+- 운영 파일/디렉터리 권한은 각각 0600/0700으로 시작한다. run 디렉터리는 서버만 변경하는 로컬 실험 경계다. 외부 프로세스가 파일을 교체하는 환경은 지원하지 않는다.
+
+## 2. 버전과 canonical JSON
+
+`formatVersion=1`, `rulesVersion=1`, `responseVersion=1`로 시작한다. format은 바이트 형식, rules는 매칭/잔고/거절 의미, response는 최초 응답 DTO다. 알 수 없는 버전이나 서로 다른 runId/configHash는 기동을 거절한다. 규칙 버전만 같게 붙이고 실행 의미를 변경하지 않는다.
+
+본문은 UTF-8 compact JSON이다. JSON number는 버전과 소수 자릿수 같은 작은 메타데이터에만 쓰고, 금액·수량·순번·한도는 API와 같은 정규화 정수 문자열을 쓴다. 개행·불필요 공백 없음, 필드 순서는 아래 계약에 고정한다. map 순회로 canonical bytes를 만들지 않고 고정 struct와 정렬한 배열을 사용한다. 문자열은 Go encoding/json 기본 escaping을 사용하며 허용 ID/literal의 ASCII 범위를 검증한다.
+
+- Config 필드 순서: [초기 설정 예시](../../config/examples/local.json)의 선언 순서. accounts는 accountId 바이트 사전순, 항목은 accountId/baseLots/quoteAtoms 순이다. 한도·단위의 v1 고정값도 포함한다.
+- `configHash`: 정규화 Config bytes의 SHA-256, 소문자 64자리 hex. 입력 파일의 들여쓰기·계정 배열 순서는 hash에 영향을 주지 않는다. 잘못된 중복 계정은 정규화 전에 거절한다.
+- Genesis payload 필드: runId, configHash, config. `config`에는 초기 잔고·전체 한도·모든 규칙 버전이 포함된다.
+- WAL metadata payload 필드: runId, configHash, rulesVersion, responseVersion. 이후 모든 command record는 이 식별 정보를 상속한다.
+- Command payload 필드: commandSeq, kind, accountId, payload. kind는 PLACE_ORDER 또는 CANCEL_ORDER이고 payload의 필드 순서는 API의 각 필수 본문 표 순서다. 헤더의 runId와 commandSeq까지 포함한 입력으로 최초 결과를 결정한다.
+- 응답에 시각을 넣지 않으므로 v1 WAL에 wall clock은 없다. tradeId는 runId/commandSeq/matchIndex로 결정한다. 해시·JSON 파서 버전 변경은 golden bytes 테스트로 검증한다.
+
+## 3. Genesis·WAL 헤더·snapshot envelope
+
+아래 정수 바이트 필드는 모두 little-endian이다. 길이 계산은 overflow 검사 후 수행하며 선언 길이만 보고 무제한 메모리를 할당하지 않는다.
+
+| offset | 길이 | 값 |
+| --- | ---: | --- |
+| 0 | 8 | ASCII magic: Genesis `EXGEN001`, WAL header `EXWAL001`, snapshot `EXSNP001` |
+| 8 | 4 | uint32 formatVersion=1 |
+| 12 | 8 | uint64 payloadBytes |
+| 20 | payloadBytes | canonical JSON payload |
+| 20+payloadBytes | 32 | 앞의 20+payloadBytes 전체의 SHA-256 raw bytes |
+
+Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot 최대 2 GiB다. Genesis/snapshot 파일은 정확히 envelope 하나이며 남는 바이트도 오류다. WAL은 envelope 하나 뒤에 아래의 완전한 그룹들이 연결된다. snapshot은 P4에서 streaming 쓰기/검증으로 처리하고 길이만큼 선할당하지 않는다. 상한을 넘으면 새 snapshot 생성을 실패로 남기고 기존 snapshot/WAL을 보존한다. 이 파일 상한은 가용 메모리 보장이 아니다.
+
+Genesis와 WAL header는 서로 일치해야 한다. 비어 있는 WAL도 유효한 헤더는 필요하다. 완성되지 않았거나 checksum이 다른 Genesis/header를 정상 새 실험으로 취급하지 않는다.
+
+## 4. WAL 그룹 프레임
+
+그룹 헤더는 36 bytes다. 첫 그룹은 seq=1이고 이후 `firstSeq = 이전 firstSeq + 이전 count`다. Genesis는 commandSeq를 소비하지 않는다.
+
+| offset | 길이 | 값 |
+| --- | ---: | --- |
+| 0 | 8 | ASCII `EXGRP001` |
+| 8 | 4 | uint32 headerBytes=36 |
+| 12 | 4 | uint32 payloadBytes, 1~1,048,576 |
+| 16 | 8 | uint64 firstSeq, int64 양수 범위 |
+| 24 | 4 | uint32 commandCount, 1~256 |
+| 28 | 4 | uint32 flags=0 |
+| 32 | 4 | CRC32C(header[0:32]), Go hash/crc32 Castagnoli |
+
+payload는 `uint32 recordBytes + canonical command JSON`을 count회 이어 붙인다. recordBytes는 1~4,096이다. payloadBytes에는 각 4-byte 길이도 포함한다. record 내부 commandSeq는 firstSeq부터 정확하게 연속해야 한다. 남는 payload bytes, count/길이 불일치, 잘못된 canonical 입력은 손상이다.
+
+footer는 16 bytes다: ASCII `EXEND001` 8 bytes, uint32 totalGroupBytes (`36+payloadBytes+16`), uint32 CRC32C. 마지막 CRC는 header + payload + footer 앞 12 bytes 전체를 대상으로 한다. checksum은 우발적 손상 검사용이며 악의적 파일 변조를 인증하지 않는다.
+
+기본 배치 한도는 256명령/1 MiB payload/첫 명령부터 1ms 대기다. 먼저 찬 조건에서 닫고, 큰 단일 record가 한도에 맞지 않으면 형식 검사 단계에서 거절한다. 이 수치는 초기 설정이며 처리량이나 지연 달성의 증거가 아니다. 한 배치 sync·적용 후 다음 배치를 처리한다.
+
+쓰기 순서는 header/payload/footer의 short write를 끝까지 처리 → 엄격한 동기화 성공 → durableSeq 전진 → 순차 상태 적용 → 결과 게시다. 어느 쓰기·동기화라도 실패하면 다음 명령 처리를 중단한다. footer는 과거 sync 완료를 증명하지 않는다.
+
+## 5. snapshot DTO와 게시
+
+snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersion, snapshotSeq, state다. state는 다음을 고정 배열로 포함한다.
+
+| state 필드 | 내용·순서 |
+| --- | --- |
+| accounts | accountId 순. ID와 자산별 available/reserved 정수 값 |
+| orders | accountId/clientOrderId 순. 활성·종료·거절 Order DTO 모두 |
+| book | bids/asks, 가격 우선 순. 가격별 clientOrderId+accountId FIFO 목록 |
+| trades | commandSeq/matchIndex 순, 가격·수량·양쪽 주문/계정 참조 |
+| results | accountId/kind/requestId 순. canonical 원래 command와 불변 최초 response |
+
+DTO의 정확한 Go 필드 선언과 golden snapshot fixture는 P4 구현에서 위 API/도메인 필드에 맞춰 고정하고, 실험 데이터를 쓰기 전에 formatVersion=1 검증을 완료한다. P0에서 아직 없는 snapshot decoder의 호환성을 주장하지 않는다. 복구 시 book과 orders, 예약 잔고, results의 누락·불일치를 검사한다. results에는 REJECTED·취소 no-op 결과도 들어간다.
+
+명령 경계 S에서 owner가 사본을 만든다. 파일명은 S를 20자리 0-padding한 `snapshot-S.bin`이다. 같은 디렉터리의 고유 임시 파일을 O_EXCL로 만들고, envelope 전체 쓰기 → 파일 엄격한 sync → close → 정식 이름으로 rename → 디렉터리 엄격한 sync 순으로 게시한다. 정식 이름이 이미 있으면 무조건 덮어쓰지 않고 같은 S의 정상 파일인지 확인한다. 기존 정상 snapshot은 보존한다. 재시작 시 임시 파일은 후보로 쓰지 않으며 임의로 정리할 필요도 없다.
+
+## 6. 복구 판정
+
+잠금 → Genesis/WAL header 확인 → 전체 WAL 프레임/연속성 검사 → 정상 snapshot 선택 → 후속 command 재생 → 불변식 검사 → 남길 WAL 및 변경 메타데이터 엄격한 sync → ready 순이다. v1은 WAL을 전부 보존하므로 snapshotSeq 이전 그룹도 구조와 checksum을 검사한다. snapshotSeq는 실제 유효 WAL 끝을 넘을 수 없다.
+
+- 다음 그룹의 36-byte header를 물리 EOF 때문에 끝까지 읽지 못하면 마지막 미완성 그룹이다.
+- header 전체를 읽었는데 magic/길이/CRC/seq/버전이 틀리면 EOF 근처여도 손상으로 기동 중단한다.
+- 정상 header가 가리킨 payload/footer가 물리 EOF로 잘렸을 때만 해당 마지막 그룹을 통째로 버릴 수 있다. 그 뒤의 magic을 검색해 재동기화하지 않는다.
+- 완전한 그룹의 checksum 오류·record 파싱 오류·순번 누락은 중단한다. 길이 필드가 비정상인데 단순 tail로 분류하지 않는다.
+- 잘린 꼬리는 마지막 완전한 그룹 끝으로 truncate하고 WAL을 엄격한 sync한다. 완전한 미응답 그룹은 재생 후에도 반드시 sync하여 이번 복구에서 내구성을 확정한다.
+- 최신 snapshot이 손상되면 이전 정상 snapshot 또는 Genesis를 쓰되 전체 WAL이 유효해야 한다. runId/configHash가 다르면 조용히 다른 실험 파일로 대체하지 않고 중단한다.
+- 디스크/외부 행위가 이미 성공 응답한 로그 전체를 삭제하거나 정상 경계까지 잘라낸 경우를 checksum만으로 탐지할 수 없다. 이는 저장장치 정상·단일 소유자 전제 밖이며 별도 복제나 외부 commit watermark는 v1 범위 밖이다.
+
+## 7. macOS 내구성 어댑터
+
+Go 1.27.3의 [File.Sync 구현](https://go.dev/src/internal/poll/fd_fsync_darwin.go)은 F_FULLFSYNC를 먼저 호출하지만 ENOTSUP에서는 fsync로 fallback한다. [Apple 설명](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man2/fsync.2.html)의 일반 fsync와 drive-cache flush 차이를 고려해 v1에서는 이 fallback을 허용하지 않는다.
+
+P2의 Darwin 어댑터는 cgo로 시스템 `fcntl(fd, F_FULLFSYNC)`를 직접 호출한다. EINTR만 재시도하고 ENOTSUP·EINVAL·EIO 등은 오류로 전달한다. Go 파일의 SyscallConn.Control 안에서 FD를 사용해 닫힘과의 경합을 피한다. cgo와 Apple Command Line Tools는 개발 toolchain이며 추가 Go production module은 필요하지 않다. 다른 OS/cgo 비활성화는 명시적인 지원 불가다.
+
+파일 내용뿐 아니라 생성·rename 후 관련 디렉터리, 새 run 생성 후 parent도 같은 strict sync 경로를 사용한다. lock FD는 종료까지 유지한다. 프로세스 강제 종료는 OS cache를 비우지 않으므로 전원 장애 검증을 대신하지 않는다.
+
+P0의 [storageprobe](../../tools/storageprobe/main.go)는 실제 APFS에서 별도 임시 디렉터리를 만들고 파일 sync, rename+directory sync, 잠금 충돌, truncate+sync, read-back을 확인했다. 테스트는 독립 프로세스 간 잠금과 close 후 해제, 닫힌 파일 sync 거절, 기존 parent 파일 보존도 확인한다. 대상은 호출 성공과 오류 전달이며 전원 차단·WAL 재생은 미검증이다.
+
+## 8. 검증 단계
+
+- P2: envelope/group golden bytes, 모든 바이트 절단, 길이/체크섬 손상, short write/EINTR/sync 오류, 명령 크기/정수 한도, 두 프로세스 잠금, 파일·parent sync 누락 검출.
+- P3: sync 실패 시 미적용, 완전한 미응답 그룹 재생, 응답 유실 후 최초 결과 재현.
+- P4: 모든 게시 지점 종료, 최신 snapshot 실패 시 fallback, snapshotSeq 앞/뒤 검증, 전체 WAL 재생과 상태/결과 동일성.
+- P5: 폐기 가능한 별도 환경의 실제 OS/전원 장애 검증. P0 probe 성공으로 이 완료 조건을 해제하지 않는다.

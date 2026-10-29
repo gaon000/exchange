@@ -1,0 +1,5 @@
+/.tools/
+/.cache/
+/var/
+/bin/
+.DS_Store

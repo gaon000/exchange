@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 문서만 존재한다. Go 소스·모듈 설정·실행 진입점·저장소·API·CI는 아직 구현하지 않았다. 아래 구현 목표와 예정 경로를 현재 구현으로 해석하지 않는다.
+2026-10-29 기준 P0의 Go 모듈·고정 toolchain wrapper·저장 API probe가 존재한다. 거래 엔진·WAL·서버·CI는 아직 구현하지 않았다. 아래 예정 모듈을 현재 구현으로 해석하지 않는다.
 
 ## 현재 문서 지도
 
@@ -19,6 +19,15 @@
 | [docs/design-docs/](docs/design-docs/index.md) | 구현 전 합의한 상태·동시성·저장·복구 계약 |
 | [docs/exec-plans/](docs/exec-plans/index.md) | 구현 단계·진행·실제 검증 기록 |
 
+## 현재 개발 도구
+
+| 실제 경로 | 책임 |
+| --- | --- |
+| [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
+| [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
+| [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
+| [config/examples/local.json](config/examples/local.json) | P0 초기 잔고·단위 fixture. 서버 loader는 P1/P2에서 구현 |
+
 ## 합의한 구현 목표
 
 Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고·주문·중복 결과의 업무 상태는 한 고루틴만 변경한다. API 수신, 로그 I/O, 불변 스냅샷 사본의 저장은 별도 고루틴에서 수행할 수 있다. 단일 상태 변경 고루틴은 서버 전체를 단일 OS 스레드로 제한한다는 의미가 아니다.
@@ -27,7 +36,7 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 예정 모듈과 의존 방향
 
-아래는 구현 계획의 경로 제안이다. 이 디렉터리들은 아직 존재하지 않는다. P0에서 확정하거나 변경 이유를 계획에 기록한다.
+아래는 P0에서 확정한 예정 모듈 경로다. 이 디렉터리들은 아직 존재하지 않는다. 실제 구현 중 변경하면 이유를 계획에 기록한다.
 
 | 예정 경로 | 책임 | 허용 의존 |
 | --- | --- | --- |

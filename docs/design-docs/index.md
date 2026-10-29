@@ -15,3 +15,5 @@
 | 문서 | 상태 | 범위 |
 | --- | --- | --- |
 | [exchange v1](exchange-v1.md) | Accepted | 주문 상태, 잔고 예약·해제, 명령 로그·스냅샷·중복·장애 복구 |
+| [API v1](api-v1.md) | Accepted | P0 정수 단위·한도·정규화·로컬 HTTP·최초 응답·조회 계약 |
+| [Storage v1](storage-v1.md) | Accepted | P0 파일 형식·버전·체크섬·strict sync·잠금·복구 판정 |

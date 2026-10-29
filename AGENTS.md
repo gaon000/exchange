@@ -1,6 +1,6 @@
 # 작업 안내: exchange
 
-학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. 현재는 문서만 있으며 애플리케이션과 실행 환경은 미구성이다.
+학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P0의 계약·Go 환경·저장 probe를 갖췄으며 거래 엔진·API는 아직 미구현이다.
 
 ## 먼저 읽을 문서
 

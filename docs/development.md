@@ -2,7 +2,18 @@
 
 ## 환경과 도구
 
-2026-10-29 기준 구현 언어는 Go로 합의했고, 애플리케이션 소스·go.mod·toolchain 버전 설정·CI는 아직 없다. 현재 셸에서 Go 실행 파일을 PATH로 찾지 못했다. 구체적인 Go 버전·모듈 경로·환경 준비는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)의 P0/P1에서 수행한다. PATH 결과만으로 시스템 전체의 Go 설치 여부를 단정하지 않는다.
+2026-10-29 P0에서 Go 1.27.3을 [.go-version](../.go-version)과 [go.mod](../go.mod)에 기록했다. 모듈은 `github.com/gaon000/exchange`다. 기본 PATH와 확인한 표준 설치 위치에서는 Go를 찾지 못해 공식 배포본을 프로젝트의 `.tools/go1.27.3`에 설치했다. 시스템 Go·셸 설정은 변경하지 않았다.
+
+| 항목 | P0에서 확인한 기준 환경 |
+| --- | --- |
+| OS/아키텍처 | macOS 15.8 (24H23), Darwin 24.6.0, arm64 |
+| CPU/메모리 | Apple M3 Pro, 논리 CPU 11개, RAM 18 GiB |
+| 저장소 | 내장 SSD의 로컬 APFS, 4,096-byte allocation block |
+| Go/모듈 | Go 1.27.3 darwin/arm64, 외부 require 없음 |
+| C toolchain | Apple Command Line Tools의 clang, CGO_ENABLED=1 |
+| 검증 범위 | 파일/디렉터리 F_FULLFSYNC·잠금·read-back·probe 테스트. 전원 장애 미검증 |
+
+현재 지원 기준은 이 환경이다. 다른 OS·파일 시스템·Go 버전은 검증 후 확대한다. 하드웨어/가용 디스크 공간은 P6 측정 시작 시 다시 기록한다. [공식 다운로드 목록](https://go.dev/dl/?mode=json)에서 확인한 `go1.27.3.darwin-arm64.tar.gz` SHA-256은 `dd3908cf20959d798c1e06ebe5b72213f0505ce01373b40ce3110975a6cd99c2`다. 설치 스크립트는 압축 해제 전에 이 값을 확인한다.
 
 Go 코드는 Go 모듈·도구로 관리한다. 향후 JavaScript/TypeScript 도구를 도입한다면 기존 사용자 규칙에 따라 Node.js 22 이상과 pnpm을 우선한다. 적절한 Node.js가 없으면 nvm 설치 여부와 사용 가능한 버전을 먼저 확인한다. 현재 Node.js 애플리케이션이나 pnpm 프로젝트를 구성한 것은 아니다.
 
@@ -10,9 +21,20 @@ Go 코드는 Go 모듈·도구로 관리한다. 향후 JavaScript/TypeScript 도
 
 ## 시작하기
 
-[README](../README.md), [작업 안내](../AGENTS.md), [제품 명세](product-specs/exchange.md), [상세 설계](design-docs/exchange-v1.md)를 읽는다. 애플리케이션 설치·로컬 실행 절차는 미구성이다. 구현 계획의 준비 단계 이후 실제 도구·경로·재현 명령을 여기에 추가한다.
+[README](../README.md), [작업 안내](../AGENTS.md), [제품 명세](product-specs/exchange.md), [상세 설계](design-docs/exchange-v1.md)를 읽는다. 저장소 루트에서 다음을 실행한다.
 
-환경변수 설정은 아직 없다. 필요한 설정이 생기면 이름, 용도, 필수 여부와 비밀값 없는 예제로 설명한다. 실제 credential은 안전한 별도 경로로 관리한다.
+```sh
+sh scripts/setup-go.sh
+scripts/go version
+scripts/go test ./...
+scripts/go run ./tools/storageprobe -dir .
+```
+
+setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버전이 있으면 재설치하지 않는다. 자동 버전 선택 대신 [scripts/go](../scripts/go)가 정확한 버전을 확인하고 `GOTOOLCHAIN=local`, `GOENV=off`, `GOWORK=off`로 실행한다. 캐시와 GOPATH는 `.cache/` 아래다. `.tools/`, `.cache/`, 실험 데이터 `var/`와 빌드 출력 `bin/`은 Git에서 제외한다. [Go toolchain 문서](https://go.dev/doc/toolchain)의 go directive 자체는 최소 버전이므로 재현 실행에는 wrapper를 사용한다.
+
+현재 실행 가능한 것은 개발 probe이며 거래 서버가 아니다. probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
+
+거래 서버의 환경변수 loader는 아직 없다. 초기 입력은 [local.json](../config/examples/local.json) fixture와 [API 계약](design-docs/api-v1.md)을 기준으로 P1/P2에서 연결한다. 현재 fixture에는 비밀값이 없다. 실제 credential이 필요해지면 안전한 별도 경로로 관리한다.
 
 ## 명령
 
@@ -20,14 +42,18 @@ Go 코드는 Go 모듈·도구로 관리한다. 향후 JavaScript/TypeScript 도
 
 | 작업 | 실제 명령·구성 상태 |
 | --- | --- |
-| 의존성 설치 | 미구성: 패키지 manifest와 lockfile 없음 |
+| 개발 toolchain 준비 | `sh scripts/setup-go.sh` (macOS arm64) |
+| toolchain 확인 | `scripts/go version`; `scripts/go env GOVERSION GOOS GOARCH CGO_ENABLED CC` |
+| Go 의존성 | go.mod만 존재, 외부 require/go.sum 없음. 추가 production dependency는 승인 전 설치하지 않음 |
 | 로컬 실행 | 미구성: 애플리케이션과 실행 진입점 없음 |
-| 정적 분석 | 미구성: linter 설정·스크립트 없음 |
-| 포맷 검사 | 미구성: formatter 설정·스크립트 없음 |
-| 타입 검사 | 미구성: Go 모듈·소스 없음. 구현 후 Go 컴파일 검증에 포함 |
-| 기본 테스트 | 미구성: 테스트 코드와 실행 설정 없음 |
+| 정적 분석 | `scripts/go vet ./...` |
+| 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l tools`; 출력이 비어 있어야 함. 소스 경로가 늘면 대상도 추가 |
+| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (현재 probe만 대상, 출력은 Git 제외) |
+| 기본 테스트 | `scripts/go test ./...` (현재 probe만 대상) |
+| race 검사 | `scripts/go test -race ./...` |
+| cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
+| 실제 저장 호출 확인 | `scripts/go run ./tools/storageprobe -dir .` |
 | 통합·주요 흐름 테스트 | 미구성: 애플리케이션·테스트 환경 없음 |
-| 빌드 | 미구성: 빌드 대상과 설정 없음 |
 | 추적된 변경의 공백 검사 | `git diff --check`; staged 변경은 `git diff --cached --check` |
 | 새 문서의 공백 검사 | `git diff --no-index --check -- /dev/null <새 문서 경로>`; 각 파일에 실행하며 `<새 문서 경로>`는 실제 경로로 교체 |
 
@@ -48,7 +74,7 @@ Go 코드는 gofmt 형식을 사용하고 공개 함수·타입에 Go 문서 주
 
 ## 테스트 환경
 
-미구성: 테스트 소스·fixture·실행 환경이 없다. 구현 계획에 Go 단위·race·fuzz·benchmark와 장애 주입 검증의 예정 명령을 기록했다. 모듈·대상 패키지·테스트를 작성한 뒤 실제 실행하고 이 문서의 명령 표를 갱신한다. 현재 명령 표와 계획의 미래 명령을 구분한다.
+[storageprobe 테스트](../tools/storageprobe/main_test.go)는 실제 파일 sync·부모 파일 보존·닫힌 FD 오류·프로세스 간 잠금과 해제를 검증한다. [지원 불가 테스트](../tools/storageprobe/unsupported_test.go)는 cgo를 끄면 성공으로 보고하지 않고 자기 임시 파일을 정리하는지 검사한다. 거래 엔진·WAL·API·fuzz·benchmark·장애 주입은 P1 이후 구현 대상이다. 테스트 수집이 없는 패키지를 통과 실적으로 세지 않는다.
 
 불변식·독립 기준 모델·재생 비교는 엔진 검증, 실제 파일·프로세스 종료는 저장/복구 검증, OS·전원 장애는 별도 환경 검증으로 구분한다. 데이터 디렉터리와 runId는 실험별로 격리한다. race/fuzz/profiler가 켜진 수치를 일반 성능 결과에 섞지 않는다.
 
@@ -56,6 +82,6 @@ Go 코드는 gofmt 형식을 사용하고 공개 함수·타입에 Go 문서 주
 
 ## CI와 릴리스
 
-미구성: CI workflow, 원격 저장소 연결, 릴리스·배포 설정이 없다. 호스팅 대상과 원격 보호 규칙도 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
+origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이며 master에 설계 문서가 push되어 있다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
 
-문서 적용만으로 개발 환경 구성이나 애플리케이션 실행 검증이 완료되지는 않는다. 아직 실행할 애플리케이션·테스트·빌드가 없어 해당 검증은 미실행이다.
+개발 probe의 빌드·테스트는 거래 엔진·API·WAL 검증을 의미하지 않는다. P0의 실제 결과는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.

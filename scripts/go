@@ -1,0 +1,19 @@
+#!/bin/sh
+# Keep toolchain selection and build caches local and reproducible.
+set -eu
+project_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+version=$(cat "$project_dir/.go-version")
+go_binary="$project_dir/.tools/go$version/bin/go"
+if [ ! -x "$go_binary" ]; then
+  echo 'Run sh scripts/setup-go.sh first.' >&2
+  exit 1
+fi
+export GOTOOLCHAIN=local GOWORK=off GOENV=off
+export GOCACHE="$project_dir/.cache/go-build"
+export GOPATH="$project_dir/.cache/gopath"
+actual=$("$go_binary" version)
+case "$actual" in
+  "go version go$version "*) ;;
+  *) echo "Unexpected toolchain: $actual" >&2; exit 1 ;;
+esac
+exec "$go_binary" "$@"
