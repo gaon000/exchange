@@ -273,7 +273,10 @@ func validateSample(req Request, s Sample, elapsed time.Duration) error {
 	if s.StartedAt < req.Scheduled || s.FinishedAt < s.StartedAt || s.WrittenAt != -1 && (s.WrittenAt < s.StartedAt || s.WrittenAt > s.FinishedAt) {
 		return fmt.Errorf("execution timestamps violate planned/start/write/finish order")
 	}
-	o := s.Outcome
+	return validateOutcome(req, s.Outcome)
+}
+
+func validateOutcome(req Request, o Outcome) error {
 	if o.HTTPStatus != 0 && (o.HTTPStatus < 100 || o.HTTPStatus > 599) {
 		return fmt.Errorf("invalid HTTP status")
 	}

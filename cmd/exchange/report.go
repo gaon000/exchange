@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gaon000/exchange/internal/buildinfo"
 	d "github.com/gaon000/exchange/internal/domain"
 	rt "github.com/gaon000/exchange/internal/runtime"
 )
@@ -14,13 +15,15 @@ type initializedReport struct {
 	MaxCommands d.Int  `json:"maxCommands"`
 }
 type readyReport struct {
-	Event    string           `json:"event"`
-	RunID    string           `json:"runId"`
-	DataDir  string           `json:"dataDir"`
-	Listen   string           `json:"listen"`
-	Runtime  runtimeSettings  `json:"runtime"`
-	HTTP     httpSettings     `json:"http"`
-	Recovery recoverySettings `json:"recovery"`
+	Event      string           `json:"event"`
+	RunID      string           `json:"runId"`
+	ConfigHash string           `json:"configHash"`
+	Build      buildinfo.Info   `json:"build"`
+	DataDir    string           `json:"dataDir"`
+	Listen     string           `json:"listen"`
+	Runtime    runtimeSettings  `json:"runtime"`
+	HTTP       httpSettings     `json:"http"`
+	Recovery   recoverySettings `json:"recovery"`
 }
 type runtimeSettings struct {
 	CommandQueue   int    `json:"commandQueue"`
@@ -56,7 +59,7 @@ func readyReportFor(r *rt.Runtime, dir, address string, o serveOptions) readyRep
 	for _, s := range recovery.Skipped {
 		skipped = append(skipped, skippedSnapshot{s.Name, s.Reason})
 	}
-	return readyReport{Event: "ready", RunID: r.RunID(), DataDir: dir, Listen: address,
+	return readyReport{Event: "ready", RunID: r.RunID(), ConfigHash: r.ConfigHash(), Build: buildinfo.Current(), DataDir: dir, Listen: address,
 		Runtime:  runtimeSettings{o.runtime.CommandQueue, o.runtime.QueryQueue, o.runtime.RequestLimit, o.runtime.PendingWaiters, o.runtime.BatchCommands, o.runtime.BatchBytes, o.runtime.BatchDelay.String()},
 		HTTP:     httpSettings{o.http.RequestLimit, o.http.ReadHeaderTimeout.String(), o.http.ReadBodyTimeout.String(), o.http.ResultTimeout.String(), o.http.WriteTimeout.String(), o.httpShutdownTimeout.String()},
 		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}}

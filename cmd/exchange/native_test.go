@@ -276,7 +276,7 @@ func TestNativeCLISignalDrainsAcceptedCommandAndRestartsWithoutReseeding(t *test
 			dir, initialized := initProcess(t)
 			p := startProcess(t, "serve", "--data-dir", dir, "--listen", "127.0.0.1:0", "--batch-delay", "1h", "--batch-commands", "2", "--request-limit", "32", "--pending-waiters", "4")
 			report := p.ready(t)
-			if report.RunID != initialized.RunID || report.Runtime.BatchDelay != "1h0m0s" || report.Runtime.RequestLimit != 32 || report.HTTP.RequestLimit != 32 || report.Recovery.ReplayedCommands != 0 || report.Recovery.Skipped == nil {
+			if report.RunID != initialized.RunID || report.ConfigHash != initialized.ConfigHash || report.Build.GoVersion == "" || report.Build.GOOS != "darwin" || report.Runtime.BatchDelay != "1h0m0s" || report.Runtime.RequestLimit != 32 || report.HTTP.RequestLimit != 32 || report.Recovery.ReplayedCommands != 0 || report.Recovery.Skipped == nil {
 				t.Fatal(report)
 			}
 			if store, err := wal.Open(dir); err == nil || !durable.Contended(err) {

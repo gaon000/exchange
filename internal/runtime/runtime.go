@@ -123,6 +123,9 @@ func (r *Runtime) Ready() bool { return r.ready.Load() }
 // RunID returns the immutable run identity required on requests.
 func (r *Runtime) RunID() string { return r.genesis.RunID }
 
+// ConfigHash returns the immutable Genesis configuration hash for run provenance.
+func (r *Runtime) ConfigHash() string { return r.genesis.ConfigHash }
+
 // Done closes after the owner and both file workers stop and the run lock is
 // released. It does not initiate shutdown; use Wait to inspect the terminal error.
 func (r *Runtime) Done() <-chan struct{} { return r.done }

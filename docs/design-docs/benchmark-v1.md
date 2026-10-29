@@ -2,13 +2,13 @@
 
 상태: Accepted (P6 구현 계약)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력 계획·스케줄러·집계를 구현했다. 실제 HTTP executor·loadgen CLI·원본 파일 출력·서버 내부 계측·기준 측정은 아직 연결하지 않았다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
+구현 상태: [internal/bench](../../internal/bench/plan.go)의 입력 계획·스케줄러·집계·HTTP executor와 [loadgen CLI](../../cmd/loadgen/command.go)의 준비 검증·원본 파일 출력을 구현했다. 서버 내부 계측·기준 측정은 남아 있다. 이 문서의 지표 정의는 성능 목표값이나 실측 결과가 아니다.
 
 ## 목적과 경계
 
 [제품 명세](../product-specs/exchange.md#성능-결과의-판정)의 영구 저장을 포함한 성능을 측정한다. 측정 대상은 공개 HTTP API이며 부하 생성기가 엔진을 직접 호출하지 않는다. 새 실험 초기화와 기존 run 재시작은 [저장 계약](storage-v1.md#1-데이터-디렉터리와-초기화)을 따른다. bench 핵심 라이브러리는 파일·저장소·서버를 초기화하지 않는다.
 
-후속 CLI는 명시적인 runId와 새 namespace, 초기 설정·초기 상태를 확인하고 기존 실험을 재초기화하지 않아야 한다. 실제 HTTP 전송은 숫자 loopback에 한정하며 proxy·redirect로 다른 서버에 요청을 보내지 않는다. 이 전송·실험 준비 절차는 아직 미구현이다.
+CLI는 서버의 ready 보고서에서 runId·configHash·listen 주소·서버 설정과 바이너리 build 정보를 읽는다. 같은 초기 설정의 canonical hash를 대조한 뒤 모든 등록 계정의 공개 잔고와 asOfSeq=0을 확인한다. 기존 실험을 재초기화하지 않는다. 실제 HTTP 전송은 숫자 loopback에 한정하며 proxy·redirect·자동 업무 재시도를 사용하지 않는다. 다른 클라이언트가 동시에 쓰지 않는 전용 실험 run이 전제이며 사전 검사가 이후 외부 쓰기까지 잠그지는 않는다.
 
 ## 재현 입력
 
@@ -55,11 +55,31 @@ worker로 전달된 뒤 CPU 실행이 지연된 경우도 전송 전에 lateness
 
 생성기 누락률의 분모는 예정 요청 수, timeout/과부하 비율의 분모는 실제 시작 요청 수다. 각 건수도 함께 남긴다. 워밍업 또는 측정에서 생성기 누락·잘못된 응답·실행 중단이 있으면 `MeasurementValid=false`다. 서버의 과부하/timeout은 측정한 실패율이며 그 자체로 데이터를 숨기지 않는다. `MeasurementValid=true`도 p99·허용 실패율 목표 통과나 최대 지속 처리량 달성을 뜻하지 않는다.
 
-## 남은 연결과 검증
+## HTTP 전송과 실행 파일
 
-- 실제 HTTP executor: 응답 크기/시간 제한, 전체 JSON·run/계정/키 검증, 실제 전송 시각, 잘린 200 응답의 UNKNOWN 처리, 준비 잔고·namespace 확인.
-- loadgen CLI: 초기 입력과 실행 manifest, 예정/실제 시각·원본 결과, 집계·실패 원인을 남기는 파일 출력. 출력 실패나 중단 실행을 완료 보고서로 오인하지 않게 구분한다.
+- [HTTP executor](../../internal/bench/http.go)는 deadline·64 KiB 응답 본문·8 KiB 헤더 상한을 사용한다. 완전한 JSON의 버전·run·계정·키·순번·주문 수량/상태와 원래 입력을 검사하고, 최초 응답 bytes의 SHA-256을 남긴다. 잘린 200이나 연결 오류는 UNKNOWN, 잘못된 JSON/상태는 InvalidResponse다. 응답 본문 전체를 표본에 복제하지 않으며 code·순번·체결 수·상태·fingerprint와 관찰 시각을 보존한다.
+- httptrace의 WroteRequest를 실제 쓰기 완료 관찰로 기록한다. 실패 후 늦게 실행되는 callback은 반환된 표본을 변경하지 않는다. connection pool 한도는 실행 worker 한도와 같고 전송 context가 응답 본문 읽기까지 제한한다.
+- [준비 단계](../../internal/bench/prepare.go)는 계획의 고유 명령 수가 설정 한도 이내인지, 모든 계정이 등록됐는지, 거절 probe 계정이 무잔고인지, seed 주문 자금이 충분한지 먼저 검사한다. 공개 잔고 검증 뒤 준비 주문을 순차 실행하고 1부터 이어지는 순번·OPEN·체결 0을 확인한다. 준비 실패는 재시도하지 않고 부분 보고서와 서버 상태를 보존한다.
+- loadgen은 `--config`, `--workload`, `--server-report`, `--output`을 필수로 받는다. 입력은 4 MiB 이하 일반 파일과 엄격한 JSON이다. 출력은 기존 parent 아래 새 디렉터리만 허용하며 기존 파일을 덮어쓰지 않는다. 실행 예시는 [개발 기준](../development.md#http-부하-실행)에 있다.
+
+| 출력 | 내용 |
+| --- | --- |
+| manifest.json | 원래 설정·초기 공급량·서버 ready 보고서·서버/생성기 Go/OS/CPU 아키텍처와 소스 revision·dirty 여부·plan digest |
+| plan.jsonl | 준비/워밍업/측정의 명령·본문·예정 시각·원래 phase, 한 줄당 요청 하나 |
+| preparation.json | 조회한 초기 잔고·실제 준비 시도의 시각/결과, 부분 실패도 보존 |
+| samples.jsonl | 모든 예정 인덱스의 실제 시각·응답 요약 또는 생성기 누락 원인 |
+| run.json | UTC 기준 시각·monotonic 경과 시간·실행 옵션·중단 여부 |
+| summary.json | 원본 표본에서 계산한 지연·처리량·실패율과 측정 유효성 |
+| completed.json | 앞 여섯 파일의 SHA-256과 plan digest. 파일 쓰기/Sync/close 후 임시 표식을 rename하며 성능 목표 통과를 뜻하지 않음 |
+| failed.json | 준비/실행/출력/집계 실패 원인. 실패 시 남은 파일은 지우지 않음 |
+
+측정 중 파일 쓰기는 하지 않는다. SIGINT/SIGTERM은 전송 context를 취소하고 worker 합류 후 미래 요청까지 취소 표본으로 남긴다. 중단·생성기 누락·잘못된 응답은 종료 코드 1이며 completed.json을 만들지 않는다. 서버 과부하/timeout만 발생한 유효 표본은 파일을 완료할 수 있으며 허용 실패율 판정은 후속 성능 기준의 책임이다. 강제 kill이나 디스크 실패에서는 일부 파일/임시 표식만 남을 수 있다. 완료 JSON과 해시를 확인해야 하며 이 출력 방식은 거래 WAL의 strict sync나 전원 장애 내구성 보장이 아니다.
+
+빌드 정보가 없는 바이너리는 revisionKnown=false로 기록하며 현재 checkout의 Git 값으로 대신하지 않는다. 수정 중인 바이너리는 modified=true다. 이 정보만으로 CPU 모델·RAM·파일 시스템·서버 구간 비용을 측정했다고 주장하지 않는다.
+
+## 남은 계측과 기준 측정
+
 - 서버 계측: 큐·배치·write/sync·적용·응답 비용, CPU/메모리/GC/WAL 증가량, snapshot 시간·메모리와 profiler 유무.
 - 실제 기준 측정 뒤 p99 상한·허용 실패율·워밍업/지속 기간·반복 수·workload를 고정하고 P7에서 같은 조건으로 비교한다.
 
-현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. 가짜 executor 결과를 실제 거래 HTTP 성능으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
+현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
