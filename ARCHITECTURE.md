@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진이 존재한다. WAL·runtime·서버·CI는 아직 구현하지 않았다.
+2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진, P2 Genesis/WAL·공유 내구성 어댑터가 존재한다. runtime·snapshot·서버·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -26,7 +26,7 @@
 | [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
-| [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. P1 도메인 검증에 연결. 서버 loader는 P2 이후 구현 |
+| [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder 제공. CLI loader는 P5 예정 |
 
 ## 합의한 구현 목표
 
@@ -36,13 +36,15 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 모듈과 의존 방향
 
-P1에서 domain과 engine을 구현했다. 나머지는 예정 경로이며 아직 존재하지 않는다.
+P2까지 domain·engine·strictjson·durable·wal을 구현했다. 아래에서 나머지 예정 경로와 구분한다.
 
 | 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |
 | [internal/domain](internal/domain/types.go) (구현) | 정수 파싱·산술·ID·Config·명령·결과·버전 타입 | 표준 라이브러리, 외부 I/O 없음 |
 | [internal/engine](internal/engine/engine.go) (구현) | 가격 정렬+FIFO, 잔고·주문·체결·최초 결과를 결정적으로 변경 | domain |
-| `internal/wal/` | 프레임·그룹·체크섬·동기화·로그 순회 | domain, 파일 I/O 경계 |
+| [internal/strictjson](internal/strictjson/strict.go) (구현) | 중복 키·정확한 필드명·필수 필드·깊이 검사 | 표준 라이브러리 |
+| [internal/durable](internal/durable/darwin.go) (구현) | APFS 확인·strict F_FULLFSYNC·FD 수명에 묶인 flock | 시스템 cgo, 표준 라이브러리 |
+| [internal/wal](internal/wal/store.go) (구현) | Genesis·WAL 프레임/검사·Init/Open/Replay/ConfirmRecovery/Append | domain, strictjson, durable; engine 의존은 테스트만 |
 | `internal/snapshot/` | 불변 상태 DTO 직렬화·검증·게시 | domain, 파일 I/O 경계 |
 | `internal/runtime/` | 큐·배치·순번·단일 소유권·복구 조율 | engine, wal, snapshot의 계약 |
 | `internal/api/` | 요청 정규화·계정 식별·응답·조회 | runtime의 command/query 인터페이스 |

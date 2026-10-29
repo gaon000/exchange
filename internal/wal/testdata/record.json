@@ -1,0 +1,1 @@
+{"commandSeq":"1","kind":"PLACE_ORDER","accountId":"alice","payload":{"clientOrderId":"buy-1","symbol":"BTC-USDT","side":"BUY","type":"LIMIT","timeInForce":"GTC","priceTicks":"100","quantityLots":"2"}}

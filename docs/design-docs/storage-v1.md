@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: 저장 API probe만 존재. Genesis·WAL·snapshot 구현은 P2~P4다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. runtime 연결은 P3, snapshot은 P4다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -113,6 +113,19 @@ P2의 Darwin 어댑터는 cgo로 시스템 `fcntl(fd, F_FULLFSYNC)`를 직접 �
 파일 내용뿐 아니라 생성·rename 후 관련 디렉터리, 새 run 생성 후 parent도 같은 strict sync 경로를 사용한다. lock FD는 종료까지 유지한다. 프로세스 강제 종료는 OS cache를 비우지 않으므로 전원 장애 검증을 대신하지 않는다.
 
 P0의 [storageprobe](../../tools/storageprobe/main.go)는 실제 APFS에서 별도 임시 디렉터리를 만들고 파일 sync, rename+directory sync, 잠금 충돌, truncate+sync, read-back을 확인했다. 테스트는 독립 프로세스 간 잠금과 close 후 해제, 닫힌 파일 sync 거절, 기존 parent 파일 보존도 확인한다. 대상은 호출 성공과 오류 전달이며 전원 차단·WAL 재생은 미검증이다.
+
+### P2 구현과 호출 계약
+
+[wal.Store](../../internal/wal/store.go)는 자체 고루틴·mutex 없이 한 소유자가 호출한다. 업무 상태는 소유하지 않는다. [durable](../../internal/durable/darwin.go)은 probe와 WAL이 함께 쓰는 strict sync·flock 경계이며 지원되지 않는 플랫폼은 파일을 만들기 전에 실패한다.
+
+- `DecodeConfig`는 byte 상한·엄격한 JSON·단위/공급량을 검사한다. `Init`은 UUID v4를 생성하고 계정 정렬·configHash를 포함한 Genesis를 영구 기록한다. 기존 디렉터리는 재사용하지 않는다.
+- `Open`은 잠금 후 Genesis와 WAL 전체를 읽고 완전한 그룹의 순번·등록 계정·요청 키 유일성까지 확인한다. 파일은 수정하지 않는다. 검증한 끝은 `Recovery()`이며 아직 `DurableSeq()`는 0이다.
+- 호출자는 새 엔진에 `Replay`하고 매 명령의 appliedSeq와 불변식을 확인한다. 오류가 나면 부분 복원한 엔진을 버리고 저장소를 닫는다. 조회·결과를 아직 공개하지 않는다.
+- `ConfirmRecovery`만 허용된 잘린 꼬리를 truncate하고 남길 WAL, Genesis, lock inode, run/parent 디렉터리를 엄격히 동기화한다. 모두 성공해야 durableSeq를 확인된 끝으로 전진시키고 Append를 연다. 완전한 미응답 그룹도 이 경로를 거친다.
+- `Append`는 연속적이고 중복 키가 없는 한 그룹을 기록·동기화한다. 기록 전 입력 오류는 파일을 바꾸지 않는다. write/sync 실패는 저장소를 실패 상태로 고정하며 후속 쓰기를 거절한다. engine 적용·응답은 성공 이후 호출자 책임이다.
+- `Close`는 FD를 닫아 잠금을 해제하며 `.lock`을 삭제하지 않는다. 초기화/복구 실패에서도 기존 파일을 보존한다. 외부 파일 교체는 지원 경계 밖이며, 열린 파일이 아닌 경로의 symlink/비정규 파일은 거절한다.
+
+P2는 [독립 Python 인코더](../../internal/wal/testdata/generate.py)의 golden bytes, 메모리 I/O 오류 주입, 실제 APFS 파일과 별도 프로세스 잠금을 구분해 검사했다. 이 테스트에서 재생 결과는 P1 엔진의 주문·잔고·최초 결과와 일치하지만 아직 runtime 응답 경로·snapshot·전원 장애 검증은 아니다. 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
 
 ## 8. 검증 단계
 

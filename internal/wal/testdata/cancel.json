@@ -1,0 +1,1 @@
+{"commandSeq":"2","kind":"CANCEL_ORDER","accountId":"alice","payload":{"cancelRequestId":"cancel-1","clientOrderId":"buy-1"}}
