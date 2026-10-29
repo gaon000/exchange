@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P1 도메인·엔진과 P2 엄격한 JSON·Config decoder 완료. HTTP 본문 크기·계정 문맥·서버 조회 페이지 연결은 P3/P5에서 구현한다.
+구현 상태: P3 runtime의 명령·계정/run 문맥·오류 구분·일관된 조회·체결 페이지까지 Go API로 구현했다. HTTP 헤더·본문 크기·응답 직렬화·네트워크 검증은 P5에서 연결한다.
 
 [제품 명세](../product-specs/exchange.md)의 정책과 [처리 설계](exchange-v1.md)를 구체화한다. 여기서 정하는 숫자는 재현용 모의 거래 설정이며 실제 시장 규칙·시세가 아니다. 변경 시 Genesis의 설정 식별값과 규칙 버전을 함께 검토한다.
 
@@ -40,7 +40,7 @@ v1 거래쌍은 `BTC-USDT`다. 내부 가격·수량·잔고·대금은 부호 �
 - Host는 loopback 주소만 허용하고, 브라우저 Origin 헤더가 있는 요청은 거절한다. CORS를 열지 않는다.
 - JSON 요청의 Content-Type은 `application/json` (선택적인 charset=utf-8 허용). Content-Encoding은 없거나 identity만 허용한다.
 - 기본 연결 요청 제한: 헤더 8 KiB, 본문 4 KiB, 헤더 읽기 2초, 본문 읽기 2초, 결과 대기 5초, 응답 쓰기 5초. 이는 서버 자원 한도이며 p99 성능 목표가 아니다.
-- command queue 기본 8,192개, 동시에 대기/송신하는 HTTP 요청 최대 16,384개, 고유 pending 키당 대기자 최대 16개. query도 전역 요청 한도를 공유하며 업무 고루틴용 별도 bounded query queue를 둔다. 숫자는 P3에서 설정으로 노출하고 P6 측정에 기록한다.
+- command queue 기본 8,192개, 동시에 대기/송신하는 HTTP 요청 최대 16,384개, 고유 pending 키당 대기자 최대 16개. query도 전역 요청 한도를 공유하며 업무 고루틴용 별도 query queue 기본 1,024개를 둔다. P3의 runtime.Options로 노출했으며 P6 측정에 기록한다.
 - 포화 거절과 연결 timeout이 이미 접수한 명령의 처리 취소를 뜻하지 않는다. 준비 완료 전에는 변경 요청·업무 조회·완료 캐시 응답을 제공하지 않는다.
 
 ## 3. 정규화와 중복 키

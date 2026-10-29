@@ -67,8 +67,13 @@ type Level struct {
 }
 
 func (b *book) view() []Level {
-	out := make([]Level, 0, len(b.prices))
-	for i := range len(b.prices) {
+	return b.top(len(b.prices))
+}
+
+func (b *book) top(limit int) []Level {
+	count := min(limit, len(b.prices))
+	out := make([]Level, 0, count)
+	for i := range count {
 		j := i
 		if b.side == d.Buy {
 			j = len(b.prices) - 1 - i

@@ -2,7 +2,7 @@
 
 상태: Accepted
 합의 반영일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2까지 정수 도메인·메모리 엔진·Genesis/WAL 저장 계층 완료. runtime·snapshot·API 미구현, 전체 성능·실제 전원 장애 미검증.
+구현 상태: P3까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime 완료. snapshot·HTTP API 미구현, 전체 성능·실제 전원 장애 미검증.
 
 ## 목적과 사용자
 

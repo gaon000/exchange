@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. runtime 연결은 P3, snapshot은 P4다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. snapshot은 P4다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 

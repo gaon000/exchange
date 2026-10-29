@@ -51,6 +51,45 @@ func (e *Engine) Balances(accountID string) (d.Balances, bool) {
 	return b, ok
 }
 
+// Result returns a detached initial outcome by key, without requiring its input.
+// Runtime validates the querying account and run before calling this method.
+func (e *Engine) Result(key d.Key) (d.Result, bool) {
+	r, ok := e.results[key]
+	return r.result.Clone(), ok
+}
+
+// Book returns up to limit aggregate levels per side, in price priority order.
+func (e *Engine) Book(limit int) (bids, asks []Level, err error) {
+	if limit < 1 || limit > 100 {
+		return nil, nil, d.ErrInvalid
+	}
+	return e.bids.top(limit), e.asks.top(limit), nil
+}
+
+// TradePage returns copied trades after an exact cursor through an applied
+// command boundary. Zero/zero means the first page. No newer trade enters it.
+func (e *Engine) TradePage(afterSeq, afterIndex, throughSeq d.Int, limit int) ([]d.Trade, error) {
+	if afterSeq < 0 || afterIndex < 0 || (afterSeq == 0) != (afterIndex == 0) || throughSeq < 0 || throughSeq > e.applied || afterSeq > throughSeq || limit < 1 || limit > 1000 {
+		return nil, d.ErrInvalid
+	}
+	start := 0
+	if afterSeq != 0 {
+		start = sort.Search(len(e.trades), func(i int) bool {
+			x := e.trades[i]
+			return x.CommandSeq > afterSeq || x.CommandSeq == afterSeq && x.MatchIndex >= afterIndex
+		})
+		if start == len(e.trades) || e.trades[start].CommandSeq != afterSeq || e.trades[start].MatchIndex != afterIndex {
+			return nil, d.ErrInvalid
+		}
+		start++
+	}
+	end := start
+	for end < len(e.trades) && end-start < limit && e.trades[end].CommandSeq <= throughSeq {
+		end++
+	}
+	return append([]d.Trade{}, e.trades[start:end]...), nil
+}
+
 // State copies all state in stable order for audit and replay comparisons.
 // Callers may mutate the returned slices and nested results safely.
 func (e *Engine) State() State {

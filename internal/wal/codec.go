@@ -50,6 +50,19 @@ type commandWire struct {
 	Payload   json.RawMessage `json:"payload"`
 }
 
+// PayloadBytes returns a record's exact contribution to a group's payload,
+// including its length prefix, so batching uses the same wire encoding as WAL.
+func PayloadBytes(r Record) (int, error) {
+	b, err := encodeRecord(r)
+	if err != nil {
+		return 0, err
+	}
+	if len(b) > MaxRecordBytes {
+		return 0, ErrInvalid
+	}
+	return 4 + len(b), nil
+}
+
 // DecodeConfig reads strict user JSON, leaving files and identity generation to callers.
 func DecodeConfig(data []byte) (d.Config, error) {
 	var c d.Config
