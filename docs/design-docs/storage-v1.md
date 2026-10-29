@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·복사·직접 복원까지 구현했으며 snapshot 파일 I/O와 runtime 연결은 진행 전이다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·snapshot envelope 스트리밍 코덱까지 구현했다. 파일 게시·후보 선택과 runtime 연결은 진행 전이다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -50,7 +50,11 @@ run-1/
 | 20 | payloadBytes | canonical JSON payload |
 | 20+payloadBytes | 32 | 앞의 20+payloadBytes 전체의 SHA-256 raw bytes |
 
-Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot 최대 2 GiB다. Genesis/snapshot 파일은 정확히 envelope 하나이며 남는 바이트도 오류다. WAL은 envelope 하나 뒤에 아래의 완전한 그룹들이 연결된다. snapshot은 P4에서 streaming 쓰기/검증으로 처리하고 길이만큼 선할당하지 않는다. 상한을 넘으면 새 snapshot 생성을 실패로 남기고 기존 snapshot/WAL을 보존한다. 이 파일 상한은 가용 메모리 보장이 아니다.
+Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot payload 최대 2 GiB다. Genesis/snapshot 파일은 정확히 envelope 하나이며 남는 바이트도 오류다. WAL은 envelope 하나 뒤에 아래의 완전한 그룹들이 연결된다. P4의 [snapshot.Write/Read](../../internal/snapshot/codec.go)는 streaming으로 쓰고 검사하며 선언 길이만큼 선할당하지 않는다. 상한을 넘으면 출력 전에 ErrTooLarge를 반환한다. 이 파일 상한은 전체 상태 사본의 가용 메모리를 보장하지 않는다.
+
+Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
+
+ErrCorrupt는 손상·비정규형 후보로 후속 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단해야 한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 caller가 Restore와 WAL 대조를 수행한다. 아직 파일 sync·게시·복구 선택을 연결한 것은 아니다.
 
 Genesis와 WAL header는 서로 일치해야 한다. 비어 있는 WAL도 유효한 헤더는 필요하다. 완성되지 않았거나 checksum이 다른 Genesis/header를 정상 새 실험으로 취급하지 않는다.
 
@@ -88,7 +92,7 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 | trades | commandSeq/matchIndex 순, 가격·수량·양쪽 주문/계정 참조 |
 | results | accountId/kind/requestId 순. canonical 원래 command와 불변 최초 response |
 
-상태 DTO의 필드 순서는 [domain.Checkpoint](../../internal/domain/checkpoint.go)의 선언과 [독립 Python 생성기](../../internal/engine/testdata/generate_checkpoint.py)의 [golden JSON](../../internal/engine/testdata/checkpoint-v1.json)으로 고정한다. 아직 envelope 파일 fixture와 파일 decoder는 구현 전이다.
+상태 DTO의 필드 순서는 [domain.Checkpoint](../../internal/domain/checkpoint.go)의 선언과 [독립 Python 생성기](../../internal/engine/testdata/generate_checkpoint.py)의 [golden JSON](../../internal/engine/testdata/checkpoint-v1.json)으로 고정한다. [독립 envelope 생성기](../../internal/snapshot/testdata/generate.py)와 [golden snapshot](../../internal/snapshot/testdata/snapshot.bin)으로 바이트 형식을 검사한다.
 
 - accounts 항목은 accountId, availableBaseLots, reservedBaseLots, availableQuoteAtoms, reservedQuoteAtoms다.
 - orders 항목은 accountId, order다. order와 response는 API의 전체 Order/Result 형식을 재사용한다. reason은 미설정 시 null이며 빈 문자열이나 알 수 없는 문자열은 허용하지 않는다.
