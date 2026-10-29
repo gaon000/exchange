@@ -90,7 +90,7 @@ worker로 전달된 뒤 CPU 실행이 지연된 경우도 전송 전에 lateness
 | append | WAL worker의 Append 전체. 검증·인코딩·write/sync·후처리를 포함하며 저장 실패 시간도 기록 |
 | WAL encode / write / sync | 실제 인코딩, short-write/EINTR 재시도를 포함한 writeAll, strict sync 호출. 초기화·복구 동기화 제외. 실패한 단계도 기록 |
 | apply / query | owner의 엔진 Apply 한 번 / 조회 한 번. 실패한 Apply와 정상 적용 수는 별도 |
-| snapshotCapture / snapshotPublish | owner의 성공한 사본 생성 / worker 게시 시도 전체. 게시 실패와 owner가 확인한 완료 수 별도 |
+| snapshotCapture / snapshotPublish | owner의 성공한 사본 생성 / worker 정렬·게시 시도 전체. P6 기준 버전에서는 정렬이 capture에 포함됐으므로 P7 비교 시 비용 이동을 구별. 게시 실패와 owner가 확인한 완료 수 별도 |
 | HTTP handler / encode / write | 전체 handler / JSON 인코딩 / WriteHeader부터 Write와 최종 Flush까지. health·조회·거절 응답도 포함 |
 
 배치 수·고유 명령 수·payload 합계/최대 개수, 접수·캐시/대기 중복·적용·fatal 실패·snapshot 완료/오류도 기록한다. 큐 현재 길이는 관찰 시점 값이며 observedCommandQueuePeak는 접수 직후 표본의 최대값이다. 빠른 dequeue를 놓칠 수 있어 진짜 최대 점유량과 구분한다. WAL encodedBytes는 시도한 frame 크기이므로 부분 쓰기 실패가 있으면 파일 증가량과 다르다. WAL groups/commands는 sync 성공 수이며 이후 Seek·owner 확인·엔진 적용과 구분한다. ioErrors는 Write/Sync 오류 수다.

@@ -106,6 +106,8 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 
 명령 경계 S에서 owner가 사본을 만든다. [snapshot.Publish](../../internal/snapshot/publish.go)는 S를 20자리 0-padding한 `snapshot-S.bin`으로 게시한다. 호출자는 run의 WAL 잠금을 보유하고 writer를 하나로 직렬화해야 한다. Publish 자체가 별도 잠금을 획득하거나 owner에서 사본을 만드는 것은 아니다.
 
+P7에서 사본 생성과 정렬을 분리했다. `engine.CopyCheckpoint`는 owner 안에서 가변 참조를 모두 복사하되 accounts/orders/results의 map 순서를 그대로 둔다. runtime은 이 사본의 소유권을 한 snapshot worker에 넘기며 이후 사본을 읽거나 변경하지 않는다. worker가 `engine.CanonicalizeCheckpoint`로 세 배열을 정렬한 뒤 Publish에 불변 DTO를 전달한다. book의 가격/FIFO와 trades 순서는 정렬 대상이 아니다. 동기 호출용 `engine.Capture`는 복사와 정렬을 함께 수행하는 기존 계약을 유지한다. 파일 형식·정렬 기준은 변하지 않으며 Restore는 비정규 순서의 저장 상태를 정렬해서 고치지 않고 거절한다.
+
 1. 입력·전체 payload 한도를 확인한다. 실패하면 파일 생성 전 종료한다.
 2. APFS 확인 후 같은 디렉터리에 고유 `.snapshot-*.tmp`를 O_EXCL/0600으로 생성한다.
 3. envelope 전체 쓰기 → 파일 F_FULLFSYNC → close → 정식 이름으로 exclusive rename → 디렉터리 F_FULLFSYNC 순으로 게시한다. 각 오류와 close 오류를 호출자에게 전달한다.
@@ -117,15 +119,15 @@ Darwin [RenameExclusive](../../internal/durable/rename_darwin.go)는 [Apple rena
 
 ### 실행 중 생성과 종료
 
-[Runtime.Snapshot(ctx)](../../internal/runtime/snapshot.go)은 Go 제어 API다. 현재 HTTP endpoint·자동 주기는 없다. 응답은 RunID와 실제로 게시한 SnapshotSeq다.
+[Runtime.Snapshot(ctx)](../../internal/runtime/snapshot.go)은 Go 제어 API다. HTTP endpoint는 없으며 P6 CLI의 선택적인 주기 worker가 이 API를 호출한다. 응답은 RunID와 실제로 게시한 SnapshotSeq다.
 
-- 접수·복사·게시를 합쳐 동시에 한 요청만 유지한다. 추가 요청은 `SNAPSHOT_BUSY/NOT_ADMITTED`로 즉시 거절한다. 응답 대기는 runtime의 전역 요청 한도에도 포함된다.
+- 접수·복사·정렬·게시를 합쳐 동시에 한 요청만 유지한다. 추가 요청은 `SNAPSHOT_BUSY/NOT_ADMITTED`로 즉시 거절한다. 응답 대기는 runtime의 전역 요청 한도에도 포함된다.
 - owner가 처리 중 명령의 적용을 끝낸 뒤 사본을 만든다. 현재 구현은 한 WAL 배치 적용 중에도 사본을 만들지 않는다. 아직 큐·배치·WAL 동기화에 있는 명령을 모두 포함한다는 보장은 없으며 생성 요청 자체는 명령 큐의 barrier가 아니다.
-- 사본 생성 동안에는 owner 처리가 멈춘다. 사본을 전달한 뒤 별도 snapshot worker가 저장하는 동안 주문·조회·WAL worker는 진행할 수 있다. 파일 크기 제한은 사본 할당 전의 메모리 상한이 아니다.
+- 사본 생성 동안에는 owner 처리가 멈춘다. 사본을 전달한 뒤 별도 snapshot worker가 정렬·저장하는 동안 주문·조회·WAL worker는 진행할 수 있다. 파일 크기 제한은 사본 할당 전의 메모리 상한이 아니다.
 - context 취소는 응답 대기만 끝내고 `SNAPSHOT_TIMEOUT/UNKNOWN`을 반환한다. 이미 접수한 생성은 계속하고, 응답 대기 슬롯을 해제해도 다음 사본은 기존 게시가 끝날 때까지 허용하지 않는다.
 - 파일과 디렉터리의 strict sync 성공을 owner가 확인한 뒤에만 `Runtime.SnapshotSeq()`를 전진시키고 성공을 응답한다. owner는 자신의 WAL 완료 확인 순번과 appliedSeq를 사용하며 쓰기 중인 wal.Store를 동시 조회하지 않는다.
 - 파일 접근 전 순수 payload 상한 거절인 `snapshot.ErrTooLarge`만 생성 실패로 반환하고 거래를 계속한다. 실제 I/O·게시 오류·다른 bytes의 기존 파일·worker panic은 접수를 닫고 실패 상태로 전환한다. ErrTooLarge와 함께 반환된 I/O/정리 오류도 중단 대상이다.
-- Shutdown은 이미 접수한 생성과 명령·조회를 처리하고 두 저장 worker의 종료를 기다린 뒤 WAL 핸들과 run 잠금을 닫는다. 실패 시에도 진행 중 파일 작업이 끝나기 전 잠금을 풀지 않는다. 실패 후 worker가 게시한 파일은 메모리 snapshotSeq에 반영하지 않고 다음 기동에서 검사한다.
+- Shutdown은 이미 접수한 생성과 명령·조회를 처리하고 두 저장 worker의 종료를 기다린 뒤 WAL 핸들과 run 잠금을 닫는다. 정렬 중이거나 실패한 경우에도 진행 중 worker가 끝나기 전 잠금을 풀지 않는다. 실패 후 worker가 게시한 파일은 메모리 snapshotSeq에 반영하지 않고 다음 기동에서 검사한다.
 
 `SnapshotSeq()`는 이번 runtime이 복구에서 선택했거나 게시 완료를 확인한 순번이다. 0은 Genesis 경계이므로 초기 snapshot 파일 유무는 `Recovery().SnapshotFile`로 구분한다. timeout·오류·응답 전 종료만으로 파일이 없다고 판단하지 않는다.
 

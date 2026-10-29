@@ -6,6 +6,7 @@ import (
 	"math"
 	"os"
 	"reflect"
+	"slices"
 	"testing"
 
 	d "github.com/gaon000/exchange/internal/domain"
@@ -41,6 +42,12 @@ func TestIndependentCheckpointGoldenJSON(t *testing.T) {
 	}
 	if !bytes.Equal(got, want) {
 		t.Fatal("checkpoint wire contract changed")
+	}
+	copy := e.CopyCheckpoint()
+	engine.CanonicalizeCheckpoint(&copy)
+	encodedCopy, err := json.Marshal(copy)
+	if err != nil || !bytes.Equal(encodedCopy, want) {
+		t.Fatal("deferred canonicalization changed golden bytes")
 	}
 	var decoded d.Checkpoint
 	if err := strictjson.Decode(want, &decoded); err != nil {
@@ -133,6 +140,34 @@ func TestCheckpointIsDetachedBothDirections(t *testing.T) {
 	equal(t, restored.State(), want)
 	apply(t, e, place("b", "later", d.Sell, 97, 1))
 	equal(t, restored.State(), want)
+}
+
+func TestCheckpointCopyCanonicalizesAfterFurtherTrading(t *testing.T) {
+	e := newEngine(t, config())
+	for _, command := range checkpointCommands() {
+		apply(t, e, command)
+	}
+	want, seq := e.Capture(), e.AppliedSeq()
+	copy := e.CopyCheckpoint()
+	// Scramble only the collections whose canonical order is deferred. FIFO and
+	// trade order must survive unchanged, including equal-price order priority.
+	slices.Reverse(copy.Accounts)
+	slices.Reverse(copy.Orders)
+	slices.Reverse(copy.Results)
+	apply(t, e, place("b", "later-fill", d.Sell, 97, 1))
+	apply(t, e, cancel("a", "later-cancel", "future"))
+	engine.CanonicalizeCheckpoint(&copy)
+	equal(t, copy, want)
+	restored, err := engine.Restore(runID, config(), seq, copy)
+	if err != nil {
+		t.Fatal(err)
+	}
+	equal(t, restored.Capture(), want)
+	// Restore must still reject unsorted stored state rather than repairing it.
+	slices.Reverse(copy.Results)
+	if _, err := engine.Restore(runID, config(), seq, copy); err == nil {
+		t.Fatal("recovery silently canonicalized corrupted input")
+	}
 }
 
 func orderIndex(cp *d.Checkpoint, id string) int {

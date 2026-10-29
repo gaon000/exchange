@@ -6,6 +6,7 @@ import (
 	"time"
 
 	d "github.com/gaon000/exchange/internal/domain"
+	"github.com/gaon000/exchange/internal/engine"
 	"github.com/gaon000/exchange/internal/snapshot"
 )
 
@@ -77,16 +78,16 @@ func (o *owner) captureSnapshot(req *snapshotRequest) {
 		panic("snapshot sequence outside applied/durable boundary")
 	}
 	started := time.Now()
-	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.Capture()}
+	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.CopyCheckpoint()}
 	o.r.metrics.capture.Observe(time.Since(started))
 	if o.r.hooks.afterCapture != nil {
 		o.r.hooks.afterCapture(doc)
 	}
 	o.snapshotSequence = seq
-	o.snapshotJobs <- doc // one bounded slot; publisher never reads the engine
+	o.snapshotJobs <- doc // transfer exclusive ownership of the detached copy
 }
 
-func writeSnapshot(files checkpoints, doc snapshot.Document) (reply snapshotWriteReply) {
+func writeSnapshot(files checkpoints, doc snapshot.Document, beforeSort func()) (reply snapshotWriteReply) {
 	reply.seq, reply.code = doc.SnapshotSeq, "STORAGE_UNAVAILABLE"
 	defer func() {
 		if p := recover(); p != nil {
@@ -94,6 +95,10 @@ func writeSnapshot(files checkpoints, doc snapshot.Document) (reply snapshotWrit
 			reply.code = "INTERNAL_FAILURE"
 		}
 	}()
+	if beforeSort != nil {
+		beforeSort()
+	}
+	engine.CanonicalizeCheckpoint(&doc.State)
 	reply.err = files.Publish(doc)
 	if reply.err == snapshot.ErrInvalid {
 		reply.code = "INTERNAL_FAILURE"

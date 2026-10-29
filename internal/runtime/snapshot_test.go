@@ -159,6 +159,75 @@ func TestSnapshotCopyDetachedWhileTradingContinues(t *testing.T) {
 	finish(t, r)
 }
 
+func TestSnapshotSortingRunsOutsideOwnerAndShutdownJoinsIt(t *testing.T) {
+	entered, release := make(chan struct{}), make(chan struct{})
+	var once sync.Once
+	unblock := func() { once.Do(func() { close(release) }) }
+	f := fake(t)
+	o := DefaultOptions()
+	o.BatchCommands = 1
+	r, files := startSnapshotTest(t, f, o, hooks{beforeSnapshotSort: func() {
+		close(entered)
+		<-release
+	}}, false)
+	t.Cleanup(unblock)
+	first, err := r.Submit(ctx(t), buy("rest"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pending := snapshotAsync(r, ctx(t))
+	receive(t, entered)
+	// The worker is paused before sorting the detached copy. Live commands and
+	// queries must complete without releasing it or changing that old boundary.
+	if _, err := r.Submit(ctx(t), command("bob", "fill", d.Sell, 100, 2)); err != nil {
+		t.Fatal(err)
+	}
+	v := read(t, r, Query{Kind: OrderQuery, ID: "rest"})
+	if v.AsOfSeq != 2 || v.Order.Status != d.Filled || r.SnapshotSeq() != 0 {
+		t.Fatal("sorting blocked progress or acknowledged an unpublished snapshot")
+	}
+	if _, err := r.Snapshot(ctx(t)); err == nil {
+		t.Fatal("sorting allowed another checkpoint copy")
+	} else {
+		checkFailure(t, err, "SNAPSHOT_BUSY", NotAdmitted)
+	}
+	stopped, cancelStop := context.WithCancel(context.Background())
+	cancelStop()
+	if err := r.Shutdown(stopped); !errors.Is(err, context.Canceled) || r.Ready() || f.closed.Load() != 0 {
+		t.Fatal("shutdown released storage before the sorting worker finished")
+	}
+	unblock()
+	doc := receive(t, files.started)
+	result := receive(t, pending)
+	if result.err != nil || result.result.SnapshotSeq != 1 || doc.SnapshotSeq != 1 {
+		t.Fatalf("snapshot boundary: %+v / %d", result, doc.SnapshotSeq)
+	}
+	finish(t, r)
+	restored, err := engine.Restore(runID, f.g.Config, 1, doc.State)
+	if err != nil {
+		t.Fatal(err)
+	}
+	initial, found, err := restored.Lookup(buy("rest"))
+	if err != nil || !found || !reflect.DeepEqual(initial, first) || f.closed.Load() != 1 {
+		t.Fatal("deferred sorting changed the original result or leaked the store")
+	}
+}
+
+func TestSnapshotSortingPanicFailsWithoutPublication(t *testing.T) {
+	f := fake(t)
+	r, files := startSnapshotTest(t, f, DefaultOptions(), hooks{beforeSnapshotSort: func() {
+		panic("sorting failure")
+	}}, false)
+	if _, err := r.Submit(ctx(t), buy("initial")); err != nil {
+		t.Fatal(err)
+	}
+	_, err := r.Snapshot(ctx(t))
+	checkFailure(t, err, "INTERNAL_FAILURE", Unknown)
+	if r.Shutdown(ctx(t)) == nil || r.Ready() || r.SnapshotSeq() != 0 || f.closed.Load() != 1 || len(files.published) != 0 {
+		t.Fatal("sorting failure was accepted or leaked the storage lifetime")
+	}
+}
+
 func TestSnapshotDuringWALSyncCapturesOnlyAppliedState(t *testing.T) {
 	f := fake(t)
 	f.gate = make(chan error)

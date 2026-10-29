@@ -54,7 +54,7 @@ func (r *Runtime) run() {
 		defer close(o.snapshotDone)
 		for doc := range o.snapshotJobs {
 			started := time.Now()
-			reply := writeSnapshot(r.snapshots, doc)
+			reply := writeSnapshot(r.snapshots, doc, r.hooks.beforeSnapshotSort)
 			r.metrics.publish.Observe(time.Since(started))
 			if reply.err != nil {
 				r.metrics.snapshotErrors.Add(1)
