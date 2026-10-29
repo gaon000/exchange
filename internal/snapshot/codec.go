@@ -79,17 +79,29 @@ func (doc Document) shape() error {
 func Write(w io.Writer, doc Document) error { return write(w, doc, MaxPayloadBytes) }
 
 func write(w io.Writer, doc Document, limit int64) error {
-	if err := doc.shape(); err != nil {
+	n, err := measure(doc, limit)
+	if err != nil {
 		return err
+	}
+	return writeEnvelope(w, doc, n)
+}
+
+func measure(doc Document, limit int64) (int64, error) {
+	if err := doc.shape(); err != nil {
+		return 0, err
 	}
 	count := &counter{limit: limit}
 	if err := payload(count, doc); err != nil {
-		return err
+		return 0, err
 	}
+	return count.n, nil
+}
+
+func writeEnvelope(w io.Writer, doc Document, payloadBytes int64) error {
 	var header [headerBytes]byte
 	copy(header[:], "EXSNP001")
 	binary.LittleEndian.PutUint32(header[8:12], 1)
-	binary.LittleEndian.PutUint64(header[12:], uint64(count.n))
+	binary.LittleEndian.PutUint64(header[12:], uint64(payloadBytes))
 	hash := sha256.New()
 	sink := io.MultiWriter(fullWriter{w}, hash)
 	if _, err := sink.Write(header[:]); err != nil {

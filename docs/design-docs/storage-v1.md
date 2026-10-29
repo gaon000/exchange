@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·snapshot envelope 스트리밍 코덱까지 구현했다. 파일 게시·후보 선택과 runtime 연결은 진행 전이다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·스트리밍 코덱·snapshot 파일 게시를 구현했다. 후보 선택·fallback·WAL 대조와 runtime 연결은 진행 전이다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -54,7 +54,7 @@ Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot payload 최대
 
 Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
 
-ErrCorrupt는 손상·비정규형 후보로 후속 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단해야 한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 caller가 Restore와 WAL 대조를 수행한다. 아직 파일 sync·게시·복구 선택을 연결한 것은 아니다.
+ErrCorrupt는 손상·비정규형 후보로 후속 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단해야 한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 caller가 Restore와 WAL 대조를 수행한다. 파일 게시는 아래 API로 구현했고 복구 선택·runtime 연결은 남아 있다.
 
 Genesis와 WAL header는 서로 일치해야 한다. 비어 있는 WAL도 유효한 헤더는 필요하다. 완성되지 않았거나 checksum이 다른 Genesis/header를 정상 새 실험으로 취급하지 않는다.
 
@@ -103,7 +103,16 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 
 [engine.Capture/Restore](../../internal/engine/checkpoint.go)는 사본과 복원된 상태 사이의 가변 참조를 공유하지 않는다. Restore는 과거 명령을 다시 매칭하지 않고 인덱스와 FIFO를 직접 구성한다. 순번·주문·체결·최초 결과 관계, 예약액·총공급량·Genesis와 체결에서 계산한 계정별 보유량을 검증하고 모순된 후보를 거절한다. 특히 취소 이후 체결, 최초 응답 변경, 누락된 활성 주문을 허용하지 않는다. 파일 복구 계층은 여기에 더해 저장된 command 입력/순번을 보존된 WAL과 대조해야 한다. 이 상태 검증만으로 파일 게시·재시작 복구가 완료된 것은 아니다.
 
-명령 경계 S에서 owner가 사본을 만든다. 파일명은 S를 20자리 0-padding한 `snapshot-S.bin`이다. 같은 디렉터리의 고유 임시 파일을 O_EXCL로 만들고, envelope 전체 쓰기 → 파일 엄격한 sync → close → 정식 이름으로 rename → 디렉터리 엄격한 sync 순으로 게시한다. 정식 이름이 이미 있으면 무조건 덮어쓰지 않고 같은 S의 정상 파일인지 확인한다. 기존 정상 snapshot은 보존한다. 재시작 시 임시 파일은 후보로 쓰지 않으며 임의로 정리할 필요도 없다.
+명령 경계 S에서 owner가 사본을 만든다. [snapshot.Publish](../../internal/snapshot/publish.go)는 S를 20자리 0-padding한 `snapshot-S.bin`으로 게시한다. 호출자는 run의 WAL 잠금을 보유하고 writer를 하나로 직렬화해야 한다. Publish 자체가 별도 잠금을 획득하거나 owner에서 사본을 만드는 것은 아니다.
+
+1. 입력·전체 payload 한도를 확인한다. 실패하면 파일 생성 전 종료한다.
+2. APFS 확인 후 같은 디렉터리에 고유 `.snapshot-*.tmp`를 O_EXCL/0600으로 생성한다.
+3. envelope 전체 쓰기 → 파일 F_FULLFSYNC → close → 정식 이름으로 exclusive rename → 디렉터리 F_FULLFSYNC 순으로 게시한다. 각 오류와 close 오류를 호출자에게 전달한다.
+4. 성공한 뒤에만 caller가 snapshotSeq를 전진시킨다. rename 뒤 오류·프로세스 종료에는 정상 이름의 파일이 이미 존재할 수 있다. 오류를 성공으로 간주하지 않고 재기동 시 검증·재동기화해야 한다.
+
+기존 같은 S의 파일은 canonical envelope 전체를 스트리밍 비교한다. 정확히 같으면 파일과 디렉터리를 다시 엄격한 sync하고, 다르거나 손상됐으면 ErrExistsMismatch로 거절한다. 확인과 rename 사이 파일이 나타난 경우에도 같은 규칙을 적용한다. 기존 파일을 지우거나 덮어쓰지 않는다. 실패 시 자신이 만든 임시 파일만 정리하며, 정리 오류는 원래 오류와 함께 반환한다. 프로세스 종료로 남은 임시 파일은 다음 복구에서 후보로 쓰지 않아야 한다.
+
+Darwin [RenameExclusive](../../internal/durable/rename_darwin.go)는 [Apple rename 계약](https://raw.githubusercontent.com/apple-oss-distributions/xnu/main/bsd/man/man2/rename.2)의 `renamex_np(RENAME_EXCL)`을 호출한다. 대상이 있으면 EEXIST이며, 지원 불가 오류를 일반 rename으로 낮추지 않는다. 현재 macOS/APFS에서 새 이름 게시·기존 이름 보존과 strict sync를 검증했다. 다른 OS/cgo 비활성에서는 파일 생성 전에 지원 불가로 실패한다.
 
 ## 6. 복구 판정
 
