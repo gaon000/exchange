@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "sourceDirectory": "var/p6-baseline-4gm7mz4t",
+  "archive": "var/archives/p6-baseline-4gm7mz4t.tar.gz",
+  "archiveSHA256": "1131ed4e3b520dfff3179c7a105df59ed0b7353f8fb77c1af78c568364ac0636",
+  "archiveBytes": 1694291788,
+  "verifiedMembers": 503,
+  "receipt": "var/archives/p6-baseline-4gm7mz4t.tar.receipt.json",
+  "receiptSHA256": "90fd568af629d3a003de2d774e8371ed20d0a3c4a4109a686e55265e21f26745",
+  "restoreParent": "var",
+  "originalDirectoryRemovedAfterVerification": true
+}
