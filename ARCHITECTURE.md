@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. 부하 생성기·CI는 아직 구현하지 않았다.
+2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 입력 계획·스케줄러·집계 라이브러리를 구현했으며 부하 전송/CLI·서버 계측·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -36,7 +36,7 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 모듈과 의존 방향
 
-P4 모듈과 P5의 api·서버 CLI를 구현했다. 아래에서 나머지 예정 경로와 구분한다.
+P4 모듈과 P5의 api·서버 CLI, P6의 bench 핵심을 구현했다. 아래에서 나머지 예정 경로와 구분한다.
 
 | 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |
@@ -49,7 +49,8 @@ P4 모듈과 P5의 api·서버 CLI를 구현했다. 아래에서 나머지 예�
 | [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot |
 | [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, 표준 HTTP |
 | [cmd/exchange](cmd/exchange/main.go) (구현) | init/serve·설정 검증·모듈 조립·기동 보고·signal 종료와 HTTP/runtime 합류 | 위 모듈의 공개 진입점 |
-| `cmd/loadgen/`, `internal/bench/` | 네트워크 부하·측정·재현 설정 | 공개 API 계약, 측정 도구 |
+| [internal/bench](internal/bench/plan.go) (핵심 구현) | 고정 seed 입력·제한된 open-loop 실행·모든 시도 표본·정확한 지연/고유 결과 집계. 실제 HTTP 전송은 후속 작업 | domain, 표준 라이브러리; engine/runtime 직접 호출 없음 |
+| `cmd/loadgen/` (예정) | 공개 HTTP 부하·초기 상태 확인·측정 파일·실행 설정 | bench, 공개 API 계약 |
 
 API는 엔진 내부 맵을 직접 수정하지 않는다. 엔진은 HTTP·파일·벽시계·난수·외부 서비스에 의존하지 않는다. WAL은 거래 승인 여부를 결정하지 않는다. loadgen의 전체 경로 측정은 엔진 직접 호출을 우회 경로로 사용하지 않는다. 공통 타입은 실제 공유 계약에 한해 분리하고 순환 의존은 허용하지 않는다.
 

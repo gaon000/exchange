@@ -13,7 +13,7 @@
 - [전체 구조](ARCHITECTURE.md): 구현한 모듈과 예정 모듈의 책임.
 - [개발 기준](docs/development.md): 도구·명령의 구성 상태와 개발 규칙.
 
-개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. 부하 생성기·CI와 실제 전원 장애·전체 성능 검증은 남아 있다.
+개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. [부하 생성 핵심](docs/design-docs/benchmark-v1.md)은 구현했으며 HTTP 전송/CLI·서버 계측·CI와 실제 전원 장애·전체 성능 검증은 남아 있다.
 
 ## 로컬 실행
 

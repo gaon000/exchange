@@ -48,8 +48,8 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
-| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
-| 기본 테스트 | `scripts/go test ./...` (CLI·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
+| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
+| 기본 테스트 | `scripts/go test ./...` (CLI·bench·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
 | race 검사 | `scripts/go test -race ./...` |
 | cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
 | 실제 저장 호출 확인 | `scripts/go run ./tools/storageprobe -dir .` |
@@ -63,6 +63,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | HTTP 입력·전송·거래/복구 | `scripts/go test ./internal/api -v` (loopback 권한 필요, APFS 통합 사례는 macOS/cgo) |
 | CLI 실제 프로세스·signal·재시작 | `scripts/go test ./cmd/exchange -run '^TestNativeCLI' -v` (macOS/cgo·loopback, 개발 컴퓨터를 종료하지 않음) |
 | HTTP 장애·과부하·프로세스 복구 | `scripts/go test ./internal/runtime -run '^TestNativeHTTP' -v -timeout=120s` (macOS/cgo·loopback, 테스트 소유 자식 프로세스만 kill) |
+| 부하 생성 핵심·집계 | `scripts/go test -race ./internal/bench -timeout=60s` (입력·스케줄·표본/집계, HTTP 성능 측정 아님) |
 | 추적된 변경의 공백 검사 | `git diff --check`; staged 변경은 `git diff --cached --check` |
 | 새 문서의 공백 검사 | `git diff --no-index --check -- /dev/null <새 문서 경로>`; 각 파일에 실행하며 `<새 문서 경로>`는 실제 경로로 교체 |
 
@@ -128,6 +129,8 @@ P5의 [HTTP 장애 통합](../internal/runtime/http_fault_native_test.go)은 실
 [프로세스 통합](../internal/runtime/http_process_native_test.go)은 저장 결과 4종·적용 전후·응답 전/실제 본문 일부 전송 후·snapshot 사본 생성 전후/게시 전후의 12개 지점에서 자식만 종료한다. 재시작 시 기존 snapshot+WAL에서 허용한 순번을 확인하고, 재시도한 최초 응답·주문·잔고·호가·체결과 최종 WAL bytes를 정상 실행과 비교한다. snapshot 파일의 개별 write/sync/rename 호출은 P4의 파일 계층 7개 지점 검사와 구분한다. 사본 복사 내부나 매칭 내부의 특정 CPU 명령에서 kill한 것으로 표현하지 않는다.
 
 [고정 seed 동시 입력](../internal/runtime/http_concurrent_native_test.go)은 4개 생산자의 고유 명령 64개를 각각 두 번 보내고 64개 잔고 조회를 수행한다. 응답 순번으로 정렬한 원본 입력을 별도 순차 엔진에 적용해 최초 결과·각 asOfSeq 잔고·최종 checkpoint를 비교한다. 이는 전송·순서·재생의 검사이며 독립 매칭 모델은 P1 테스트에 있다. [명시적 거래 사례](../internal/runtime/http_rules_native_test.go)는 가격/FIFO·여러 가격 체결 후 자기 거래 차단과 동시 잔고 소진의 기대 정수 값을 별도로 확인한다. 테스트 bridge와 환경변수는 `_test.go`에만 있으며 실행 바이너리에 장애 설정을 추가하지 않는다.
+
+P6의 [bench 핵심](../internal/bench/plan.go)은 고정 입력·open-loop 스케줄·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [입력·스케줄·집계 계약](design-docs/benchmark-v1.md)을 따른다. 현재는 가짜 executor로 알고리즘과 취소·포화를 검사하며 실제 HTTP 전송·loadgen CLI·측정 파일·서버 계측은 아직 없다. 서버 부하 테스트를 실행했다고 해석하지 않는다.
 
 ## CI와 릴리스
 
