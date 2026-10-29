@@ -194,3 +194,7 @@ P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·
 origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
 
 P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P5의 실제 결과는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
+
+## 실제 OS·전원 장애 시험 준비
+
+[별도 시험 절차](power-loss-validation.md)에 외부 관찰자의 요청/최초 응답 보존, 복구 전 원본 사본, 재시도 전 GET 검사와 미확정 명령의 허용 상태를 기록했다. 실제 장비가 없는 현재는 예제 거래의 정상 종료·재시작만 확인했으며 전원 장애 증거로 사용하지 않는다. 이 절차에는 OS 종료나 장비 전원을 제어하는 명령이 없다.

@@ -1,0 +1,1605 @@
+{
+  "version": 1,
+  "mode": "same-host-graceful-restart-documentation-dry-run",
+  "actualPowerLoss": false,
+  "separateObserverHost": false,
+  "sourceCommit": "1172a32d98be28a39b9204b7eb9410017822b4c5",
+  "binaryBuild": "bin/exchange: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/cmd/exchange\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261029115947-58836215ccbd\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=58836215ccbdf5171ac351d6b633b692366e0a17\n\tbuild\tvcs.time=2026-10-29T11:59:47Z\n\tbuild\tvcs.modified=false\n",
+  "binarySHA256": "cb713c68be28446189dbccf8629ed7ac8840a9c19126037dc1b5437e171903f7",
+  "artifactRoot": "var/power-procedure-dry-run-7wj8zi82",
+  "cases": [
+    {
+      "prefixCommands": 4,
+      "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+      "configHash": "4a20e6d783a0c422685fed2d46539a915a9dfa0198e87a5a09c0e6feca0d336d",
+      "readOnlyChecksBeforeAnyRetry": 10,
+      "recovery": {
+        "snapshotFile": "",
+        "snapshotSeq": "0",
+        "replayedCommands": "4",
+        "skippedSnapshots": []
+      },
+      "expectedBalances": {
+        "alice": {
+          "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+          "asOfSeq": "4",
+          "BTC": {
+            "availableLots": "10004",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "99999999600",
+            "reservedAtoms": "0"
+          }
+        },
+        "bob": {
+          "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+          "asOfSeq": "4",
+          "BTC": {
+            "availableLots": "9996",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "100000000400",
+            "reservedAtoms": "0"
+          }
+        },
+        "carol": {
+          "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+          "asOfSeq": "4",
+          "BTC": {
+            "availableLots": "10000",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "100000000000",
+            "reservedAtoms": "0"
+          }
+        }
+      },
+      "book": {
+        "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+        "asOfSeq": "4",
+        "bids": [],
+        "asks": []
+      },
+      "trades": {
+        "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+        "asOfSeq": "4",
+        "throughSeq": "4",
+        "trades": [
+          {
+            "tradeId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c:2:1",
+            "priceTicks": "100",
+            "quantityLots": "4",
+            "takerSide": "BUY"
+          }
+        ],
+        "nextCursor": null
+      },
+      "allOriginalResultsUnchanged": true,
+      "duplicateRetriesChangedState": false,
+      "requests": [
+        {
+          "index": 0,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-maker",
+            "symbol": "BTC-USDT",
+            "side": "SELL",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100",
+            "quantityLots": "10"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 1,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-taker",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "110",
+            "quantityLots": "4"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 2,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/cancellations",
+          "request": {
+            "cancelRequestId": "power-cancel",
+            "clientOrderId": "power-maker"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 3,
+          "accountId": "carol",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-reject",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100000000",
+            "quantityLots": "1000000"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 4,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/results/place/power-maker",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 5,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/results/place/power-taker",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 6,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/results/cancel/power-cancel",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 7,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/results/place/power-reject",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 8,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/results/place/power-pending",
+          "request": null,
+          "status": 404,
+          "response": {
+            "state": "UNKNOWN"
+          }
+        },
+        {
+          "index": 9,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "10004",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "99999999600",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 10,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "9996",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000400",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 11,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "10000",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000000",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 12,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/book",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "bids": [],
+            "asks": []
+          }
+        },
+        {
+          "index": 13,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/trades",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "throughSeq": "4",
+            "trades": [
+              {
+                "tradeId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c:2:1",
+                "priceTicks": "100",
+                "quantityLots": "4",
+                "takerSide": "BUY"
+              }
+            ],
+            "nextCursor": null
+          }
+        },
+        {
+          "index": 14,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-maker",
+            "symbol": "BTC-USDT",
+            "side": "SELL",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100",
+            "quantityLots": "10"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 15,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-taker",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "110",
+            "quantityLots": "4"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 16,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/cancellations",
+          "request": {
+            "cancelRequestId": "power-cancel",
+            "clientOrderId": "power-maker"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 17,
+          "accountId": "carol",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-reject",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100000000",
+            "quantityLots": "1000000"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 18,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "10004",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "99999999600",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 19,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "9996",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000400",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 20,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "322c0937-dbd9-4a9b-b796-dab9a9adc99c",
+            "asOfSeq": "4",
+            "BTC": {
+              "availableLots": "10000",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000000",
+              "reservedAtoms": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "prefixCommands": 5,
+      "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+      "configHash": "4a20e6d783a0c422685fed2d46539a915a9dfa0198e87a5a09c0e6feca0d336d",
+      "readOnlyChecksBeforeAnyRetry": 11,
+      "recovery": {
+        "snapshotFile": "",
+        "snapshotSeq": "0",
+        "replayedCommands": "5",
+        "skippedSnapshots": []
+      },
+      "expectedBalances": {
+        "alice": {
+          "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+          "asOfSeq": "5",
+          "BTC": {
+            "availableLots": "10004",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "99999999420",
+            "reservedAtoms": "180"
+          }
+        },
+        "bob": {
+          "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+          "asOfSeq": "5",
+          "BTC": {
+            "availableLots": "9996",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "100000000400",
+            "reservedAtoms": "0"
+          }
+        },
+        "carol": {
+          "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+          "asOfSeq": "5",
+          "BTC": {
+            "availableLots": "10000",
+            "reservedLots": "0"
+          },
+          "USDT": {
+            "availableAtoms": "100000000000",
+            "reservedAtoms": "0"
+          }
+        }
+      },
+      "book": {
+        "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+        "asOfSeq": "5",
+        "bids": [
+          {
+            "priceTicks": "90",
+            "quantityLots": "2"
+          }
+        ],
+        "asks": []
+      },
+      "trades": {
+        "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+        "asOfSeq": "5",
+        "throughSeq": "5",
+        "trades": [
+          {
+            "tradeId": "99ee3c82-d611-4719-9a92-095d2c3ead0e:2:1",
+            "priceTicks": "100",
+            "quantityLots": "4",
+            "takerSide": "BUY"
+          }
+        ],
+        "nextCursor": null
+      },
+      "allOriginalResultsUnchanged": true,
+      "duplicateRetriesChangedState": false,
+      "requests": [
+        {
+          "index": 0,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-maker",
+            "symbol": "BTC-USDT",
+            "side": "SELL",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100",
+            "quantityLots": "10"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 1,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-taker",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "110",
+            "quantityLots": "4"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 2,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/cancellations",
+          "request": {
+            "cancelRequestId": "power-cancel",
+            "clientOrderId": "power-maker"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 3,
+          "accountId": "carol",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-reject",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100000000",
+            "quantityLots": "1000000"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 4,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-pending",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "90",
+            "quantityLots": "2"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-pending",
+            "commandSeq": "5",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-pending",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "90",
+              "originalQty": "2",
+              "executedQty": "0",
+              "openQty": "2",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "5",
+              "updatedSeq": "5"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 5,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/results/place/power-maker",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 6,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/results/place/power-taker",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 7,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/results/cancel/power-cancel",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 8,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/results/place/power-reject",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 9,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/results/place/power-pending",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-pending",
+            "commandSeq": "5",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-pending",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "90",
+              "originalQty": "2",
+              "executedQty": "0",
+              "openQty": "2",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "5",
+              "updatedSeq": "5"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 10,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/results/place/power-pending",
+          "request": null,
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-pending",
+            "commandSeq": "5",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-pending",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "90",
+              "originalQty": "2",
+              "executedQty": "0",
+              "openQty": "2",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "5",
+              "updatedSeq": "5"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 11,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "10004",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "99999999420",
+              "reservedAtoms": "180"
+            }
+          }
+        },
+        {
+          "index": 12,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "9996",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000400",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 13,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "10000",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000000",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 14,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/book",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "bids": [
+              {
+                "priceTicks": "90",
+                "quantityLots": "2"
+              }
+            ],
+            "asks": []
+          }
+        },
+        {
+          "index": 15,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/trades",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "throughSeq": "5",
+            "trades": [
+              {
+                "tradeId": "99ee3c82-d611-4719-9a92-095d2c3ead0e:2:1",
+                "priceTicks": "100",
+                "quantityLots": "4",
+                "takerSide": "BUY"
+              }
+            ],
+            "nextCursor": null
+          }
+        },
+        {
+          "index": 16,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-maker",
+            "symbol": "BTC-USDT",
+            "side": "SELL",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100",
+            "quantityLots": "10"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-maker",
+            "commandSeq": "1",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "0",
+              "openQty": "10",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "1",
+              "updatedSeq": "1"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 17,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-taker",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "110",
+            "quantityLots": "4"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-taker",
+            "commandSeq": "2",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-taker",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "110",
+              "originalQty": "4",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "400",
+              "status": "FILLED",
+              "reason": null,
+              "createdSeq": "2",
+              "updatedSeq": "2"
+            },
+            "tradeCount": "1"
+          }
+        },
+        {
+          "index": 18,
+          "accountId": "bob",
+          "method": "POST",
+          "path": "/v1/cancellations",
+          "request": {
+            "cancelRequestId": "power-cancel",
+            "clientOrderId": "power-maker"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "bob",
+            "kind": "CANCEL_ORDER",
+            "requestId": "power-cancel",
+            "commandSeq": "3",
+            "code": "CANCELLED",
+            "order": {
+              "clientOrderId": "power-maker",
+              "symbol": "BTC-USDT",
+              "side": "SELL",
+              "priceTicks": "100",
+              "originalQty": "10",
+              "executedQty": "4",
+              "openQty": "0",
+              "cancelledQty": "6",
+              "executedQuoteAtoms": "400",
+              "status": "CANCELLED",
+              "reason": "USER_CANCEL",
+              "createdSeq": "1",
+              "updatedSeq": "3"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 19,
+          "accountId": "carol",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-reject",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "100000000",
+            "quantityLots": "1000000"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "carol",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-reject",
+            "commandSeq": "4",
+            "code": "INSUFFICIENT_BALANCE",
+            "order": {
+              "clientOrderId": "power-reject",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "100000000",
+              "originalQty": "1000000",
+              "executedQty": "0",
+              "openQty": "0",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "REJECTED",
+              "reason": "INSUFFICIENT_BALANCE",
+              "createdSeq": "4",
+              "updatedSeq": "4"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 20,
+          "accountId": "alice",
+          "method": "POST",
+          "path": "/v1/orders",
+          "request": {
+            "clientOrderId": "power-pending",
+            "symbol": "BTC-USDT",
+            "side": "BUY",
+            "type": "LIMIT",
+            "timeInForce": "GTC",
+            "priceTicks": "90",
+            "quantityLots": "2"
+          },
+          "status": 200,
+          "response": {
+            "schemaVersion": 1,
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "accountId": "alice",
+            "kind": "PLACE_ORDER",
+            "requestId": "power-pending",
+            "commandSeq": "5",
+            "code": "ACCEPTED",
+            "order": {
+              "clientOrderId": "power-pending",
+              "symbol": "BTC-USDT",
+              "side": "BUY",
+              "priceTicks": "90",
+              "originalQty": "2",
+              "executedQty": "0",
+              "openQty": "2",
+              "cancelledQty": "0",
+              "executedQuoteAtoms": "0",
+              "status": "OPEN",
+              "reason": null,
+              "createdSeq": "5",
+              "updatedSeq": "5"
+            },
+            "tradeCount": "0"
+          }
+        },
+        {
+          "index": 21,
+          "accountId": "alice",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "10004",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "99999999420",
+              "reservedAtoms": "180"
+            }
+          }
+        },
+        {
+          "index": 22,
+          "accountId": "bob",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "9996",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000400",
+              "reservedAtoms": "0"
+            }
+          }
+        },
+        {
+          "index": 23,
+          "accountId": "carol",
+          "method": "GET",
+          "path": "/v1/balances",
+          "request": null,
+          "status": 200,
+          "response": {
+            "runId": "99ee3c82-d611-4719-9a92-095d2c3ead0e",
+            "asOfSeq": "5",
+            "BTC": {
+              "availableLots": "10000",
+              "reservedLots": "0"
+            },
+            "USDT": {
+              "availableAtoms": "100000000000",
+              "reservedAtoms": "0"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "artifactSHA256": {
+    "check-power-procedure.py": "49fdd6da80e62213a1127bde81a36ab120f2c97874d7ff8e826300317dd94ff5",
+    "prefix-4/after-ready.jsonl": "d1d30f204350d0bec46c77d0b2beaa6574fa5e0edabaf98d6b300d0cb9828727",
+    "prefix-4/after-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-4/before-ready.jsonl": "4bc91057452266fd95bc8c03697a1738da222528a633b3bb922208277ef717cc",
+    "prefix-4/before-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-4/initialized.json": "3049acf0bea2d728513c77ad24baa8cd2b4674e1850ad8a26d9470677bcc185e",
+    "prefix-4/request-000.json": "6f4302e7b7ccfd642f81d5227be7aa395763ba4e61b149fbf64909b69dba9b36",
+    "prefix-4/request-001.json": "7c848cc142fb182dfcc8a6b21a93eba938190261d5529047fae67db6511b87ff",
+    "prefix-4/request-002.json": "c52bd89b09094ebc0ad77af09a9d27781abedc9a2346dfe5561c5ce62ab0b281",
+    "prefix-4/request-003.json": "442b13882690ff6c0f6070b9dd8ebba10233a15ccb47d6043206ce38db06d5aa",
+    "prefix-4/request-004.json": "b66b4d7ea1d745c9c49419d3fd09c78fa2c8c2d5c3b0d36b421f65ba18701c1b",
+    "prefix-4/request-005.json": "a3b933a12be752137aa6ed85d44f60dce65a6f8281b2922e305b1cf3006ef572",
+    "prefix-4/request-006.json": "803118597bdb28727bad94017814cf7ffce1dad8223609390059aa7d00a433e6",
+    "prefix-4/request-007.json": "4e0ad77e5a0d52f12895a10e46c52fa5dc4a4d18fd1b9202f08b70db17af738e",
+    "prefix-4/request-008.json": "f60b4a7656c71f39352c45a3a707ba982019feee8f0aa44d35ddc4ea25e7ac23",
+    "prefix-4/request-009.json": "257906699a5532614cb53513b33f9cf124f95d1f8d68f88af2d582a9db035836",
+    "prefix-4/request-010.json": "fc739fe3ef88a494ad2817685aa6ad4d0adaa20af93501a35a8baa932c45492b",
+    "prefix-4/request-011.json": "4df4d2224db7b86d3d535c0ceeb5e5853922e06663ca4979099ce6ec37a89587",
+    "prefix-4/request-012.json": "8daeee568822a29a133e05d33ad836f8959073592bd7fa928bad563d78e6e1b6",
+    "prefix-4/request-013.json": "cc13cd3ce59116c1e37c86678bb20a36134ed2a330191bc29f4067e2bd7b5297",
+    "prefix-4/request-014.json": "12647e7d233ded1d3a9af76b5380dc74d70b32cdcdf86fbbb27e88e301fccbfb",
+    "prefix-4/request-015.json": "561ab1b53e36a9b0e9777f5ca878db045167362a0d0568116f44bacf32180446",
+    "prefix-4/request-016.json": "d59aff3d782705ba60c8e8f43584f06da3fe92cbf6806320423d9d461cecbc29",
+    "prefix-4/request-017.json": "560479d935ecf1ccdac3eb087c7cf0e814088c3631553f5935766b738f432a48",
+    "prefix-4/request-018.json": "c719d062717e65cbc70fd5d46f34372d4611adfb336d5f965e47adfa87a669f7",
+    "prefix-4/request-019.json": "d11ed83a1fafaac86724cfba102b0b66c5a7d042f4e3bbfde0f7de995c568e8f",
+    "prefix-4/request-020.json": "b5d2c86713298f947b2334ec0745ff2bfb0e0487239ccb62834195acb3f834ac",
+    "prefix-4/run/.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-4/run/commands.wal": "ed1d6d003ab9f4fb274c0f53fcabdbca3bf19d732bcf509a1001525a73143d55",
+    "prefix-4/run/genesis.bin": "441affd430a055288cb12a21a24b72a67b5ad16649c31ad38f0037033a352f4b",
+    "prefix-5/after-ready.jsonl": "ef5c5a84fc3e03b4e4bd108325841a00995af5fe9a571c58a30f0c3107eb0749",
+    "prefix-5/after-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-5/before-ready.jsonl": "51394f8ccfe9eeca91ac6b87e04baab0b10e3629fac1f646ff4e8c715e6e2302",
+    "prefix-5/before-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-5/initialized.json": "0b38272ea3a70039bdfed6d83a60ab462f6da22ed51612517d2553a6ede389e8",
+    "prefix-5/request-000.json": "1e820f980e002354e66b1102d9bf36cb5e0d494d2dd7b94a233e63a7c13f4c9d",
+    "prefix-5/request-001.json": "75b47c7d304ecba3d54ac791bab005dcfbd6e8025dfb1d0276cb3ab0e716aef9",
+    "prefix-5/request-002.json": "2ba2ac1be84dec418617b2e2697eafcaa2ed185726b3d1b71584fe677171ad0b",
+    "prefix-5/request-003.json": "bf5951794df05daaf9bf7068871bf13b80873a3bc990934907ba23f42d6a9719",
+    "prefix-5/request-004.json": "356fead3f1e6198aeca285c245dc4b751bdba63c8ff5b6c6eb65c7b5d0bd43c1",
+    "prefix-5/request-005.json": "74eb3fd2014e4108cf48488166a5bd5594e670cd6c29e8d55d3d49ef20daafb5",
+    "prefix-5/request-006.json": "af3a21ee66957d46fe28fe7b22019056c7166be4c9733742677746408c54b025",
+    "prefix-5/request-007.json": "43e4c1c22a4352dc1d6342eaba2fe7bd1bc2fbbd56891e5522ce029a50515a3b",
+    "prefix-5/request-008.json": "70d5063b3118af70b9fdc15413442a9288b7507eb37f670e060858a95258506f",
+    "prefix-5/request-009.json": "27baa7bfcdb55eb738269cf04e959a3128f65765a67b308690034be38b70e00e",
+    "prefix-5/request-010.json": "b7be26537d9ad8cda98c67174e8829293e8d6395bc2915ae0313caab3ee94d51",
+    "prefix-5/request-011.json": "e48b3ddb4724e6a88b409b230b86e884156a057e4fffa6eff50f916369974ad7",
+    "prefix-5/request-012.json": "da9cf370eb607ed0aeb5c306eb98b5d1c99bd68e3f5328f7c78b131941a013d3",
+    "prefix-5/request-013.json": "43fd281034ab31eb24f771d92f6d00bb8c1f91736e86575610bf7843f3120ad6",
+    "prefix-5/request-014.json": "1c9ec600e72f2846ced0a5250d9abdd7f2ef05352980a8fc6ea4a0366d847e30",
+    "prefix-5/request-015.json": "5c59766fec740da795fdbe1c0dfad89b3b3c8a305c72d1fa5f9eab5df0017027",
+    "prefix-5/request-016.json": "ce4f897fc81cfbb5e999c924ffd415631f7985e48e964ac841247f9e5d7e0264",
+    "prefix-5/request-017.json": "91383bc7d52b024ed5a4ca4086ab564844730fab200ca9fd533dd3b568962ce2",
+    "prefix-5/request-018.json": "160897a8b97a75757bfefd901d1ab03d0669e8474b7d0f110d58d6625d379604",
+    "prefix-5/request-019.json": "679438322ba75311b85a14b0dff127ecb13d4628058897079d1a7f3c2a88e3c6",
+    "prefix-5/request-020.json": "a63290c29dda74666c7c2ce362f202940022430a8f3304b6b16834f6db0679ed",
+    "prefix-5/request-021.json": "ebb36b8b68cd4f79e05ff6e153af84560a0c097161b08c13847f3ca0e48488d0",
+    "prefix-5/request-022.json": "ec0f6f3ec9e454df17aae8b0063c5b983c22647af441a84b8e6461ff4922782c",
+    "prefix-5/request-023.json": "55e5001381a8f7e07657234146bfd18f11f4913d40237b4183074eccf119deaf",
+    "prefix-5/run/.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prefix-5/run/commands.wal": "c6e821349314aac22d19c1196b95d09282132754b28da30ebd4f12b91eefee32",
+    "prefix-5/run/genesis.bin": "1dc5330221c02977be5632ad566190c27721f49f810750707333f17dfa49fce7"
+  }
+}
