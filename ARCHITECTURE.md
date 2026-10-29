@@ -4,7 +4,7 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P0의 Go 모듈·고정 toolchain wrapper·저장 API probe가 존재한다. 거래 엔진·WAL·서버·CI는 아직 구현하지 않았다. 아래 예정 모듈을 현재 구현으로 해석하지 않는다.
+2026-10-29 기준 Go 모듈·고정 toolchain wrapper·저장 API probe와 P1 정수 도메인·메모리 엔진이 존재한다. WAL·runtime·서버·CI는 아직 구현하지 않았다.
 
 ## 현재 문서 지도
 
@@ -26,7 +26,7 @@
 | [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
-| [config/examples/local.json](config/examples/local.json) | P0 초기 잔고·단위 fixture. 서버 loader는 P1/P2에서 구현 |
+| [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. P1 도메인 검증에 연결. 서버 loader는 P2 이후 구현 |
 
 ## 합의한 구현 목표
 
@@ -34,14 +34,14 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 기본 경로는 `형식 검사 → bounded queue → 순번 → 그룹 로그 영구 저장 → 순차 상태 적용 → 결과 응답`이다. 세부 순서·조회 일관성·오류 경계는 [상세 설계](docs/design-docs/exchange-v1.md)를 기준으로 한다.
 
-## 예정 모듈과 의존 방향
+## 모듈과 의존 방향
 
-아래는 P0에서 확정한 예정 모듈 경로다. 이 디렉터리들은 아직 존재하지 않는다. 실제 구현 중 변경하면 이유를 계획에 기록한다.
+P1에서 domain과 engine을 구현했다. 나머지는 예정 경로이며 아직 존재하지 않는다.
 
-| 예정 경로 | 책임 | 허용 의존 |
+| 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |
-| `internal/domain/` | 정수 단위·ID·명령·결과·버전 타입 | 표준 라이브러리, 외부 I/O 없음 |
-| `internal/engine/` | 주문·호가창·잔고·중복 결과를 결정적으로 변경 | domain |
+| [internal/domain](internal/domain/types.go) (구현) | 정수 파싱·산술·ID·Config·명령·결과·버전 타입 | 표준 라이브러리, 외부 I/O 없음 |
+| [internal/engine](internal/engine/engine.go) (구현) | 가격 정렬+FIFO, 잔고·주문·체결·최초 결과를 결정적으로 변경 | domain |
 | `internal/wal/` | 프레임·그룹·체크섬·동기화·로그 순회 | domain, 파일 I/O 경계 |
 | `internal/snapshot/` | 불변 상태 DTO 직렬화·검증·게시 | domain, 파일 I/O 경계 |
 | `internal/runtime/` | 큐·배치·순번·단일 소유권·복구 조율 | engine, wal, snapshot의 계약 |
@@ -50,6 +50,8 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 | `cmd/loadgen/`, `internal/bench/` | 네트워크 부하·측정·재현 설정 | 공개 API 계약, 측정 도구 |
 
 API는 엔진 내부 맵을 직접 수정하지 않는다. 엔진은 HTTP·파일·벽시계·난수·외부 서비스에 의존하지 않는다. WAL은 거래 승인 여부를 결정하지 않는다. loadgen의 전체 경로 측정은 엔진 직접 호출을 우회 경로로 사용하지 않는다. 공통 타입은 실제 공유 계약에 한해 분리하고 순환 의존은 허용하지 않는다.
+
+P1의 engine은 자체 고루틴·잠금 없이 한 소유자가 순차 호출한다. New/Lookup/Apply와 값 복사 조회를 제공하며, State는 안정된 순서의 진단용 사본이다. State를 snapshot 파일 형식으로 직접 직렬화하지 않는다. 자료구조·순번·오류 경계의 구체적인 연결 계약은 [상세 설계](docs/design-docs/exchange-v1.md#p1-구현과-호출-계약)를 따른다.
 
 ## 시스템과 데이터 경계
 

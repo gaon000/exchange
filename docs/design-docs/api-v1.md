@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: 계약만 확정. API·엔진은 P1~P5에서 구현한다.
+구현 상태: P1의 정수·명령·Config 검증과 메모리 엔진 완료. HTTP·엄격한 본문 파서·서버 조회 페이지는 P3/P5에서 구현한다.
 
 [제품 명세](../product-specs/exchange.md)의 정책과 [처리 설계](exchange-v1.md)를 구체화한다. 여기서 정하는 숫자는 재현용 모의 거래 설정이며 실제 시장 규칙·시세가 아니다. 변경 시 Genesis의 설정 식별값과 규칙 버전을 함께 검토한다.
 
@@ -30,7 +30,7 @@ v1 거래쌍은 `BTC-USDT`다. 내부 가격·수량·잔고·대금은 부호 �
 
 예: BTC당 60,000 USDT는 `priceTicks="6000000"`, 0.01 BTC는 `quantityLots="100"`다. 최대 예약 대금은 600,000,000 atoms = 600 USDT다. 표시값 환산을 엔진의 정수 계산에 역으로 끼워 넣거나 float로 반올림하지 않는다.
 
-[로컬 초기 설정 예시](../../config/examples/local.json)는 alice/bob/carol 각 1 BTC와 100,000 USDT를 지급한다. 합계는 base 30,000 lots (=3 BTC), quote 300,000,000,000 atoms (=300,000 USDT)다. `reserved=0`에서 시작한다. 이 예시는 아직 실행 가능한 서버 설정이 아니며 P1/P2의 검증 fixture로 연결한다. 계정 수·잔고는 허용 한도 안에서 새 실험마다 바꿀 수 있고, 단위와 주문 한도는 v1 규칙이다.
+[로컬 초기 설정 예시](../../config/examples/local.json)는 alice/bob/carol 각 1 BTC와 100,000 USDT를 지급한다. 합계는 base 30,000 lots (=3 BTC), quote 300,000,000,000 atoms (=300,000 USDT)다. `reserved=0`에서 시작한다. P1 도메인 테스트에서 이 fixture의 값·한도를 확인한다. 아직 서버 설정 loader는 없으며 P2 이후 연결한다. 계정 수·잔고는 허용 한도 안에서 새 실험마다 바꿀 수 있고, 단위와 주문 한도는 v1 규칙이다.
 
 ## 2. 로컬 전송과 계정 문맥
 

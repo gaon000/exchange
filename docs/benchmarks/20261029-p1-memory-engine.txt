@@ -1,0 +1,18 @@
+goos: darwin
+goarch: arm64
+pkg: github.com/gaon000/exchange/internal/engine
+cpu: Apple M3 Pro
+BenchmarkEngine/Rest-11         	  468024	       460.8 ns/op	         1.000 new_commands/op	    1313 B/op	       5 allocs/op
+BenchmarkEngine/Rest-11         	  509206	       514.6 ns/op	         1.000 new_commands/op	    1313 B/op	       5 allocs/op
+BenchmarkEngine/Rest-11         	  505227	       670.1 ns/op	         1.000 new_commands/op	    1313 B/op	       5 allocs/op
+BenchmarkEngine/Match-11        	  190081	      1232 ns/op	         2.000 new_commands/op	    3036 B/op	      13 allocs/op
+BenchmarkEngine/Match-11        	  195370	      1206 ns/op	         2.000 new_commands/op	    3036 B/op	      13 allocs/op
+BenchmarkEngine/Match-11        	  198943	      1163 ns/op	         2.000 new_commands/op	    3036 B/op	      13 allocs/op
+BenchmarkEngine/Cancel-11       	  279862	       861.1 ns/op	         2.000 new_commands/op	    2257 B/op	       9 allocs/op
+BenchmarkEngine/Cancel-11       	  284955	       859.7 ns/op	         2.000 new_commands/op	    2257 B/op	       9 allocs/op
+BenchmarkEngine/Cancel-11       	  292488	       850.5 ns/op	         2.000 new_commands/op	    2257 B/op	       9 allocs/op
+BenchmarkEngine/Duplicate-11    	 1602165	       149.5 ns/op	         0 new_commands/op	     144 B/op	       1 allocs/op
+BenchmarkEngine/Duplicate-11    	 1601810	       154.2 ns/op	         0 new_commands/op	     144 B/op	       1 allocs/op
+BenchmarkEngine/Duplicate-11    	 1605844	       148.8 ns/op	         0 new_commands/op	     144 B/op	       1 allocs/op
+PASS
+ok  	github.com/gaon000/exchange/internal/engine	3.825s
