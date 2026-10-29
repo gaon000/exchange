@@ -10,33 +10,39 @@ import (
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
+	"github.com/gaon000/exchange/internal/snapshot"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
 // Runtime owns the engine and WAL lifecycle. Public methods may be called
 // concurrently. Readiness opens only after replay, invariant checks, and sync.
 type Runtime struct {
-	genesis   wal.Genesis
-	accounts  map[string]bool
-	opts      Options
-	engine    *engine.Engine
-	store     journal
-	commands  chan *commandRequest
-	queries   chan *queryRequest
-	slots     chan struct{}
-	stop      chan struct{}
-	done      chan struct{}
-	ready     atomic.Bool
-	admission sync.Mutex
-	closing   bool
-	terminal  error // written before done closes; readers wait for done
-	hooks     hooks
-	recovery  RecoveryReport
-	snapshots checkpoints
+	genesis          wal.Genesis
+	accounts         map[string]bool
+	opts             Options
+	engine           *engine.Engine
+	store            journal
+	commands         chan *commandRequest
+	queries          chan *queryRequest
+	slots            chan struct{}
+	stop             chan struct{}
+	done             chan struct{}
+	ready            atomic.Bool
+	admission        sync.Mutex
+	closing          bool
+	terminal         error // written before done closes; readers wait for done
+	hooks            hooks
+	recovery         RecoveryReport
+	snapshots        checkpoints
+	snapshotRequests chan *snapshotRequest
+	snapshotBusy     bool // admission mutex; remains set after a waiting caller times out
+	snapshotSeq      atomic.Int64
 }
 type hooks struct {
-	beforeApply func(wal.Record)
-	afterApply  func(wal.Record)
+	beforeApply   func(wal.Record)
+	afterApply    func(wal.Record)
+	beforeCapture func()
+	afterCapture  func(snapshot.Document)
 }
 type commandRequest struct {
 	command d.Command
@@ -101,6 +107,8 @@ func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) 
 	}
 	r := &Runtime{genesis: g, accounts: make(map[string]bool), opts: options, engine: e, store: s, commands: make(chan *commandRequest, options.CommandQueue), queries: make(chan *queryRequest, options.QueryQueue), slots: make(chan struct{}, options.RequestLimit), stop: make(chan struct{}), done: make(chan struct{}), hooks: h}
 	r.recovery, r.snapshots = report, files
+	r.snapshotRequests = make(chan *snapshotRequest, 1)
+	r.snapshotSeq.Store(int64(report.SnapshotSeq))
 	for _, a := range g.Config.Accounts {
 		r.accounts[a.AccountID] = true
 	}
@@ -208,9 +216,10 @@ func (r *Runtime) Read(ctx context.Context, q Query) (View, error) {
 	}
 }
 
-// Shutdown stops new admission and drains all accepted commands. A context
-// timeout leaves the drain running; it does not cancel accepted work or close
-// a file being written. Repeated calls may wait for the same completion.
+// Shutdown stops new admission and drains accepted commands, queries, and the
+// outstanding snapshot. A context timeout leaves the drain running; both file
+// workers finish before the run lock is released. Repeated calls may wait for
+// the same completion.
 func (r *Runtime) Shutdown(ctx context.Context) error {
 	r.stopAdmission()
 	select {

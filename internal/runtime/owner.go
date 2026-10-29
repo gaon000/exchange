@@ -7,6 +7,7 @@ import (
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
+	"github.com/gaon000/exchange/internal/snapshot"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -20,24 +21,42 @@ type writeReply struct {
 	code    string
 }
 type owner struct {
-	r            *Runtime
-	pending      map[d.Key]*pendingCommand
-	batch        []wal.Record
-	payloadBytes int
-	held         *commandRequest // at most one dequeued command that starts the next group
-	current      *commandRequest
-	currentQuery *queryRequest
-	deadline     time.Time
-	timer        *time.Timer
-	busy         bool
-	draining     bool
-	jobs         chan []wal.Record
-	writes       chan writeReply
-	writerDone   chan struct{}
+	r                *Runtime
+	pending          map[d.Key]*pendingCommand
+	batch            []wal.Record
+	payloadBytes     int
+	held             *commandRequest // at most one dequeued command that starts the next group
+	current          *commandRequest
+	currentQuery     *queryRequest
+	deadline         time.Time
+	timer            *time.Timer
+	busy             bool
+	draining         bool
+	jobs             chan []wal.Record
+	writes           chan writeReply
+	writerDone       chan struct{}
+	durableSeq       d.Int // owner-observed WAL acknowledgment; never read store during I/O
+	snapshotRequest  *snapshotRequest
+	snapshotSequence d.Int
+	snapshotJobs     chan snapshot.Document
+	snapshotWrites   chan snapshotWriteReply
+	snapshotDone     chan struct{}
 }
 
 func (r *Runtime) run() {
 	o := &owner{r: r, pending: make(map[d.Key]*pendingCommand), jobs: make(chan []wal.Record), writes: make(chan writeReply, 1), writerDone: make(chan struct{})}
+	o.durableSeq = r.engine.AppliedSeq()
+	o.snapshotJobs = make(chan snapshot.Document, 1)
+	o.snapshotWrites = make(chan snapshotWriteReply, 1)
+	o.snapshotDone = make(chan struct{})
+	go func() {
+		defer close(o.snapshotDone)
+		for doc := range o.snapshotJobs {
+			reply := writeSnapshot(r.snapshots, doc)
+			doc = snapshot.Document{} // release the full copy while waiting for the next job
+			o.snapshotWrites <- reply
+		}
+	}()
 	go func() {
 		defer close(o.writerDone)
 		for batch := range o.jobs {
@@ -51,12 +70,22 @@ func (r *Runtime) run() {
 		r.stopAdmission()
 		o.stopTimer()
 		close(o.jobs)
-		<-o.writerDone // never close a WAL handle while its writer is still running
+		close(o.snapshotJobs)
+		<-o.writerDone   // never close a WAL handle while its writer is still running
+		<-o.snapshotDone // the WAL lifetime lock also covers snapshot file publication
 		r.terminal = errors.Join(r.terminal, r.store.Close())
 		close(r.done)
 	}()
 	stop := r.stop
 	for {
+		// Observe publication failures before dispatching another batch or query.
+		select {
+		case reply := <-o.snapshotWrites:
+			if !o.completeSnapshot(reply) {
+				return
+			}
+		default:
+		}
 		if !o.draining {
 			select {
 			case <-stop:
@@ -77,7 +106,7 @@ func (r *Runtime) run() {
 				o.admit(req)
 				o.current = nil
 				continue
-			} else if o.draining && len(o.batch) == 0 && len(r.commands) == 0 && len(r.queries) == 0 {
+			} else if o.draining && len(o.batch) == 0 && len(r.commands) == 0 && len(r.queries) == 0 && len(r.snapshotRequests) == 0 && o.snapshotRequest == nil {
 				if err := r.engine.CheckInvariants(); err != nil {
 					o.fail(failure("INTERNAL_FAILURE", Unknown, err))
 				}
@@ -99,6 +128,12 @@ func (r *Runtime) run() {
 				if !o.apply(reply) {
 					return
 				}
+			case req := <-r.snapshotRequests:
+				o.captureSnapshot(req)
+			case reply := <-o.snapshotWrites:
+				if !o.completeSnapshot(reply) {
+					return
+				}
 			case query := <-r.queries:
 				o.currentQuery = query
 				r.readOwner(query, o.pending)
@@ -114,6 +149,12 @@ func (r *Runtime) run() {
 			tick = o.timer.C
 		}
 		select {
+		case req := <-r.snapshotRequests:
+			o.captureSnapshot(req)
+		case reply := <-o.snapshotWrites:
+			if !o.completeSnapshot(reply) {
+				return
+			}
 		case req := <-r.commands:
 			o.current = req
 			o.admit(req)
@@ -240,6 +281,7 @@ func (o *owner) apply(reply writeReply) bool {
 		o.fail(failure("INTERNAL_FAILURE", Unknown, fmt.Errorf("durable sequence mismatch")))
 		return false
 	}
+	o.durableSeq = reply.durable
 	for _, record := range o.batch {
 		if o.r.hooks.beforeApply != nil {
 			o.r.hooks.beforeApply(record)
@@ -280,6 +322,7 @@ func replyCommand(req *commandRequest, result d.Result, err error) {
 func (o *owner) fail(err *Failure) {
 	o.r.stopAdmission()
 	o.r.terminal = err
+	o.failSnapshot(err)
 	for _, p := range o.pending {
 		for _, waiter := range p.waiters {
 			replyCommand(waiter, d.Result{}, err)

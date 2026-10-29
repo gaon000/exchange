@@ -2,7 +2,7 @@
 
 상태: Accepted (P0 구현 기준)
 결정일: 2026-10-29 (Asia/Seoul)
-구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·스트리밍 코덱·파일 게시와 runtime 기동 시 후보 선택·fallback·WAL 대조를 구현했다. 실행 중 owner의 사본 생성과 snapshot worker 연결은 남아 있다.
+구현 상태: P2의 Genesis·WAL·복구 확정 API와 공유 내구성 어댑터를 구현했다. P3 runtime에 저장→적용→응답과 재생을 연결했다. P4는 상태 DTO·직접 복원·스트리밍 코덱·파일 게시와 runtime의 실행 중 생성·종료 합류·기동 시 후보 선택·fallback·WAL 대조까지 구현했다.
 
 [상세 설계](exchange-v1.md)의 저장 후 적용·결정적 재생 계약을 구체화한다. 단위·명령·응답은 [API 계약](api-v1.md)을 따른다. v1의 검증 대상은 macOS arm64의 로컬 APFS이며 다른 OS·네트워크 파일 시스템으로 보장을 확대하지 않는다.
 
@@ -113,6 +113,20 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 기존 같은 S의 파일은 canonical envelope 전체를 스트리밍 비교한다. 정확히 같으면 파일과 디렉터리를 다시 엄격한 sync하고, 다르거나 손상됐으면 ErrExistsMismatch로 거절한다. 확인과 rename 사이 파일이 나타난 경우에도 같은 규칙을 적용한다. 기존 파일을 지우거나 덮어쓰지 않는다. 실패 시 자신이 만든 임시 파일만 정리하며, 정리 오류는 원래 오류와 함께 반환한다. 프로세스 종료로 남은 임시 파일은 다음 복구에서 후보로 쓰지 않아야 한다.
 
 Darwin [RenameExclusive](../../internal/durable/rename_darwin.go)는 [Apple rename 계약](https://raw.githubusercontent.com/apple-oss-distributions/xnu/main/bsd/man/man2/rename.2)의 `renamex_np(RENAME_EXCL)`을 호출한다. 대상이 있으면 EEXIST이며, 지원 불가 오류를 일반 rename으로 낮추지 않는다. 현재 macOS/APFS에서 새 이름 게시·기존 이름 보존과 strict sync를 검증했다. 다른 OS/cgo 비활성에서는 파일 생성 전에 지원 불가로 실패한다.
+
+### 실행 중 생성과 종료
+
+[Runtime.Snapshot(ctx)](../../internal/runtime/snapshot.go)은 Go 제어 API다. 현재 HTTP endpoint·자동 주기는 없다. 응답은 RunID와 실제로 게시한 SnapshotSeq다.
+
+- 접수·복사·게시를 합쳐 동시에 한 요청만 유지한다. 추가 요청은 `SNAPSHOT_BUSY/NOT_ADMITTED`로 즉시 거절한다. 응답 대기는 runtime의 전역 요청 한도에도 포함된다.
+- owner가 처리 중 명령의 적용을 끝낸 뒤 사본을 만든다. 현재 구현은 한 WAL 배치 적용 중에도 사본을 만들지 않는다. 아직 큐·배치·WAL 동기화에 있는 명령을 모두 포함한다는 보장은 없으며 생성 요청 자체는 명령 큐의 barrier가 아니다.
+- 사본 생성 동안에는 owner 처리가 멈춘다. 사본을 전달한 뒤 별도 snapshot worker가 저장하는 동안 주문·조회·WAL worker는 진행할 수 있다. 파일 크기 제한은 사본 할당 전의 메모리 상한이 아니다.
+- context 취소는 응답 대기만 끝내고 `SNAPSHOT_TIMEOUT/UNKNOWN`을 반환한다. 이미 접수한 생성은 계속하고, 응답 대기 슬롯을 해제해도 다음 사본은 기존 게시가 끝날 때까지 허용하지 않는다.
+- 파일과 디렉터리의 strict sync 성공을 owner가 확인한 뒤에만 `Runtime.SnapshotSeq()`를 전진시키고 성공을 응답한다. owner는 자신의 WAL 완료 확인 순번과 appliedSeq를 사용하며 쓰기 중인 wal.Store를 동시 조회하지 않는다.
+- 파일 접근 전 순수 payload 상한 거절인 `snapshot.ErrTooLarge`만 생성 실패로 반환하고 거래를 계속한다. 실제 I/O·게시 오류·다른 bytes의 기존 파일·worker panic은 접수를 닫고 실패 상태로 전환한다. ErrTooLarge와 함께 반환된 I/O/정리 오류도 중단 대상이다.
+- Shutdown은 이미 접수한 생성과 명령·조회를 처리하고 두 저장 worker의 종료를 기다린 뒤 WAL 핸들과 run 잠금을 닫는다. 실패 시에도 진행 중 파일 작업이 끝나기 전 잠금을 풀지 않는다. 실패 후 worker가 게시한 파일은 메모리 snapshotSeq에 반영하지 않고 다음 기동에서 검사한다.
+
+`SnapshotSeq()`는 이번 runtime이 복구에서 선택했거나 게시 완료를 확인한 순번이다. 0은 Genesis 경계이므로 초기 snapshot 파일 유무는 `Recovery().SnapshotFile`로 구분한다. timeout·오류·응답 전 종료만으로 파일이 없다고 판단하지 않는다.
 
 ## 6. 복구 판정
 
