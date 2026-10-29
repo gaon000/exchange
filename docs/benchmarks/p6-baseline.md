@@ -30,7 +30,7 @@
 
 ## 고정 비교 조건 v1
 
-기계 판독 기준은 [criteria-v1.json](../../config/benchmarks/criteria-v1.json), 초기 상태는 [config-v1.json](../../config/benchmarks/config-v1.json), workload 원형은 [workload-v1.json](../../config/benchmarks/workload-v1.json)이다. rate만 탐색 변수로 바꾸고 나머지 workload·초기 자금·판정은 유지한다. 파일의 40,000/s는 탐색 시작점이며 통과가 보장된 목표가 아니다. 판정 도구와 반복 baseline 결과는 후속 작업이다.
+기계 판독 기준은 [criteria-v1.json](../../config/benchmarks/criteria-v1.json), 초기 상태는 [config-v1.json](../../config/benchmarks/config-v1.json), workload 원형은 [workload-v1.json](../../config/benchmarks/workload-v1.json)이다. rate만 탐색 변수로 바꾸고 나머지 workload·초기 자금·판정은 유지한다. 파일의 40,000/s는 탐색 시작점이며 통과가 보장된 목표가 아니다. [benchreport](../../tools/benchreport/main.go)로 판정하며 반복 baseline 결과는 후속 작업이다.
 
 | 조건 | 고정 값과 의미 |
 | --- | --- |
@@ -53,8 +53,22 @@
 
 100만 예정 시도 상한으로는 5+20초에서 40,000/s까지만 측정할 수 있었다. 초기 탐색에서 그 이상의 범위를 확인할 필요가 있어 생성기의 유한 상한을 200만으로 늘렸다. rate 상한 100만/s·전체 시간 1시간, snapshot 2 GiB 파일 한도와 거래 규칙은 유지한다. 이 조건에서는 최대 80,000/s까지 같은 기간으로 요청할 수 있다. 초기 config의 maxCommands도 200만이며 실제 고유 명령 수는 중복을 제외해 그보다 작다. 메모리·파일 비용은 늘어나므로 그 영향을 숨기지 않는다. 아직 200만 시도 전체의 실행 성능을 검증했다는 의미는 아니다.
 
+## 원본 재검증과 판정 도구
+
+[benchreport](../../tools/benchreport/main.go)는 실행이 끝난 묶음을 오프라인으로 읽는다. 서버나 부하 생성기를 시작하지 않으며 측정과 동시에 실행하지 않는다. 최대 100개 묶음을 받아 서로 다른 조건을 같은 반복으로 합치지 않고 JSON 보고서를 만든다. 보고서는 기존 실험 디렉터리 밖의 새 파일만 허용한다. 디렉터리 alias도 해석해 원본 묶음 안에 보고서를 쓰거나 같은 경로를 중복 입력하는 것을 거절한다.
+
+- completed.json의 모든 파일 해시와 파일 집합을 확인한다. 누락·미기재 파일·symlink/특수 파일·변조는 evidence 오류다. loadgen의 6개 해시·plan digest·run/config identity도 다시 대조한다.
+- 설정·seed·runId로 Plan을 재구성하고 plan.jsonl의 모든 요청을 비교한다. 전체 samples.jsonl을 [Summarize](../../internal/bench/summary.go)로 다시 계산해 저장된 summary와 일치해야 한다. 새 집계가 틀릴 가능성은 독립 기대값의 단위 시험으로 별도 확인하며 재집계만으로 매칭 정확성까지 증명한다고 주장하지 않는다.
+- 전체 지연/오류와 [구간 집계](../../internal/bench/windows.go)를 판정한다. 창은 예정 시각으로 나누며, 응답이 다음 창이나 drain까지 늦어져도 원래 창에 남긴다. 서버 계측의 startedUTC를 같은 창에 대응시키고 최소 관찰 수·큐 평균 증가를 검사한다.
+- 고정 workload/config·계측 주기·snapshot/profile 설정·관찰 환경과 바이너리 revision을 검사한다. revision 미상/modified 빌드는 채택하지 않는다. snapshot 완료 이벤트와 실제 측정의 교집합을 다시 세고 profile 시각·압축 무결성을 확인한다.
+- source/binary·config·workload(rate 제외)·runtime/HTTP 설정·시나리오·관찰 하드웨어/환경별 series를 만든 뒤 rate별 반복을 모은다. 모든 포함 실행이 통과하고 서로 다른 runId가 3개 이상이어야 qualified=true다. 복사한 run은 양쪽 모두 중복으로 탈락하며, 실패한 반복도 같은 그룹의 runs에 남는다.
+
+출력의 cases는 원본 경로, sealed/summaryRecomputed/pass/reasons, 전체 summary·창별 분포/큐·snapshot 교집합과 프로세스 누적 CPU/peak RSS·WAL 크기를 포함한다. snapshotCapture/Publish 누적 시간도 서버 생애 관찰이며 측정 구간만의 비용이 아니다. groups는 실제 반복 수·통과 수·qualified와 고유 신규 주문/s 범위·최악 p99를 담는다. 보고서 자신의 build 정보와 기준/참조 입력의 SHA-256도 기록한다.
+
+완료 표식이 없는 실패 실험도 가능한 원본을 재집계하지만 UNSEALED_EXPERIMENT로 탈락한다. 다른 증거 오류나 일부 파일 부재는 cases.reasons에 남기며 누락된 수치를 성공 실적으로 사용하지 않는다. 명령 종료 코드 0은 보고서를 기록했다는 의미이며 성능 통과는 cases.pass/groups.qualified를 확인해야 한다. 전달하지 않은 실험까지 발견해 검증하지는 못하므로 trial 목록과 모든 실패 실행을 함께 보존하고 입력한다. 환경/바이너리 해시는 재현 자료이며 서명된 제3자 검증은 아니다.
+
 ## 반복 baseline과 비교 절차
 
-판정 도구와 초기 기준 바이너리를 커밋한 뒤 고정 조건의 반복 측정을 수행한다. 각 run의 입력·바이너리·환경·hash·지표를 남기고 모든 반복을 함께 보고한다. profile 실행에서 병목 근거를 얻은 뒤에만 P7 변경을 선택한다. 같은 조건에서 다시 측정하며 목표값·불리한 반복을 바꾸거나 숨기지 않는다.
+판정 도구와 초기 기준 바이너리를 커밋한 뒤 고정 조건의 반복 측정을 수행한다. 실행 방법은 [개발 기준](../development.md#고정-기준-판정)에 있다. 각 run의 입력·바이너리·환경·hash·지표를 남기고 모든 반복을 함께 보고한다. profile 실행에서 병목 근거를 얻은 뒤에만 P7 변경을 선택한다. 같은 조건에서 다시 측정하며 목표값·불리한 반복을 바꾸거나 숨기지 않는다.
 
 현재 반복 baseline과 P7 비교 수치는 미완료다. 결과는 20초 창에서 관찰한 지속 처리량이며, 영구히 이력을 유지하는 시스템의 무한 시간 처리량으로 일반화하지 않는다. 1,000/s 사이의 미측정 rate나 다른 호스트/시드/계정 집중도에 대한 전역 최대값도 주장하지 않는다. 실제 전원 장애는 별도 장비가 없어 미완료이며 부하 실험이나 프로세스 kill로 대체하지 않는다.

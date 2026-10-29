@@ -48,7 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
-| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe, 출력은 Git 제외) |
+| 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe·benchreport, 출력은 Git 제외) |
 | 기본 테스트 | `scripts/go test ./...` (CLI·bench·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
 | race 검사 | `scripts/go test -race ./...` |
 | cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
@@ -130,6 +130,21 @@ bin/experiment --config config/examples/benchmark.json --workload config/example
 첫 명령은 normal, 두 번째는 snapshot과 profiler를 함께 켠 짧은 기능 실행이다. 두 실행이 각각 새 runId·잔고·호가에서 시작한다. 다른 실행 조건은 `bin/experiment -h`로 확인한다. 기본 binary 경로는 bin/exchange·bin/loadgen이고 `--exchange`·`--loadgen`으로 변경할 수 있다. `--server-arg=--batch-delay=2ms`처럼 runtime/HTTP 설정을 전달한다. 데이터·listen·metrics/snapshot/profile 경로는 실행기가 관리한다. 중단 시에는 자식 종료와 파일 정리를 기다린다. 원본 파일을 삭제하지 않으며 미완료/성능 실패를 통과로 표시하지 않는다.
 
 완료 해시와 해석 경계는 [원본 묶음 계약](design-docs/benchmark-v1.md#재현-실험-실행기와-원본-묶음)을 따른다. 프로파일은 `scripts/go tool pprof -top var/experiments/smoke-snapshot-profile/bin/exchange var/experiments/smoke-snapshot-profile/profiles/cpu.pprof`로 읽는다. heap/allocs 파일도 같은 방식이다. 실제 전체 실행·중단·오류·기존 디렉터리 보존 검사는 `scripts/go test -race ./cmd/experiment -timeout=120s`이며 native 사례에는 macOS/APFS/cgo·loopback 권한이 필요하다.
+
+## 고정 기준 판정
+
+초기 탐색 뒤 고정한 [P6 기준](benchmarks/p6-baseline.md)을 적용한다. 다음은 새 run 한 번을 실행하고 판정 보고서를 쓰는 명령이다. 한 번의 pass는 최소 3회 반복 조건을 충족하지 않는다. 40,000/s도 탐색 시작점일 뿐 통과를 보장하지 않는다.
+
+```sh
+scripts/go build -o ./bin/ ./...
+mkdir -p var/experiments var/reports
+bin/experiment --config config/benchmarks/config-v1.json --workload config/benchmarks/workload-v1.json --output var/experiments/baseline-40000-1 --metrics-interval 500ms
+bin/benchreport --criteria config/benchmarks/criteria-v1.json --output var/reports/baseline-40000-1.json var/experiments/baseline-40000-1
+```
+
+서로 다른 새 run을 반복하고 report 명령의 마지막에 각 디렉터리를 나열해 함께 판정한다. 보고서 경로도 새 이름으로 바꾼다. 실패한 실험을 빼지 않는다. 스냅샷 비교는 experiment에 `--scenario snapshot --snapshot-interval 5s`를, profile 비교는 `--scenario profile`을 지정한다. `snapshot-profile`은 둘을 함께 켠다. raw 재집계는 CPU/메모리를 쓰므로 부하 실험과 동시에 실행하지 않는다.
+
+`bin/benchreport -h`는 입력 형태를 보여 준다. 종료 코드 0은 보고서 기록 성공이고, 실제 판정은 cases.pass와 groups.qualified를 읽는다. 해시/표본/창·중복 반복 검사는 `scripts/go test -race ./tools/benchreport ./internal/bench -timeout=120s`다. server/runtime의 CPU와 메모리 관찰은 측정 phase 전용 값과 구분한다. 전체 실험 파일 해시는 저장장치의 실제 전원 장애 검증을 대신하지 않는다.
 
 ## 코드 기준
 

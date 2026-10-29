@@ -26,6 +26,7 @@
 | [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
+| [tools/benchreport](tools/benchreport/main.go) | 완료/실패 실험 원본의 오프라인 재집계·고정 조건·독립 반복 판정. 서버/생성기를 실행하지 않음 |
 | [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder를 CLI init에 연결 |
 
 ## 합의한 구현 목표
