@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [master, 'codex/**']
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  GOTOOLCHAIN: local
+  GOENV: 'off'
+  GOWORK: 'off'
+
+jobs:
+  go:
+    name: Go (${{ matrix.mode }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mode: portable
+            os: ubuntu-24.04
+          - mode: native
+            os: macos-15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: .go-version
+          cache: false
+      - name: Connect the exact toolchain to the local wrapper
+        run: |
+          version=$(cat .go-version)
+          mkdir -p .tools
+          ln -s "$(go env GOROOT)" ".tools/go$version"
+          scripts/go version
+      - name: Verify formatting, vet, build and tests
+        env:
+          CI_MODE: ${{ matrix.mode }}
+        run: bash scripts/ci.sh "$CI_MODE"
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ci-${{ matrix.mode }}-${{ github.run_attempt }}
+          path: |
+            var/ci/*/environment.json
+            var/ci/*/platform.txt
+            var/ci/*/storage-probe.json
+            var/ci/*/packages.json
+            var/ci/*/tests.jsonl
+            var/ci/*/tests.stderr
+            var/ci/*/summary.txt
+          if-no-files-found: warn
+          retention-days: 7

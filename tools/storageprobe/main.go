@@ -34,6 +34,9 @@ func main() {
 
 func probe(parent string) (result report, err error) {
 	result = report{GoVersion: runtime.Version(), Platform: runtime.GOOS + "/" + runtime.GOARCH, PowerLoss: "not tested"}
+	if err := checkFilesystem(parent); err != nil {
+		return result, fmt.Errorf("APFS preflight: %w", err)
+	}
 	dir, err := os.MkdirTemp(parent, ".exchange-probe-")
 	if err != nil {
 		return result, err

@@ -51,6 +51,8 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe·benchreport, 출력은 Git 제외) |
 | 기본 테스트 | `scripts/go test ./...` (CLI·bench·api·domain·engine·strictjson·wal·snapshot·runtime·probe) |
 | race 검사 | `scripts/go test -race ./...` |
+| CI와 같은 일반 로직 검사 | `bash scripts/ci.sh portable` (cgo=0, 미지원 저장 경로 포함) |
+| CI와 같은 실제 저장 검사 | `bash scripts/ci.sh native` (macOS arm64/APFS/cgo=1, 전체 race 포함) |
 | cgo 미지원 경로 검사 | `CGO_ENABLED=0 scripts/go test ./...` |
 | 실제 저장 호출 확인 | `scripts/go run ./tools/storageprobe -dir .` |
 | WAL reader fuzz | `scripts/go test ./internal/wal -run '^$' -fuzz '^FuzzWALReader$' -fuzztime=30s -parallel=2` |
@@ -191,7 +193,22 @@ P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·
 
 ## CI와 릴리스
 
-origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
+origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. [CI workflow](../.github/workflows/ci.yml)는 master·codex/** push, master 대상 PR과 수동 실행을 처리한다. workflow 파일을 추가한 것과 GitHub에서 실제 통과한 것은 별개이며, push 이후 해당 커밋의 두 job 결과를 [Actions 실행 기록](https://github.com/gaon000/exchange/actions/workflows/ci.yml)에서 확인한다. 릴리스·배포 설정과 원격 branch protection은 구성하지 않았다.
+
+| 검사 이름 | 실행 환경 | 검증 범위 |
+| --- | --- | --- |
+| `Go (portable)` | ubuntu-24.04, CGO_ENABLED=0 | 전체 일반 테스트, 저장 미지원 시 변경 없이 실패하는 경로, 포맷·vet·빌드 |
+| `Go (native)` | macos-15 arm64, CGO_ENABLED=1 | APFS·strict sync·잠금 사전 검사, 전체 race 테스트와 실제 파일·loopback·자식 프로세스 종료/복구, 포맷·vet·빌드 |
+
+[공식 runner 목록](https://docs.github.com/en/actions/reference/runners/github-hosted-runners)에 따라 macos-15를 선택하며, 실제 OS/아키텍처/파일 시스템은 실행 시 다시 확인한다. Linux job의 성공은 Linux 거래 서버 지원을 의미하지 않는다. 저장 계층의 지원 기준은 계속 macOS arm64/APFS/cgo다.
+
+두 job은 [scripts/ci.sh](../scripts/ci.sh)를 사용한다. `.go-version`의 정확한 Go를 setup-go로 설치한 후 `.tools/go<버전>`에 연결해 기존 wrapper를 그대로 사용한다. 자동 toolchain 선택·사용자 GOENV·GOWORK와 외부 GOFLAGS/교차 컴파일 설정을 배제한다. go.sum이 없는 현재 모듈에 맞춰 setup-go 캐시는 끄며 production dependency는 추가하지 않는다. Actions는 commit SHA로 고정하고 `contents: read`, checkout `persist-credentials: false`를 사용한다. 각 job 제한은 20분, 패키지 테스트 제한은 5분이다.
+
+검사는 `-count=1`로 캐시를 사용하지 않는다. [civerify](../tools/civerify/main.go)는 같은 모드의 `go list`가 선택한 테스트 파일에서 일반 Test 함수 목록을 읽고 JSON 실행 결과의 run/pass와 대조한다. 필수 저장 통합 또는 미지원 경로의 대표 테스트가 목록에서 빠져도 실패한다. 패키지 누락·중간 실패·잘린 JSON·예상 밖 skip은 실패다. `TestSnapshotPublisherChild` 하나는 부모 장애 테스트에서 호출되는 helper라 일반 수집의 skip을 허용하고 통과 건수에서 제외한다. fuzz seed 실행 중 실패는 실패로 처리하지만 장시간 fuzz나 성능 측정은 이 CI에 포함하지 않는다.
+
+각 실행은 `var/ci/<mode>.<고유값>/`에 환경·선택 패키지·원본 테스트 JSON·stderr·판정 요약을 보존한다. native의 임시 테스트 파일도 같은 APFS 경로 아래에서 생성하며 storageprobe가 파일 시스템과 엄격한 저장 호출을 확인한다. GitHub에서는 성공/실패와 관계없이 생성된 진단 파일을 `ci-<mode>-<attempt>` artifact로 7일간 보존한다. 설치 실패처럼 아직 파일이 없는 경우에는 upload 경고와 앞선 실패를 함께 남긴다. 두 job 중 하나의 실패가 다른 job을 취소하지 않으며, 같은 이벤트/ref의 새 실행은 오래된 실행을 취소한다.
+
+원격에서 두 검사가 통과한 뒤 필수 상태 검사로 사용할 이름은 `Go (portable)`과 `Go (native)`다. 보호 규칙은 저장소 관리자 설정이므로 workflow만으로 병합을 차단한다고 설명하지 않는다. GitHub runner 검증은 실제 전원 장애 복구 증거가 아니며 해당 항목은 사용자 결정대로 보류한다.
 
 P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P7의 실제 결과와 미완료 항목은 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
 
