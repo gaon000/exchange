@@ -51,6 +51,7 @@ P4 모듈과 P5의 api·서버 CLI, P6의 bench·부하 CLI를 구현했다. 아
 | [internal/runtime](internal/runtime/runtime.go) (구현) | bounded command/query 큐·배치·단일 owner·WAL/snapshot worker·snapshot 후보 선택/대체 복구·두 저장 worker 종료 합류 | engine, wal, snapshot, telemetry |
 | [internal/api](internal/api/server.go) (구현) | 엄격한 요청·계정 문맥·응답 DTO·조회·HTTP 한도·loopback 전송 | domain, strictjson, runtime의 command/query 인터페이스, telemetry, 표준 HTTP |
 | [cmd/exchange](cmd/exchange/main.go) (구현) | init/serve·설정 검증·모듈 조립·기동 보고·signal 종료와 HTTP/runtime 합류 | 위 모듈의 공개 진입점 |
+| [cmd/demo](cmd/demo/main.go), [scripts/demo.sh](scripts/demo.sh) (구현) | 한 명령 도구 준비/빌드, 격리된 자식 CLI와 공개 HTTP로 거래·정상 재시작·복구·중복 결과 확인 | domain, api의 공개 DTO, strictjson, durable의 환경 확인, 표준 라이브러리. engine/runtime 직접 호출 없음 |
 | [internal/bench](internal/bench/plan.go) (구현) | 고정 seed 입력·open-loop 실행·초기 상태 확인·공개 HTTP 전송·표본/고유 결과 집계 | domain, strictjson, 표준 라이브러리; engine/runtime 직접 호출 없음 |
 | [cmd/loadgen](cmd/loadgen/command.go) (구현) | 설정/ready 보고서 대조·공개 HTTP 부하·측정 원본/완료/실패 파일 | bench, buildinfo, strictjson, telemetry, wal의 설정 해시 계산; run 파일 접근 없음 |
 | [cmd/experiment](cmd/experiment/command.go) (구현) | 새 서버/생성기 프로세스 수명·환경 수집·복사 바이너리/설정·원본 해시 묶음 | bench 입력 타입, strictjson, wal 설정 decoder, buildinfo, 표준 파일/프로세스/OS 읽기; 엔진 직접 호출 없음 |

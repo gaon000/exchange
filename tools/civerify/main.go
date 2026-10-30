@@ -124,6 +124,7 @@ func requireCoverage(expected expectations, mode string) error {
 		"internal/wal":       "TestUnsupportedStorageDoesNotCreateFiles",
 		"internal/snapshot":  "TestUnsupportedPublicationDoesNotCreateFiles",
 		"cmd/exchange":       "TestInitUnsupportedDoesNotCreateRun",
+		"cmd/demo":           "TestUnsupportedDemoLeavesNoOutput",
 		"tools/storageprobe": "TestUnsupportedPlatformFailsClosed",
 	}
 	if mode == "native" {
@@ -135,6 +136,7 @@ func requireCoverage(expected expectations, mode string) error {
 			"cmd/exchange":       "TestNativeCLIProcessKillRecoversAcknowledgedResult",
 			"cmd/loadgen":        "TestNativeCLIProducesReplayableHTTPArtifacts",
 			"cmd/experiment":     "TestNativeExperimentBundleAndFailureCleanup",
+			"cmd/demo":           "TestNativeTradingDemoAndCleanup",
 			"tools/storageprobe": "TestProbePreservesParent",
 		}
 	}

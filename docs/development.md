@@ -32,7 +32,7 @@ scripts/go run ./tools/storageprobe -dir .
 
 setup은 네트워크로 개발 toolchain만 내려받는다. 이미 같은 버전이 있으면 재설치하지 않는다. 자동 버전 선택 대신 [scripts/go](../scripts/go)가 정확한 버전을 확인하고 `GOTOOLCHAIN=local`, `GOENV=off`, `GOWORK=off`로 실행한다. 캐시와 GOPATH는 `.cache/` 아래다. `.tools/`, `.cache/`, 실험 데이터 `var/`와 빌드 출력 `bin/`은 Git에서 제외한다. [Go toolchain 문서](https://go.dev/doc/toolchain)의 go directive 자체는 최소 버전이므로 재현 실행에는 wrapper를 사용한다.
 
-실행 진입점은 거래 서버·HTTP 부하·실험 실행기 CLI와 개발 probe다. 서버 CLI는 아래 절차로 초기화·기동하며, probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
+실행 진입점은 거래 서버·거래 데모·HTTP 부하·실험 실행기 CLI와 개발 probe다. 서버 CLI는 아래 절차로 초기화·기동하며, probe는 `-dir`로 지정한 기존 parent에 고유 임시 디렉터리를 만들고 자기 파일만 정리한다. 실제 실험 데이터에 오류를 주입하는 도구가 아니다.
 
 CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사용하며 환경변수 loader는 없다. init은 wal.DecodeConfig로 설정을 검증하고 wal.Init으로 새 Genesis를 저장한다. serve는 저장된 설정으로 runtime.Open을 호출한다. fixture에는 비밀값이 없다. 실제 credential이 필요해지면 안전한 별도 경로로 관리한다.
 
@@ -46,6 +46,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | toolchain 확인 | `scripts/go version`; `scripts/go env GOVERSION GOOS GOARCH CGO_ENABLED CC` |
 | Go 의존성 | go.mod만 존재, 외부 require/go.sum 없음. 추가 production dependency는 승인 전 설치하지 않음 |
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
+| 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·새 실험·HTTP 거래·정상 재시작·복구, [안내](trading-demo.md)) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
 | 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe·benchreport, 출력은 Git 제외) |
@@ -70,6 +71,10 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 새 문서의 공백 검사 | `git diff --no-index --check -- /dev/null <새 문서 경로>`; 각 파일에 실행하며 `<새 문서 경로>`는 실제 경로로 교체 |
 
 `git diff --check`만으로 untracked 새 파일은 검사되지 않는다. `--no-index --check`는 정상 새 파일에도 차이가 있으면 종료 코드 1을 반환할 수 있으므로 공백 오류 진단과 종료 코드를 함께 확인한다. 문서 검증에는 상대 링크·제목 앵커·경로 대소문자·설명과 실제 설정의 일치 여부를 포함한다. 프로젝트 설명에는 미치환 입력 항목을 남기지 않고, 복사해서 쓸 `template.md`의 작업별 입력 안내는 유지한다. 현재 프로젝트 전용 자동 문서 검사 명령은 미구성이다.
+
+## 거래 데모
+
+[scripts/demo.sh](../scripts/demo.sh)는 `bin/demo-exchange`와 `bin/demo`를 빌드해 [거래 데모](trading-demo.md)를 실행한다. Alice/Bob의 세 고유 명령과 독립 계산한 정수 결과, 재시작 전후 최초 응답·상태·중복 재시도를 검사한다. 실행마다 새 출력 폴더와 run을 사용하고 서버는 데모가 직접 생성한 자식 프로세스다. 종료·오류·중단 정리와 실제 파일/HTTP 경로는 `scripts/go test -race ./cmd/demo ./tools/civerify -timeout=120s`로 검사하며 전체 CI에도 포함한다. 정상 WAL 재시작 증거와 실제 전원 장애 검증을 구분한다.
 
 ## CLI 초기화·실행·종료
 

@@ -15,6 +15,16 @@
 
 개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·bench·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. [HTTP 부하 생성기](docs/design-docs/benchmark-v1.md)는 준비 검증·원본 기록까지 구현했다. 실행은 [HTTP 부하 실행](docs/development.md#http-부하-실행)을 따른다. 서버 구간·CPU/메모리/GC 계측은 `--metrics-file`로 기록한다. 스냅샷 주기·프로파일 수집은 선택 옵션이다. [실험 실행기](docs/development.md#묶음-실험-실행)는 새 서버/생성기와 환경·바이너리·원본 묶음을 관리한다. [P6 기준 측정](docs/benchmarks/p6-baseline.md)에서 정상 조건의 3회 통과와 스냅샷 조건의 목표 미달을 기록했다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)에서 정렬 이동 후보를 검증했으나 반복 기준 미달로 채택하지 않고 P6 구현을 유지했다. [스냅샷 처리 한계](docs/benchmarks/p7-snapshot-capacity.md)는 고정된 20ms 기준에서 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미검증·보류 상태다. [CI](.github/workflows/ci.yml)는 일반 로직과 macOS/APFS 검사를 분리하며, 실행 범위와 원격 확인 절차는 [개발 기준](docs/development.md#ci와-릴리스)을 따른다.
 
+## 한 명령 거래 데모
+
+macOS arm64/APFS 환경에서 저장소 루트에서 실행한다.
+
+```sh
+sh scripts/demo.sh
+```
+
+도구 준비·빌드부터 실제 주문 → 부분 체결 → 잔량 취소 → 잔고 확인 → 정상 재시작·복구 → 중복 재시도까지 자동으로 검사한다. 매번 새 `var/demos/` 폴더에 실행 결과를 보존한다. 시나리오·기대 잔고·실패 시 확인할 파일은 [거래 데모 안내](docs/trading-demo.md)를 따른다.
+
 ## 로컬 실행
 
 저장소 루트에서 빌드하고 새 실험을 한 번 초기화한다. `demo`가 이미 있으면 다른 새 이름을 사용한다.

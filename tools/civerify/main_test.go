@@ -126,6 +126,7 @@ func TestCoverageRequiresModeSpecificIntegrationTests(t *testing.T) {
 		module + "internal/wal":       {"TestUnsupportedStorageDoesNotCreateFiles": true},
 		module + "internal/snapshot":  {"TestUnsupportedPublicationDoesNotCreateFiles": true},
 		module + "cmd/exchange":       {"TestInitUnsupportedDoesNotCreateRun": true},
+		module + "cmd/demo":           {"TestUnsupportedDemoLeavesNoOutput": true},
 		module + "tools/storageprobe": {"TestUnsupportedPlatformFailsClosed": true},
 	}
 	if err := requireCoverage(portable, "portable"); err != nil {
