@@ -187,13 +187,13 @@ P5의 [HTTP 장애 통합](../internal/runtime/http_fault_native_test.go)은 실
 
 [고정 seed 동시 입력](../internal/runtime/http_concurrent_native_test.go)은 4개 생산자의 고유 명령 64개를 각각 두 번 보내고 64개 잔고 조회를 수행한다. 응답 순번으로 정렬한 원본 입력을 별도 순차 엔진에 적용해 최초 결과·각 asOfSeq 잔고·최종 checkpoint를 비교한다. 이는 전송·순서·재생의 검사이며 독립 매칭 모델은 P1 테스트에 있다. [명시적 거래 사례](../internal/runtime/http_rules_native_test.go)는 가격/FIFO·여러 가격 체결 후 자기 거래 차단과 동시 잔고 소진의 기대 정수 값을 별도로 확인한다. 테스트 bridge와 환경변수는 `_test.go`에만 있으며 실행 바이너리에 장애 설정을 추가하지 않는다.
 
-P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 구간·프로세스 자원 계측을 연결했다. [계측 계약](design-docs/benchmark-v1.md#서버-구간과-자원-계측)에서 지표의 분모·관찰 범위·근사 정밀도를 확인한다. `scripts/go test -race ./internal/telemetry ./internal/wal ./internal/runtime ./internal/api ./cmd/exchange -timeout=180s`는 저장 대기/실패 중 계측, snapshot 복사/게시, 전송 실패, 파일 출력 오류·정상 종료 후 최종 건수/파일 크기를 검증한다. 실험 조건·환경/원본 묶음은 experiment CLI로 연결했다. 기준 지속 처리량 측정은 남아 있다.
+P6의 [bench](../internal/bench/plan.go)는 고정 입력·open-loop 스케줄·HTTP 전송·모든 예정 시도의 표본·고유 결과/분위수 집계를 제공한다. [측정 계약](design-docs/benchmark-v1.md)을 따른다. 가짜 executor의 알고리즘 검사와 실제 loopback 전송 검사를 분리한다. [loadgen 통합](../cmd/loadgen/native_test.go)은 실제 APFS/HTTP 거래·원본 파일 재집계·중단 후 모든 표본 보존·설정 불일치와 기존 run 재사용 거절을 확인한다. 관련 명령은 `scripts/go test -race ./internal/bench ./cmd/loadgen -timeout=120s`다. 서버 구간·프로세스 자원 계측을 연결했다. [계측 계약](design-docs/benchmark-v1.md#서버-구간과-자원-계측)에서 지표의 분모·관찰 범위·근사 정밀도를 확인한다. `scripts/go test -race ./internal/telemetry ./internal/wal ./internal/runtime ./internal/api ./cmd/exchange -timeout=180s`는 저장 대기/실패 중 계측, snapshot 복사/게시, 전송 실패, 파일 출력 오류·정상 종료 후 최종 건수/파일 크기를 검증한다. 실험 조건·환경/원본 묶음은 experiment CLI로 연결했다. [P6 기준 측정](benchmarks/p6-baseline.md), [P7 후보 비교](benchmarks/p7-snapshot-sorting.md)와 [스냅샷 처리 한계](benchmarks/p7-snapshot-capacity.md)를 기록했다. 최적화 후보는 반복 기준 미달로 미채택했으며 실제 전원 장애 검증은 미완료다.
 
 ## CI와 릴리스
 
 origin은 [gaon000/exchange](https://github.com/gaon000/exchange)이다. 커밋·병합·push 상태는 Git 기록으로 확인한다. CI workflow·릴리스·배포 설정은 없다. 호스팅 대상과 원격 보호 규칙은 미확정이다. 도입 후 실제 workflow 경로, 자동 검사, 확인한 보호 규칙과 배포 후 확인 방법을 기록한다.
 
-P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P5의 실제 결과는 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
+P1 엔진 테스트와 [단독 benchmark](benchmarks/p1-memory-engine.md)는 API·WAL·p99 전체 경로 검증을 의미하지 않는다. P0~P7의 실제 결과와 미완료 항목은 [구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에 기록한다.
 
 ## 실제 OS·전원 장애 시험 준비
 
