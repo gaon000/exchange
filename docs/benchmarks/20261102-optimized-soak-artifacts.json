@@ -1,0 +1,11 @@
+{
+  "rawRoot": "var/soak-optimized-20261102.yawwm75d",
+  "fileCount": 261,
+  "totalBytes": 3788276967,
+  "manifestSHA256": "b5426dafd1ac9f421b4c9d7222fff6735070bb318526b0dc3ad691df362c70c2",
+  "comparisonSHA256": "565ab4cad112779b3a949369f755d3e4bea0b7a4514a0807fdcb6ff82746ad24",
+  "beforeAfterSHA256": "21bf04e1d3de6dd83ec36f70ddca14e1b82f3626783b5eae6864e7a11b9f66e8",
+  "reportSHA256": "730587d8b268f6c3821c373958991382b91d89ca88ff4c4ffe154c53d27cdcf7",
+  "artifactPolicy": "Raw data, binaries and experiment/analysis scripts retained locally; not uploaded. Counts exclude the manifest itself.",
+  "powerLossTested": false
+}

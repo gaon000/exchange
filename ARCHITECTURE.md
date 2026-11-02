@@ -8,7 +8,9 @@
 
 2026-10-30에는 [10분 부하 비교](docs/benchmarks/soak-10m-snapshot-comparison.md), [스냅샷 단계 계측](docs/benchmarks/snapshot-stage-breakdown.md), [복구 디코더 최적화](docs/benchmarks/snapshot-decoder-optimization.md)를 완료했다. decoder 후보는 동일 상태 5쌍에서 전체 복구 중앙값 32.5% 감소와 상태 bytes 일치를 확인해 채택했다. 생성 비용과 owner 사본 생성·동시 부하 지연은 별도 검증 대상으로 구분했다.
 
-2026-11-02에는 [스냅샷 생성 사전 계산](docs/benchmarks/snapshot-preflight-optimization.md)에서 중복 직렬화를 제거했다. 동일 상태 5쌍의 생성 중앙값은 29.7%, 해당 크기 검사 단계는 79.4% 감소했다. 2회차 후보의 지연 증가도 포함했으며 저장 bytes·재시작·양방향 버전 호환을 확인했다. owner 복사/정렬과 실제 writer·sync 계약은 유지하고 동시 주문 p99·처리량은 재측정하지 않았다.
+2026-11-02에는 [스냅샷 생성 사전 계산](docs/benchmarks/snapshot-preflight-optimization.md)에서 중복 직렬화를 제거했다. 동일 상태 5쌍의 생성 중앙값은 29.7%, 해당 크기 검사 단계는 79.4% 감소했다. 2회차 후보의 지연 증가도 포함했으며 저장 bytes·재시작·양방향 버전 호환을 확인했다. owner 복사/정렬과 실제 writer·sync 계약은 유지했다. 고정 상태 비교만으로 동시 주문 p99·처리량의 개선을 주장하지 않는다.
+
+같은 날 [최적화 버전 10분 부하·복구 비교](docs/benchmarks/optimized-soak-10m-comparison.md)를 수행했다. 끔/켬 모두 전체 복구는 일치했고 켬의 CPU·평균 snapshot 생성·복구 시간은 줄었다. 전체 요청 p99는 두 조건 모두 이전보다 높았고 켬은 생성기 미전송 9건으로 measurementValid=false였다. 두 조건 모두 누락 0·5초 구간별 20ms 참조 기준을 함께 만족하지 못했다.
 
 ## 현재 문서 지도
 
