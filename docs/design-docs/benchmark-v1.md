@@ -156,3 +156,33 @@ CPU profile의 비동기 쓰기 실패도 보존해 일반 종료를 요청한�
 - 초기 탐색 후 [고정 비교 조건 v1](../benchmarks/p6-baseline.md#고정-비교-조건-v1)을 확정했고 판정 도구와 반복 baseline을 연결했다. P7에서 같은 조건으로 비교한다.
 
 현재 [입력 테스트](../../internal/bench/plan_test.go), [스케줄러 테스트](../../internal/bench/runner_test.go), [집계 테스트](../../internal/bench/summary_test.go)는 고정 입력·순서·누락·중복·시간/분모 계산을 검증한다. [전송 테스트](../../internal/bench/http_test.go)는 잘린 응답·deadline·redirect·identity를, [실제 CLI 통합](../../cmd/loadgen/native_test.go)은 HTTP→runtime→APFS 거래와 파일 재집계·중단/재사용 거절을 확인한다. 가짜 executor 결과와 짧은 실제 실행 smoke를 기준 지속 처리량으로 보고하지 않는다. 전체 진행과 실행 증거는 [구현 계획](../exec-plans/active/20261029-1531-exchange-v1.md)에 남긴다.
+
+
+## 스냅샷 생성·복구 단계 계측
+
+CLI ready의 `recovery.stages`는 readiness 전 복구를, runtime statistics의 `snapshotStages`는 실행 중 생성을 보고한다. 각 값은 기존 `telemetry.Distribution`과 같은 `count`, `sumNanos`, `minNanos`, `maxNanos`, 고정 구간 buckets다. 정수는 JSON 문자열, 시간 단위는 nanoseconds다. 단계별 합·최소·최대는 단조 시계 관측값이며 histogram 분위수의 근사값과 구분한다. 값은 프로세스 로컬 누계이며 재시작하면 초기화한다.
+
+| 경로 | 단계 | 포함하는 작업 |
+| --- | --- | --- |
+| 생성 | `capture.copy`, `capture.sort` | owner가 수행하는 detached 사본 생성, canonical 정렬 |
+| 생성 | `publish.measure`, `publish.encodeWrite` | payload 검증·JSON 직렬화로 길이 산출, 다시 직렬화·checksum·buffer·파일 write |
+| 생성 | `publish.fileSync`, `publish.close`, `publish.rename`, `publish.directorySync` | 새 파일 strict sync, close, exclusive rename, 디렉터리 strict sync |
+| 생성·중복 | `publish.existing` | 기존 경로 확인; 존재하면 canonical bytes 대조·기존 파일 strict sync |
+| 복구 | `recovery.walOpen` | filesystem·잠금·Genesis 검사와 WAL 최초 전체 스캔을 포함한 wal.Open |
+| 복구 | `recovery.list`, `recovery.load` | 후보 목록, 후보 파일 열기·검증·decode·닫기 |
+| 복구 | `load.checksum`, `load.decode` | envelope 경계와 checksum 검사, 실제 읽는 bytes를 다시 해시하며 엄격 JSON 해석 |
+| decode | `decode.identity/accounts/orders/book/trades/results/shape` | identity, 컬렉션별 항목 검사/복원, 마지막 shape 검사; `load.decode`의 하위 단계 |
+| 복구 | `recovery.restore` | 엔진 재구성과 의미 검사; `restore.rebuild/invariants/relations`로 세분화 |
+| 복구 | `recovery.replay` | 보존한 WAL 전체 대조·suffix 적용; `replay.scanAndApply`와 `replay.finalInvariants`로 분리 |
+| 복구 | `recovery.confirmSnapshot` | 선택 snapshot의 canonical 재직렬화·bytes 대조·strict sync |
+| 재확인 | `confirm.measure`, `confirm.existing`, `confirm.directorySync` | 길이 재산출, 기존 파일 대조/동기화, 디렉터리 동기화 |
+| 재확인 | `confirm.compareBytes`, `confirm.existingFileSync` | `confirm.existing` 안의 bytes 비교와 파일 sync. 중복 생성에서도 `publish.*` 이름으로 관측 |
+| 복구 | `recovery.confirmWAL` | WAL·Genesis·lock·디렉터리의 복구 내구성 확인 |
+
+준비·파일 생성·디렉터리 열기·rename 경합은 별도 `prepare`, `createTemp`, `directoryOpen`, `renameConflict` 단계다. 동일 이름은 여러 후보/시도의 누계이며 성공만 세지 않는다. 진행 중인 단계는 종료되기 전까지 보고하지 않는다. 실패한 단계는 종료 시 기록하고, 실행하지 않은 단계는 키가 없다. 생성 성공 수는 기존 `snapshots`, 실패는 `snapshotErrors`로 확인한다. 복구 보고는 Open이 성공한 경우 노출되며 대체 복구 중 건너뛴 후보의 시도도 포함한다.
+
+부모·자식 시간은 겹친다. 예를 들어 `recovery.load`에 `load.decode`가, `load.decode`에 `decode.results`가 포함된다. 부모와 자식을 합산하지 않는다. `snapshotCapture`/`snapshotPublish`는 기존 전체 구간이며 `snapshotStages`와 중복 합산하지 않는다. 시간이 명시되지 않은 호출·스케줄·계측 비용이 있어 하위 단계 합과 전체 시간은 정확히 일치하지 않는다. 오류 종료의 defer 정리는 마지막 단계에 포함될 수 있다. GC·스케줄링·I/O 대기를 포함한 wall time이지 순수 CPU 시간이나 디스크 장치 응답 시간은 아니다.
+
+단계명은 코드의 고정 집합이고 입력 ID를 사용하지 않는다. 복구 명령·JSON 항목 하나마다 타이머를 실행하지 않는다. 동시 통계 조회는 복사본을 반환한다. `Capture/Restore/Load/Publish/Confirm` 기존 호출은 계측을 끈 경로를 유지하며 runtime이 계측 경로를 사용한다. snapshot/WAL 저장 bytes, 오류·fallback·sync 순서는 바꾸지 않는다.
+
+동일 상태 반복 실험과 한계는 [단계별 측정](../benchmarks/snapshot-stage-breakdown.md)에 기록한다. 이후 decoder 개선 전후의 동일 상태 5쌍 비교는 [복구 디코더 비교](../benchmarks/snapshot-decoder-optimization.md)에 기록한다.

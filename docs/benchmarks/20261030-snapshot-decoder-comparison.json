@@ -1,0 +1,932 @@
+{
+  "rawRoot": "var/snapshot-decoder-20261030.fq2sk1r9",
+  "provenance": {
+    "createdAt": "2026-10-30T08:58:39.271333+00:00",
+    "source": "var/soak-comparison-20261030.92490s/snapshot/run",
+    "sourceFiles": {
+      "genesis.bin": {
+        "sha256": "301131fd63bdf64cbe8f4d8b671ee5a416561c150cb254d5c6943a9d89456fd9",
+        "bytes": 796
+      },
+      "commands.wal": {
+        "sha256": "ca5b905e7fcac7012e04a2961f65af755a9ef44bc71c0bbedf535f2f3abb8e16",
+        "bytes": 13626452
+      },
+      "snapshot-00000000000000051385.bin": {
+        "sha256": "6d836cda051929a34551776a6892aa5bda478058ea16bd23a75b27b41a355abe",
+        "bytes": 52307324
+      },
+      ".lock": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "snapshotSeq": "51385",
+    "counts": {
+      "accounts": 4,
+      "orders": 45280,
+      "trades": 12117,
+      "results": 51385
+    },
+    "bookLevels": {
+      "bids": 7,
+      "asks": 5
+    },
+    "runId": "06fbd2fa-75d8-474b-b758-b7928ba26891",
+    "configHash": "ad465f51c35d302ee709eafbe28dab99d8b99751fc73b272997872a40f021e37",
+    "platform": "macOS-15.8-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "go": "go version go1.27.3 darwin/arm64",
+    "gitHead": "3b5a6f5fac85a5e5c004e6a4c87624bddc893563",
+    "worktreeModified": true,
+    "trials": 5,
+    "order": "odd before then after; even after then before",
+    "cache": "OS cache not flushed; copy and hash before startup excluded",
+    "scope": "runtime.Open and one runtime.Snapshot, no HTTP listener, no concurrent commands",
+    "powerLossTested": false,
+    "purpose": "Snapshot decoder before/after comparison, 5 paired runs of the identical frozen state"
+  },
+  "environment": {
+    "controls": {
+      "GODEBUG": null,
+      "GOMAXPROCS": "11",
+      "GOGC": "100",
+      "GOMEMLIMIT": "off"
+    },
+    "hardware": "hw.ncpu: 11\nhw.memsize: 19327352832\nmachdep.cpu.brand_string: Apple M3 Pro\n",
+    "binaries": {
+      "before": "4bf17a518309e94ec4487b0188d4290364b3ed673fbb53fd982bbe211c2b6261",
+      "after": "1adc3756354542dd1a62e6ee9fa14d29597b16dab5ca835f456c1503cdeaddf6"
+    },
+    "gitHead": "3b5a6f5fac85a5e5c004e6a4c87624bddc893563",
+    "gitBranch": "codex/snapshot-decoder-optimization",
+    "modified": true
+  },
+  "variants": {
+    "before": {
+      "openNanos": {
+        "median": 3767219375,
+        "min": 3748101750,
+        "max": 3784717375,
+        "values": [
+          3767219375,
+          3757644000,
+          3784717375,
+          3774696833,
+          3748101750
+        ]
+      },
+      "snapshotReconfirmNanos": {
+        "median": 524209084,
+        "min": 513096167,
+        "max": 539502833,
+        "values": [
+          518832333,
+          513096167,
+          527501083,
+          524209084,
+          539502833
+        ]
+      },
+      "recoveryStages": {
+        "confirm.compareBytes": {
+          "median": 250353917,
+          "min": 248062500,
+          "max": 258708583,
+          "values": [
+            248062500,
+            258708583,
+            250353917,
+            251805875,
+            249238875
+          ]
+        },
+        "confirm.directoryOpen": {
+          "median": 35083,
+          "min": 32833,
+          "max": 66833,
+          "values": [
+            66833,
+            33792,
+            35083,
+            32833,
+            36125
+          ]
+        },
+        "confirm.directorySync": {
+          "median": 4542,
+          "min": 4167,
+          "max": 5917,
+          "values": [
+            4291,
+            4542,
+            4167,
+            5041,
+            5917
+          ]
+        },
+        "confirm.existing": {
+          "median": 258634292,
+          "min": 251445083,
+          "max": 266744541,
+          "values": [
+            251445083,
+            266744541,
+            258634292,
+            260891416,
+            253986083
+          ]
+        },
+        "confirm.existingFileSync": {
+          "median": 7998125,
+          "min": 3328834,
+          "max": 8986459,
+          "values": [
+            3328834,
+            7998125,
+            8180625,
+            8986459,
+            4704209
+          ]
+        },
+        "confirm.measure": {
+          "median": 229429291,
+          "min": 228313375,
+          "max": 232870875,
+          "values": [
+            229429291,
+            231759083,
+            228313375,
+            228777584,
+            232870875
+          ]
+        },
+        "confirm.prepare": {
+          "median": 23875,
+          "min": 22084,
+          "max": 25500,
+          "values": [
+            23959,
+            22209,
+            23875,
+            25500,
+            22084
+          ]
+        },
+        "decode.accounts": {
+          "median": 40416,
+          "min": 39375,
+          "max": 48209,
+          "values": [
+            48209,
+            39375,
+            39917,
+            40500,
+            40416
+          ]
+        },
+        "decode.book": {
+          "median": 16350875,
+          "min": 15838917,
+          "max": 17306208,
+          "values": [
+            15838917,
+            16350875,
+            17306208,
+            16399875,
+            16200625
+          ]
+        },
+        "decode.identity": {
+          "median": 34500,
+          "min": 33500,
+          "max": 42625,
+          "values": [
+            42625,
+            34500,
+            33541,
+            33500,
+            35833
+          ]
+        },
+        "decode.orders": {
+          "median": 584163084,
+          "min": 581635541,
+          "max": 603109375,
+          "values": [
+            583920875,
+            581635541,
+            603109375,
+            586485250,
+            584163084
+          ]
+        },
+        "decode.results": {
+          "median": 1422361333,
+          "min": 1419754833,
+          "max": 1433316125,
+          "values": [
+            1422361333,
+            1420542333,
+            1433316125,
+            1433261584,
+            1419754833
+          ]
+        },
+        "decode.shape": {
+          "median": 1417,
+          "min": 1333,
+          "max": 1666,
+          "values": [
+            1416,
+            1333,
+            1666,
+            1459,
+            1417
+          ]
+        },
+        "decode.trades": {
+          "median": 119175042,
+          "min": 118755125,
+          "max": 121277292,
+          "values": [
+            119852417,
+            119175042,
+            121277292,
+            119126375,
+            118755125
+          ]
+        },
+        "load.checksum": {
+          "median": 20661208,
+          "min": 20497125,
+          "max": 21010417,
+          "values": [
+            20497125,
+            20609709,
+            21010417,
+            20661208,
+            20928667
+          ]
+        },
+        "load.decode": {
+          "median": 2142071917,
+          "min": 2137784958,
+          "max": 2175092333,
+          "values": [
+            2142071917,
+            2137784958,
+            2175092333,
+            2155354583,
+            2138958417
+          ]
+        },
+        "recovery.confirmSnapshot": {
+          "median": 487015250,
+          "min": 480975584,
+          "max": 498567917,
+          "values": [
+            480975584,
+            498567917,
+            487015250,
+            489736500,
+            486926375
+          ]
+        },
+        "recovery.confirmWAL": {
+          "median": 2855375,
+          "min": 54583,
+          "max": 3860250,
+          "values": [
+            58916,
+            2963875,
+            3860250,
+            2855375,
+            54583
+          ]
+        },
+        "recovery.list": {
+          "median": 84375,
+          "min": 77500,
+          "max": 99542,
+          "values": [
+            99542,
+            97792,
+            77708,
+            84375,
+            77500
+          ]
+        },
+        "recovery.load": {
+          "median": 2162595792,
+          "min": 2158420167,
+          "max": 2196127917,
+          "values": [
+            2162595792,
+            2158420167,
+            2196127917,
+            2176041584,
+            2159912292
+          ]
+        },
+        "recovery.prepare": {
+          "median": 125,
+          "min": 83,
+          "max": 250,
+          "values": [
+            250,
+            125,
+            83,
+            125,
+            83
+          ]
+        },
+        "recovery.replay": {
+          "median": 541914250,
+          "min": 534859792,
+          "max": 547202292,
+          "values": [
+            534859792,
+            541914250,
+            538182167,
+            547202292,
+            542291792
+          ]
+        },
+        "recovery.restore": {
+          "median": 78984916,
+          "min": 78087417,
+          "max": 81132625,
+          "values": [
+            78984916,
+            78087417,
+            81132625,
+            80189291,
+            78729084
+          ]
+        },
+        "recovery.walOpen": {
+          "median": 478556375,
+          "min": 477557083,
+          "max": 509582542,
+          "values": [
+            509582542,
+            477557083,
+            478289167,
+            478556375,
+            480080833
+          ]
+        },
+        "replay.finalInvariants": {
+          "median": 21867292,
+          "min": 21280500,
+          "max": 24104417,
+          "values": [
+            21422792,
+            21280500,
+            23742333,
+            24104417,
+            21867292
+          ]
+        },
+        "replay.scanAndApply": {
+          "median": 520422000,
+          "min": 513434000,
+          "max": 523094750,
+          "values": [
+            513434000,
+            520631250,
+            514436791,
+            523094750,
+            520422000
+          ]
+        },
+        "restore.invariants": {
+          "median": 22159375,
+          "min": 21396750,
+          "max": 23832917,
+          "values": [
+            22336542,
+            21396750,
+            21984417,
+            22159375,
+            23832917
+          ]
+        },
+        "restore.rebuild": {
+          "median": 22023750,
+          "min": 21708084,
+          "max": 23657792,
+          "values": [
+            22814000,
+            23657792,
+            21714167,
+            21708084,
+            22023750
+          ]
+        },
+        "restore.relations": {
+          "median": 33826416,
+          "min": 32861625,
+          "max": 37426834,
+          "values": [
+            33826416,
+            33026584,
+            37426834,
+            36315750,
+            32861625
+          ]
+        }
+      },
+      "cumulativeAllocBytesAtOpen": {
+        "median": 2194661016,
+        "min": 2194546408,
+        "max": 2194762120,
+        "values": [
+          2194702912,
+          2194762120,
+          2194661016,
+          2194546408,
+          2194641224
+        ]
+      },
+      "gcCountAtOpen": {
+        "median": 164,
+        "min": 163,
+        "max": 167,
+        "values": [
+          163,
+          167,
+          164,
+          164,
+          165
+        ]
+      },
+      "heapAllocBytesAtOpen": {
+        "median": 129255584,
+        "min": 91109952,
+        "max": 152537104,
+        "values": [
+          102523992,
+          91109952,
+          129255584,
+          132077240,
+          152537104
+        ]
+      }
+    },
+    "after": {
+      "openNanos": {
+        "median": 2543226375,
+        "min": 2534375500,
+        "max": 2588314375,
+        "values": [
+          2543226375,
+          2534375500,
+          2549421459,
+          2588314375,
+          2541217375
+        ]
+      },
+      "snapshotReconfirmNanos": {
+        "median": 521032375,
+        "min": 517758625,
+        "max": 527398083,
+        "values": [
+          520587375,
+          521032375,
+          527398083,
+          521037042,
+          517758625
+        ]
+      },
+      "recoveryStages": {
+        "confirm.compareBytes": {
+          "median": 250753542,
+          "min": 249441416,
+          "max": 254267333,
+          "values": [
+            251822666,
+            249566167,
+            250753542,
+            254267333,
+            249441416
+          ]
+        },
+        "confirm.directoryOpen": {
+          "median": 53250,
+          "min": 32375,
+          "max": 58709,
+          "values": [
+            58709,
+            32375,
+            53250,
+            34583,
+            56625
+          ]
+        },
+        "confirm.directorySync": {
+          "median": 4292,
+          "min": 3166,
+          "max": 4584,
+          "values": [
+            3166,
+            4292,
+            4250,
+            4500,
+            4584
+          ]
+        },
+        "confirm.existing": {
+          "median": 258581209,
+          "min": 256753666,
+          "max": 259375667,
+          "values": [
+            256753666,
+            258750166,
+            258581209,
+            259375667,
+            257617333
+          ]
+        },
+        "confirm.existingFileSync": {
+          "median": 7772375,
+          "min": 4879042,
+          "max": 9144209,
+          "values": [
+            4879042,
+            9144209,
+            7772375,
+            5048875,
+            8114667
+          ]
+        },
+        "confirm.measure": {
+          "median": 228769542,
+          "min": 227247292,
+          "max": 230691916,
+          "values": [
+            230691916,
+            227247292,
+            230281500,
+            228769542,
+            227493416
+          ]
+        },
+        "confirm.prepare": {
+          "median": 22458,
+          "min": 21000,
+          "max": 25750,
+          "values": [
+            21459,
+            22542,
+            21000,
+            22458,
+            25750
+          ]
+        },
+        "decode.accounts": {
+          "median": 27958,
+          "min": 27459,
+          "max": 32459,
+          "values": [
+            28750,
+            27459,
+            32459,
+            27667,
+            27958
+          ]
+        },
+        "decode.book": {
+          "median": 6581875,
+          "min": 6532916,
+          "max": 6679542,
+          "values": [
+            6679542,
+            6532916,
+            6656000,
+            6552250,
+            6581875
+          ]
+        },
+        "decode.identity": {
+          "median": 33167,
+          "min": 31667,
+          "max": 55250,
+          "values": [
+            55250,
+            33167,
+            35750,
+            32583,
+            31667
+          ]
+        },
+        "decode.orders": {
+          "median": 266989417,
+          "min": 265826042,
+          "max": 285073750,
+          "values": [
+            266989417,
+            266049083,
+            272935083,
+            285073750,
+            265826042
+          ]
+        },
+        "decode.results": {
+          "median": 603610750,
+          "min": 598661292,
+          "max": 613260917,
+          "values": [
+            603647250,
+            598661292,
+            601200792,
+            613260917,
+            603610750
+          ]
+        },
+        "decode.shape": {
+          "median": 2416,
+          "min": 2167,
+          "max": 2875,
+          "values": [
+            2416,
+            2417,
+            2875,
+            2167,
+            2292
+          ]
+        },
+        "decode.trades": {
+          "median": 55696709,
+          "min": 55435875,
+          "max": 57267417,
+          "values": [
+            55472125,
+            55696709,
+            57267417,
+            55435875,
+            56489042
+          ]
+        },
+        "load.checksum": {
+          "median": 20584209,
+          "min": 20506625,
+          "max": 22177583,
+          "values": [
+            20506625,
+            20584209,
+            22177583,
+            20553041,
+            20609792
+          ]
+        },
+        "load.decode": {
+          "median": 932881500,
+          "min": 927010083,
+          "max": 960391208,
+          "values": [
+            932881500,
+            927010083,
+            938138041,
+            960391208,
+            932576917
+          ]
+        },
+        "recovery.confirmSnapshot": {
+          "median": 487533458,
+          "min": 485203292,
+          "max": 488946208,
+          "values": [
+            487533458,
+            486061250,
+            488946208,
+            488239250,
+            485203292
+          ]
+        },
+        "recovery.confirmWAL": {
+          "median": 3857208,
+          "min": 2907500,
+          "max": 4245583,
+          "values": [
+            2907500,
+            3992292,
+            2979333,
+            3857208,
+            4245583
+          ]
+        },
+        "recovery.list": {
+          "median": 82042,
+          "min": 63667,
+          "max": 117291,
+          "values": [
+            117291,
+            78750,
+            63667,
+            88792,
+            82042
+          ]
+        },
+        "recovery.load": {
+          "median": 953414750,
+          "min": 947619125,
+          "max": 980968750,
+          "values": [
+            953414750,
+            947619125,
+            960341417,
+            980968750,
+            953210500
+          ]
+        },
+        "recovery.prepare": {
+          "median": 125,
+          "min": 84,
+          "max": 125,
+          "values": [
+            125,
+            84,
+            125,
+            125,
+            125
+          ]
+        },
+        "recovery.replay": {
+          "median": 537810208,
+          "min": 533869167,
+          "max": 556773250,
+          "values": [
+            533869167,
+            537810208,
+            537435709,
+            556773250,
+            538915792
+          ]
+        },
+        "recovery.restore": {
+          "median": 80270709,
+          "min": 78844375,
+          "max": 80943834,
+          "values": [
+            78844375,
+            79909334,
+            80857750,
+            80270709,
+            80943834
+          ]
+        },
+        "recovery.walOpen": {
+          "median": 478769125,
+          "min": 478085042,
+          "max": 486493250,
+          "values": [
+            486493250,
+            478875375,
+            478769125,
+            478085042,
+            478586167
+          ]
+        },
+        "replay.finalInvariants": {
+          "median": 21676917,
+          "min": 21162583,
+          "max": 23347292,
+          "values": [
+            21243375,
+            21676917,
+            21162583,
+            21696375,
+            23347292
+          ]
+        },
+        "replay.scanAndApply": {
+          "median": 516129958,
+          "min": 512622375,
+          "max": 535074291,
+          "values": [
+            512622375,
+            516129958,
+            516270583,
+            535074291,
+            515563583
+          ]
+        },
+        "restore.invariants": {
+          "median": 22000000,
+          "min": 21804584,
+          "max": 22569833,
+          "values": [
+            21876750,
+            21804584,
+            22142042,
+            22569833,
+            22000000
+          ]
+        },
+        "restore.rebuild": {
+          "median": 22389250,
+          "min": 22124834,
+          "max": 24441917,
+          "values": [
+            23412292,
+            22347208,
+            22389250,
+            24441917,
+            22124834
+          ]
+        },
+        "restore.relations": {
+          "median": 35749458,
+          "min": 33250041,
+          "max": 36809959,
+          "values": [
+            33547000,
+            35749458,
+            36320250,
+            33250041,
+            36809959
+          ]
+        }
+      },
+      "cumulativeAllocBytesAtOpen": {
+        "median": 1195813704,
+        "min": 1195770480,
+        "max": 1195916808,
+        "values": [
+          1195813704,
+          1195770480,
+          1195781992,
+          1195916808,
+          1195835968
+        ]
+      },
+      "gcCountAtOpen": {
+        "median": 109,
+        "min": 108,
+        "max": 111,
+        "values": [
+          108,
+          108,
+          109,
+          109,
+          111
+        ]
+      },
+      "heapAllocBytesAtOpen": {
+        "median": 132081288,
+        "min": 129578984,
+        "max": 160214888,
+        "values": [
+          160214888,
+          129578984,
+          132081288,
+          157760240,
+          130560800
+        ]
+      }
+    }
+  },
+  "pairs": [
+    {
+      "trial": 1,
+      "openReductionPct": 32.49062181307134,
+      "decodeReductionPct": 56.44957143612093
+    },
+    {
+      "trial": 2,
+      "openReductionPct": 32.55413498458076,
+      "decodeReductionPct": 56.63688812427316
+    },
+    {
+      "trial": 3,
+      "openReductionPct": 32.63905316047543,
+      "decodeReductionPct": 56.86904749895967
+    },
+    {
+      "trial": 4,
+      "openReductionPct": 31.42987398691576,
+      "decodeReductionPct": 55.44161431372241
+    },
+    {
+      "trial": 5,
+      "openReductionPct": 32.19988291406444,
+      "decodeReductionPct": 56.400418559422604
+    }
+  ],
+  "powerLossTested": false,
+  "medianReductionPct": {
+    "open": 32.49062181307134,
+    "decode": 56.44957143612093,
+    "cumulativeAllocAtOpen": 45.512601022116115
+  },
+  "allPairsImproved": true,
+  "nonOverlappingRanges": true,
+  "allStateBytesIdentical": true,
+  "previousArtifactsVerified": {
+    "soak-comparison-20261030.92490s": 234,
+    "snapshot-stages-20261030.ye3p3gdp": 129
+  },
+  "sourceUnchanged": true
+}

@@ -5,11 +5,17 @@ import (
 	"sort"
 
 	d "github.com/gaon000/exchange/internal/domain"
+	"github.com/gaon000/exchange/internal/telemetry"
 )
 
 // Capture copies every persisted state field at the owner's command boundary.
 // The caller may hand this detached value to a background snapshot writer.
-func (e *Engine) Capture() d.Checkpoint {
+func (e *Engine) Capture() d.Checkpoint { return e.CaptureWithTimings(nil) }
+
+// CaptureWithTimings measures detached copying and canonical sorting separately.
+func (e *Engine) CaptureWithTimings(t *telemetry.Stages) d.Checkpoint {
+	span := t.Begin("capture.copy")
+	defer span.End()
 	c := d.Checkpoint{Accounts: make([]d.CheckpointAccount, 0, len(e.accounts)), Orders: make([]d.CheckpointOrder, 0, len(e.orders)), Book: d.CheckpointBook{Bids: captureBook(&e.bids), Asks: captureBook(&e.asks)}, Trades: append([]d.Trade{}, e.trades...), Results: make([]d.CheckpointResult, 0, len(e.results))}
 	for id, b := range e.accounts {
 		c.Accounts = append(c.Accounts, d.CheckpointAccount{AccountID: id, AvailableBaseLots: b.Base.Available, ReservedBaseLots: b.Base.Reserved, AvailableQuoteAtoms: b.Quote.Available, ReservedQuoteAtoms: b.Quote.Reserved})
@@ -28,6 +34,7 @@ func (e *Engine) Capture() d.Checkpoint {
 		}
 		c.Results = append(c.Results, d.CheckpointResult{Command: command, Response: r.result.Clone()})
 	}
+	span.Next("capture.sort")
 	sort.Slice(c.Accounts, func(i, j int) bool { return c.Accounts[i].AccountID < c.Accounts[j].AccountID })
 	sort.Slice(c.Orders, func(i, j int) bool { return orderLess(c.Orders[i], c.Orders[j]) })
 	sort.Slice(c.Results, func(i, j int) bool { return resultLess(c.Results[i], c.Results[j]) })
@@ -71,7 +78,14 @@ func captureBook(b *book) []d.CheckpointLevel {
 // order/FIFO, supply, reservation, trade, command, and initial-result relations.
 // It does not match historical commands again. Recovery must additionally check
 // these saved command inputs against the retained WAL before publishing state.
-func Restore(runID string, config d.Config, seq d.Int, c d.Checkpoint) (_ *Engine, err error) {
+func Restore(runID string, config d.Config, seq d.Int, c d.Checkpoint) (*Engine, error) {
+	return RestoreWithTimings(runID, config, seq, c, nil)
+}
+
+// RestoreWithTimings retains all Restore checks and measures their stages.
+func RestoreWithTimings(runID string, config d.Config, seq d.Int, c d.Checkpoint, t *telemetry.Stages) (_ *Engine, err error) {
+	span := t.Begin("restore.rebuild")
+	defer span.End()
 	defer func() {
 		if p := recover(); p != nil {
 			err = fmt.Errorf("invalid checkpoint arithmetic/state: %v", p)
@@ -141,9 +155,11 @@ func Restore(runID string, config d.Config, seq d.Int, c d.Checkpoint) (_ *Engin
 		}
 		e.results[key] = record{command: command, result: saved.Response.Clone()}
 	}
+	span.Next("restore.invariants")
 	if err := e.CheckInvariants(); err != nil {
 		return nil, err
 	}
+	span.Next("restore.relations")
 	if err := e.checkCheckpointRelations(config); err != nil {
 		return nil, err
 	}

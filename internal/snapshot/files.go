@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	d "github.com/gaon000/exchange/internal/domain"
+	"github.com/gaon000/exchange/internal/telemetry"
 )
 
 // Candidate identifies one canonically named snapshot. Temporary and unrelated
@@ -52,7 +53,12 @@ func List(dir string) ([]Candidate, error) {
 // Load validates one candidate without altering or syncing it. A non-regular
 // candidate or invalid envelope may be skipped; filesystem and close errors may
 // not. Call Confirm only after state invariants and WAL inputs have been checked.
-func Load(dir string, candidate Candidate, want Identity, maxSeq d.Int) (doc Document, err error) {
+func Load(dir string, candidate Candidate, want Identity, maxSeq d.Int) (Document, error) {
+	return LoadWithTimings(dir, candidate, want, maxSeq, nil)
+}
+
+// LoadWithTimings measures checksum and strict decoding without relaxing Load.
+func LoadWithTimings(dir string, candidate Candidate, want Identity, maxSeq d.Int, t *telemetry.Stages) (doc Document, err error) {
 	if !candidate.valid() {
 		return Document{}, ErrInvalid
 	}
@@ -80,7 +86,7 @@ func Load(dir string, candidate Candidate, want Identity, maxSeq d.Int) (doc Doc
 	if err != nil {
 		return Document{}, err
 	}
-	doc, err = Read(f, info.Size(), want, maxSeq)
+	doc, err = readWithTimings(f, info.Size(), want, maxSeq, t)
 	if err != nil {
 		return Document{}, err
 	}
@@ -96,24 +102,41 @@ func Confirm(dir string, doc Document) error {
 	return confirm(dir, doc, nativeFileOps())
 }
 
-func confirm(dir string, doc Document, ops fileOps) (err error) {
+// ConfirmWithTimings measures canonical revalidation and durability confirmation.
+func ConfirmWithTimings(dir string, doc Document, t *telemetry.Stages) error {
+	return confirmWithTimings(dir, doc, nativeFileOps(), t)
+}
+
+func confirm(dir string, doc Document, ops fileOps) error {
+	return confirmWithTimings(dir, doc, ops, nil)
+}
+
+func confirmWithTimings(dir string, doc Document, ops fileOps, t *telemetry.Stages) (err error) {
+	span := t.Begin("confirm.measure")
+	defer span.End()
 	size, err := measure(doc, MaxPayloadBytes)
 	if err != nil {
 		return err
 	}
+	span.Next("confirm.prepare")
 	if err := ops.checkFS(dir); err != nil {
 		return err
 	}
 	name, _ := Filename(doc.SnapshotSeq)
-	if exists, err := confirmIdentical(filepath.Join(dir, name), doc, size, ops); err != nil {
+	span.Next("confirm.existing")
+	if exists, err := confirmIdenticalWithTimings(filepath.Join(dir, name), doc, size, ops, t, "confirm"); err != nil {
 		return err
 	} else if !exists {
 		return corrupt("selected snapshot disappeared before confirmation")
 	}
+	span.Next("confirm.directoryOpen")
 	directory, err := ops.open(dir)
 	if err != nil {
 		return err
 	}
 	defer func() { err = errors.Join(err, directory.Close()) }()
-	return ops.sync(directory)
+	span.Next("confirm.directorySync")
+	syncErr := ops.sync(directory)
+	span.End()
+	return syncErr
 }

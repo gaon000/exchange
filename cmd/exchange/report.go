@@ -4,6 +4,7 @@ import (
 	"github.com/gaon000/exchange/internal/buildinfo"
 	d "github.com/gaon000/exchange/internal/domain"
 	rt "github.com/gaon000/exchange/internal/runtime"
+	"github.com/gaon000/exchange/internal/telemetry"
 	"runtime"
 )
 
@@ -59,10 +60,11 @@ type httpSettings struct {
 	ShutdownTimeout   string `json:"shutdownTimeout"`
 }
 type recoverySettings struct {
-	SnapshotFile     string            `json:"snapshotFile"`
-	SnapshotSeq      d.Int             `json:"snapshotSeq"`
-	ReplayedCommands d.Int             `json:"replayedCommands"`
-	Skipped          []skippedSnapshot `json:"skippedSnapshots"`
+	Stages           telemetry.StageReport `json:"stages"`
+	SnapshotFile     string                `json:"snapshotFile"`
+	SnapshotSeq      d.Int                 `json:"snapshotSeq"`
+	ReplayedCommands d.Int                 `json:"replayedCommands"`
+	Skipped          []skippedSnapshot     `json:"skippedSnapshots"`
 }
 type skippedSnapshot struct {
 	Name   string `json:"name"`
@@ -78,6 +80,6 @@ func readyReportFor(r *rt.Runtime, dir, address string, o serveOptions) readyRep
 	return readyReport{Event: "ready", RunID: r.RunID(), ConfigHash: r.ConfigHash(), Build: buildinfo.Current(), DataDir: dir, Listen: address,
 		Runtime:  runtimeSettings{o.runtime.CommandQueue, o.runtime.QueryQueue, o.runtime.RequestLimit, o.runtime.PendingWaiters, o.runtime.BatchCommands, o.runtime.BatchBytes, o.runtime.BatchDelay.String()},
 		HTTP:     httpSettings{o.http.RequestLimit, o.http.ReadHeaderTimeout.String(), o.http.ReadBodyTimeout.String(), o.http.ResultTimeout.String(), o.http.WriteTimeout.String(), o.httpShutdownTimeout.String()},
-		Recovery: recoverySettings{recovery.SnapshotFile, recovery.SnapshotSeq, recovery.ReplayedCommands, skipped}, Metrics: metricsSettings{o.metricsFile != "", true, o.metricsFile, o.metricsInterval.String()},
+		Recovery: recoverySettings{SnapshotFile: recovery.SnapshotFile, SnapshotSeq: recovery.SnapshotSeq, ReplayedCommands: recovery.ReplayedCommands, Skipped: skipped, Stages: recovery.Stages}, Metrics: metricsSettings{o.metricsFile != "", true, o.metricsFile, o.metricsInterval.String()},
 		Experiments: experimentSettings{o.snapshotInterval.String(), o.snapshotLog, 1000, o.profileDir, runtime.MemProfileRate}}
 }

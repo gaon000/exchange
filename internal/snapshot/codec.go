@@ -14,6 +14,7 @@ import (
 	"io"
 
 	d "github.com/gaon000/exchange/internal/domain"
+	"github.com/gaon000/exchange/internal/telemetry"
 )
 
 // Wire limits bound the whole payload and each fixed-size JSON value. Large
@@ -236,6 +237,12 @@ func payload(w io.Writer, doc Document) error {
 // caller must hold run ownership, call engine.Restore to validate semantics,
 // compare saved inputs with the WAL, and confirm recovery durability.
 func Read(r io.ReaderAt, size int64, want Identity, maxSeq d.Int) (Document, error) {
+	return readWithTimings(r, size, want, maxSeq, nil)
+}
+
+func readWithTimings(r io.ReaderAt, size int64, want Identity, maxSeq d.Int, t *telemetry.Stages) (Document, error) {
+	span := t.Begin("load.checksum")
+	defer span.End()
 	if !want.valid() || maxSeq < 0 {
 		return Document{}, ErrInvalid
 	}
@@ -270,10 +277,11 @@ func Read(r io.ReaderAt, size int64, want Identity, maxSeq d.Int) (Document, err
 	}
 	// Re-hash the bytes actually decoded as well: a changed backing reader must
 	// not pass based on the digest of an earlier read.
+	span.Next("load.decode")
 	hash.Reset()
 	_, _ = hash.Write(header[:])
 	reader := io.TeeReader(io.NewSectionReader(r, headerBytes, int64(n)), hash)
-	doc, err := decodePayload(reader, want, maxSeq)
+	doc, err := decodePayloadWithTimings(reader, want, maxSeq, t)
 	if err != nil {
 		return Document{}, err
 	}

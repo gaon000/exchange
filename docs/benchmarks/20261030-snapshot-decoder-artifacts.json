@@ -1,0 +1,22 @@
+{
+  "rawRoot": "var/snapshot-decoder-20261030.fq2sk1r9",
+  "fileCount": 105,
+  "totalBytes": 672242639,
+  "manifestSHA256": "627ef1097628479abb8255479a2914960ea8966c7160cf86ad5bd857d5e26a4f",
+  "comparisonSHA256": "8cbed51bdee7027c4d8dab406840c8eb428486cadd13bfe04a0196e06d1effd7",
+  "variants": {
+    "before": {
+      "binarySHA256": "4bf17a518309e94ec4487b0188d4290364b3ed673fbb53fd982bbe211c2b6261",
+      "sourceArchiveSHA256": "2252688bea73173377c433c1b450f4d138d0c2b0d292abe35ff7adaf6d11c146",
+      "sourceHashesSHA256": "2e02c84e753926bdfb87f6daedbe12b37fa957d4f7690e91c132078c254476c4"
+    },
+    "after": {
+      "binarySHA256": "1adc3756354542dd1a62e6ee9fa14d29597b16dab5ca835f456c1503cdeaddf6",
+      "sourceArchiveSHA256": "23a06a232b25a2855252e8beccd2d92354acd5be6bdcf063cad46121576f43ce",
+      "sourceHashesSHA256": "bba6ff9ddfe12d02011faaf74be6850b6d084d66b8bd1f9edebb346fef9793d4"
+    }
+  },
+  "decoderPatchSHA256": "e558d96a756c341f7d1eb15a959b981cddd6932b4db6104cd07ccc29814f344e",
+  "policy": "Local raw state copies, source archives, binaries and checks retained; no upload.",
+  "powerLossTested": false
+}

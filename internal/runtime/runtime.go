@@ -12,6 +12,7 @@ import (
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
 	"github.com/gaon000/exchange/internal/snapshot"
+	"github.com/gaon000/exchange/internal/telemetry"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -76,18 +77,25 @@ func Open(dir string, options Options) (*Runtime, error) {
 	if err != nil {
 		return nil, err
 	}
+	stages := &telemetry.Stages{}
+	span := stages.Begin("recovery.walOpen")
 	s, err := wal.Open(dir)
+	span.End()
 	if err != nil {
 		return nil, err
 	}
-	return startWithSnapshots(s, diskCheckpoints{dir}, options, hooks{})
+	return startWithTimings(s, diskCheckpoints{dir}, options, hooks{}, stages)
 }
 
 func start(s journal, options Options, h hooks) (*Runtime, error) {
 	return startWithSnapshots(s, nil, options, h)
 }
 
-func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) (_ *Runtime, err error) {
+func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) (*Runtime, error) {
+	return startWithTimings(s, files, options, h, &telemetry.Stages{})
+}
+
+func startWithTimings(s journal, files checkpoints, options Options, h hooks, stages *telemetry.Stages) (_ *Runtime, err error) {
 	defer func() {
 		if p := recover(); p != nil {
 			err = fmt.Errorf("runtime recovery panic: %v", p)
@@ -100,18 +108,22 @@ func startWithSnapshots(s journal, files checkpoints, options Options, h hooks) 
 		return nil, err
 	}
 	g := s.Genesis()
-	e, report, err := recoverState(s, files)
+	e, report, err := recoverStateWithTimings(s, files, stages)
 	if err != nil {
 		return nil, err
 	}
-	if err := s.ConfirmRecovery(); err != nil {
+	span := stages.Begin("recovery.confirmWAL")
+	syncErr := s.ConfirmRecovery()
+	span.End()
+	if err := syncErr; err != nil {
 		return nil, err
 	}
 	if s.DurableSeq() != e.AppliedSeq() {
 		return nil, fmt.Errorf("recovery durable sequence mismatch")
 	}
 	r := &Runtime{genesis: g, accounts: make(map[string]bool), opts: options, engine: e, store: s, commands: make(chan *commandRequest, options.CommandQueue), queries: make(chan *queryRequest, options.QueryQueue), slots: make(chan struct{}, options.RequestLimit), stop: make(chan struct{}), done: make(chan struct{}), hooks: h}
-	r.recovery, r.snapshots = report, files
+	report.Stages = stages.Snapshot()
+	r.recovery, r.snapshots = report, instrumentCheckpoints(files, &r.metrics.snapshotStages)
 	r.snapshotRequests = make(chan *snapshotRequest, 1)
 	r.snapshotSeq.Store(int64(report.SnapshotSeq))
 	for _, a := range g.Config.Accounts {

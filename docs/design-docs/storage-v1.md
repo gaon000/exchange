@@ -55,6 +55,11 @@ Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot payload 최대
 
 Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
 
+snapshot 값 해석은 [닫힌 scalar/leaf 타입 집합](../../internal/snapshot/decode.go)에 한해 UTF-8 검사 → typed JSON 복원 → canonical 재직렬화 bytes의 완전 일치 검사를 사용한다. 구조를 여러 번 파싱하던 일반 strictjson 경로를 snapshot 안에서만 대체한다. 필드 누락·중복·미지 필드·대소문자 변경·필드 순서·비정규 escape/공백은 canonical bytes와 달라 거절된다. 정수와 Reason은 기존 custom decoder가 검증한다. null 허용은 포인터와 Reason뿐이며 다른 scalar/struct의 null은 typed decode 실패 또는 재직렬화 불일치로 거절한다. 배열은 기존 streaming parser가 처리한다.
+
+이 동등성은 leaf DTO에 map/slice/interface/RawMessage와 새로운 custom codec이 없다는 전제에 의존한다. generic 타입 집합과 [스키마·차등 검증](../../internal/snapshot/decode_test.go)이 이를 고정하며 DTO가 달라지면 전제를 다시 검토해야 한다. 일반 HTTP/WAL strictjson 검증은 바꾸지 않는다. decoder마다 고정 16KiB 값 버퍼를 재사용하며 반환된 문자열·객체는 버퍼와 분리된다. 기존 16KiB 값 제한·깊이 64 제한, 전체 SHA-256·배열 수, Restore의 의미 검사, WAL 대조·fallback·strict sync와 오류 분류를 유지한다.
+
+
 ErrCorrupt는 손상·비정규형 후보로 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 runtime의 복구 계층이 Restore와 WAL 대조를 수행한다.
 
 Genesis와 WAL header는 서로 일치해야 한다. 비어 있는 WAL도 유효한 헤더는 필요하다. 완성되지 않았거나 checksum이 다른 Genesis/header를 정상 새 실험으로 취급하지 않는다.

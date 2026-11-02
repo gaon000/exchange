@@ -11,6 +11,7 @@ import (
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/durable"
+	"github.com/gaon000/exchange/internal/telemetry"
 )
 
 // ErrExistsMismatch prevents replacement of a different or damaged snapshot at
@@ -63,11 +64,23 @@ func nativeFileOps() fileOps {
 	}
 }
 
-func publish(dir string, doc Document, ops fileOps, limit int64) (err error) {
+// PublishWithTimings measures publication stages without changing bytes or syncs.
+func PublishWithTimings(dir string, doc Document, t *telemetry.Stages) error {
+	return publishWithTimings(dir, doc, nativeFileOps(), MaxPayloadBytes, t)
+}
+
+func publish(dir string, doc Document, ops fileOps, limit int64) error {
+	return publishWithTimings(dir, doc, ops, limit, nil)
+}
+
+func publishWithTimings(dir string, doc Document, ops fileOps, limit int64, t *telemetry.Stages) (err error) {
+	span := t.Begin("publish.measure")
+	defer span.End()
 	size, err := measure(doc, limit)
 	if err != nil {
 		return err // rejected size/input must not create even a temporary file
 	}
+	span.Next("publish.prepare")
 	if err := ops.checkFS(dir); err != nil {
 		return err
 	}
@@ -85,12 +98,17 @@ func publish(dir string, doc Document, ops fileOps, limit int64) (err error) {
 	}
 	name, _ := Filename(doc.SnapshotSeq)
 	destination := filepath.Join(dir, name)
-	if exists, err := confirmIdentical(destination, doc, size, ops); exists || err != nil {
+	span.Next("publish.existing")
+	if exists, err := confirmIdenticalWithTimings(destination, doc, size, ops, t, "publish"); exists || err != nil {
 		if err != nil {
 			return err
 		}
-		return ops.sync(directory)
+		span.Next("publish.directorySync")
+		syncErr := ops.sync(directory)
+		span.End()
+		return syncErr
 	}
+	span.Next("publish.createTemp")
 	f, err := ops.temp(dir)
 	if err != nil {
 		return err
@@ -106,24 +124,29 @@ func publish(dir string, doc Document, ops fileOps, limit int64) (err error) {
 			}
 		}
 	}()
+	span.Next("publish.encodeWrite")
 	if err := writeEnvelope(f, doc, size); err != nil {
 		return err
 	}
+	span.Next("publish.fileSync")
 	if err := ops.sync(f); err != nil {
 		return err
 	}
+	span.Next("publish.close")
 	err = f.Close()
 	f = nil // Close failure is terminal too; do not reuse or close the FD twice
 	if err != nil {
 		return err
 	}
+	span.Next("publish.rename")
 	if err := ops.rename(temporary, destination); err != nil {
 		if !errors.Is(err, os.ErrExist) {
 			return err
 		}
 		// The destination appeared after our first lookup. RENAME_EXCL left it
 		// untouched; only exact equality permits idempotent success.
-		if exists, err := confirmIdentical(destination, doc, size, ops); err != nil {
+		span.Next("publish.renameConflict")
+		if exists, err := confirmIdenticalWithTimings(destination, doc, size, ops, t, "publish"); err != nil {
 			return err
 		} else if !exists {
 			return ErrExistsMismatch
@@ -133,10 +156,13 @@ func publish(dir string, doc Document, ops fileOps, limit int64) (err error) {
 		}
 	}
 	temporary = "" // renamed successfully, or our own redundant temp was removed
-	return ops.sync(directory)
+	span.Next("publish.directorySync")
+	syncErr := ops.sync(directory)
+	span.End()
+	return syncErr
 }
 
-func confirmIdentical(path string, doc Document, size int64, ops fileOps) (exists bool, err error) {
+func confirmIdenticalWithTimings(path string, doc Document, size int64, ops fileOps, t *telemetry.Stages, prefix string) (exists bool, err error) {
 	f, err := ops.open(path)
 	if errors.Is(err, os.ErrNotExist) {
 		return false, nil
@@ -154,6 +180,8 @@ func confirmIdentical(path string, doc Document, size int64, ops fileOps) (exist
 	}
 	// Compare streaming canonical bytes, including the digest. Equality proves
 	// the existing file is this document, without allocating a second checkpoint.
+	span := t.Begin(prefix + ".compareBytes")
+	defer span.End()
 	compare := &comparingWriter{r: f}
 	if err := writeEnvelope(compare, doc, size); err != nil {
 		return true, err
@@ -165,7 +193,10 @@ func confirmIdentical(path string, doc Document, size int64, ops fileOps) (exist
 		}
 		return true, ErrExistsMismatch
 	}
-	return true, ops.sync(f)
+	span.Next(prefix + ".existingFileSync")
+	syncErr := ops.sync(f)
+	span.End()
+	return true, syncErr
 }
 
 type comparingWriter struct {

@@ -7,6 +7,7 @@ import (
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
 	"github.com/gaon000/exchange/internal/snapshot"
+	"github.com/gaon000/exchange/internal/telemetry"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -23,6 +24,7 @@ type RecoveryReport struct {
 	SnapshotSeq      d.Int
 	ReplayedCommands d.Int
 	Skipped          []SkippedSnapshot
+	Stages           telemetry.StageReport
 }
 
 type checkpoints interface {
@@ -41,19 +43,51 @@ func (s diskCheckpoints) Load(c snapshot.Candidate, id snapshot.Identity, seq d.
 func (s diskCheckpoints) Confirm(doc snapshot.Document) error { return snapshot.Confirm(s.dir, doc) }
 func (s diskCheckpoints) Publish(doc snapshot.Document) error { return snapshot.Publish(s.dir, doc) }
 
+// measuredCheckpoints is installed only for the production disk implementation.
+// Test journals/providers keep their existing contracts and outer stage timings.
+type measuredCheckpoints struct {
+	diskCheckpoints
+	stages *telemetry.Stages
+}
+
+func (s measuredCheckpoints) Load(c snapshot.Candidate, id snapshot.Identity, seq d.Int) (snapshot.Document, error) {
+	return snapshot.LoadWithTimings(s.dir, c, id, seq, s.stages)
+}
+func (s measuredCheckpoints) Confirm(doc snapshot.Document) error {
+	return snapshot.ConfirmWithTimings(s.dir, doc, s.stages)
+}
+func (s measuredCheckpoints) Publish(doc snapshot.Document) error {
+	return snapshot.PublishWithTimings(s.dir, doc, s.stages)
+}
+func instrumentCheckpoints(files checkpoints, stages *telemetry.Stages) checkpoints {
+	if disk, ok := files.(diskCheckpoints); ok {
+		return measuredCheckpoints{disk, stages}
+	}
+	return files
+}
+
 func snapshotIdentity(g wal.Genesis) snapshot.Identity {
 	return snapshot.Identity{RunID: g.RunID, ConfigHash: g.ConfigHash, RulesVersion: g.Config.RulesVersion, ResponseVersion: g.Config.ResponseVersion}
 }
 
 func recoverState(s journal, files checkpoints) (*engine.Engine, RecoveryReport, error) {
+	return recoverStateWithTimings(s, files, &telemetry.Stages{})
+}
+
+func recoverStateWithTimings(s journal, files checkpoints, t *telemetry.Stages) (*engine.Engine, RecoveryReport, error) {
+	files = instrumentCheckpoints(files, t)
+	span := t.Begin("recovery.prepare")
+	defer span.End()
 	g := s.Genesis()
 	report := RecoveryReport{Skipped: []SkippedSnapshot{}}
 	if files != nil {
+		span.Next("recovery.list")
 		candidates, err := files.List()
 		if err != nil {
 			return nil, report, err
 		}
 		for _, candidate := range candidates {
+			span.Next("recovery.load")
 			doc, err := files.Load(candidate, snapshotIdentity(g), s.Recovery().LastSeq)
 			if err != nil {
 				if !errors.Is(err, snapshot.ErrCorrupt) {
@@ -68,10 +102,12 @@ func recoverState(s journal, files checkpoints) (*engine.Engine, RecoveryReport,
 			if doc.SnapshotSeq != candidate.Seq {
 				return nil, report, snapshot.ErrInvalid
 			}
-			e, err := engine.Restore(g.RunID, g.Config, doc.SnapshotSeq, doc.State)
+			span.Next("recovery.restore")
+			e, err := engine.RestoreWithTimings(g.RunID, g.Config, doc.SnapshotSeq, doc.State, t)
 			if err == nil {
 				var walErr error
-				err, walErr = replayInto(s, e, doc.SnapshotSeq)
+				span.Next("recovery.replay")
+				err, walErr = replayInto(s, e, doc.SnapshotSeq, t)
 				if walErr != nil {
 					return nil, report, walErr
 				}
@@ -80,6 +116,7 @@ func recoverState(s journal, files checkpoints) (*engine.Engine, RecoveryReport,
 				report.Skipped = append(report.Skipped, SkippedSnapshot{candidate.Name, err.Error()})
 				continue
 			}
+			span.Next("recovery.confirmSnapshot")
 			if err := files.Confirm(doc); err != nil {
 				return nil, report, err
 			}
@@ -88,11 +125,13 @@ func recoverState(s journal, files checkpoints) (*engine.Engine, RecoveryReport,
 			return e, report, nil
 		}
 	}
+	span.Next("recovery.newEngine")
 	e, err := engine.New(g.RunID, g.Config)
 	if err != nil {
 		return nil, report, err
 	}
-	stateErr, walErr := replayInto(s, e, 0)
+	span.Next("recovery.replay")
+	stateErr, walErr := replayInto(s, e, 0, t)
 	if stateErr != nil || walErr != nil {
 		return nil, report, errors.Join(stateErr, walErr)
 	}
@@ -104,7 +143,9 @@ func recoverState(s journal, files checkpoints) (*engine.Engine, RecoveryReport,
 // and sequence without re-matching; only the suffix changes the engine. Expected
 // candidate mismatches must not escape the visitor and poison the WAL handle:
 // an older snapshot can still be valid. A WAL scan error is always fatal.
-func replayInto(s journal, e *engine.Engine, snapshotSeq d.Int) (stateErr, walErr error) {
+func replayInto(s journal, e *engine.Engine, snapshotSeq d.Int, t *telemetry.Stages) (stateErr, walErr error) {
+	span := t.Begin("replay.scanAndApply")
+	defer span.End()
 	var visited d.Int
 	walErr = s.Replay(func(record wal.Record) error {
 		if stateErr != nil {
@@ -138,6 +179,7 @@ func replayInto(s journal, e *engine.Engine, snapshotSeq d.Int) (stateErr, walEr
 		return nil
 	})
 	if stateErr == nil && walErr == nil {
+		span.Next("replay.finalInvariants")
 		if visited != s.Recovery().LastSeq || e.AppliedSeq() != visited {
 			stateErr = engine.ErrSequence
 		} else {
@@ -151,5 +193,6 @@ func replayInto(s journal, e *engine.Engine, snapshotSeq d.Int) (stateErr, walEr
 func (r *Runtime) Recovery() RecoveryReport {
 	copy := r.recovery
 	copy.Skipped = append([]SkippedSnapshot{}, copy.Skipped...)
+	copy.Stages = copy.Stages.Clone()
 	return copy
 }

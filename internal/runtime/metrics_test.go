@@ -58,6 +58,14 @@ func TestSnapshotMetricsSeparateCopyAndPublish(t *testing.T) {
 	}
 	request := snapshotAsync(r, ctx(t))
 	receive(t, files.started)
+	stages := r.Statistics().SnapshotStages
+	if stages["capture.copy"].Count != 1 || stages["capture.sort"].Count != 1 || stages["publish.fileSync"].Count != 0 {
+		t.Fatal("copy stages or invented injected-provider sync", stages)
+	}
+	stages["capture.copy"].Buckets[0].Count = 999
+	if r.Statistics().SnapshotStages["capture.copy"].Buckets[0].Count != 1 {
+		t.Fatal("snapshot statistics alias")
+	}
 	if s := r.Statistics(); s.SnapshotCapture.Count != 1 || s.SnapshotPublish.Count != 0 || s.Snapshots != 0 {
 		t.Fatal(s)
 	}

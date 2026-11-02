@@ -77,7 +77,7 @@ func (o *owner) captureSnapshot(req *snapshotRequest) {
 		panic("snapshot sequence outside applied/durable boundary")
 	}
 	started := time.Now()
-	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.Capture()}
+	doc := snapshot.Document{Identity: snapshotIdentity(o.r.genesis), SnapshotSeq: seq, State: o.r.engine.CaptureWithTimings(&o.r.metrics.snapshotStages)}
 	o.r.metrics.capture.Observe(time.Since(started))
 	if o.r.hooks.afterCapture != nil {
 		o.r.hooks.afterCapture(doc)

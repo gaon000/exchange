@@ -115,6 +115,11 @@ func TestNativeCLIExperimentControlsAndSnapshotRecovery(t *testing.T) {
 	if r.Recovery.SnapshotSeq != 1 || r.Recovery.ReplayedCommands != 0 || r.Experiments.SnapshotInterval != "0s" || r.Experiments.ProfileDir != "" {
 		t.Fatal(r)
 	}
+	for _, stage := range []string{"recovery.walOpen", "load.decode", "decode.results", "restore.relations", "replay.scanAndApply", "confirm.compareBytes", "recovery.confirmWAL"} {
+		if r.Recovery.Stages[stage].Count != 1 {
+			t.Fatalf("missing ready stage %s: %+v", stage, r.Recovery.Stages)
+		}
+	}
 	retry := send(client, r, "alice", "POST", "/v1/orders", orderJSON)
 	if retry.err != nil || retry.status != 200 || !bytes.Equal(retry.body, first.body) {
 		t.Fatal(retry)

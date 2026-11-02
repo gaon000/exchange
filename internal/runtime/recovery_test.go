@@ -9,6 +9,7 @@ import (
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/engine"
 	"github.com/gaon000/exchange/internal/snapshot"
+	"github.com/gaon000/exchange/internal/telemetry"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -145,6 +146,14 @@ func TestRecoveryLatestPreviousAndGenesisAreEquivalent(t *testing.T) {
 					t.Fatal("report aliases runtime state")
 				}
 			}
+			stages := r.Recovery().Stages
+			if stages["recovery.confirmWAL"].Count != 1 || stages["replay.scanAndApply"].Count < 1 {
+				t.Fatal("recovery stages missing", stages)
+			}
+			stages["recovery.confirmWAL"].Buckets[0].Count = 999
+			if r.Recovery().Stages["recovery.confirmWAL"].Buckets[0].Count != 1 {
+				t.Fatal("recovery report alias")
+			}
 			for _, record := range f.records {
 				expected, _, _ := want.Lookup(record.Command)
 				actual, err := r.Submit(ctx(t), record.Command)
@@ -231,8 +240,12 @@ func TestWALScanErrorWinsOverCandidateMismatch(t *testing.T) {
 	f, files, _ := recoveryFixture(t)
 	f.records[0].Command.Cancel.ClientOrderID = "different"
 	f.replayErr = injected
-	_, _, err := recoverState(f, files)
+	stages := &telemetry.Stages{}
+	_, _, err := recoverStateWithTimings(f, files, stages)
 	if !errors.Is(err, injected) || len(files.loaded) != 1 {
 		t.Fatalf("WAL error hidden by candidate mismatch: %v", err)
+	}
+	if s := stages.Snapshot(); s["replay.scanAndApply"].Count != 1 || s["replay.finalInvariants"].Count != 0 || s["recovery.confirmSnapshot"].Count != 0 {
+		t.Fatal("failed replay reported stages that were not executed", s)
 	}
 }

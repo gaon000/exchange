@@ -1,0 +1,9 @@
+{
+  "rawRoot": "var/soak-comparison-20261030.92490s",
+  "fileCount": 234,
+  "totalBytes": 3764290132,
+  "manifestSHA256": "a905594da150d54f24c328dee03bc094623c2538e8ff700c656969739cbe6049",
+  "comparisonSHA256": "f448242150d289f3b8c02d045ffa89e6d951e1c94096adb40c5de4c8652ba28c",
+  "artifactPolicy": "Raw data, binaries and experiment/analysis scripts retained locally; not uploaded.",
+  "powerLossTested": false
+}

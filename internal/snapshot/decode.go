@@ -5,9 +5,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
+	"unicode/utf8"
 
 	d "github.com/gaon000/exchange/internal/domain"
-	"github.com/gaon000/exchange/internal/strictjson"
+	"github.com/gaon000/exchange/internal/telemetry"
 )
 
 // Fixed literals enforce field order and delimiters. Variable-size collections
@@ -15,8 +16,9 @@ import (
 // beyond maxValueBytes. json.Decoder.Decode on the whole document/price level
 // would silently buffer the entire array before enforcing any limit.
 type decoder struct {
-	r   *bufio.Reader
-	err error
+	r        *bufio.Reader
+	err      error
+	valueBuf [maxValueBytes]byte
 }
 
 func (p *decoder) expect(s string) {
@@ -47,11 +49,19 @@ func (p *decoder) peek() byte {
 	}
 	return b[0]
 }
-func (p *decoder) value(dst any) {
+
+// snapshotValue is deliberately closed: its leaf DTOs contain no maps, slices,
+// interfaces or RawMessage. Only pointers and domain.Reason can encode null.
+// TestCanonicalLeafSchema guards these assumptions when the DTOs evolve.
+type snapshotValue interface {
+	string | int | d.Int | d.CheckpointAccount | d.CheckpointOrder | d.OrderRef | d.Trade | d.CheckpointResult
+}
+
+func parseValue[T snapshotValue](p *decoder, dst *T) {
 	if p.err != nil {
 		return
 	}
-	var b []byte
+	b := p.valueBuf[:0]
 	depth := 0
 	quoted, escaped := false, false
 	for p.err == nil {
@@ -93,7 +103,16 @@ func (p *decoder) value(dst any) {
 	if p.err != nil {
 		return
 	}
-	if err := strictjson.Decode(b, dst); err != nil {
+	// Typed decoding validates JSON syntax, scalar types and custom integers /
+	// reasons. Re-encoding must match every input byte: this also rejects missing,
+	// duplicate, unknown, case-folded or reordered fields, noncanonical escapes,
+	// whitespace and forbidden nulls for this closed set of leaf DTOs. Unlike the
+	// general HTTP/WAL decoder, a snapshot never accepts noncanonical JSON.
+	if !utf8.Valid(b) {
+		p.err = corrupt("invalid UTF-8")
+		return
+	}
+	if err := json.Unmarshal(b, dst); err != nil {
 		p.err = corrupt("invalid JSON value: " + err.Error())
 		return
 	}
@@ -126,13 +145,13 @@ func parseArray[T any](p *decoder, limit d.Int, item func() T) []T {
 	p.expect("]")
 	return values
 }
-func parseValues[T any](p *decoder, limit d.Int) []T {
-	return parseArray(p, limit, func() (v T) { p.value(&v); return })
+func parseValues[T snapshotValue](p *decoder, limit d.Int) []T {
+	return parseArray(p, limit, func() (v T) { parseValue(p, &v); return })
 }
 func (p *decoder) book(seq d.Int, refs *d.Int) []d.CheckpointLevel {
 	return parseArray(p, seq, func() (level d.CheckpointLevel) {
 		p.expect(`{"priceTicks":`)
-		p.value(&level.PriceTicks)
+		parseValue(p, &level.PriceTicks)
 		p.expect(`,"orders":`)
 		level.Orders = parseValues[d.OrderRef](p, seq-*refs)
 		*refs += d.Int(len(level.Orders))
@@ -141,18 +160,24 @@ func (p *decoder) book(seq d.Int, refs *d.Int) []d.CheckpointLevel {
 	})
 }
 func decodePayload(r io.Reader, want Identity, maxSeq d.Int) (Document, error) {
+	return decodePayloadWithTimings(r, want, maxSeq, nil)
+}
+
+func decodePayloadWithTimings(r io.Reader, want Identity, maxSeq d.Int, t *telemetry.Stages) (Document, error) {
+	span := t.Begin("decode.identity")
+	defer span.End()
 	p := &decoder{r: bufio.NewReaderSize(r, bufferBytes)}
 	var doc Document
 	p.expect(`{"runId":`)
-	p.value(&doc.RunID)
+	parseValue(p, &doc.RunID)
 	p.expect(`,"configHash":`)
-	p.value(&doc.ConfigHash)
+	parseValue(p, &doc.ConfigHash)
 	p.expect(`,"rulesVersion":`)
-	p.value(&doc.RulesVersion)
+	parseValue(p, &doc.RulesVersion)
 	p.expect(`,"responseVersion":`)
-	p.value(&doc.ResponseVersion)
+	parseValue(p, &doc.ResponseVersion)
 	p.expect(`,"snapshotSeq":`)
-	p.value(&doc.SnapshotSeq)
+	parseValue(p, &doc.SnapshotSeq)
 	if p.err != nil {
 		return Document{}, p.err
 	}
@@ -160,17 +185,22 @@ func decodePayload(r io.Reader, want Identity, maxSeq d.Int) (Document, error) {
 		return Document{}, ErrIdentity
 	}
 	p.expect(`,"state":{"accounts":`)
+	span.Next("decode.accounts")
 	doc.State.Accounts = parseValues[d.CheckpointAccount](p, 10_000)
 	p.expect(`,"orders":`)
+	span.Next("decode.orders")
 	doc.State.Orders = parseValues[d.CheckpointOrder](p, doc.SnapshotSeq)
 	p.expect(`,"book":{"bids":`)
+	span.Next("decode.book")
 	var refs d.Int
 	doc.State.Book.Bids = p.book(doc.SnapshotSeq, &refs)
 	p.expect(`,"asks":`)
 	doc.State.Book.Asks = p.book(doc.SnapshotSeq, &refs)
 	p.expect(`},"trades":`)
+	span.Next("decode.trades")
 	doc.State.Trades = parseValues[d.Trade](p, doc.SnapshotSeq)
 	p.expect(`,"results":`)
+	span.Next("decode.results")
 	doc.State.Results = parseValues[d.CheckpointResult](p, doc.SnapshotSeq)
 	p.expect("}}")
 	if p.err != nil {
@@ -182,6 +212,7 @@ func decodePayload(r io.Reader, want Identity, maxSeq d.Int) (Document, error) {
 		}
 		return Document{}, corrupt("trailing payload bytes")
 	}
+	span.Next("decode.shape")
 	if doc.shape() != nil {
 		return Document{}, corrupt("state shape")
 	}

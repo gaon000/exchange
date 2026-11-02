@@ -1,0 +1,13 @@
+{
+  "rawRoot": "var/snapshot-stages-20261030.ye3p3gdp",
+  "fileCount": 129,
+  "totalBytes": 738739848,
+  "manifestSHA256": "46c1b27e559c2bd24edbb5873849955d18cd579e37d25c89591830316fe7b2dd",
+  "analysisSHA256": "a7823a9ba971620bdcdd492bd1b7a9b0b6eeadb8baa7f0b58fe935b77e5f91ad",
+  "binarySHA256": "dd9a5e8bc098f251e83c192bc8b4c93be67eb44479490a3b9d5b1db38adbaee6",
+  "measuredSourceArchiveSHA256": "d586a012819a48753b9d72aa037edd0afabac4e4ee2405c9b593d3b9032993f5",
+  "finalSourceArchiveSHA256": "64cffa681981b7a9b1cf2c696c777de36af9137df5e09290192b5d48950382af",
+  "postMeasurementPatchSHA256": "238c1132f03f2cb031dbffef70bf1cb8ab3282b3c8800e4e0418a43f0d21d589",
+  "policy": "Local raw state copies, binaries, profiles and analysis sources retained; no upload.",
+  "powerLossTested": false
+}
