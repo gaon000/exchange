@@ -92,7 +92,7 @@ func measure(doc Document, limit int64) (int64, error) {
 		return 0, err
 	}
 	count := &counter{limit: limit}
-	if err := payload(count, doc); err != nil {
+	if err := encodePayload(&encoder{size: count}, doc); err != nil {
 		return 0, err
 	}
 	return count.n, nil
@@ -122,11 +122,18 @@ func writeEnvelope(w io.Writer, doc Document, payloadBytes int64) error {
 type counter struct{ n, limit int64 }
 
 func (c *counter) Write(b []byte) (int, error) {
-	if int64(len(b)) > c.limit-c.n {
-		return 0, ErrTooLarge
+	if err := c.add(len(b)); err != nil {
+		return 0, err
 	}
-	c.n += int64(len(b))
 	return len(b), nil
+}
+
+func (c *counter) add(n int) error {
+	if int64(n) > c.limit-c.n {
+		return ErrTooLarge
+	}
+	c.n += int64(n)
+	return nil
 }
 
 type fullWriter struct{ io.Writer }
@@ -151,17 +158,33 @@ func (w fullWriter) Write(b []byte) (int, error) {
 }
 
 type encoder struct {
-	w   io.Writer
-	err error
+	w    io.Writer
+	size *counter // non-nil only during preflight; no JSON bytes are emitted
+	err  error
 }
 
 func (e *encoder) text(s string) {
 	if e.err == nil {
-		_, e.err = io.WriteString(e.w, s)
+		if e.size != nil {
+			e.err = e.size.add(len(s))
+		} else {
+			_, e.err = io.WriteString(e.w, s)
+		}
 	}
 }
 func (e *encoder) value(v any) {
 	if e.err != nil {
+		return
+	}
+	if e.size != nil {
+		n, err := valueSize(v)
+		if err != nil {
+			e.err = err
+		} else if n > maxValueBytes {
+			e.err = ErrInvalid
+		} else {
+			e.err = e.size.add(n)
+		}
 		return
 	}
 	b, err := json.Marshal(v)
@@ -204,7 +227,10 @@ func (e *encoder) book(levels []d.CheckpointLevel) {
 	e.text("]")
 }
 func payload(w io.Writer, doc Document) error {
-	e := &encoder{w: w}
+	return encodePayload(&encoder{w: w}, doc)
+}
+
+func encodePayload(e *encoder, doc Document) error {
 	e.text(`{"runId":`)
 	e.value(doc.RunID)
 	e.text(`,"configHash":`)

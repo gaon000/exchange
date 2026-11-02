@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "rawRoot": "var/snapshot-preflight-20261102.ztj_vssr",
+  "provenance": {
+    "createdAt": "2026-11-02T02:17:17.722296+00:00",
+    "source": "var/soak-comparison-20261030.92490s/snapshot/run",
+    "sourceFiles": {
+      "genesis.bin": {
+        "sha256": "301131fd63bdf64cbe8f4d8b671ee5a416561c150cb254d5c6943a9d89456fd9",
+        "bytes": 796
+      },
+      "commands.wal": {
+        "sha256": "ca5b905e7fcac7012e04a2961f65af755a9ef44bc71c0bbedf535f2f3abb8e16",
+        "bytes": 13626452
+      },
+      "snapshot-00000000000000051385.bin": {
+        "sha256": "6d836cda051929a34551776a6892aa5bda478058ea16bd23a75b27b41a355abe",
+        "bytes": 52307324
+      },
+      ".lock": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "snapshotSeq": "51385",
+    "counts": {
+      "accounts": 4,
+      "orders": 45280,
+      "trades": 12117,
+      "results": 51385
+    },
+    "bookLevels": {
+      "bids": 7,
+      "asks": 5
+    },
+    "runId": "06fbd2fa-75d8-474b-b758-b7928ba26891",
+    "configHash": "ad465f51c35d302ee709eafbe28dab99d8b99751fc73b272997872a40f021e37",
+    "platform": "macOS-15.8-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "go": "go version go1.27.3 darwin/arm64",
+    "gitHead": "df71229eabb9781c7eb1f2bb99e08eea1015ca38",
+    "worktreeModified": true,
+    "trials": 5,
+    "order": "odd before then after; even after then before",
+    "cache": "OS cache not flushed; copy and hash before startup excluded",
+    "scope": "Fresh runtime.Snapshot after WAL-only Open, followed by separate-process snapshot Open and idempotent reconfirmation; no HTTP or concurrent commands",
+    "powerLossTested": false,
+    "purpose": "Fresh snapshot publication size preflight; five paired before/after trials and separate restart verification",
+    "baselineCommit": "df71229eabb9781c7eb1f2bb99e08eea1015ca38",
+    "protocolVersion": 1
+  },
+  "environment": {
+    "controls": {
+      "GODEBUG": null,
+      "GOMAXPROCS": "11",
+      "GOGC": "100",
+      "GOMEMLIMIT": "off"
+    },
+    "hardware": "hw.ncpu: 11\nhw.memsize: 19327352832\nmachdep.cpu.brand_string: Apple M3 Pro\n",
+    "platform": "ProductName:\t\tmacOS\nProductVersion:\t\t15.8\nBuildVersion:\t\t24H23\n",
+    "disk": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   460Gi   407Gi    17Gi    97%    6.7M  174M    4%   /System/Volumes/Data\n",
+    "binaries": {
+      "before": "3223bda63315fe6303da09de695ddffb34beb4acd5ecf13ab145cf0f1b058136",
+      "after": "688a7f0f4708896ca5f81f7cf67116ce6fa1a7add376c3c5e3966b4c1ba99c4c"
+    },
+    "gitHead": "df71229eabb9781c7eb1f2bb99e08eea1015ca38",
+    "gitBranch": "codex/snapshot-size-preflight",
+    "modified": true
+  },
+  "metrics": {
+    "snapshotNanos": {
+      "before": {
+        "median": 675941334,
+        "min": 659622833,
+        "max": 741169834,
+        "values": [
+          675941334,
+          659622833,
+          723856667,
+          741169834,
+          670097667
+        ]
+      },
+      "after": {
+        "median": 475323500,
+        "min": 446587458,
+        "max": 1086188416,
+        "values": [
+          612947875,
+          1086188416,
+          458334667,
+          475323500,
+          446587458
+        ]
+      },
+      "medianReductionPercent": 29.6797701085698
+    },
+    "publish.measure": {
+      "before": {
+        "median": 248934833,
+        "min": 241636541,
+        "max": 269158917,
+        "values": [
+          269158917,
+          254921708,
+          248934833,
+          241636541,
+          245562000
+        ]
+      },
+      "after": {
+        "median": 51277375,
+        "min": 45882334,
+        "max": 376232417,
+        "values": [
+          56381541,
+          376232417,
+          51277375,
+          48338459,
+          45882334
+        ]
+      },
+      "medianReductionPercent": 79.4012857172142
+    },
+    "publish.encodeWrite": {
+      "before": {
+        "median": 361926125,
+        "min": 346829917,
+        "max": 444003791,
+        "values": [
+          347263375,
+          346829917,
+          421311125,
+          444003791,
+          361926125
+        ]
+      },
+      "after": {
+        "median": 365004500,
+        "min": 343897416,
+        "max": 577345708,
+        "values": [
+          491397083,
+          577345708,
+          354934375,
+          365004500,
+          343897416
+        ]
+      },
+      "medianReductionPercent": -0.8505534105889723
+    },
+    "capture.copy": {
+      "before": {
+        "median": 15394875,
+        "min": 14661375,
+        "max": 16905500,
+        "values": [
+          15394875,
+          14661375,
+          16028250,
+          14832416,
+          16905500
+        ]
+      },
+      "after": {
+        "median": 16766750,
+        "min": 12784750,
+        "max": 22224000,
+        "values": [
+          19339250,
+          22224000,
+          12784750,
+          16766750,
+          15489875
+        ]
+      },
+      "medianReductionPercent": -8.911244813614916
+    },
+    "capture.sort": {
+      "before": {
+        "median": 31854208,
+        "min": 27929250,
+        "max": 33015000,
+        "values": [
+          33015000,
+          31854208,
+          28929459,
+          27929250,
+          32166958
+        ]
+      },
+      "after": {
+        "median": 30083458,
+        "min": 29020792,
+        "max": 91172084,
+        "values": [
+          34965625,
+          91172084,
+          29020792,
+          29638500,
+          30083458
+        ]
+      },
+      "medianReductionPercent": 5.558920190387406
+    },
+    "publish.fileSync": {
+      "before": {
+        "median": 8134333,
+        "min": 6587416,
+        "max": 8617916,
+        "values": [
+          7291125,
+          8189958,
+          6587416,
+          8617916,
+          8134333
+        ]
+      },
+      "after": {
+        "median": 7850416,
+        "min": 6650625,
+        "max": 12796125,
+        "values": [
+          6650625,
+          12796125,
+          7718125,
+          11538083,
+          7850416
+        ]
+      },
+      "medianReductionPercent": 3.4903537880733415
+    },
+    "publish.directorySync": {
+      "before": {
+        "median": 3399458,
+        "min": 1689667,
+        "max": 5003500,
+        "values": [
+          3399458,
+          2706750,
+          1689667,
+          3773959,
+          5003500
+        ]
+      },
+      "after": {
+        "median": 3314042,
+        "min": 2233584,
+        "max": 5785958,
+        "values": [
+          3314042,
+          5785958,
+          2233584,
+          3611792,
+          2973875
+        ]
+      },
+      "medianReductionPercent": 2.5126358378306235
+    },
+    "allocatedBytes": {
+      "before": {
+        "median": 302543240,
+        "min": 302535264,
+        "max": 302554408,
+        "values": [
+          302543240,
+          302535264,
+          302554408,
+          302538328,
+          302550112
+        ]
+      },
+      "after": {
+        "median": 182754696,
+        "min": 182751256,
+        "max": 182757888,
+        "values": [
+          182754696,
+          182751512,
+          182751256,
+          182755520,
+          182757888
+        ]
+      },
+      "medianReductionPercent": 39.59385904639614
+    },
+    "mallocs": {
+      "before": {
+        "median": 8217850,
+        "min": 8217829,
+        "max": 8217932,
+        "values": [
+          8217850,
+          8217829,
+          8217932,
+          8217838,
+          8217885
+        ]
+      },
+      "after": {
+        "median": 4219040,
+        "min": 4219035,
+        "max": 4219080,
+        "values": [
+          4219063,
+          4219040,
+          4219035,
+          4219040,
+          4219080
+        ]
+      },
+      "medianReductionPercent": 48.66005098657191
+    },
+    "gcCycles": {
+      "before": {
+        "median": 5,
+        "min": 4,
+        "max": 5,
+        "values": [
+          4,
+          4,
+          5,
+          5,
+          5
+        ]
+      },
+      "after": {
+        "median": 3,
+        "min": 3,
+        "max": 4,
+        "values": [
+          3,
+          3,
+          3,
+          3,
+          4
+        ]
+      },
+      "medianReductionPercent": 40.0
+    },
+    "restartOpenNanos": {
+      "before": {
+        "median": 2865709583,
+        "min": 2674147916,
+        "max": 3036853458,
+        "values": [
+          2865709583,
+          3017477542,
+          3036853458,
+          2776962125,
+          2674147916
+        ]
+      },
+      "after": {
+        "median": 2663247583,
+        "min": 2626469334,
+        "max": 3133353250,
+        "values": [
+          3133353250,
+          2655794875,
+          2663247583,
+          3102330125,
+          2626469334
+        ]
+      },
+      "medianReductionPercent": 7.064986668608986
+    }
+  },
+  "pairs": [
+    {
+      "trial": 1,
+      "beforeSnapshotNanos": 675941334,
+      "afterSnapshotNanos": 612947875,
+      "beforeMeasureNanos": 269158917,
+      "afterMeasureNanos": 56381541,
+      "improved": true
+    },
+    {
+      "trial": 2,
+      "beforeSnapshotNanos": 659622833,
+      "afterSnapshotNanos": 1086188416,
+      "beforeMeasureNanos": 254921708,
+      "afterMeasureNanos": 376232417,
+      "improved": false
+    },
+    {
+      "trial": 3,
+      "beforeSnapshotNanos": 723856667,
+      "afterSnapshotNanos": 458334667,
+      "beforeMeasureNanos": 248934833,
+      "afterMeasureNanos": 51277375,
+      "improved": true
+    },
+    {
+      "trial": 4,
+      "beforeSnapshotNanos": 741169834,
+      "afterSnapshotNanos": 475323500,
+      "beforeMeasureNanos": 241636541,
+      "afterMeasureNanos": 48338459,
+      "improved": true
+    },
+    {
+      "trial": 5,
+      "beforeSnapshotNanos": 670097667,
+      "afterSnapshotNanos": 446587458,
+      "beforeMeasureNanos": 245562000,
+      "afterMeasureNanos": 45882334,
+      "improved": true
+    }
+  ],
+  "verification": {
+    "status": "PASSED",
+    "sourceUnchanged": true,
+    "crossVersionRecovery": [
+      {
+        "generated": "before",
+        "reader": "after",
+        "passed": true
+      },
+      {
+        "generated": "after",
+        "reader": "before",
+        "passed": true
+      }
+    ],
+    "completedAt": "2026-11-02T02:19:50.252475+00:00"
+  },
+  "validation": {
+    "snapshotPackage": {
+      "command": "scripts/go test ./internal/snapshot",
+      "exitCode": 0
+    },
+    "differential": {
+      "leafCases": 8000,
+      "payloadTrials": 100,
+      "limitsPerPayload": 6,
+      "oracle": "encoding/json.Marshal and previous payload counter"
+    },
+    "fuzz": {
+      "command": "scripts/go test ./internal/snapshot -run '^$' -fuzz '^FuzzPreflightMatchesJSON$' -fuzztime=30s -parallel=2",
+      "exitCode": 0,
+      "reportedExecutions": 9893,
+      "elapsedSeconds": 31.256,
+      "source": "tool output of this session; raw terminal stream not copied"
+    },
+    "portable": {
+      "tests": 195,
+      "packages": 18,
+      "exitCode": 0,
+      "rawSource": "var/ci/portable.Mgpb7x"
+    },
+    "native": {
+      "tests": 227,
+      "packages": 18,
+      "explicitChildHelperSkips": 1,
+      "exitCode": 0,
+      "rawSource": "var/ci/native.jz2JiH"
+    },
+    "sourceMatchesMeasuredAfter": true,
+    "githubCIRun": false,
+    "powerLossTested": false
+  },
+  "limits": [
+    "single frozen state",
+    "OS cache not flushed",
+    "no concurrent orders",
+    "one slower after trial retained",
+    "not a throughput or p99 result",
+    "physical power-loss deferred"
+  ]
+}

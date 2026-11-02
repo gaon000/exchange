@@ -6,7 +6,9 @@
 
 2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 부하 실행·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준 처리량과 snapshot 조건의 목표 미달을 기록했다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)의 정렬 이동 후보는 반복 기준 미달로 미채택하고 P6 구현을 유지했다. [스냅샷 처리 한계](docs/benchmarks/p7-snapshot-capacity.md)는 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미검증·보류 상태다. [CI](.github/workflows/ci.yml)는 일반 로직과 macOS/APFS 검사를 분리하며, 실행 범위와 원격 확인 절차는 [개발 기준](docs/development.md#ci와-릴리스)을 따른다.
 
-2026-10-30에는 [10분 부하 비교](docs/benchmarks/soak-10m-snapshot-comparison.md), [스냅샷 단계 계측](docs/benchmarks/snapshot-stage-breakdown.md), [복구 디코더 최적화](docs/benchmarks/snapshot-decoder-optimization.md)를 완료했다. decoder 후보는 동일 상태 5쌍에서 전체 복구 중앙값 32.5% 감소와 상태 bytes 일치를 확인해 채택했다. 생성의 반복 직렬화·owner 사본 생성과 동시 부하의 지연 문제는 별도 후속 작업이다.
+2026-10-30에는 [10분 부하 비교](docs/benchmarks/soak-10m-snapshot-comparison.md), [스냅샷 단계 계측](docs/benchmarks/snapshot-stage-breakdown.md), [복구 디코더 최적화](docs/benchmarks/snapshot-decoder-optimization.md)를 완료했다. decoder 후보는 동일 상태 5쌍에서 전체 복구 중앙값 32.5% 감소와 상태 bytes 일치를 확인해 채택했다. 생성 비용과 owner 사본 생성·동시 부하 지연은 별도 검증 대상으로 구분했다.
+
+2026-11-02에는 [스냅샷 생성 사전 계산](docs/benchmarks/snapshot-preflight-optimization.md)에서 중복 직렬화를 제거했다. 동일 상태 5쌍의 생성 중앙값은 29.7%, 해당 크기 검사 단계는 79.4% 감소했다. 2회차 후보의 지연 증가도 포함했으며 저장 bytes·재시작·양방향 버전 호환을 확인했다. owner 복사/정렬과 실제 writer·sync 계약은 유지하고 동시 주문 p99·처리량은 재측정하지 않았다.
 
 ## 현재 문서 지도
 
