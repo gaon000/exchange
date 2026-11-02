@@ -105,7 +105,23 @@ HTTP 상태/bytes는 서버가 시도하고 Write에서 반환받은 값이다. 
 
 loadgen run.json에는 Plan/준비 완료 후 Run 전·후의 생성기 자원 관찰을 추가한다. worker 준비·워밍업·측정·drain을 포함하며 측정 phase만의 CPU가 아니다. 두 시점 heap 차이는 최대 메모리나 총할당이 아니다. 생성기와 서버 자원을 구분한다.
 
-주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음은 아래 실험 실행기로 연결하며 반복 기준 측정은 남아 있다.
+주기 수집·JSON 출력·계측 비용도 실험에 포함된다. 정상·snapshot·profiling 비교에서 같은 계측 설정을 유지한다. 서버 JSONL은 loadgen completed.json의 6개 파일(생성기 진단 시 8개)과 별도이며 서버 종료 후 final까지 확보한다. 환경/원본 묶음은 아래 실험 실행기로 연결하며 반복 기준 측정은 남아 있다.
+
+## 생성기 진단 옵션
+
+`loadgen --diagnostics-interval 500ms` 또는 `experiment --diagnostics-interval 500ms`로 선택적 생성기 진단을 켠다. 기본 0은 비활성이며 100ms~1m만 허용한다. workload JSON과 입력 계획·digest는 바뀌지 않는다. manifest의 `diagnosticsIntervalNanos`와 run의 `dispatchRecorded`, `diagnostics`는 켰을 때만 추가한다. 기본 실행의 여섯 파일·기존 표본/집계 형식은 유지한다.
+
+- `dispatch.jsonl`: 예정 인덱스마다 `index`, `dispatchedNanos`, `workerNanos`. ScheduleEpoch 기준 monotonic offset이며 -1은 미관찰이다. dispatched는 scheduler가 대기에서 돌아온 뒤 lateness 검사/무대기열 전달 직전에 관찰한 시각이다. worker는 전달받은 고루틴이 처음 관찰한 시각이며 실행 전 취소/늦음에도 남는다. 차이는 실제 channel 대기열 길이가 아니라 두 관찰 사이 실행 지연이다. GENERATOR_LATE에서 worker=-1이면 scheduler 검사, worker가 있으면 worker 재검사에서 거절된 것이다. 미래 요청 취소는 둘 다 -1일 수 있다. 기존 samples의 StartedAt=-1 계약은 그대로다.
+- `generator-metrics.jsonl`: `stage` initial/periodic/final과 기존 `telemetry.Process`의 생성기 자원. run.diagnostics.originUTC를 기준으로 scheduled/started/finishedNanos는 monotonic, startedUTC/finishedUTC는 실제 벽시계 관찰이다. 최초 예정 시각은 0, final은 -1이다. periodic은 절대 주기 기준이며 늦어진 수집은 `skippedIntervals`로 명시한다. GC/CPU 누계는 인접 행 차분으로 읽고 수집 구간·분모를 함께 표시한다. 지원하지 못한 지표는 기존 unavailable/error 필드를 유지한다.
+- run.diagnostics는 intervalNanos, originUTC, processRecords, limitReached를 기록한다. 수집은 worker 준비 전 initial부터 Run 종료/drain 이후 final까지이며 본 측정 phase만의 자원이 아니다. server와의 UTC 정렬은 각 행의 UTC/monotonic 차이와 수집 기간을 고려한다.
+
+별도 수집 고루틴은 강제 GC·요청별 파일 쓰기를 하지 않는다. dispatch 배열은 기존 최대 예정 시도 수(200만)로, 자원 표본은 주기 40,000개+initial/final로 제한한다. 기본 모드는 두 배열/collector를 만들지 않는다. 한도 초과 시 수집을 멈추고 Run 종료 때 final과 부분 원본을 보존하되 completed를 만들지 않는다. 부분 원본의 거래 summary가 유효해도 진단 완료 성공으로 취급하지 않는다. 정상·취소 모두 collector 합류 후 파일을 저장하며 디스크 오류 시 기존 실패/부분 파일 보존 계약을 따른다.
+
+진단 모드의 completed.json은 추가 두 파일까지 여덟 파일을 해시한다. `experiment`는 같은 옵션을 자식에 전달하고 원본의 설정 일치, 모든 인덱스/시각과 기존 표본의 대응, initial→periodic→final 순서·간격 누락·상한·개수 및 해시를 검증한다. 구 버전 실행기는 여섯 파일만 기대하므로 새 진단 묶음은 현행 실행기로 검증한다. 구 버전의 비진단 원본은 계속 읽을 수 있다.
+
+진단은 실행 경계를 관찰하는 도구이며 OS 스케줄러·GC·디스크의 인과관계를 증명하지 않는다. 전체 호스트나 다른 프로세스의 자원도 측정하지 않는다. 추가 할당/CPU 비용은 실험 조건의 일부다. 조건 비교 양쪽에 같은 주기를 적용하고 무진단 기준과 분리한다. [기존 지연 분석](../benchmarks/latency-diagnostics.md)에 도입 근거를 기록했다.
+
+`benchreport`는 진단 모드의 여덟 파일 해시도 확인하고 기존 요청 통계를 재집계한다. 진단 주기는 series 식별에 포함하며, 무진단 조건으로 고정한 기존 기준에는 `GENERATOR_DIAGNOSTICS_ENABLED` 사유를 기록해 합격/최대 처리량으로 채택하지 않는다. 진단 스트림의 시각·누락 의미 검사는 experiment가 담당한다. 신규 진단 비용을 반영한 성능 기준은 이번에 만들지 않았다.
 
 ## 스냅샷과 프로파일 실험 옵션
 
@@ -144,7 +160,7 @@ CPU profile의 비동기 쓰기 실패도 보존해 일반 종료를 요청한�
 
 서버 준비에는 30초, 초기화에는 30초, 부하 생성기에는 준비 주문 deadline 합+워밍업+측정+2분의 한도를 둔다. SIGINT/SIGTERM 또는 실패 시 자신이 만든 자식만 SIGTERM으로 종료하고 30초 동안 합류한다. 제한을 넘으면 해당 자식만 kill하고 실험을 실패 처리한다. 개발 컴퓨터나 다른 서버를 종료하지 않는다. 서버의 저장 drain에 실패한 실행을 정상으로 보지 않는다.
 
-완료 전에 loadgen의 정해진 6개 파일과 완료 해시, summary의 유효성·plan digest·run/config identity·시간 범위, 서버 initial/final을 확인한다. snapshot 시나리오는 실제 완료 이벤트의 시작~끝과 측정 구간이 겹쳐야 한다. UNKNOWN 이벤트는 성공 건수에 포함하지 않으며 서버가 너무 빨리 끝나 snapshot이 없으면 설정을 켰더라도 실패다. profile 시나리오는 수집 시각이 Run 전체를 덮는지와 압축 파일 무결성을 검사한다. 이는 protobuf 전체 의미 검증을 대체하지 않으며 별도 `go tool pprof` 해석 증거를 기록한다.
+완료 전에 loadgen의 정해진 6개 파일(생성기 진단 시 8개)과 완료 해시, summary의 유효성·plan digest·run/config identity·시간 범위, 서버 initial/final을 확인한다. snapshot 시나리오는 실제 완료 이벤트의 시작~끝과 측정 구간이 겹쳐야 한다. UNKNOWN 이벤트는 성공 건수에 포함하지 않으며 서버가 너무 빨리 끝나 snapshot이 없으면 설정을 켰더라도 실패다. profile 시나리오는 수집 시각이 Run 전체를 덮는지와 압축 파일 무결성을 검사한다. 이는 protobuf 전체 의미 검증을 대체하지 않으며 별도 `go tool pprof` 해석 증거를 기록한다.
 
 마지막으로 symlink/특수 파일을 거절하고 최대 1,200개 파일의 해시를 계산해 임시 완료 표식을 rename한다. 파일 Sync/Close와 자식 exit 성공을 요구하지만 거래 WAL의 strict sync/전원 장애 보장을 관찰 파일에 확대하지 않는다. 강제 kill·디스크 오류에서는 failed.json조차 없을 수 있으므로 완료 표식이 없는 디렉터리는 미완료다. 완료 이후 stdout 출력 실패는 CLI 오류가 되지만 이미 검증한 completed 묶음을 무효화하지 않는다. 완료 묶음을 직접 변경하거나 같은 run을 재사용하면 원래 해시와 달라진다.
 

@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"sort"
+	"time"
 
 	"github.com/gaon000/exchange/internal/bench"
 	"github.com/gaon000/exchange/internal/wal"
@@ -19,6 +20,14 @@ func analyze(dir string, c criteria) (caseReport, error) {
 	var m manifest
 	if err := readJSON(path("loadgen/manifest.json"), &m); err != nil {
 		return r, err
+	}
+	if m.DiagnosticsInterval != 0 {
+		if m.DiagnosticsInterval < 100*time.Millisecond || m.DiagnosticsInterval > time.Minute {
+			return r, fmt.Errorf("invalid generator diagnostic interval")
+		}
+		// Existing criteria were fixed without these observer costs. Keep raw
+		// recomputation available, but never silently qualify a diagnostic run.
+		r.Reasons = append(r.Reasons, "GENERATOR_DIAGNOSTICS_ENABLED")
 	}
 	var experiment struct {
 		Scenario string `json:"scenario"`
@@ -104,10 +113,14 @@ func analyze(dir string, c criteria) (caseReport, error) {
 		if err := readJSON(path("loadgen/completed.json"), &loadgenSeal); err != nil {
 			return r, err
 		}
-		if loadgenSeal.Version != bench.Version || loadgenSeal.PlanDigest != p.Digest() || len(loadgenSeal.Files) != 6 {
+		names := []string{"manifest.json", "plan.jsonl", "preparation.json", "samples.jsonl", "run.json", "summary.json"}
+		if m.DiagnosticsInterval > 0 {
+			names = append(names, "dispatch.jsonl", "generator-metrics.jsonl")
+		}
+		if loadgenSeal.Version != bench.Version || loadgenSeal.PlanDigest != p.Digest() || len(loadgenSeal.Files) != len(names) {
 			return r, fmt.Errorf("invalid loadgen completion marker")
 		}
-		for _, name := range []string{"manifest.json", "plan.jsonl", "preparation.json", "samples.jsonl", "run.json", "summary.json"} {
+		for _, name := range names {
 			if loadgenSeal.Files[name] != s.Files["loadgen/"+name] {
 				return r, fmt.Errorf("loadgen completion hash mismatch")
 			}
@@ -155,6 +168,9 @@ func analyze(dir string, c criteria) (caseReport, error) {
 	}
 	if run.Options != m.Settings.Execution {
 		return r, fmt.Errorf("recorded execution settings mismatch")
+	}
+	if run.DispatchRecorded != (m.DiagnosticsInterval > 0) {
+		return r, fmt.Errorf("recorded diagnostic settings mismatch")
 	}
 	run.Samples = make([]bench.Sample, 0, p.Count())
 	err = lines(path("loadgen/samples.jsonl"), func(b []byte) error {

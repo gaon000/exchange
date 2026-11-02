@@ -52,6 +52,9 @@ func verifyEvidence(dir string, ready ready, workload settings, o options) (veri
 		return v, err
 	}
 	names := []string{"manifest.json", "plan.jsonl", "preparation.json", "samples.jsonl", "run.json", "summary.json"}
+	if o.DiagnosticsInterval > 0 {
+		names = append(names, "dispatch.jsonl", "generator-metrics.jsonl")
+	}
 	digest, err := hex.DecodeString(complete.PlanDigest)
 	if err != nil || len(digest) != 32 || complete.Version != bench.Version || len(complete.Files) != len(names) {
 		return v, fmt.Errorf("invalid loadgen completion marker")
@@ -70,8 +73,9 @@ func verifyEvidence(dir string, ready ready, workload settings, o options) (veri
 		}
 	}
 	var manifest struct {
-		PlanDigest string `json:"planDigest"`
-		Server     struct {
+		PlanDigest          string        `json:"planDigest"`
+		DiagnosticsInterval time.Duration `json:"diagnosticsIntervalNanos"`
+		Server              struct {
 			RunID      string `json:"runId"`
 			ConfigHash string `json:"configHash"`
 		} `json:"server"`
@@ -81,6 +85,9 @@ func verifyEvidence(dir string, ready ready, workload settings, o options) (veri
 	}
 	if manifest.PlanDigest != complete.PlanDigest || manifest.Server.RunID != ready.RunID || manifest.Server.ConfigHash != ready.ConfigHash {
 		return v, fmt.Errorf("loadgen identity mismatch")
+	}
+	if manifest.DiagnosticsInterval != o.DiagnosticsInterval {
+		return v, fmt.Errorf("generator diagnostics configuration mismatch")
 	}
 	var summary bench.Summary
 	if err := readJSON(path("loadgen/summary.json"), &summary); err != nil {
@@ -95,6 +102,14 @@ func verifyEvidence(dir string, ready ready, workload settings, o options) (veri
 	}
 	if run.Aborted || run.ScheduleEpoch.IsZero() || run.Elapsed < workload.Workload.Warmup+workload.Workload.Duration {
 		return v, fmt.Errorf("invalid loadgen run")
+	}
+	if run.DispatchRecorded != (o.DiagnosticsInterval > 0) {
+		return v, fmt.Errorf("generator dispatch diagnostics missing or unexpected")
+	}
+	if o.DiagnosticsInterval > 0 {
+		if err := verifyGeneratorDiagnostics(dir, ready.RunID, workload, o.DiagnosticsInterval, run); err != nil {
+			return v, err
+		}
 	}
 	v.PlanDigest = complete.PlanDigest
 	v.MeasurementStartUTC = run.ScheduleEpoch.Add(workload.Workload.Warmup)

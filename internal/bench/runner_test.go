@@ -56,7 +56,10 @@ func TestRunPreservesScheduleWhileWorkersAreBlocked(t *testing.T) {
 		err    error
 	}
 	done := make(chan finished, 1)
-	go func() { r, err := Run(context.Background(), p, options, executor); done <- finished{r, err} }()
+	go func() {
+		r, err := RunWithDispatch(context.Background(), p, options, executor)
+		done <- finished{r, err}
+	}()
 	receive(t, entered)
 	receive(t, entered)
 	// The offered window must finish independently while its two responses wait.
@@ -93,6 +96,9 @@ func TestRunPreservesScheduleWhileWorkersAreBlocked(t *testing.T) {
 	if started != 2 || capacity != 18 {
 		t.Fatalf("responses slowed or queued the offered load: started=%d capacity=%d", started, capacity)
 	}
+	if err := ValidateDispatch(p, got.result); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestRunRecordsEveryAttemptAndFixedWindow(t *testing.T) {
@@ -102,6 +108,9 @@ func TestRunRecordsEveryAttemptAndFixedWindow(t *testing.T) {
 	}))
 	if err != nil || result.Elapsed < p.Spec().Duration || result.ScheduleEpoch.IsZero() || result.FinishedUTC.Before(result.ScheduleEpoch) {
 		t.Fatal("did not preserve the observation window", result, err)
+	}
+	if result.DispatchRecorded || result.DispatchSamples != nil {
+		t.Fatal("default run enabled diagnostics")
 	}
 	for _, sample := range result.Samples {
 		if sample.Local != "" || sample.Outcome.Class != Business || sample.StartedAt < p.Request(sample.Index).Scheduled {
@@ -128,16 +137,24 @@ func TestRunRecordsSchedulerLatenessInsteadOfCatchingUp(t *testing.T) {
 	options := testRunOptions()
 	options.MaxLateness = 5 * time.Millisecond
 	var calls atomic.Int64
-	result, err := run(context.Background(), p, options, executorFunc(func(context.Context, Request) Execution {
+	result, err := runObserved(context.Background(), p, options, executorFunc(func(context.Context, Request) Execution {
 		calls.Add(1)
 		return Execution{}
-	}), &overrunClock{current: time.Unix(0, 0)})
+	}), &overrunClock{current: time.Unix(0, 0)}, true)
 	if err != nil || calls.Load() != 0 || len(result.Samples) != 20 {
 		t.Fatal("late scheduler executed a catch-up burst", calls.Load(), err)
 	}
 	for _, sample := range result.Samples {
 		if sample.Local != LocalLate || sample.StartedAt != -1 || sample.FinishedAt-p.Request(sample.Index).Scheduled <= options.MaxLateness {
 			t.Fatal("late request was hidden", sample)
+		}
+	}
+	if err := ValidateDispatch(p, result); err != nil {
+		t.Fatal(err)
+	}
+	for _, d := range result.DispatchSamples {
+		if d.WorkerAt != -1 {
+			t.Fatal("scheduler drop claimed worker execution", d)
 		}
 	}
 }
@@ -150,7 +167,7 @@ func TestRunCancellationKeepsFutureAndAcceptedAttempts(t *testing.T) {
 	done := make(chan RunResult, 1)
 	errorsSeen := make(chan error, 1)
 	go func() {
-		result, err := Run(ctx, p, testRunOptions(), executorFunc(func(ctx context.Context, _ Request) Execution {
+		result, err := RunWithDispatch(ctx, p, testRunOptions(), executorFunc(func(ctx context.Context, _ Request) Execution {
 			select {
 			case entered <- struct{}{}:
 			default:
@@ -179,6 +196,41 @@ func TestRunCancellationKeepsFutureAndAcceptedAttempts(t *testing.T) {
 	}
 	if local == 0 || unknown == 0 {
 		t.Fatal("did not distinguish unsent from already executing requests")
+	}
+	if err := ValidateDispatch(p, result); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestDispatchRejectsMissingAndContradictoryObservations(t *testing.T) {
+	p := scheduledPlan(t, 10, 100*time.Millisecond)
+	o := testRunOptions()
+	o.MaxLateness = 50 * time.Millisecond
+	r := RunResult{Options: o, DispatchRecorded: true, Elapsed: 80 * time.Millisecond,
+		Samples:         []Sample{{Index: 0, Local: LocalLate, StartedAt: -1, WrittenAt: -1, FinishedAt: 80 * time.Millisecond}},
+		DispatchSamples: []DispatchSample{{Index: 0, DispatchedAt: time.Millisecond, WorkerAt: 80 * time.Millisecond}}}
+	if err := ValidateDispatch(p, r); err != nil {
+		t.Fatal("worker lateness should retain the pre-execution boundary", err)
+	}
+	for _, mutate := range []func(*RunResult){
+		func(r *RunResult) { r.DispatchRecorded = false },
+		func(r *RunResult) { r.DispatchSamples = nil },
+		func(r *RunResult) { r.DispatchSamples[0].Index = 1 },
+		func(r *RunResult) { r.DispatchSamples[0].DispatchedAt = -1 },
+		func(r *RunResult) { r.DispatchSamples[0].DispatchedAt = 60 * time.Millisecond },
+		func(r *RunResult) { r.DispatchSamples[0].WorkerAt = -1 },
+		func(r *RunResult) { r.DispatchSamples[0].WorkerAt = 90 * time.Millisecond },
+		func(r *RunResult) { r.DispatchSamples[0].WorkerAt = 30 * time.Millisecond },
+		func(r *RunResult) { r.Elapsed = 79 * time.Millisecond },
+		func(r *RunResult) { r.Samples[0].StartedAt = time.Millisecond },
+	} {
+		bad := r
+		bad.DispatchSamples = append([]DispatchSample(nil), r.DispatchSamples...)
+		bad.Samples = append([]Sample(nil), r.Samples...)
+		mutate(&bad)
+		if err := ValidateDispatch(p, bad); err == nil {
+			t.Fatal("accepted contradictory diagnostic", bad)
+		}
 	}
 }
 

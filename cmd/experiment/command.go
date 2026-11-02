@@ -41,6 +41,7 @@ func (a *extraArgs) Set(value string) error {
 type options struct {
 	Exchange, Loadgen, Config, Workload, Output, Scenario string
 	MetricsInterval, SnapshotInterval                     time.Duration
+	DiagnosticsInterval                                   time.Duration
 	ServerArgs                                            extraArgs
 }
 
@@ -56,6 +57,7 @@ func parse(args []string, stderr io.Writer) (options, error) {
 	f.StringVar(&o.Scenario, "scenario", "normal", "normal, snapshot, profile or snapshot-profile")
 	f.DurationVar(&o.MetricsInterval, "metrics-interval", time.Second, "server metrics interval (100ms to 1m)")
 	f.DurationVar(&o.SnapshotInterval, "snapshot-interval", 5*time.Second, "snapshot interval in snapshot scenarios (100ms to 1h)")
+	f.DurationVar(&o.DiagnosticsInterval, "diagnostics-interval", 0, "optional generator diagnostics (0=off, 100ms to 1m)")
 	f.Var(&o.ServerArgs, "server-arg", "repeatable runtime/HTTP --option=value; cannot override output/lifecycle controls")
 	if err := f.Parse(args); err != nil {
 		return o, err
@@ -70,6 +72,9 @@ func parse(args []string, stderr io.Writer) (options, error) {
 	}
 	if o.MetricsInterval < 100*time.Millisecond || o.MetricsInterval > time.Minute || o.SnapshotInterval < 100*time.Millisecond || o.SnapshotInterval > time.Hour {
 		return o, fmt.Errorf("invalid sampling interval")
+	}
+	if o.DiagnosticsInterval != 0 && (o.DiagnosticsInterval < 100*time.Millisecond || o.DiagnosticsInterval > time.Minute) {
+		return o, fmt.Errorf("invalid generator diagnostics interval")
 	}
 	return o, nil
 }
@@ -178,6 +183,9 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (retErr e
 		serve = append(serve, "--profile-dir", path("profiles"))
 	}
 	load := []string{path("bin/loadgen"), "--config", path("config.json"), "--workload", path("workload.json"), "--server-report", path("server-ready.json"), "--output", path("loadgen")}
+	if o.DiagnosticsInterval > 0 {
+		load = append(load, "--diagnostics-interval", o.DiagnosticsInterval.String())
+	}
 	manifest := experimentManifest{1, time.Now().UTC(), o.Scenario, []invocation{{"init", initialize}, {"serve", serve}, {"loadgen", load}}}
 	if err := writeJSON(path("manifest.json"), manifest); err != nil {
 		return err

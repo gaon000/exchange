@@ -93,12 +93,24 @@ type Sample struct {
 // RunResult retains all samples for exact quantiles and later raw artifact output.
 // No artifact serialization or per-request disk I/O happens on the timed path.
 type RunResult struct {
-	ScheduleEpoch time.Time     `json:"scheduleEpoch"`
-	FinishedUTC   time.Time     `json:"finishedUTC"`
-	Elapsed       time.Duration `json:"elapsedNanos"`
-	Aborted       bool          `json:"aborted"`
-	Options       RunOptions    `json:"options"`
-	Samples       []Sample      `json:"-"`
+	ScheduleEpoch    time.Time        `json:"scheduleEpoch"`
+	FinishedUTC      time.Time        `json:"finishedUTC"`
+	Elapsed          time.Duration    `json:"elapsedNanos"`
+	Aborted          bool             `json:"aborted"`
+	Options          RunOptions       `json:"options"`
+	Samples          []Sample         `json:"-"`
+	DispatchRecorded bool             `json:"dispatchRecorded,omitempty"`
+	DispatchSamples  []DispatchSample `json:"-"`
+}
+
+// DispatchSample separates the scheduler's pre-handoff observation from the
+// worker's first execution. Both use ScheduleEpoch's monotonic offsets; -1 is
+// unobserved. WorkerAt remains observable even when lateness prevents execution.
+// These boundaries locate observed delay, not the OS/runtime cause of that delay.
+type DispatchSample struct {
+	Index        int           `json:"index"`
+	DispatchedAt time.Duration `json:"dispatchedNanos"`
+	WorkerAt     time.Duration `json:"workerNanos"`
 }
 
 type clock interface {
@@ -131,7 +143,17 @@ func Run(ctx context.Context, p *Plan, options RunOptions, executor Executor) (R
 	return run(ctx, p, options, executor, realClock{})
 }
 
+// RunWithDispatch retains optional scheduler/worker observations alongside the
+// original samples. Scheduling, admission limits and summary semantics are unchanged.
+func RunWithDispatch(ctx context.Context, p *Plan, options RunOptions, executor Executor) (RunResult, error) {
+	return runObserved(ctx, p, options, executor, realClock{}, true)
+}
+
 func run(ctx context.Context, p *Plan, options RunOptions, executor Executor, clk clock) (RunResult, error) {
+	return runObserved(ctx, p, options, executor, clk, false)
+}
+
+func runObserved(ctx context.Context, p *Plan, options RunOptions, executor Executor, clk clock, observe bool) (RunResult, error) {
 	if p == nil || p.digest == "" || len(p.requests) == 0 || executor == nil {
 		return RunResult{}, fmt.Errorf("plan and executor are required")
 	}
@@ -141,6 +163,13 @@ func run(ctx context.Context, p *Plan, options RunOptions, executor Executor, cl
 	result := RunResult{Options: options, Samples: make([]Sample, len(p.requests))}
 	for i := range result.Samples {
 		result.Samples[i] = Sample{Index: i, StartedAt: -1, WrittenAt: -1, FinishedAt: -1}
+	}
+	if observe {
+		result.DispatchRecorded = true
+		result.DispatchSamples = make([]DispatchSample, len(p.requests))
+		for i := range result.DispatchSamples {
+			result.DispatchSamples[i] = DispatchSample{Index: i, DispatchedAt: -1, WorkerAt: -1}
+		}
 	}
 	// Start the schedule only after worker startup. Publication through jobs
 	// happens after epoch is set, so workers cannot observe an uninitialized time.
@@ -157,6 +186,9 @@ func run(ctx context.Context, p *Plan, options RunOptions, executor Executor, cl
 			for index := range jobs {
 				req := p.requests[index]
 				started := clk.now()
+				if observe {
+					result.DispatchSamples[index].WorkerAt = started.Sub(epoch)
+				}
 				sample := Sample{Index: index, StartedAt: started.Sub(epoch), WrittenAt: -1, FinishedAt: -1}
 				if ctx.Err() != nil {
 					sample.Local, sample.StartedAt = LocalCanceled, -1
@@ -193,7 +225,12 @@ func run(ctx context.Context, p *Plan, options RunOptions, executor Executor, cl
 			}
 			break
 		}
-		if now := clk.now(); now.Sub(epoch.Add(req.Scheduled)) > options.MaxLateness {
+		now := clk.now()
+		if observe {
+			// Written before handoff; after handoff this index belongs to its worker.
+			result.DispatchSamples[index].DispatchedAt = now.Sub(epoch)
+		}
+		if now.Sub(epoch.Add(req.Scheduled)) > options.MaxLateness {
 			result.Samples[index].Local = LocalLate
 			result.Samples[index].FinishedAt = now.Sub(epoch)
 			continue

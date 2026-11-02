@@ -44,7 +44,7 @@ func TestMain(m *testing.M) {
 
 func TestOptionsAndFreshArtifacts(t *testing.T) {
 	base := []string{"--config", "config", "--workload", "workload", "--output", "output"}
-	for _, extra := range [][]string{{"--scenario", "bad"}, {"--metrics-interval", "1ms"}, {"--snapshot-interval", "0"}, {"--server-arg=--data-dir=old"}, {"--server-arg=--batch-delay"}, {"--server-arg=--batch-delay=1ms", "--server-arg=--batch-delay=2ms"}} {
+	for _, extra := range [][]string{{"--diagnostics-interval", "1ms"}, {"--diagnostics-interval", "-1s"}, {"--diagnostics-interval", "61s"}, {"--scenario", "bad"}, {"--metrics-interval", "1ms"}, {"--snapshot-interval", "0"}, {"--server-arg=--data-dir=old"}, {"--server-arg=--batch-delay"}, {"--server-arg=--batch-delay=1ms", "--server-arg=--batch-delay=2ms"}} {
 		if _, err := parse(append(append([]string{}, base...), extra...), io.Discard); err == nil {
 			t.Fatal(extra)
 		}

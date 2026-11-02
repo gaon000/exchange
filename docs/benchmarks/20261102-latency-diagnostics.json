@@ -1,0 +1,876 @@
+{
+  "sourceRoot": "var/soak-optimized-20261102.yawwm75d",
+  "analysisRoot": "var/latency-diagnostics-20261102",
+  "sourceHashes": {
+    "normal/loadgen/run.json": "7f49b763341312c362a2e4a09b70425498d6b5c74154488d4c6d99d072089080",
+    "normal/loadgen/plan.jsonl": "f6f5ac220ebf777f81a9954157b24a483d4b51f1340915f0ceaf199f6272b42a",
+    "normal/loadgen/samples.jsonl": "ec0563454e10320bc4bb02dabf5b2bb57a17249b7ea5436eeca090d92ed3d0d5",
+    "normal/server-metrics.jsonl": "35a13c4540a9ebf26964fc7dad04b1a3b09537f810b0ad3f3892e2b69e77058a",
+    "snapshot/loadgen/run.json": "77faa573c17c355b00d6728e9f5348a35b5fc3c058de58f4ae8ed233d383d3df",
+    "snapshot/loadgen/plan.jsonl": "94c791d400de0eb181ec9630dc90333624e717111cee8cef03c6235bd75caaca",
+    "snapshot/loadgen/samples.jsonl": "f63c850d7142d6551c231861277782d725b26c04df795d76107a629e48d2fdf1",
+    "snapshot/server-metrics.jsonl": "4f9a371e6faa88bb9f37b1e7c512113335dad7ed700c8dbc9ad5a996a259a1d0",
+    "snapshot/snapshot-events.jsonl": "67fe08758fca5adf6a8693b119f8d58b160d3801b9ce07a8b836d0a3c595d405"
+  },
+  "analysisSHA256": "71661f1db356400c34d207a80ba59e1c8a316318878d99d2ca62c05fb99d48e8",
+  "analysisScriptSHA256": "4853a4cb3cae4e37ffb08dab47f666f3a016ff4c5c60ff1a7bde3c58d8aadf87",
+  "goWindowsCompared": 240,
+  "cases": {
+    "normal": {
+      "wallMinusMonotonicEndMs": -9.72341114025879,
+      "totals": {
+        "observedStartUTC": "2026-11-02T02:42:03.071652Z",
+        "observedEndUTC": "2026-11-02T02:52:03.061614Z",
+        "startBoundaryLagMs": 250.21100044250488,
+        "endBoundaryLagMs": 260.24889945983887,
+        "cpuMs": 39691.178,
+        "gcCpuMs": 1536.1492110000002,
+        "gcCycles": 65,
+        "gcPauseLargestUpperMs": 0.65536,
+        "observedQueueDepthMax": 1,
+        "maxCollectionMs": 4.574060440063477,
+        "stages": {
+          "runtime.commandQueueWait": {
+            "count": 60000,
+            "meanMs": 0.05867082226666667,
+            "p99BucketUpperMs": 1.0,
+            "over20ms": 10
+          },
+          "runtime.batchWait": {
+            "count": 50934,
+            "meanMs": 1.1560004611654298,
+            "p99BucketUpperMs": 2.0,
+            "over20ms": 0
+          },
+          "runtime.append": {
+            "count": 50823,
+            "meanMs": 2.5353689999606477,
+            "p99BucketUpperMs": 10.0,
+            "over20ms": 29
+          },
+          "runtime.apply": {
+            "count": 50934,
+            "meanMs": 0.01487051441080614,
+            "p99BucketUpperMs": 0.1,
+            "over20ms": 0
+          },
+          "runtime.wal.sync": {
+            "count": 50823,
+            "meanMs": 2.4352936696967906,
+            "p99BucketUpperMs": 10.0,
+            "over20ms": 27
+          },
+          "http.handler": {
+            "count": 60000,
+            "meanMs": 3.4021319001833334,
+            "p99BucketUpperMs": 20.0,
+            "over20ms": 140
+          },
+          "http.encode": {
+            "count": 60000,
+            "meanMs": 0.018391589666666666,
+            "p99BucketUpperMs": 0.1,
+            "over20ms": 0
+          },
+          "http.write": {
+            "count": 60000,
+            "meanMs": 0.047150310716666664,
+            "p99BucketUpperMs": 0.2,
+            "over20ms": 0
+          },
+          "runtime.snapshotCapture": {
+            "count": 0,
+            "meanMs": null,
+            "p99BucketUpperMs": null,
+            "over20ms": 0
+          },
+          "runtime.snapshotPublish": {
+            "count": 0,
+            "meanMs": null,
+            "p99BucketUpperMs": null,
+            "over20ms": 0
+          }
+        }
+      },
+      "selectedWindows": [
+        {
+          "startSeconds": 500,
+          "scheduled": 500,
+          "missed": 0,
+          "request": {
+            "count": 500,
+            "p99Ms": 39.279792,
+            "maxMs": 44.4695,
+            "over20ms": 44
+          },
+          "dispatchDelay": {
+            "count": 500,
+            "p99Ms": 1.121625,
+            "maxMs": 1.68625,
+            "over20ms": 0
+          },
+          "transportWrite": {
+            "count": 500,
+            "p99Ms": 0.171791,
+            "maxMs": 0.406083,
+            "over20ms": 0
+          },
+          "server": {
+            "observedStartUTC": "2026-11-02T02:50:23.075363Z",
+            "observedEndUTC": "2026-11-02T02:50:28.075889Z",
+            "startBoundaryLagMs": 246.50001525878906,
+            "endBoundaryLagMs": 245.9738254547119,
+            "cpuMs": 392.302,
+            "gcCpuMs": 56.87099700000009,
+            "gcCycles": 1,
+            "gcPauseLargestUpperMs": 0.229376,
+            "observedQueueDepthMax": 1,
+            "maxCollectionMs": 0.23603439331054688,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 499,
+                "meanMs": 1.394866396793587,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 2
+              },
+              "runtime.batchWait": {
+                "count": 417,
+                "meanMs": 1.131607211031175,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 391,
+                "meanMs": 5.365640890025576,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 9
+              },
+              "runtime.apply": {
+                "count": 414,
+                "meanMs": 0.01627416425120773,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 391,
+                "meanMs": 5.259895872122762,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 9
+              },
+              "http.handler": {
+                "count": 496,
+                "meanMs": 7.433189868951613,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 38
+              },
+              "http.encode": {
+                "count": 496,
+                "meanMs": 0.019931451612903228,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 496,
+                "meanMs": 0.05275557258064516,
+                "p99BucketUpperMs": 0.2,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            }
+          },
+          "snapshotEventsOverlapping": 0
+        },
+        {
+          "startSeconds": 505,
+          "scheduled": 500,
+          "missed": 0,
+          "request": {
+            "count": 500,
+            "p99Ms": 35.182583,
+            "maxMs": 45.94025,
+            "over20ms": 75
+          },
+          "dispatchDelay": {
+            "count": 500,
+            "p99Ms": 1.187875,
+            "maxMs": 2.422458,
+            "over20ms": 0
+          },
+          "transportWrite": {
+            "count": 500,
+            "p99Ms": 0.185583,
+            "maxMs": 0.198417,
+            "over20ms": 0
+          },
+          "server": {
+            "observedStartUTC": "2026-11-02T02:50:28.075889Z",
+            "observedEndUTC": "2026-11-02T02:50:33.075933Z",
+            "startBoundaryLagMs": 245.9738254547119,
+            "endBoundaryLagMs": 245.92995643615723,
+            "cpuMs": 347.502,
+            "gcCpuMs": 0.0,
+            "gcCycles": 0,
+            "gcPauseLargestUpperMs": null,
+            "observedQueueDepthMax": 1,
+            "maxCollectionMs": 0.3521442413330078,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 501,
+                "meanMs": 3.036189461077844,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 4
+              },
+              "runtime.batchWait": {
+                "count": 424,
+                "meanMs": 1.132533216981132,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 389,
+                "meanMs": 9.774271005141388,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 15
+              },
+              "runtime.apply": {
+                "count": 427,
+                "meanMs": 0.01606304449648712,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 389,
+                "meanMs": 9.658815329048844,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 14
+              },
+              "http.handler": {
+                "count": 504,
+                "meanMs": 12.889309093253969,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 71
+              },
+              "http.encode": {
+                "count": 504,
+                "meanMs": 0.020372775793650794,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 504,
+                "meanMs": 0.054569494047619044,
+                "p99BucketUpperMs": 0.2,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            }
+          },
+          "snapshotEventsOverlapping": 0
+        },
+        {
+          "startSeconds": 510,
+          "scheduled": 500,
+          "missed": 0,
+          "request": {
+            "count": 500,
+            "p99Ms": 24.882833,
+            "maxMs": 33.499333,
+            "over20ms": 20
+          },
+          "dispatchDelay": {
+            "count": 500,
+            "p99Ms": 1.179291,
+            "maxMs": 4.405291,
+            "over20ms": 0
+          },
+          "transportWrite": {
+            "count": 500,
+            "p99Ms": 0.313833,
+            "maxMs": 2.321333,
+            "over20ms": 0
+          },
+          "server": {
+            "observedStartUTC": "2026-11-02T02:50:33.075933Z",
+            "observedEndUTC": "2026-11-02T02:50:38.075353Z",
+            "startBoundaryLagMs": 245.92995643615723,
+            "endBoundaryLagMs": 246.51002883911133,
+            "cpuMs": 321.451,
+            "gcCpuMs": 0.0,
+            "gcCycles": 0,
+            "gcPauseLargestUpperMs": null,
+            "observedQueueDepthMax": 1,
+            "maxCollectionMs": 0.3070831298828125,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 500,
+                "meanMs": 1.162590014,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 0
+              },
+              "runtime.batchWait": {
+                "count": 443,
+                "meanMs": 1.1464700248306996,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 429,
+                "meanMs": 4.870240177156178,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 1
+              },
+              "runtime.apply": {
+                "count": 443,
+                "meanMs": 0.012599584650112867,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 429,
+                "meanMs": 4.772769160839161,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 1
+              },
+              "http.handler": {
+                "count": 500,
+                "meanMs": 6.854398906,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 17
+              },
+              "http.encode": {
+                "count": 500,
+                "meanMs": 0.017533144,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 500,
+                "meanMs": 0.051290166,
+                "p99BucketUpperMs": 0.2,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            }
+          },
+          "snapshotEventsOverlapping": 0
+        }
+      ],
+      "misses": [],
+      "missBrackets": []
+    },
+    "snapshot": {
+      "wallMinusMonotonicEndMs": 1.483068313598633,
+      "totals": {
+        "observedStartUTC": "2026-11-02T02:53:07.536874Z",
+        "observedEndUTC": "2026-11-02T03:03:07.538365Z",
+        "startBoundaryLagMs": 134.44900512695312,
+        "endBoundaryLagMs": 132.95817375183105,
+        "cpuMs": 73889.156,
+        "gcCpuMs": 12051.539361,
+        "gcCycles": 356,
+        "gcPauseLargestUpperMs": 2.0971520000000003,
+        "observedQueueDepthMax": 2,
+        "maxCollectionMs": 5.097866058349609,
+        "stages": {
+          "runtime.commandQueueWait": {
+            "count": 59991,
+            "meanMs": 0.3143128493273991,
+            "p99BucketUpperMs": 10.0,
+            "over20ms": 284
+          },
+          "runtime.batchWait": {
+            "count": 50926,
+            "meanMs": 1.1630610292188666,
+            "p99BucketUpperMs": 2.0,
+            "over20ms": 5
+          },
+          "runtime.append": {
+            "count": 50452,
+            "meanMs": 2.685850401986046,
+            "p99BucketUpperMs": 20.0,
+            "over20ms": 30
+          },
+          "runtime.apply": {
+            "count": 50926,
+            "meanMs": 0.01412757430389192,
+            "p99BucketUpperMs": 0.1,
+            "over20ms": 0
+          },
+          "runtime.wal.sync": {
+            "count": 50452,
+            "meanMs": 2.5956056746016016,
+            "p99BucketUpperMs": 20.0,
+            "over20ms": 28
+          },
+          "http.handler": {
+            "count": 59991,
+            "meanMs": 3.804910433014952,
+            "p99BucketUpperMs": 20.0,
+            "over20ms": 583
+          },
+          "http.encode": {
+            "count": 59991,
+            "meanMs": 0.016858827340767782,
+            "p99BucketUpperMs": 0.1,
+            "over20ms": 0
+          },
+          "http.write": {
+            "count": 59991,
+            "meanMs": 0.04451789533430015,
+            "p99BucketUpperMs": 0.2,
+            "over20ms": 0
+          },
+          "runtime.snapshotCapture": {
+            "count": 120,
+            "meanMs": 40.539681975,
+            "p99BucketUpperMs": 100.0,
+            "over20ms": 89
+          },
+          "runtime.snapshotPublish": {
+            "count": 119,
+            "meanMs": 291.50624089915965,
+            "p99BucketUpperMs": 2000.0,
+            "over20ms": 119
+          }
+        }
+      },
+      "selectedWindows": [
+        {
+          "startSeconds": 285,
+          "scheduled": 500,
+          "missed": 4,
+          "request": {
+            "count": 496,
+            "p99Ms": 204.656833,
+            "maxMs": 268.973833,
+            "over20ms": 31
+          },
+          "dispatchDelay": {
+            "count": 500,
+            "p99Ms": 46.030666,
+            "maxMs": 76.1025,
+            "over20ms": 13
+          },
+          "transportWrite": {
+            "count": 496,
+            "p99Ms": 93.258166,
+            "maxMs": 146.912917,
+            "over20ms": 13
+          },
+          "server": {
+            "observedStartUTC": "2026-11-02T02:57:52.537538Z",
+            "observedEndUTC": "2026-11-02T02:57:57.537525Z",
+            "startBoundaryLagMs": 133.78500938415527,
+            "endBoundaryLagMs": 133.79812240600586,
+            "cpuMs": 574.747,
+            "gcCpuMs": 117.58978900000017,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.65536,
+            "observedQueueDepthMax": 0,
+            "maxCollectionMs": 5.097866058349609,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 496,
+                "meanMs": 1.1602829939516128,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 7
+              },
+              "runtime.batchWait": {
+                "count": 424,
+                "meanMs": 1.725462641509434,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 4
+              },
+              "runtime.append": {
+                "count": 405,
+                "meanMs": 2.6248054419753086,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 1
+              },
+              "runtime.apply": {
+                "count": 424,
+                "meanMs": 0.06696727358490566,
+                "p99BucketUpperMs": 0.5,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 405,
+                "meanMs": 2.503951874074074,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 1
+              },
+              "http.handler": {
+                "count": 496,
+                "meanMs": 5.782973439516129,
+                "p99BucketUpperMs": 100.0,
+                "over20ms": 18
+              },
+              "http.encode": {
+                "count": 496,
+                "meanMs": 0.051496661290322585,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 496,
+                "meanMs": 0.059741596774193544,
+                "p99BucketUpperMs": 0.5,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "meanMs": 44.843541,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "meanMs": 252.88,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            }
+          },
+          "snapshotEventsOverlapping": 1
+        },
+        {
+          "startSeconds": 390,
+          "scheduled": 500,
+          "missed": 5,
+          "request": {
+            "count": 495,
+            "p99Ms": 48.41275,
+            "maxMs": 127.914,
+            "over20ms": 9
+          },
+          "dispatchDelay": {
+            "count": 500,
+            "p99Ms": 45.043333,
+            "maxMs": 85.041,
+            "over20ms": 10
+          },
+          "transportWrite": {
+            "count": 495,
+            "p99Ms": 4.948125,
+            "maxMs": 87.9685,
+            "over20ms": 2
+          },
+          "server": {
+            "observedStartUTC": "2026-11-02T02:59:37.53806Z",
+            "observedEndUTC": "2026-11-02T02:59:42.538157Z",
+            "startBoundaryLagMs": 133.26311111450195,
+            "endBoundaryLagMs": 133.16607475280762,
+            "cpuMs": 608.391,
+            "gcCpuMs": 57.606380999999374,
+            "gcCycles": 1,
+            "gcPauseLargestUpperMs": 0.13107200000000002,
+            "observedQueueDepthMax": 0,
+            "maxCollectionMs": 0.3058910369873047,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 495,
+                "meanMs": 0.31166309898989897,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 3
+              },
+              "runtime.batchWait": {
+                "count": 420,
+                "meanMs": 1.2290074452380952,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 412,
+                "meanMs": 2.593757575242718,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 420,
+                "meanMs": 0.02564574523809524,
+                "p99BucketUpperMs": 0.5,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 412,
+                "meanMs": 2.471519410194175,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 494,
+                "meanMs": 3.848499390688259,
+                "p99BucketUpperMs": 20.0,
+                "over20ms": 3
+              },
+              "http.encode": {
+                "count": 494,
+                "meanMs": 0.01998617206477733,
+                "p99BucketUpperMs": 0.2,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 494,
+                "meanMs": 0.05719752226720648,
+                "p99BucketUpperMs": 0.5,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "meanMs": 48.806417,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            }
+          },
+          "snapshotEventsOverlapping": 1
+        }
+      ],
+      "misses": [
+        {
+          "index": 29301,
+          "scheduledSeconds": 288.01,
+          "delayMs": 51.857125,
+          "snapshotActiveAtObservation": false
+        },
+        {
+          "index": 29302,
+          "scheduledSeconds": 288.02,
+          "delayMs": 76.1025,
+          "snapshotActiveAtObservation": false
+        },
+        {
+          "index": 29303,
+          "scheduledSeconds": 288.03,
+          "delayMs": 66.103208,
+          "snapshotActiveAtObservation": false
+        },
+        {
+          "index": 29304,
+          "scheduledSeconds": 288.04,
+          "delayMs": 55.724916,
+          "snapshotActiveAtObservation": false
+        },
+        {
+          "index": 39970,
+          "scheduledSeconds": 394.7,
+          "delayMs": 56.411875,
+          "snapshotActiveAtObservation": true
+        },
+        {
+          "index": 39974,
+          "scheduledSeconds": 394.74,
+          "delayMs": 85.041,
+          "snapshotActiveAtObservation": true
+        },
+        {
+          "index": 39975,
+          "scheduledSeconds": 394.75,
+          "delayMs": 74.722333,
+          "snapshotActiveAtObservation": true
+        },
+        {
+          "index": 39976,
+          "scheduledSeconds": 394.76,
+          "delayMs": 64.722833,
+          "snapshotActiveAtObservation": true
+        },
+        {
+          "index": 39977,
+          "scheduledSeconds": 394.77,
+          "delayMs": 54.723083,
+          "snapshotActiveAtObservation": true
+        }
+      ],
+      "missBrackets": [
+        {
+          "observedStartUTC": "2026-11-02T02:57:55.551497Z",
+          "observedEndUTC": "2026-11-02T02:57:56.037502Z",
+          "startBoundaryLagMs": 0.0,
+          "endBoundaryLagMs": 0.0,
+          "cpuMs": 22.342,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "observedQueueDepthMax": 0,
+          "maxCollectionMs": 5.097866058349609,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 51,
+              "meanMs": 8.996344666666666,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 5
+            },
+            "runtime.batchWait": {
+              "count": 45,
+              "meanMs": 6.091355444444444,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 4
+            },
+            "runtime.append": {
+              "count": 28,
+              "meanMs": 4.81359075,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.apply": {
+              "count": 45,
+              "meanMs": 0.4946425777777778,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 28,
+              "meanMs": 4.2035045,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "http.handler": {
+              "count": 52,
+              "meanMs": 25.017624153846153,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 15
+            },
+            "http.encode": {
+              "count": 52,
+              "meanMs": 0.35910976923076926,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 52,
+              "meanMs": 0.17430930769230768,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          }
+        },
+        {
+          "observedStartUTC": "2026-11-02T02:59:42.038392Z",
+          "observedEndUTC": "2026-11-02T02:59:42.538157Z",
+          "startBoundaryLagMs": 0.0,
+          "endBoundaryLagMs": 0.0,
+          "cpuMs": 300.108,
+          "gcCpuMs": 57.606380999999374,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.13107200000000002,
+          "observedQueueDepthMax": 0,
+          "maxCollectionMs": 0.2110004425048828,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 45,
+              "meanMs": 3.1129091333333334,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 3
+            },
+            "runtime.batchWait": {
+              "count": 37,
+              "meanMs": 1.3189325135135137,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 29,
+              "meanMs": 3.3201393793103446,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 37,
+              "meanMs": 0.015975243243243245,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 29,
+              "meanMs": 3.2256696896551724,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 44,
+              "meanMs": 7.503854113636363,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 3
+            },
+            "http.encode": {
+              "count": 44,
+              "meanMs": 0.013299272727272727,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 44,
+              "meanMs": 0.06396690909090909,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "meanMs": 48.806417,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          }
+        }
+      ]
+    }
+  }
+}

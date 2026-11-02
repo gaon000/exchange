@@ -40,13 +40,14 @@ type serverReport struct {
 	Experiments json.RawMessage `json:"experiments,omitempty"`
 }
 type manifest struct {
-	Version       int            `json:"version"`
-	CreatedUTC    time.Time      `json:"createdUTC"`
-	PlanDigest    string         `json:"planDigest"`
-	Settings      settings       `json:"settings"`
-	InitialConfig d.Config       `json:"initialConfig"`
-	Server        serverReport   `json:"server"`
-	Generator     buildinfo.Info `json:"generator"`
+	Version             int            `json:"version"`
+	CreatedUTC          time.Time      `json:"createdUTC"`
+	PlanDigest          string         `json:"planDigest"`
+	Settings            settings       `json:"settings"`
+	InitialConfig       d.Config       `json:"initialConfig"`
+	Server              serverReport   `json:"server"`
+	Generator           buildinfo.Info `json:"generator"`
+	DiagnosticsInterval time.Duration  `json:"diagnosticsIntervalNanos,omitempty"`
 }
 
 type runReport struct {
@@ -55,6 +56,7 @@ type runReport struct {
 	GeneratorAfterUTC  time.Time         `json:"generatorAfterUTC"`
 	GeneratorBefore    telemetry.Process `json:"generatorBefore"`
 	GeneratorAfter     telemetry.Process `json:"generatorAfter"`
+	Diagnostics        *diagnosticReport `json:"diagnostics,omitempty"`
 }
 
 func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err error) {
@@ -64,6 +66,7 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 	workloadFile := flags.String("workload", "", "required workload/execution JSON settings")
 	serverFile := flags.String("server-report", "", "required exchange serve ready JSON report")
 	output := flags.String("output", "", "new artifact directory under an existing parent")
+	diagnosticsInterval := flags.Duration("diagnostics-interval", 0, "optional dispatch/process diagnostics (0=off, 100ms to 1m); retained in memory until Run ends")
 	if err := flags.Parse(args); err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			return nil
@@ -74,6 +77,9 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 		return fmt.Errorf("--config, --workload, --server-report and --output are required; no positional arguments")
 	}
 	if err := ctx.Err(); err != nil {
+		return err
+	}
+	if err := validateDiagnosticInterval(*diagnosticsInterval); err != nil {
 		return err
 	}
 	var options settings
@@ -130,7 +136,8 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 			}{err.Error(), time.Now().UTC()}))
 		}
 	}()
-	m := manifest{bench.Version, time.Now().UTC(), p.Digest(), options, g.Config, server, buildinfo.Current()}
+	m := manifest{Version: bench.Version, CreatedUTC: time.Now().UTC(), PlanDigest: p.Digest(), Settings: options,
+		InitialConfig: g.Config, Server: server, Generator: buildinfo.Current(), DiagnosticsInterval: *diagnosticsInterval}
 	if err := a.json("manifest.json", m); err != nil {
 		return err
 	}
@@ -155,7 +162,21 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 		return fmt.Errorf("preparation failed; partial artifacts and server state preserved: %w", err)
 	}
 	beforeUTC, before := time.Now().UTC(), telemetry.ReadProcess()
-	result, runErr := bench.Run(ctx, p, options.Execution, e)
+	var sampler *processSampler
+	var diagnostic *diagnosticReport
+	var result bench.RunResult
+	var runErr error
+	if *diagnosticsInterval > 0 {
+		sampler = startProcessSampler(*diagnosticsInterval)
+		result, runErr = bench.RunWithDispatch(ctx, p, options.Execution, e)
+		report := sampler.finish()
+		diagnostic = &report
+		if report.LimitReached {
+			runErr = errors.Join(runErr, fmt.Errorf("generator diagnostics sample limit reached"))
+		}
+	} else {
+		result, runErr = bench.Run(ctx, p, options.Execution, e)
+	}
 	after, afterUTC := telemetry.ReadProcess(), time.Now().UTC()
 	// Persist all samples before summarizing, including aborted/invalid runs.
 	if err := a.write("samples.jsonl", func(w io.Writer) error {
@@ -169,8 +190,14 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (err erro
 	}); err != nil {
 		return errors.Join(runErr, err)
 	}
-	if err := a.json("run.json", runReport{result, beforeUTC, afterUTC, before, after}); err != nil {
+	if err := a.json("run.json", runReport{result, beforeUTC, afterUTC, before, after, diagnostic}); err != nil {
 		return errors.Join(runErr, err)
+	}
+	if sampler != nil {
+		if err := writeDiagnostics(&a, result, sampler); err != nil {
+			return errors.Join(runErr, err)
+		}
+		runErr = errors.Join(runErr, bench.ValidateDispatch(p, result))
 	}
 	summary, summaryErr := bench.Summarize(p, result)
 	if summaryErr != nil {

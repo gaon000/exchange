@@ -187,6 +187,7 @@ func TestNativeCLIProducesReplayableHTTPArtifacts(t *testing.T) {
 
 func TestNativeCLIInterruptedMeasurementRetainsEverySample(t *testing.T) {
 	args, r, options := liveFixture(t)
+	args = append(args, "--diagnostics-interval", "100ms")
 	options.Workload.Duration = 5 * time.Second
 	writeFixture(t, args[3], options)
 	ctx, cancel := context.WithCancel(context.Background())
@@ -223,6 +224,23 @@ func TestNativeCLIInterruptedMeasurementRetainsEverySample(t *testing.T) {
 	}
 	if bytes.Count(b, []byte("\n")) != p.Count() {
 		t.Fatal("canceled future samples lost")
+	}
+	var report runReport
+	runBytes, err := os.ReadFile(filepath.Join(args[7], "run.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(runBytes, &report); err != nil || report.Diagnostics == nil || !report.DispatchRecorded {
+		t.Fatal("canceled run lost diagnostics", err)
+	}
+	for _, name := range []string{"dispatch.jsonl", "generator-metrics.jsonl"} {
+		data, err := os.ReadFile(filepath.Join(args[7], name))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if name == "dispatch.jsonl" && bytes.Count(data, []byte("\n")) != p.Count() || name == "generator-metrics.jsonl" && !bytes.Contains(data, []byte(`"stage":"final"`)) {
+			t.Fatal("canceled diagnostic stream incomplete", name)
+		}
 	}
 	var summary bench.Summary
 	b, err = os.ReadFile(filepath.Join(args[7], "summary.json"))

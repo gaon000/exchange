@@ -72,6 +72,10 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 
 `git diff --check`만으로 untracked 새 파일은 검사되지 않는다. `--no-index --check`는 정상 새 파일에도 차이가 있으면 종료 코드 1을 반환할 수 있으므로 공백 오류 진단과 종료 코드를 함께 확인한다. 문서 검증에는 상대 링크·제목 앵커·경로 대소문자·설명과 실제 설정의 일치 여부를 포함한다. 프로젝트 설명에는 미치환 입력 항목을 남기지 않고, 복사해서 쓸 `template.md`의 작업별 입력 안내는 유지한다. 현재 프로젝트 전용 자동 문서 검사 명령은 미구성이다.
 
+## 생성기 지연 진단
+
+`loadgen`과 `experiment`의 `--diagnostics-interval 500ms`는 선택적 scheduler/worker 시각과 생성기 주기 자원을 남긴다. 기본값은 0이며 100ms~1m를 허용한다. 기존 실행 인자에 이 옵션을 추가하고 새 출력 디렉터리를 사용한다. `dispatch.jsonl`, `generator-metrics.jsonl`과 설정/해시가 보존된다. 측정 종료 후 저장하고, 취소·수집 지연·상한도 기록한다. [측정 계약](design-docs/benchmark-v1.md#생성기-진단-옵션)과 [기존 10분 지연 분석](benchmarks/latency-diagnostics.md)을 따른다. 추가 계측 비용은 아직 정량화하지 않았으며 성능 비교 양쪽에서 같은 설정을 사용한다.
+
 ## 거래 데모
 
 [scripts/demo.sh](../scripts/demo.sh)는 `bin/demo-exchange`와 `bin/demo`를 빌드해 [거래 데모](trading-demo.md)를 실행한다. Alice/Bob의 세 고유 명령과 독립 계산한 정수 결과, 재시작 전후 최초 응답·상태·중복 재시도를 검사한다. 실행마다 새 출력 폴더와 run을 사용하고 서버는 데모가 직접 생성한 자식 프로세스다. 종료·오류·중단 정리와 실제 파일/HTTP 경로는 `scripts/go test -race ./cmd/demo ./tools/civerify -timeout=120s`로 검사하며 전체 CI에도 포함한다. 정상 WAL 재시작 증거와 실제 전원 장애 검증을 구분한다.

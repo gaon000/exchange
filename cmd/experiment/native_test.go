@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/gaon000/exchange/internal/bench"
 	"github.com/gaon000/exchange/internal/wal"
 )
 
@@ -41,10 +42,17 @@ func TestNativeExperimentBundleAndFailureCleanup(t *testing.T) {
 		t.Fatal(err)
 	}
 	base := []string{"--exchange", filepath.Join(bin, "exchange"), "--loadgen", filepath.Join(bin, "loadgen"), "--config", filepath.Join(root, "config/examples/benchmark.json"), "--workload", wp, "--metrics-interval", "100ms", "--snapshot-interval", "100ms"}
-	for _, scenario := range []string{"normal", "snapshot-profile"} {
+	for _, scenario := range []string{"normal", "diagnostic-normal", "snapshot-profile"} {
 		t.Run(scenario, func(t *testing.T) {
 			dir := filepath.Join(t.TempDir(), "experiment")
-			args := append(append([]string{}, base...), "--scenario", scenario, "--output", dir)
+			mode := scenario
+			if mode == "diagnostic-normal" {
+				mode = "normal"
+			}
+			args := append(append([]string{}, base...), "--scenario", mode, "--output", dir)
+			if scenario != "normal" {
+				args = append(args, "--diagnostics-interval", "100ms")
+			}
 			var stdout bytes.Buffer
 			if err := run(context.Background(), args, &stdout, io.Discard); err != nil {
 				t.Fatal(err)
@@ -58,6 +66,12 @@ func TestNativeExperimentBundleAndFailureCleanup(t *testing.T) {
 			}
 			if len(complete.Files) < 20 || complete.RunID == "" {
 				t.Fatal(complete)
+			}
+			for _, file := range []string{"loadgen/dispatch.jsonl", "loadgen/generator-metrics.jsonl"} {
+				_, exists := complete.Files[file]
+				if exists != (scenario != "normal") {
+					t.Fatal("diagnostics inventory does not match selected mode", scenario, file)
+				}
 			}
 			for name, hash := range complete.Files {
 				actual, err := hashFile(filepath.Join(dir, name))
@@ -85,6 +99,9 @@ func TestNativeExperimentBundleAndFailureCleanup(t *testing.T) {
 			after, err := os.ReadFile(filepath.Join(dir, "completed.json"))
 			if err != nil || !bytes.Equal(before, after) {
 				t.Fatal("old experiment changed", err)
+			}
+			if scenario != "normal" {
+				testDiagnosticCorruption(t, dir, workload)
 			}
 		})
 	}
@@ -138,5 +155,44 @@ func TestNativeExperimentBundleAndFailureCleanup(t *testing.T) {
 				t.Fatal(err)
 			}
 		})
+	}
+}
+
+func testDiagnosticCorruption(t *testing.T, dir string, workload settings) {
+	t.Helper()
+	var r ready
+	var runReport bench.RunResult
+	if err := readJSON(filepath.Join(dir, "server-ready.json"), &r); err != nil {
+		t.Fatal(err)
+	}
+	if err := readJSON(filepath.Join(dir, "loadgen/run.json"), &runReport); err != nil {
+		t.Fatal(err)
+	}
+	verify := func() error {
+		return verifyGeneratorDiagnostics(dir, r.RunID, workload, 100*time.Millisecond, runReport)
+	}
+	if err := verify(); err != nil {
+		t.Fatal(err)
+	}
+	for _, file := range []string{"dispatch.jsonl", "generator-metrics.jsonl"} {
+		path := filepath.Join(dir, "loadgen", file)
+		original, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		lines := bytes.Split(bytes.TrimSpace(original), []byte("\n"))
+		// Removing or duplicating the final row must fail even if the file hash
+		// were recomputed in the completion marker.
+		for _, broken := range [][]byte{bytes.Join(lines[:len(lines)-1], []byte("\n")), append(bytes.Clone(original), lines[len(lines)-1]...)} {
+			if err := os.WriteFile(path, broken, 0600); err != nil {
+				t.Fatal(err)
+			}
+			if err := verify(); err == nil {
+				t.Fatal("accepted incomplete/duplicated diagnostics", file)
+			}
+		}
+		if err := os.WriteFile(path, original, 0600); err != nil {
+			t.Fatal(err)
+		}
 	}
 }

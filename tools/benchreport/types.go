@@ -103,12 +103,13 @@ type serverRecord struct {
 	} `json:"experiments"`
 }
 type manifest struct {
-	Version       int            `json:"version"`
-	PlanDigest    string         `json:"planDigest"`
-	Settings      settings       `json:"settings"`
-	InitialConfig d.Config       `json:"initialConfig"`
-	Server        serverRecord   `json:"server"`
-	Generator     buildinfo.Info `json:"generator"`
+	Version             int            `json:"version"`
+	PlanDigest          string         `json:"planDigest"`
+	Settings            settings       `json:"settings"`
+	InitialConfig       d.Config       `json:"initialConfig"`
+	Server              serverRecord   `json:"server"`
+	Generator           buildinfo.Info `json:"generator"`
+	DiagnosticsInterval time.Duration  `json:"diagnosticsIntervalNanos,omitempty"`
 }
 type environmentRecord struct {
 	LogicalCPUs        int               `json:"logicalCPUs"`

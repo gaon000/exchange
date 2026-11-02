@@ -46,7 +46,15 @@ func writeLines(t *testing.T, path string, values []any) {
 func sealFixture(t *testing.T, dir, runID, planDigest string) {
 	t.Helper()
 	loadgen := map[string]string{}
-	for _, name := range []string{"manifest.json", "plan.jsonl", "preparation.json", "samples.jsonl", "run.json", "summary.json"} {
+	var m manifest
+	if err := readJSON(filepath.Join(dir, "loadgen/manifest.json"), &m); err != nil {
+		t.Fatal(err)
+	}
+	names := []string{"manifest.json", "plan.jsonl", "preparation.json", "samples.jsonl", "run.json", "summary.json"}
+	if m.DiagnosticsInterval > 0 {
+		names = append(names, "dispatch.jsonl", "generator-metrics.jsonl")
+	}
+	for _, name := range names {
 		h, err := hashFile(filepath.Join(dir, "loadgen", name))
 		if err != nil {
 			t.Fatal(err)
@@ -74,6 +82,34 @@ func sealFixture(t *testing.T, dir, runID, planDigest string) {
 		t.Fatal(err)
 	}
 	writeTest(t, filepath.Join(dir, "completed.json"), seal{Version: 1, RunID: runID, Files: hashes})
+}
+
+func TestDiagnosticRunsRecomputeWithoutQualifyingUnderOldCriteria(t *testing.T) {
+	dir, c, m, run := fixture(t)
+	base, err := analyze(dir, c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, interval := range []time.Duration{100 * time.Millisecond, 500 * time.Millisecond} {
+		m.DiagnosticsInterval = interval
+		run.DispatchRecorded = true
+		writeTest(t, filepath.Join(dir, "loadgen/manifest.json"), m)
+		writeTest(t, filepath.Join(dir, "loadgen/run.json"), run)
+		// Diagnostic contents are semantically checked by experiment; this tool
+		// checks their hashes and recomputes the original request measurements.
+		for _, name := range []string{"dispatch.jsonl", "generator-metrics.jsonl"} {
+			writeTest(t, filepath.Join(dir, "loadgen", name), map[string]string{"fixture": "diagnostic bytes"})
+		}
+		sealFixture(t, dir, m.Server.RunID, m.PlanDigest)
+		r, err := analyze(dir, c)
+		if err != nil || !r.Recomputed || !r.Sealed || r.Pass || r.Series == base.Series || !strings.Contains(strings.Join(r.Reasons, ","), "GENERATOR_DIAGNOSTICS_ENABLED") {
+			t.Fatal("diagnostic mode mixed with baseline criteria", r, err)
+		}
+		if canonical(r.Summary) != canonical(base.Summary) {
+			t.Fatal("diagnostic metadata changed request statistics")
+		}
+		base.Series = r.Series
+	}
 }
 
 func fixture(t *testing.T) (string, criteria, manifest, bench.RunResult) {
