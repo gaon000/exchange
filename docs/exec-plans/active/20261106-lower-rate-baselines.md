@@ -12,7 +12,7 @@
 ## Progress
 
 - [x] c9a9950 master 머지·push.
-- [ ] 해당 원격 CI 확인·요청률 옵션·회귀 검증·clean producer 고정.
+- [x] 해당 원격 CI 확인·요청률 옵션·회귀 검증·clean producer 고정.
 - [ ] 낮은 두 요청률 6회와 원본/판정 검증.
 - [ ] 통과 작업점에서 비교 및 필요한 경우 병목 한 곳 후보 검증.
 - [ ] 결과·한계·재현 명령과 최종 검증/커밋.
@@ -30,3 +30,5 @@
 ## Outcomes & Retrospective
 
 진행 중.
+
+- 2026-11-06: 첫 낮은 부하 collection은 정상1/snapshot1 완료 후 snapshot2 시작 전 quiet 미달로 중단됐다. 완료 prefix를 보존하고 같은 pin/조건의 나머지만 새 root로 재개한다. 부하 시작 후 부분 실패를 교체하는 resume는 금지한다.

@@ -9,7 +9,7 @@ import subprocess
 import time
 from analysis import host_lifetime
 from build import go
-from common import REPO, child, digest, lines, read, require, save, seal
+from common import REPO, child, digest, lines, read, require, save, seal, verify
 from recovery import now
 from runner import source_hashes
 from samplers import Samplers
@@ -140,7 +140,55 @@ def power_and_thermal(root, label):
             require(int(line.rsplit('=', 1)[1].strip().rstrip(';')) == 100, 'OS reports CPU throttling')
 
 
-def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
+def resume_state(root, selected_order, hashes, runtime_env, seen=None):
+    root = root.resolve()
+    seen = set() if seen is None else seen
+    require(root not in seen and len(seen) < 16, 'resume dependency cycle or excessive depth')
+    seen.add(root)
+    integrity = verify(root, allow_failed=True)
+    require(not integrity['completed'], 'cannot resume a completed collection')
+    protocol, failure = read(root/'protocol.json'), read(root/'failed.json')
+    require(protocol['preset'] == 'reference' and protocol['order'] == [list(x) for x in selected_order]
+            and protocol['binarySHA256'] == hashes and protocol['runtimeEnvironment'] == runtime_env,
+            'resume conditions or producer binaries differ')
+    require('host did not meet predeclared quiet gate' in failure['error'],
+            'only pre-workload quiet-gate interruption is resumable')
+    inherited, parent_results = {}, []
+    if protocol.get('resumeFrom'):
+        reference = protocol['resumeFrom']
+        parent = Path(reference['path']).resolve()
+        require(digest(parent/'manifest.json') == reference['manifestSHA256'], 'resume parent manifest changed')
+        parent_results, inherited = resume_state(parent, selected_order, hashes, runtime_env, seen)
+    results = failure['completedCases']
+    names = [x[0] for x in selected_order]
+    require([x['case'] for x in results] == names[:len(results)] and len(parent_results) <= len(results) < len(names)
+            and results[:len(parent_results)] == parent_results, 'resume results must preserve the completed prefix')
+    paths = dict(inherited)
+    for index, name in enumerate(names):
+        path = child(root, name)
+        if index < len(results):
+            if name in paths:
+                require(not path.exists(), 'duplicate completed case in resume chain')
+            else:
+                require((path/'loadgen/summary.json').is_file(), 'completed case is missing raw summary')
+                paths[name] = path
+        else:
+            require(not path.exists(), 'partially executed workload cannot be replaced by resume')
+    return results, paths
+
+
+def verify_dependencies(root):
+    protocol = read(root/'protocol.json')
+    reference = protocol.get('resumeFrom')
+    if not reference:
+        return {'parentCasesVerified': 0}
+    parent = Path(reference['path']).resolve()
+    require(digest(parent/'manifest.json') == reference['manifestSHA256'], 'resume parent manifest changed')
+    results, _ = resume_state(parent, protocol['order'], protocol['binarySHA256'], protocol['runtimeEnvironment'])
+    return {'parentCasesVerified': len(results), 'parentManifestSHA256': reference['manifestSHA256']}
+
+
+def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None, resume_from=None):
     selected_order = order(preset, normal_rate, snapshot_rate)
     require(platform.system() == 'Darwin' and platform.machine() == 'arm64', 'reference measurement requires macOS arm64/APFS')
     require(preset in ('smoke', 'reference'), 'invalid preset')
@@ -148,18 +196,25 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
     output, build_dir = output.resolve(), build_dir.resolve()
     require(not output.is_relative_to(build_dir), 'output must be outside frozen build')
     build = validate_build(build_dir)
+    env = os.environ.copy()
+    env.update(GOMAXPROCS=str(os.cpu_count()), GOGC='100', GOMEMLIMIT='off')
+    env.pop('GODEBUG', None)
+    env.pop('EXCHANGE_TRACE', None)
+    runtime_env = {key: env[key] for key in ('GOMAXPROCS', 'GOGC', 'GOMEMLIMIT')}
+    results, inherited = [], {}
+    if resume_from is not None:
+        require(preset == 'reference', 'resume requires reference preset')
+        require(not output.is_relative_to(resume_from.resolve()), 'output must be outside resumed input')
+        results, inherited = resume_state(resume_from, selected_order, build['sha256'], runtime_env)
+    pending_order = [x for x in selected_order if x[0] not in inherited]
     output.parent.mkdir(parents=True, exist_ok=True)
     output.mkdir(mode=0o700)
-    target, results = None, []
+    target = None
     previous_handlers = {}
     def interrupted(*_):
         raise KeyboardInterrupt()
     for sig in (signal.SIGINT, signal.SIGTERM):
         previous_handlers[sig] = signal.signal(sig, interrupted)
-    env = os.environ.copy()
-    env.update(GOMAXPROCS=str(os.cpu_count()), GOGC='100', GOMEMLIMIT='off')
-    env.pop('GODEBUG', None)
-    env.pop('EXCHANGE_TRACE', None)
     try:
         (output/'bin').mkdir()
         for name in BINARIES:
@@ -167,7 +222,7 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
         save(output/'producer-build.json', build)
         protocol = {'version': 1, 'preset': preset, 'createdUTC': now(), 'producerRevision': build['revision'],
                     'binarySHA256': build['sha256'], 'sourceSHA256': source_hashes(), 'order': selected_order,
-                    'runtimeEnvironment': {key: env[key] for key in ('GOMAXPROCS', 'GOGC', 'GOMEMLIMIT')},
+                    'runtimeEnvironment': runtime_env,
                     'quietGate': {'medianBusyMax': 15, 'peakBusyMax': 30, 'minimumRecords': 2 if preset == 'smoke' else 10,
                                   'enforced': preset == 'reference'},
                     'cooldownSeconds': 0 if preset == 'smoke' else 30, 'trace': False, 'generatorDiagnosticsNanos': 0,
@@ -175,11 +230,13 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
                     'minimumFreeBytes': 8*2**30, 'maximumBundleBytes': 4*2**30,
                     'maximumProcessRSSBytes': 2*2**30, 'maximumOwnedRSSBytes': 3*2**30,
                     'hostFullyIsolated': False, 'powerLossTested': False}
+        if resume_from is not None:
+            protocol['resumeFrom'] = {'path': str(resume_from.resolve()), 'manifestSHA256': digest(resume_from/'manifest.json')}
         save(output/'protocol.json', protocol)
         probe = subprocess.run([str(output/'bin/storageprobe'), '-dir', str(output)], capture_output=True, text=True, timeout=30)
         require(probe.returncode == 0, 'storage probe failed: '+probe.stderr)
         save(output/'storage-probe.json', json.loads(probe.stdout))
-        for index, (name, scenario, rate) in enumerate(selected_order):
+        for index, (name, scenario, rate) in enumerate(pending_order):
             power_and_thermal(output, name)
             for attempt in range(3):
                 label = name+'-quiet-'+str(attempt+1)
@@ -231,10 +288,10 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
             result = {'case': name, 'exit': code, 'measurementValid': summary['measurementValid']}
             results.append(result)
             print(json.dumps({'stage': 'finished', **result}), flush=True)
-            if index+1 < len(selected_order):
+            if index+1 < len(pending_order):
                 time.sleep(protocol['cooldownSeconds'])
         judged = subprocess.run([str(output/'bin/benchreport'), '-output', str(output/'qualification.json'),
-                                 *[str(output/name) for name, _, _ in selected_order]], capture_output=True, text=True, env=env, timeout=300)
+                                 *[str(inherited.get(name, output/name)) for name, _, _ in selected_order]], capture_output=True, text=True, env=env, timeout=300)
         require(judged.returncode == 0, 'benchreport failed: '+judged.stderr)
         save(output/'suite.json', {'status': 'COLLECTION_COMPLETED', 'results': results,
                                   'meaning': 'inspect qualification.json; collection completion is not performance qualification'})

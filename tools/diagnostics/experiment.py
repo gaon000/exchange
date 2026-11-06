@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from common import require, save, verify
+from common import read, require, save, verify
 
 
 def main():
@@ -28,6 +28,7 @@ def main():
     baseline.add_argument('--preset', choices=['smoke', 'reference'], default='smoke')
     baseline.add_argument('--normal-rate', type=int, help='reference only: 1000..80000, step 1000; default 29000')
     baseline.add_argument('--snapshot-rate', type=int, help='reference only: 1000..80000, step 1000; default 3000')
+    baseline.add_argument('--resume-from', type=Path, help='preserve completed prefix after a quiet-gate-only interruption')
     frozen = commands.add_parser('baseline-build', help='freeze clean producer binaries before recording a baseline')
     frozen.add_argument('--output', type=Path, required=True)
     for name in ['verify', 'analyze']:
@@ -43,7 +44,7 @@ def main():
     elif options.command == 'baseline':
         from baseline import run as run_baseline
         print(json.dumps({'bundle': str(run_baseline(options.output, options.build_dir, options.preset,
-                                                    options.normal_rate, options.snapshot_rate)), 'status': 'collected'}))
+                                                    options.normal_rate, options.snapshot_rate, options.resume_from)), 'status': 'collected'}))
     elif options.command == 'compare':
         from comparison import compare as compare_report
         result = compare_report(options.spec, options.output)
@@ -60,6 +61,9 @@ def main():
             result = verify(root, allow_failed=options.allow_failed)
             from analysis import verify_archives
             result['archives'] = verify_archives(root)
+            if (root/'protocol.json').is_file() and read(root/'protocol.json').get('resumeFrom'):
+                from baseline import verify_dependencies
+                result['baselineDependencies'] = verify_dependencies(root)
         else:
             from analysis import analyze_bundle
             result = analyze_bundle(root)

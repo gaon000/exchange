@@ -57,3 +57,13 @@ parent에 `protocol.json`, `producer-build.json`, 호스트/quiet/power/guard �
 새 [비교 명령](experiment-comparison.md)을 쓸 때 P6 개별 case를 bundle로 선택하고 case 필드를 생략한다. 새 3회 반복을 과거 보관 자료와 비교하려면 그 자료도 원본 재검증·같은 조건·독립 반복 요구를 만족해야 한다. 기준 측정은 정상 재시작/실제 전원 장애의 추가 검증을 수행하지 않는다. 해당 검증은 별도 근거로 관리한다.
 
 실제 실행의 결과와 한계는 [현재 기준 재측정](benchmarks/controlled-baseline.md)을 읽는다.
+
+## 유휴 검사 중단 후 재개
+
+본 reference가 거래 부하 시작 전 quiet gate에서만 중단됐다면 원본을 바꾸지 않고 새 디렉터리에서 이어갈 수 있다.
+
+```sh
+python3 tools/diagnostics/experiment.py baseline --build-dir var/baseline-build --output var/baseline-lower-resumed --preset reference --normal-rate 10000 --snapshot-rate 1000 --resume-from var/baseline-lower
+```
+
+이전 조건·runtime 환경·producer hash·완료 순서와 전체 inventory를 검사한다. 완료한 prefix는 원래 디렉터리에서 참조하고 남은 실행만 새 root에 생성한다. 판정에는 이전 완료 실행도 모두 포함한다. 이미 부하가 시작된 부분 실행, 기준/바이너리 변경, 완료 수집, 순서 누락/중복은 재개로 대체할 수 없다. 연결은 최대 16단계이며 각 parent manifest hash를 고정한다. 새 root의 `verify`도 참조한 parent의 무결성과 prefix를 검증한다. 새 root만 복사하면 외부 원본이 빠질 수 있으므로 resumeFrom으로 연결된 parent도 함께 보존한다.

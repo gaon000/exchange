@@ -7,11 +7,43 @@ import unittest
 import signal
 import subprocess
 from unittest.mock import patch
-from baseline import BINARIES, freeze, order, owned_processes, quiet_stats, run, stop, validate_build, within_budget
-from common import save, verify
+from baseline import BINARIES, freeze, order, owned_processes, quiet_stats, resume_state, run, stop, validate_build, verify_dependencies, within_budget
+from common import digest, read, save, seal, verify
 
 
 class BaselineTests(unittest.TestCase):
+    def test_resume_preserves_prefix_and_rejects_changed_rates_or_partial_case(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp).resolve()/'old'
+            root.mkdir()
+            selected = order('reference', 10000, 1000)
+            hashes, env = {'exchange': 'test'}, {'GOMAXPROCS': '11'}
+            save(root/'protocol.json', {'preset': 'reference', 'order': selected, 'binarySHA256': hashes, 'runtimeEnvironment': env})
+            completed = [{'case': x[0], 'measurementValid': True, 'exit': 0} for x in selected[:2]]
+            save(root/'failed.json', {'error': 'host did not meet predeclared quiet gate', 'completedCases': completed})
+            for name, _, _ in selected[:2]:
+                (root/name/'loadgen').mkdir(parents=True)
+                save(root/name/'loadgen/summary.json', {'measurementValid': True})
+            seal(root, False)
+            results, paths = resume_state(root, selected, hashes, env)
+            self.assertEqual(results, completed)
+            self.assertEqual(paths, {x[0]: root/x[0] for x in selected[:2]})
+            with self.assertRaisesRegex(ValueError, 'conditions'):resume_state(root, order('reference', 20000, 1000), hashes, env)
+            child = Path(temp)/'resumed'
+            child.mkdir()
+            save(child/'protocol.json', {**read(root/'protocol.json'), 'resumeFrom': {'path': str(root), 'manifestSHA256': digest(root/'manifest.json')}})
+            self.assertEqual(verify_dependencies(child)['parentCasesVerified'], 2)
+            save(child/'failed.json', {'error': 'host did not meet predeclared quiet gate', 'completedCases': completed})
+            seal(child, False)
+            self.assertEqual(resume_state(child, selected, hashes, env)[1], paths)
+            # A workload that actually started cannot be silently substituted.
+            (root/selected[2][0]).mkdir()
+            save(root/selected[2][0]/'partial.json', {})
+            (root/'manifest.json').unlink()
+            seal(root, False)
+            with self.assertRaisesRegex(ValueError, 'partially executed'):resume_state(root, selected, hashes, env)
+            with self.assertRaisesRegex(ValueError, 'manifest changed'):verify_dependencies(child)
+
     def test_reference_rate_overrides_match_fixed_plan_bounds(self):
         cases = order('reference', 10000, 1000)
         self.assertEqual([rate for _, kind, rate in cases if kind == 'normal'], [10000]*3)
