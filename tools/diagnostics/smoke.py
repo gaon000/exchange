@@ -33,6 +33,18 @@ def main():
         cli(*args)
         cli('verify', '--bundle', bundle, '--output', root/'verified.json')
         cli('analyze', '--bundle', bundle, '--output', root/'analysis.json')
+        spec = root/'comparison-spec.json'
+        selector = {'bundle': 'bundle', 'case': 'on-1' if options.mode == 'native' else 'only-off-1'}
+        save(spec, {'version': 1, 'comparisons': [{'name': 'same retained run',
+                                                 'baseline': [selector], 'candidate': [selector]}]})
+        cli('compare', '--spec', spec, '--output', root/'comparison')
+        cli('verify', '--bundle', root/'comparison', '--output', root/'comparison-verified.json')
+        comparison = read(root/'comparison/report.json')['comparisons'][0]
+        if (comparison['baseline'][0]['status'] != 'verified' or comparison['candidate'][0]['status'] != 'verified'
+                or comparison['judgement']['eligibleForReview']
+                or 'SHARED_RUNS_BETWEEN_SIDES' not in comparison['judgement']['blockers']
+                or not (root/'comparison/report.md').is_file()):
+            raise RuntimeError('retained-input comparison or duplicate-run rejection failed')
         if options.mode == 'native':
             print(json.dumps({'stage': 'host-observation', 'hostLifetime':
                               read(root/'analysis.json')['cases']['on-1']['hostLifetime']}), flush=True)
@@ -74,6 +86,11 @@ def main():
         cli('analyze', '--bundle', bundle, '--output', root/'must-not-pass.json', success=False)
         if (root/'must-not-pass.json').exists():
             raise RuntimeError('failed analysis emitted a successful report')
+        cli('compare', '--spec', spec, '--output', root/'comparison-invalid')
+        comparison = read(root/'comparison-invalid/report.json')['comparisons'][0]
+        if (comparison['baseline'][0]['status'] != 'error' or comparison['candidate'][0]['status'] != 'error'
+                or comparison['judgement']['eligibleForReview'] or comparison['judgement']['improvementClaimed']):
+            raise RuntimeError('comparison accepted semantically corrupted evidence')
     print(f'diagnostic {options.mode} smoke passed: fresh run, verify, analyze, no-reuse, semantic tamper')
 
 

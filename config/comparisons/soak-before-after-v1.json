@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "criteria": "../benchmarks/criteria-v1.json",
+  "comparisons": [
+    {
+      "name": "스냅샷 끔",
+      "baseline": [{"bundle": "../../var/soak-comparison-20261030.92490s", "case": "normal"}],
+      "candidate": [{"bundle": "../../var/soak-optimized-20261102.yawwm75d", "case": "normal"}]
+    },
+    {
+      "name": "스냅샷 켬",
+      "baseline": [{"bundle": "../../var/soak-comparison-20261030.92490s", "case": "snapshot"}],
+      "candidate": [{"bundle": "../../var/soak-optimized-20261102.yawwm75d", "case": "snapshot"}]
+    }
+  ]
+}

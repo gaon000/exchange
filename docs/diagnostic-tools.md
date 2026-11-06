@@ -107,6 +107,10 @@ python3 tools/diagnostics/experiment.py analyze --bundle var/timer-trace-control
 
 분석 JSON에는 분석 Python source 해시도 남긴다. 구간별 CPU·GC·저장 히스토그램, 미전송 전후 bracket, Go runnable/timer/select/syscall 상태, 긴 WAL 호출의 OS 누계 bracket을 제공한다. UTC 연결은 근사이며 clock regression·관측 경계 누락은 unavailable로 표시한다. 호스트 `iostat`는 헤더에 따라 0개 이상 디스크를 처리한다. CPU만 표시되면 `diskAvailable=false`, 디스크 수치는 null이며, 여러 디스크는 표시된 장치의 합계다. 논리 장치가 겹칠 수 있어 물리 장치 전체 처리량으로 해석하지 않는다. 프로세스 I/O는 호출 내부 커널 원인이나 요청별 디스크 비용을 증명하지 않는다. trace 계측 자체의 영향과 호스트 상태도 별도 고려한다. 실제 전원 장애 검증과 관리자 커널 추적은 여전히 미완료다.
 
+## 기준·후보 비교 보고서
+
+`compare --spec ... --output 새디렉터리`는 보관 원본을 재검증해 JSON·Markdown을 함께 생성한다. P6 판정은 기존 benchreport를 재사용하고 진단·무효·반복 부족·조건 차이를 보고서에 보존한다. [비교 명세·실행·판정 안내](experiment-comparison.md)를 따른다. 보고서 생성 성공과 성능 검토 가능 상태는 별도다.
+
 ## 자동 검증
 
 ```sh

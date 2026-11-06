@@ -11,6 +11,7 @@
 - [작업 안내](AGENTS.md): 개발 작업의 진입점과 공통 원칙.
 - [문서 지도](docs/index.md): 문서별 책임과 적용 이력.
 - [전체 구조](ARCHITECTURE.md): 구현한 모듈과 예정 모듈의 책임.
+- [실험 결과 비교 보고서](docs/experiment-comparison.md): 기준·후보 원본 검증과 JSON·Markdown 비교표.
 - [재현 가능한 실험 도구](docs/diagnostic-tools.md): 새 실행·전체 복구·원본 검증·trace/OS I/O·타이머 진단.
 - [개발 기준](docs/development.md): 도구·명령의 구성 상태와 개발 규칙.
 

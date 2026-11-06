@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [실험 결과 비교 자동화](20261106-experiment-comparison.md) | 2026-11-06 | 원본 재검증·기존 P6 판정 재사용·JSON/Markdown·조건/무효/중복 보존 | Python 17개·portable 205개·native race 237개·실제 비교 smoke·보관 자료 검증. 실제 개선 채택 없음·전원 장애 보류 |
 | [재현 가능한 실험 도구](20261106-reproducible-diagnostics.md) | 2026-11-06 | run/analyze/verify·타이머/재집계 CLI·계측 overlay·명령/CI 연결 | portable 205개·native race 237개, Python 10개·네 suite smoke·과거 네 묶음 재분석 일치. 장시간 재실행·원격 CI·전원 장애는 미검증 |
 | [타이머 trace 켬·끔 대조](20261106-timer-trace-control.md) | 2026-11-06 | 4조건 240,000개 검증, trace 끔에서도 50ms 한도 초과 확인 | 각 조건 1회·호스트 상태/UTC 변화 관찰, 인과 효과 미확정 |
 | [타이머 분리·저장 OS I/O 관찰](20261103-timer-os-io.md) | 2026-11-03 | worker 한도 초과 재현, C 호출·프로세스 I/O 누계 관찰 | 실제 거래 전체 복구 일치, 커널 내부 추적 미확보·계측 영향 미확정 |
