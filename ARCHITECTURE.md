@@ -32,7 +32,7 @@
 | [go.mod](go.mod), [.go-version](.go-version) | 모듈 github.com/gaon000/exchange, Go 1.27.3 기준 |
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [.github/workflows/ci.yml](.github/workflows/ci.yml), [scripts/ci.sh](scripts/ci.sh), [tools/civerify](tools/civerify/main.go) | 일반/실제 저장 CI, 로컬 공용 검사, 선택된 테스트와 실행 결과 대조. 거래 runtime에서 사용하지 않음 |
-| [tools/diagnostics](tools/diagnostics/experiment.py), [tools/timerprobe](tools/timerprobe/main.go), [tools/experimentcheck](tools/experimentcheck/main.go) | 새 실행·전체 복구·원본 재집계·trace/OS I/O·타이머 진단과 [기준·후보 비교](docs/experiment-comparison.md). [명령과 경계](docs/diagnostic-tools.md)를 따르며 runtime 의존 경로에 포함하지 않음 |
+| [tools/diagnostics](tools/diagnostics/experiment.py), [tools/timerprobe](tools/timerprobe/main.go), [tools/experimentcheck](tools/experimentcheck/main.go) | 새 실행·전체 복구·원본 재집계·trace/OS I/O·타이머 진단·[현재 기준 반복](docs/controlled-baseline.md)과 [기준·후보 비교](docs/experiment-comparison.md). [명령과 경계](docs/diagnostic-tools.md)를 따르며 runtime 의존 경로에 포함하지 않음 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
 | [tools/benchreport](tools/benchreport/main.go) | 완료/실패 실험 원본의 오프라인 재집계·고정 조건·독립 반복 판정. 서버/생성기를 실행하지 않음 |
 | [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder를 CLI init에 연결 |

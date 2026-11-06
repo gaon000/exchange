@@ -15,6 +15,10 @@
 
 ## 작업별 읽기
 
+[현재 기준 재측정 결과](benchmarks/controlled-baseline.md)는 유휴 gate 후 정상 29,000/s·snapshot 3,000/s 각 3회를 검증했다. 0/3·2/3 통과로 두 조건 모두 미채택했으며 실패·워밍업 누락·창별 지연을 보존한다.
+
+[현재 기준 반복 측정](controlled-baseline.md)은 clean 생산 바이너리·유휴 gate·전원·예산·고정 조건과 실패 보존을 설명한다.
+
 [실험 결과 비교 보고서](experiment-comparison.md)는 기준·후보 원본 재검증, 조건 차이·무효/실패 보존과 JSON/Markdown 생성 명령을 설명한다.
 
 [재현 가능한 실험 도구](diagnostic-tools.md)는 로컬 var 전용 도구를 저장소 CLI로 정리한 실행·검증·분석 안내다. 짧은 smoke와 명시적 10분 preset, 전체 복구, 과거 묶음 재집계, trace/OS I/O·타이머 대조를 제공한다.

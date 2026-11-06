@@ -74,7 +74,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 
 ## 재현 가능한 진단 실험
 
-[실험 도구 안내](diagnostic-tools.md)에서 `python3 tools/diagnostics/experiment.py run|verify|analyze|compare`의 실행 가능한 명령을 관리한다. Python 3.9 이상 표준 라이브러리와 프로젝트 Go wrapper를 사용한다. 기본은 짧은 smoke, 10분 조건은 명시적으로 선택한다. 공용 CI 스크립트에도 Python 회귀 검사와 portable 타이머/native 거래·복구·trace·OS I/O smoke를 연결했다.
+[실험 도구 안내](diagnostic-tools.md)에서 `python3 tools/diagnostics/experiment.py run|verify|analyze|compare|baseline-build|baseline`의 실행 가능한 명령을 관리한다. Python 3.9 이상 표준 라이브러리와 프로젝트 Go wrapper를 사용한다. 기본은 짧은 smoke, 10분 조건은 명시적으로 선택한다. 공용 CI 스크립트에도 Python 회귀 검사와 portable 타이머/native 거래·복구·trace·OS I/O smoke를 연결했다.
 
 [실험 결과 비교](experiment-comparison.md)는 기존 보관 자료를 JSON·Markdown으로 비교하는 명령과 명세를 관리한다.
 

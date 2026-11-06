@@ -1,0 +1,1013 @@
+{
+  "version": 1,
+  "producerRevision": "ca74b53916f8a583a6ae9754968a7ad6a63be49a",
+  "binarySHA256": {
+    "exchange": "d53eeeea6d7d7629d28a1ce993513da93fa192c3da1156a32a8b52754f238648",
+    "benchreport": "8f3ec49c7f78f37431035b23b09c163e59f55942e0a3444c1025975a7db627cc",
+    "experiment": "80efc6871728657345a3ed0319507c0a3372b9fdfb81092741ffcca7b15a01ff",
+    "loadgen": "18a3531d0e9819cbd942333d8de95278effd633e40e087f350ea50aa4b26639d",
+    "storageprobe": "7f8b91ebbc113cb9f67158776f29d2b2ae0e1b83445d03c50aa35291fb0f743d"
+  },
+  "root": "var/controlled-baseline-reference",
+  "rootManifestSHA256": "1553168663d5f0a67331ad95b2cca7e92884d769d934a480c8c66204ee9cbb93",
+  "qualificationSHA256": "ae015cacf57f2655063552f2d5ac8b7b89101a5050639417e82967e7438f4451",
+  "criteriaSHA256": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+  "sourceProtocolSHA256": "dd158343f5c1b20c9295f9de25fa68b6f914c43e28cab3ab2802f617db075b36",
+  "environment": {
+    "capturedUTC": "2026-11-06T09:01:50.175535Z",
+    "logicalCPUs": 11,
+    "runnerGOMAXPROCS": 11,
+    "runtimeEnvironment": {
+      "GOGC": "100",
+      "GOMAXPROCS": "11",
+      "GOMEMLIMIT": "off"
+    },
+    "hardware": {
+      "cpu": {
+        "value": "Apple M3 Pro"
+      },
+      "model": {
+        "value": "Mac15,6"
+      },
+      "os": {
+        "value": "ProductName:\t\tmacOS\nProductVersion:\t\t15.8\nBuildVersion:\t\t24H23"
+      },
+      "ramBytes": {
+        "value": "19327352832"
+      }
+    },
+    "storage": {
+      "type": "apfs",
+      "blockBytes": "4096",
+      "availableBytes": "18650480640",
+      "local": true
+    }
+  },
+  "runtimeEnvironment": {
+    "GOMAXPROCS": "11",
+    "GOGC": "100",
+    "GOMEMLIMIT": "off"
+  },
+  "hostFullyIsolated": false,
+  "groups": [
+    {
+      "series": "271111d525eb8b17ad0f0142c9c208da6a9839619efaaab058975f99097da32e",
+      "scenario": "snapshot",
+      "requestsPerSecond": 3000,
+      "runs": 3,
+      "passed": 2,
+      "qualified": false,
+      "minNewOrdersPerSecond": 1948.65,
+      "maxNewOrdersPerSecond": 1948.65,
+      "worstRequestP99Nanos": 9893625,
+      "worstScheduledP99Nanos": 10566583
+    },
+    {
+      "series": "c1ce90813dcda3f40c9a1233914603c20091d5d5bf4d6b2301697b75f28a5651",
+      "scenario": "normal",
+      "requestsPerSecond": 29000,
+      "runs": 3,
+      "passed": 0,
+      "qualified": false,
+      "minNewOrdersPerSecond": 17799.9,
+      "maxNewOrdersPerSecond": 18858.15,
+      "worstRequestP99Nanos": 236163625,
+      "worstScheduledP99Nanos": 286422735
+    }
+  ],
+  "cases": [
+    {
+      "name": "normal-1",
+      "runId": "ce655654-1081-465d-ae82-207e6219c9db",
+      "scenario": "normal",
+      "requestsPerSecond": 29000,
+      "pass": false,
+      "reasons": [
+        "GLOBAL_P99",
+        "INVALID_MEASUREMENT",
+        "MEASURE_GENERATOR_OR_UNKNOWN",
+        "UNSEALED_EXPERIMENT",
+        "WINDOW_1_P99",
+        "WINDOW_2_P99",
+        "WINDOW_3_P99"
+      ],
+      "measurementValid": false,
+      "warmupFailures": {},
+      "measurementFailures": {
+        "GENERATOR_CAPACITY": 31199,
+        "GENERATOR_LATE": 3643
+      },
+      "newOrdersPerSecond": 17799.9,
+      "requestP99Nanos": 236163625,
+      "uniqueScheduledP99Nanos": 286422735,
+      "worstWindowP99Nanos": 441500368,
+      "serverCPUSeconds": 50.16501,
+      "peakRSSBytes": "1352646656",
+      "snapshotOverlaps": 0,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 53583,
+            "p50Nanos": 4766750,
+            "p95Nanos": 8289834,
+            "p99Nanos": 11501291,
+            "maxNanos": 34792750
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 55231,
+            "p50Nanos": 4807440,
+            "p95Nanos": 8519080,
+            "p99Nanos": 12631027,
+            "maxNanos": 35352005
+          },
+          "metricSamples": 10,
+          "queueMean": 30.8,
+          "queueMax": 63
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 145000,
+          "started": 142776,
+          "localFailures": 2224,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 142776,
+            "minNanos": 54500,
+            "p50Nanos": 4396666,
+            "p95Nanos": 16438459,
+            "p99Nanos": 131194750,
+            "maxNanos": 157527416
+          },
+          "scheduledAttemptLatency": {
+            "count": 142776,
+            "minNanos": 59375,
+            "p50Nanos": 4436572,
+            "p95Nanos": 22476404,
+            "p99Nanos": 135180932,
+            "maxNanos": 163381916
+          },
+          "metricSamples": 10,
+          "queueMean": 78.8,
+          "queueMax": 529
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 145000,
+          "started": 112382,
+          "localFailures": 32618,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 112382,
+            "minNanos": 56209,
+            "p50Nanos": 5990958,
+            "p95Nanos": 232273917,
+            "p99Nanos": 438535500,
+            "maxNanos": 509184833
+          },
+          "scheduledAttemptLatency": {
+            "count": 112382,
+            "minNanos": 59755,
+            "p50Nanos": 6052268,
+            "p95Nanos": 246383407,
+            "p99Nanos": 441500368,
+            "maxNanos": 510637527
+          },
+          "metricSamples": 10,
+          "queueMean": 596.3,
+          "queueMax": 1942
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 50125,
+            "p50Nanos": 4311916,
+            "p95Nanos": 10708166,
+            "p99Nanos": 19544375,
+            "maxNanos": 32989750
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 58739,
+            "p50Nanos": 4349360,
+            "p95Nanos": 11187476,
+            "p99Nanos": 20053027,
+            "maxNanos": 34337298
+          },
+          "metricSamples": 10,
+          "queueMean": 31.9,
+          "queueMax": 73
+        }
+      ]
+    },
+    {
+      "name": "snapshot-1",
+      "runId": "4e8551d2-59d0-4bad-8148-4ac096e179e5",
+      "scenario": "snapshot",
+      "requestsPerSecond": 3000,
+      "pass": true,
+      "reasons": [],
+      "measurementValid": true,
+      "warmupFailures": {},
+      "measurementFailures": {},
+      "newOrdersPerSecond": 1948.65,
+      "requestP99Nanos": 9306834,
+      "uniqueScheduledP99Nanos": 9843125,
+      "worstWindowP99Nanos": 17494875,
+      "serverCPUSeconds": 7.949456,
+      "peakRSSBytes": "247939072",
+      "snapshotOverlaps": 4,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 72208,
+            "p50Nanos": 3536750,
+            "p95Nanos": 6403584,
+            "p99Nanos": 7524000,
+            "maxNanos": 23654708
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 81458,
+            "p50Nanos": 3616125,
+            "p95Nanos": 6487375,
+            "p99Nanos": 7658333,
+            "maxNanos": 23744125
+          },
+          "metricSamples": 10,
+          "queueMean": 3.1,
+          "queueMax": 10
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 71625,
+            "p50Nanos": 3670834,
+            "p95Nanos": 6567834,
+            "p99Nanos": 9306834,
+            "maxNanos": 41452583
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 86041,
+            "p50Nanos": 3746291,
+            "p95Nanos": 6652167,
+            "p99Nanos": 9383125,
+            "maxNanos": 41547625
+          },
+          "metricSamples": 10,
+          "queueMean": 2.3,
+          "queueMax": 7
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 62166,
+            "p50Nanos": 3412167,
+            "p95Nanos": 6412042,
+            "p99Nanos": 9219083,
+            "maxNanos": 45249375
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 79417,
+            "p50Nanos": 3492416,
+            "p95Nanos": 6492959,
+            "p99Nanos": 9299167,
+            "maxNanos": 45330833
+          },
+          "metricSamples": 10,
+          "queueMean": 2.1,
+          "queueMax": 9
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69583,
+            "p50Nanos": 3759709,
+            "p95Nanos": 7082542,
+            "p99Nanos": 17434834,
+            "maxNanos": 65280083
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 77083,
+            "p50Nanos": 3831791,
+            "p95Nanos": 7166209,
+            "p99Nanos": 17494875,
+            "maxNanos": 65347000
+          },
+          "metricSamples": 10,
+          "queueMean": 3,
+          "queueMax": 9
+        }
+      ]
+    },
+    {
+      "name": "snapshot-2",
+      "runId": "08144110-b310-4b6f-ac0b-9aecbd3b4791",
+      "scenario": "snapshot",
+      "requestsPerSecond": 3000,
+      "pass": false,
+      "reasons": [
+        "WINDOW_3_P99"
+      ],
+      "measurementValid": true,
+      "warmupFailures": {},
+      "measurementFailures": {},
+      "newOrdersPerSecond": 1948.65,
+      "requestP99Nanos": 9236417,
+      "uniqueScheduledP99Nanos": 9894875,
+      "worstWindowP99Nanos": 20685959,
+      "serverCPUSeconds": 7.850691,
+      "peakRSSBytes": "221528064",
+      "snapshotOverlaps": 4,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 68375,
+            "p50Nanos": 3796000,
+            "p95Nanos": 6839500,
+            "p99Nanos": 8611750,
+            "maxNanos": 22136375
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 75125,
+            "p50Nanos": 3868917,
+            "p95Nanos": 6916292,
+            "p99Nanos": 8684541,
+            "maxNanos": 22224375
+          },
+          "metricSamples": 10,
+          "queueMean": 3.4,
+          "queueMax": 9
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 70166,
+            "p50Nanos": 3815042,
+            "p95Nanos": 6528167,
+            "p99Nanos": 8548333,
+            "maxNanos": 36289750
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 79167,
+            "p50Nanos": 3889167,
+            "p95Nanos": 6605166,
+            "p99Nanos": 8611666,
+            "maxNanos": 36334792
+          },
+          "metricSamples": 10,
+          "queueMean": 1.5,
+          "queueMax": 4
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69958,
+            "p50Nanos": 3803792,
+            "p95Nanos": 6773417,
+            "p99Nanos": 8773333,
+            "maxNanos": 40804083
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 79667,
+            "p50Nanos": 3874834,
+            "p95Nanos": 6852500,
+            "p99Nanos": 8853667,
+            "maxNanos": 40879792
+          },
+          "metricSamples": 10,
+          "queueMean": 1.6,
+          "queueMax": 9
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69125,
+            "p50Nanos": 3857000,
+            "p95Nanos": 6738750,
+            "p99Nanos": 20628375,
+            "maxNanos": 68622292
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 74459,
+            "p50Nanos": 3922583,
+            "p95Nanos": 6813292,
+            "p99Nanos": 20685959,
+            "maxNanos": 68707792
+          },
+          "metricSamples": 10,
+          "queueMean": 2.3,
+          "queueMax": 6
+        }
+      ]
+    },
+    {
+      "name": "normal-2",
+      "runId": "115218ee-8ffe-47fa-854a-cd642ff9c3b7",
+      "scenario": "normal",
+      "requestsPerSecond": 29000,
+      "pass": false,
+      "reasons": [
+        "GLOBAL_P99",
+        "INVALID_MEASUREMENT",
+        "MEASURE_GENERATOR_OR_UNKNOWN",
+        "UNSEALED_EXPERIMENT",
+        "WINDOW_0_P99",
+        "WINDOW_1_P99"
+      ],
+      "measurementValid": false,
+      "warmupFailures": {},
+      "measurementFailures": {
+        "GENERATOR_CAPACITY": 9223
+      },
+      "newOrdersPerSecond": 18600.7,
+      "requestP99Nanos": 90119042,
+      "uniqueScheduledP99Nanos": 92660069,
+      "worstWindowP99Nanos": 95536252,
+      "serverCPUSeconds": 44.852872,
+      "peakRSSBytes": "1405026304",
+      "snapshotOverlaps": 0,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 145000,
+          "started": 141806,
+          "localFailures": 3194,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 141806,
+            "minNanos": 51667,
+            "p50Nanos": 4464417,
+            "p95Nanos": 82294917,
+            "p99Nanos": 95465417,
+            "maxNanos": 115011459
+          },
+          "scheduledAttemptLatency": {
+            "count": 141806,
+            "minNanos": 55517,
+            "p50Nanos": 4504505,
+            "p95Nanos": 82335492,
+            "p99Nanos": 95536252,
+            "maxNanos": 115021663
+          },
+          "metricSamples": 10,
+          "queueMean": 284.3,
+          "queueMax": 1574
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 145000,
+          "started": 138971,
+          "localFailures": 6029,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 138971,
+            "minNanos": 44750,
+            "p50Nanos": 4523500,
+            "p95Nanos": 84555125,
+            "p99Nanos": 92778209,
+            "maxNanos": 111180959
+          },
+          "scheduledAttemptLatency": {
+            "count": 138971,
+            "minNanos": 56344,
+            "p50Nanos": 4566405,
+            "p95Nanos": 84602079,
+            "p99Nanos": 92831917,
+            "maxNanos": 111196926
+          },
+          "metricSamples": 10,
+          "queueMean": 408.5,
+          "queueMax": 1792
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 52625,
+            "p50Nanos": 3907625,
+            "p95Nanos": 8019083,
+            "p99Nanos": 11628542,
+            "maxNanos": 20008166
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 56061,
+            "p50Nanos": 3938496,
+            "p95Nanos": 8245965,
+            "p99Nanos": 11929265,
+            "maxNanos": 20513191
+          },
+          "metricSamples": 10,
+          "queueMean": 26.2,
+          "queueMax": 55
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 51625,
+            "p50Nanos": 4000250,
+            "p95Nanos": 7671250,
+            "p99Nanos": 10839375,
+            "maxNanos": 17648208
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 54595,
+            "p50Nanos": 4031685,
+            "p95Nanos": 7816324,
+            "p99Nanos": 11200591,
+            "maxNanos": 19104799
+          },
+          "metricSamples": 10,
+          "queueMean": 46.6,
+          "queueMax": 170
+        }
+      ]
+    },
+    {
+      "name": "normal-3",
+      "runId": "3676da1d-8314-4f68-8fdd-698875b5b4d5",
+      "scenario": "normal",
+      "requestsPerSecond": 29000,
+      "pass": false,
+      "reasons": [
+        "GLOBAL_P99",
+        "INVALID_MEASUREMENT",
+        "UNSEALED_EXPERIMENT",
+        "WARMUP_GENERATOR_OR_UNKNOWN",
+        "WINDOW_2_P99",
+        "WINDOW_3_P99"
+      ],
+      "measurementValid": false,
+      "warmupFailures": {
+        "GENERATOR_CAPACITY": 921
+      },
+      "measurementFailures": {},
+      "newOrdersPerSecond": 18858.15,
+      "requestP99Nanos": 42873625,
+      "uniqueScheduledP99Nanos": 45194513,
+      "worstWindowP99Nanos": 58401363,
+      "serverCPUSeconds": 48.51131,
+      "peakRSSBytes": "1412972544",
+      "snapshotOverlaps": 0,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 54500,
+            "p50Nanos": 3981750,
+            "p95Nanos": 7626792,
+            "p99Nanos": 10699875,
+            "maxNanos": 30347250
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 55953,
+            "p50Nanos": 4012814,
+            "p95Nanos": 7842212,
+            "p99Nanos": 11199475,
+            "maxNanos": 30365467
+          },
+          "metricSamples": 10,
+          "queueMean": 23,
+          "queueMax": 76
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 53917,
+            "p50Nanos": 3708458,
+            "p95Nanos": 7103375,
+            "p99Nanos": 10733583,
+            "maxNanos": 35051833
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 56108,
+            "p50Nanos": 3735637,
+            "p95Nanos": 7199747,
+            "p99Nanos": 11391648,
+            "maxNanos": 37527031
+          },
+          "metricSamples": 10,
+          "queueMean": 35.7,
+          "queueMax": 106
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 54958,
+            "p50Nanos": 4392250,
+            "p95Nanos": 34892500,
+            "p99Nanos": 55432584,
+            "maxNanos": 97858375
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 57350,
+            "p50Nanos": 4443432,
+            "p95Nanos": 35537883,
+            "p99Nanos": 58401363,
+            "maxNanos": 106506280
+          },
+          "metricSamples": 10,
+          "queueMean": 44.6,
+          "queueMax": 86
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 145000,
+          "started": 145000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 145000,
+            "minNanos": 54708,
+            "p50Nanos": 4479000,
+            "p95Nanos": 10066166,
+            "p99Nanos": 33138250,
+            "maxNanos": 75236917
+          },
+          "scheduledAttemptLatency": {
+            "count": 145000,
+            "minNanos": 57698,
+            "p50Nanos": 4525226,
+            "p95Nanos": 10375952,
+            "p99Nanos": 36694690,
+            "maxNanos": 75951396
+          },
+          "metricSamples": 10,
+          "queueMean": 27.1,
+          "queueMax": 71
+        }
+      ]
+    },
+    {
+      "name": "snapshot-3",
+      "runId": "592e65a4-51ed-49cc-89c1-91d6d033ae20",
+      "scenario": "snapshot",
+      "requestsPerSecond": 3000,
+      "pass": true,
+      "reasons": [],
+      "measurementValid": true,
+      "warmupFailures": {},
+      "measurementFailures": {},
+      "newOrdersPerSecond": 1948.65,
+      "requestP99Nanos": 9893625,
+      "uniqueScheduledP99Nanos": 10566583,
+      "worstWindowP99Nanos": 17926791,
+      "serverCPUSeconds": 7.822609,
+      "peakRSSBytes": "246235136",
+      "snapshotOverlaps": 4,
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69166,
+            "p50Nanos": 3801041,
+            "p95Nanos": 6700834,
+            "p99Nanos": 8879958,
+            "maxNanos": 21197875
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 86083,
+            "p50Nanos": 3880542,
+            "p95Nanos": 6780291,
+            "p99Nanos": 8963959,
+            "maxNanos": 21292542
+          },
+          "metricSamples": 10,
+          "queueMean": 2.3,
+          "queueMax": 6
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 70750,
+            "p50Nanos": 4130000,
+            "p95Nanos": 7250584,
+            "p99Nanos": 8934583,
+            "maxNanos": 39442750
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 84959,
+            "p50Nanos": 4204042,
+            "p95Nanos": 7339667,
+            "p99Nanos": 9026500,
+            "maxNanos": 39485125
+          },
+          "metricSamples": 10,
+          "queueMean": 2.1,
+          "queueMax": 5
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69208,
+            "p50Nanos": 3861792,
+            "p95Nanos": 6803458,
+            "p99Nanos": 9754625,
+            "maxNanos": 48704625
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 85041,
+            "p50Nanos": 3939875,
+            "p95Nanos": 6893375,
+            "p99Nanos": 9836708,
+            "maxNanos": 48774000
+          },
+          "metricSamples": 10,
+          "queueMean": 4.4,
+          "queueMax": 23
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 15000,
+          "started": 15000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 15000,
+            "minNanos": 69500,
+            "p50Nanos": 3919084,
+            "p95Nanos": 6971000,
+            "p99Nanos": 17850750,
+            "maxNanos": 63055584
+          },
+          "scheduledAttemptLatency": {
+            "count": 15000,
+            "minNanos": 82417,
+            "p50Nanos": 3990417,
+            "p95Nanos": 7047542,
+            "p99Nanos": 17926791,
+            "maxNanos": 63114417
+          },
+          "metricSamples": 10,
+          "queueMean": 2.4,
+          "queueMax": 5
+        }
+      ]
+    }
+  ],
+  "quiet": {
+    "normal-1": {
+      "attempts": 2,
+      "accepted": [
+        {
+          "medianBusy": 12.5,
+          "maxBusy": 24.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 34,
+        "cpuBusyMedian": 48.0,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 36.125,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    },
+    "snapshot-1": {
+      "attempts": 2,
+      "accepted": [
+        {
+          "medianBusy": 12.0,
+          "maxBusy": 17.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 28,
+        "cpuBusyMedian": 17.0,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 46.785,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    },
+    "snapshot-2": {
+      "attempts": 1,
+      "accepted": [
+        {
+          "medianBusy": 6.5,
+          "maxBusy": 19.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 28,
+        "cpuBusyMedian": 12.0,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 31.08,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    },
+    "normal-2": {
+      "attempts": 1,
+      "accepted": [
+        {
+          "medianBusy": 15.0,
+          "maxBusy": 20.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 34,
+        "cpuBusyMedian": 46.5,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 37.94,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    },
+    "normal-3": {
+      "attempts": 1,
+      "accepted": [
+        {
+          "medianBusy": 13.0,
+          "maxBusy": 19.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 34,
+        "cpuBusyMedian": 50.5,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 38.08,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    },
+    "snapshot-3": {
+      "attempts": 1,
+      "accepted": [
+        {
+          "medianBusy": 4.0,
+          "maxBusy": 8.0,
+          "samples": 10
+        }
+      ],
+      "hostLifetime": {
+        "records": 28,
+        "cpuBusyMedian": 12.0,
+        "displayedDiskCount": 1,
+        "diskAvailable": true,
+        "diskMBpsMedian": 30.22,
+        "diskScope": "sum of displayed devices; logical devices may overlap",
+        "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+      }
+    }
+  },
+  "resourceGuard": {
+    "minimumFreeBytes": 15122075648,
+    "maximumBundleBytes": 3524717336,
+    "maximumOwnedRSSBytes": 2589458432
+  },
+  "validation": {
+    "rawRecomputationMatches": true,
+    "rootIntegrity": {
+      "filesVerified": 247,
+      "legacyInventory": false,
+      "completed": true
+    },
+    "pythonTests": 25,
+    "portableGoTests": 205,
+    "nativeRaceGoTests": 237
+  },
+  "powerLossTested": false,
+  "newCapacityQualified": false
+}

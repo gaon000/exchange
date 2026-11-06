@@ -22,6 +22,12 @@ def main():
     compare = commands.add_parser('compare', help='reverify retained inputs and write JSON/Markdown comparison')
     compare.add_argument('--spec', type=Path, required=True)
     compare.add_argument('--output', type=Path, required=True, help='new report directory outside every input bundle')
+    baseline = commands.add_parser('baseline', help='owned host observations and sequential P6 reference measurements')
+    baseline.add_argument('--build-dir', type=Path, required=True, help='clean frozen build directory with build.json and bin/')
+    baseline.add_argument('--output', type=Path, required=True)
+    baseline.add_argument('--preset', choices=['smoke', 'reference'], default='smoke')
+    frozen = commands.add_parser('baseline-build', help='freeze clean producer binaries before recording a baseline')
+    frozen.add_argument('--output', type=Path, required=True)
     for name in ['verify', 'analyze']:
         item = commands.add_parser(name)
         item.add_argument('--bundle', type=Path, required=True)
@@ -29,7 +35,13 @@ def main():
         if name == 'verify':
             item.add_argument('--allow-failed', action='store_true', help='check sealed partial data, never mark completed')
     options = parser.parse_args()
-    if options.command == 'compare':
+    if options.command == 'baseline-build':
+        from baseline import freeze
+        print(json.dumps({'buildDirectory': str(freeze(options.output)), 'status': 'frozen'}))
+    elif options.command == 'baseline':
+        from baseline import run as run_baseline
+        print(json.dumps({'bundle': str(run_baseline(options.output, options.build_dir, options.preset)), 'status': 'collected'}))
+    elif options.command == 'compare':
         from comparison import compare as compare_report
         result = compare_report(options.spec, options.output)
         print(json.dumps({'reportDirectory': str(options.output.resolve()), 'status': 'reported',
