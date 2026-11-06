@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [낮은 요청률 기준과 정수 JSON 비교](20261106-lower-rate-baselines.md) | 2026-11-06 | 정상 10,000/s 3/3 채택·snapshot 1,000/s 2/3 미채택, JSON 할당 감소 후보 유지 | 후보 정상 3/3·원본/조건/자동 비교·Python 27개·portable 206개·native race 238개 통과. 인과 지연/최대 처리량 향상 미주장·전원 장애 보류 |
 | [현재 기준 반복 측정](20261106-controlled-baseline.md) | 2026-11-06 | clean pin·환경 gate·6회 기준 재집계·실패 보존 | 정상 0/3·snapshot 2/3로 모두 미채택. Python 25개·portable 205개·native race 237개·실제 중단 확인. 전원 장애 보류 |
 | [실험 결과 비교 자동화](20261106-experiment-comparison.md) | 2026-11-06 | 원본 재검증·기존 P6 판정 재사용·JSON/Markdown·조건/무효/중복 보존 | Python 17개·portable 205개·native race 237개·실제 비교 smoke·보관 자료 검증. 실제 개선 채택 없음·전원 장애 보류 |
 | [재현 가능한 실험 도구](20261106-reproducible-diagnostics.md) | 2026-11-06 | run/analyze/verify·타이머/재집계 CLI·계측 overlay·명령/CI 연결 | portable 205개·native race 237개, Python 10개·네 suite smoke·과거 네 묶음 재분석 일치. 장시간 재실행·원격 CI·전원 장애는 미검증 |

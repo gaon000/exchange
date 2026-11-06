@@ -1,0 +1,2054 @@
+{
+  "version": 1,
+  "date": "2026-11-06",
+  "status": "completed",
+  "baselineProducer": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+  "candidateProducer": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+  "fixedProtocol": {
+    "version": 1,
+    "preset": "reference",
+    "createdUTC": "2026-11-06T13:17:37.818762+00:00",
+    "producerRevision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+    "binarySHA256": {
+      "exchange": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+      "loadgen": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+      "experiment": "3db18db609b442c3690ffffdccdd6d2f13b6334594bfdf9bc6fea950f503cfde",
+      "benchreport": "3db6c389b0820ff9cc40622c8b40693a127350b8d4bed16f9a20cbb697c38517",
+      "storageprobe": "d792a6c0b30ed1a09129df9dcde1be0d5120ab612096c32b627c72e5292b0916"
+    },
+    "sourceSHA256": {
+      ".go-version": "55a45ba2851dc159876cb8854f80bf67b9eae781e67ce179708ea2e4f990fcd8",
+      "cmd/demo/command.go": "ab183f62322971e1446f5732d0250c49a4998a868117a4ee1a9c1f1f1000884e",
+      "cmd/demo/command_test.go": "d4820c14ae2c30407df7c0b8ee26f2a9d8252a458f60a44b04bd73c206c1f728",
+      "cmd/demo/http.go": "391a4d06c2dac05ca88a063b101d50b83cc32444f0279ba4d8946948c00ba1a1",
+      "cmd/demo/main.go": "1fc91a149f723a7cd12e0cd36f01e03b30fcccb34c513d524321b92c5e6617e3",
+      "cmd/demo/native_test.go": "3e9bcf5782d89394d9b861201738b9b24b96558b39393ddb1176a534bf2277d2",
+      "cmd/demo/process.go": "1f312fb40a60ca7c2278550097fae534b17cb5de06cdd83d02af37c04bc37e51",
+      "cmd/demo/scenario.go": "cffb19e6293f9cf690b7e736dd6f2d5ae37d9f8def4d3eef5883d40384675aac",
+      "cmd/demo/unsupported_test.go": "c77666000e351cf8eafcc5a78deaf50ab05b802507cc6d7a00c3c5c16cc51104",
+      "cmd/exchange/command.go": "bb19b1cb9c2fde17222c0a56fa8ab363743122c780834096c1f2fce2b6f42fad",
+      "cmd/exchange/command_test.go": "1a29269567c113fa07c060809075cc984df1c4bc6fb4db5c36be796cbf8d33e4",
+      "cmd/exchange/experiments.go": "d5c2d266aac088e7c9c6661c599f960c206c3c93d7cd77c994af53ae0cd75a5a",
+      "cmd/exchange/experiments_native_test.go": "e9b13866154ec7d3b73cc2eed3fc945fa412748a5c19ae5a7404376008796ca6",
+      "cmd/exchange/experiments_test.go": "9cf858d11e52abe80f0162cf10f91ee879f527d5b34fa8abd91db2939f9cb6e9",
+      "cmd/exchange/lifecycle.go": "bf2332d1a4a5554cc0931f1c58631addc9ba1a3a9aaa127c8a7bbae73634b168",
+      "cmd/exchange/lifecycle_test.go": "bb6a930cee919f11ca3e37256d1f8bbb11239b65e9319ed6c9f41ae7567c5975",
+      "cmd/exchange/main.go": "4e402e28b4e71454f91138cac0faaa4831a4436a86905a6c1bcc8ef5545e1eea",
+      "cmd/exchange/metrics.go": "f4d6dba7c51785306d0c1bbb99d404a211202eb948c5df0573263f52bbc4ee7a",
+      "cmd/exchange/metrics_native_test.go": "127cfeb01d90c5ee591c1d7e3c7e9402d4a939e7b83c98d062d128293026023c",
+      "cmd/exchange/metrics_test.go": "755b8629233891eec09b6626494790f2775e36b90df58156bce81a71fd9b4d9c",
+      "cmd/exchange/native_test.go": "4806b67f0ae398c5c7bc801c92b56c3a14a31309835a10ac6df770e46ee37503",
+      "cmd/exchange/report.go": "3ed52ec401e57f501c5d43c25f3531589f73cd8b3ecc58f24c80b6f3b16e5577",
+      "cmd/exchange/unsupported_test.go": "2f82dda183c2aee9f65c5f452497f0c2e430d2e6b1d186227d159e90c81d881b",
+      "cmd/experiment/command.go": "fc71439274bcf23267b22c5648f3f76a116355ba3fb0e35a6686d535ca802a31",
+      "cmd/experiment/command_test.go": "d7e8f8c762649b99cddbd9645f01f5df993f701188cac9df2cfb4f47d0469db5",
+      "cmd/experiment/diagnostics.go": "bc1182ea5876acc18075c59efb3257adddf16a923fccecead755b0d0d82b1f15",
+      "cmd/experiment/environment.go": "f0de11bc89c54b75164411ea04e0694f7e549e1bc551f15dbd21f364286ae5d2",
+      "cmd/experiment/environment_darwin.go": "2426dd51afc8f222580fedd137a672378172ee74959f69b9db0aafb1a49d0211",
+      "cmd/experiment/environment_other.go": "087200c69ca2e37ba8201194d01651cbc1827c45466699ba26d6352c298d9162",
+      "cmd/experiment/files.go": "7688964f7ccc0c46b828d5226a7127236f8550868cb5d04bae0c59354cbddd1c",
+      "cmd/experiment/main.go": "fb899ef716f809938a9a47438629c09a44ff79c69d5047ac0599963b3691da1c",
+      "cmd/experiment/native_test.go": "3f7332659498078186ab175ccdb0ab85d450ea134f6aff5e127871fc25b3c904",
+      "cmd/experiment/process.go": "e0514938e96dc1443b93a58bde181cb84cb843adf7712af4ae7d8a03cf2fad69",
+      "cmd/experiment/verify.go": "3ec09e6a670116c53e9a5d509d54a98ce032b89edb57316f0b94254795adaae0",
+      "cmd/loadgen/artifacts.go": "db8a2b666ccfeacace7628f0d8d3bb1aa8171d0e63a5dbc373d97e365f75dd51",
+      "cmd/loadgen/command.go": "414ba59f3f24b074a8bc9d574090cb1bbb4e1b6f3e5ee38e94eb24cbb6ed557f",
+      "cmd/loadgen/command_test.go": "758358ac121333bd09bd333cbd9d8dd2aaa542d1ad45433b7b32da18f1c2f559",
+      "cmd/loadgen/diagnostics.go": "55a7dbf89afa9889982551ff3e8288aec484ba786a207156f08e25f9ae04b5e2",
+      "cmd/loadgen/diagnostics_test.go": "b2735e383124a2f0c997e4ce9219174de8de14f274e396da831ecce36dffe4b6",
+      "cmd/loadgen/main.go": "89ff5ca5db9ed071da0dfdb8d62f1769799b120806ef6c3e9a290ae6c0f6fefd",
+      "cmd/loadgen/native_test.go": "d5c6b99d6ad138f4d90ab88eea3a50b47a91919860bfb5848437743beb473ffc",
+      "config/benchmarks/config-v1.json": "aea894a634d8fa7d37d9c0f342e43d50abb368bab62f495689851c70540b8695",
+      "config/benchmarks/criteria-v1.json": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+      "config/benchmarks/soak-10m-v1.json": "000a5351a7b71d318bc4e57642e8407ddb9c122f44f3b64a161628a8333233d0",
+      "config/benchmarks/workload-v1.json": "13473954df0bdf39ed0f060335601760909f2db3c14efa02e090138c880b5adb",
+      "config/comparisons/soak-before-after-v1.json": "d4f285e74a601b4031da5e8401b72dd89adf67a5119f4700b8d647dd5212bd5c",
+      "config/examples/benchmark.json": "f4f5dba09c9f2c8725e5464beef7b253884beda32117400ecdc4a76446a4c8ac",
+      "config/examples/local.json": "5f074e545d2e92d88eea397f7d152a219ae8241384261debeb199b772991b4be",
+      "config/examples/workload.json": "3f8276d5de56a9cb86e4f4bc97d5df35a88d170cc75f9fd53e9ef1685e359724",
+      "go.mod": "8ccb41e981a1929f96b29313306d95f93cf575c0e6c0235b0dca85646d33ca33",
+      "internal/api/metrics.go": "17f1a9ac6816102f2e4d6daee6f927078f7b35663786c231a9a64ac108bb7064",
+      "internal/api/metrics_test.go": "84165d446ff1fba7cfbd416a2511f12013440621d03fd38839568a6cb4593ae6",
+      "internal/api/native_test.go": "23c70b1a94d920fecece1f641038287e25bfac598aa426f612810e4327f0d434",
+      "internal/api/network_test.go": "d30bd017d8ffa1a38e7ac7e92246392c480246512390aa239ef9990d341f51ba",
+      "internal/api/request.go": "a3eef2e0f6441b2b1f426dbc5fecba3125582e480040b8f0fda67b9f20f1ea01",
+      "internal/api/response.go": "17b8c12ae5cb6d840976d1d8a3814c17ee076504fa84a228b0b0b84b848435f9",
+      "internal/api/server.go": "3e9869d5dc1c8365626c34baf842da4a434b1f1ae577b2bdbda0768af741484a",
+      "internal/api/server_test.go": "9f2e77c8e849d5bdb3ac4eaeee10acedc475331b6b5e73cd349511abda003170",
+      "internal/bench/dispatch.go": "a869aa46e8279f1bf27d9e8b31502e020e1e809037ffadb162fab1cb2653df26",
+      "internal/bench/http.go": "c5b83430c29b013e681a4caacc43e3a2d02d9f32e7b82b9269201cf83ba89dea",
+      "internal/bench/http_test.go": "3833d9db5cc61588a710567691ac5ca77bab63553bc2cf20198412e356b74e7b",
+      "internal/bench/plan.go": "cbcf9b8b1e9f8391094a7075639d98e7308b7d757ee6e3f0234d948dd9faecfa",
+      "internal/bench/plan_test.go": "f087c07cd30c2dbee2259e2eea712e7316db2e288c59ca146cce1d5add8dfa94",
+      "internal/bench/prepare.go": "90900c12ec632cc35e2dfba83193c974414f3a1c445709878c822b69ea3992e0",
+      "internal/bench/prepare_test.go": "e907145513bc027fd07235f621ecaef02f6cc309c0f7b18da93c436239badd81",
+      "internal/bench/runner.go": "12a176212349900095073875b986f085b1b3fe3ec1d3bdecbed15cd0dfd7bb9f",
+      "internal/bench/runner_test.go": "283dae85378f7a16cdb504dfafeaca0a67550778538d6b62afda6028331436cc",
+      "internal/bench/summary.go": "538a62d0b6e845358a133cf87cd0a0e339dbcdd7940b07f9083293a0521d5e16",
+      "internal/bench/summary_test.go": "418e3bd974b48735f63c21ea5c7d0cceb686178d0eb1ca500cdbad1e237a1521",
+      "internal/bench/windows.go": "4150eab98323c283583d14a33feee486a2b164fba4983ea79fbd312297b41231",
+      "internal/bench/windows_test.go": "24138e531c40a91c2bc4ed19b7545c6a0b27feba2922a58b752219d9b319a754",
+      "internal/buildinfo/info.go": "111e3dc1586a7f368e59c051dd552a467045f693e9a4e9a46bbb346d0ce10eb5",
+      "internal/domain/checkpoint.go": "5be76424f37d41d484e3052ed1bd423c7e0b24b4c029e0e9f58b8f42392095a6",
+      "internal/domain/domain_test.go": "d92ed27e60c563bffae60d0c187fed43fbacfdf4c153c18e6bcd6c6c89543a09",
+      "internal/domain/integer.go": "8639b86f19d3da12b0d9a0a3cfec4bfa6de07429a3ff838e0cfb83e9b66355cf",
+      "internal/domain/integer_benchmark_test.go": "c21323595288f78e97e35ee57cf5b990cffd7cdb820c986609f90c33381c2f80",
+      "internal/domain/types.go": "c59f7817675f9fd46c8c35b739c66c7078e68627202682889fd530e5933fb2d5",
+      "internal/domain/validation.go": "4b1a49f3b6699eba998b212881215b7e4c4bbf2430f7a23871958531f5bad572",
+      "internal/durable/darwin.go": "70c7990762d0ba7b07c45117aa0a81dcb8d7b9db204a0aef223a797b8dbcd7ec",
+      "internal/durable/rename_darwin.go": "1db22be26163bdc71d3e8cfd7ee5f7021f067751ab5114a2a2fc9d629d30b64d",
+      "internal/durable/rename_unsupported.go": "691085a18aac5bb0f3c887cbca246d27800676a3ffdb28543216db949da290ef",
+      "internal/durable/unsupported.go": "8e4bede2f8ebc1163a25e933cf32ed8fb36d450079b812d5541f597588bdea4b",
+      "internal/engine/benchmark_test.go": "20cd9db6bdc56351b2f5cf23be6df87c6494604a4f8480710ddc992bb4283471",
+      "internal/engine/book.go": "44def6168da19a7427f18533f26c02e89aa45e9612187b88305e7109939fc595",
+      "internal/engine/checkpoint.go": "ca03e5f17ea8cdee1efc41c03469328f09f586b367157d826bc76c3fe23b3234",
+      "internal/engine/checkpoint_test.go": "563161a978075c718924ae28f69568bc5c3bc9fddba991d5acec3c70b3bf25fa",
+      "internal/engine/engine.go": "4e3ae6a89751044266e6b4a7d5c714def5d2e2e90039410da5d8a18ee92b3c03",
+      "internal/engine/engine_test.go": "7bc889405dc9003346b093169f99ce94f350f58d301e60c46bedac033b87e3e4",
+      "internal/engine/invariants.go": "ad48ebe5aceaab92b90bad67089eda71199180cad243d7e5ee864aec6b73ef73",
+      "internal/engine/reference_test.go": "4062f2a2e35695b03948745d6287c63bcc1f74ced529775aca044349a45fe509",
+      "internal/engine/testdata/checkpoint-v1.json": "6a16a637647a23adb061d4d35d2a0e7d21ae78197ccfd2bbbd0412a78f958932",
+      "internal/engine/testdata/generate_checkpoint.py": "b4e8893522f3025893a3ba554af790999e5263c919d011d3c4db1f3dec74282b",
+      "internal/engine/view.go": "3ed48a5f909340ab9cdaedbe12114130f99d1f92b0220e6e7912691746929ef8",
+      "internal/runtime/http_bridge_test.go": "a71e0bdb6e00c1583d7e51133352844cfc34134ffb662dd1a2e5708e0f13ca0a",
+      "internal/runtime/http_concurrent_native_test.go": "c782c5a4ca5724e517812c232c5a0c6a2cab5a98b9f58c31c219d1ee874fc7e8",
+      "internal/runtime/http_fault_native_test.go": "a42870503b3c1851f56fb4531ec24be8a972bba0211c029f01d02533fdab36c7",
+      "internal/runtime/http_helpers_native_test.go": "1a0d5c5c9517641f03a44fa50099ae75265f560cae4770879074e369ec92dae7",
+      "internal/runtime/http_process_native_test.go": "70a619e6f4e127c091e9ee457f9b03a656b016d7922df90c7fa8cdff54c732d8",
+      "internal/runtime/http_rules_native_test.go": "15b3b74386bd754849e9ee30f489f6a25b97d14c4182b09fc2f6e6e5d477dee4",
+      "internal/runtime/lifecycle_test.go": "2ddddc8a2f244c10607fd9c06726a34b641d87d7a8ab00a16e5d7c95a3972727",
+      "internal/runtime/metrics.go": "5a79632f0ebcf6377e731c7a72ad24c95093911856962435d67c05ccb746a73c",
+      "internal/runtime/metrics_test.go": "de2f79389691c4b275d77a5d16a4afc2514af5cf0c87266a39605e3fd01de947",
+      "internal/runtime/native_test.go": "de67528dbbd5016c74dc59d0b10b54a1ec131e0141da9220343afc5c654cbcbd",
+      "internal/runtime/owner.go": "4ecf6a600ea7f56223bffcf7802cd94e24a902128f42264b7f1b294683a30612",
+      "internal/runtime/query.go": "b25de2898f3eced45d926baf05b21ee61312aca47bc4159eac1842a5c791b592",
+      "internal/runtime/query_test.go": "fd5aa3d0148f77ecfb463552a20e618f92574f149cf6812254426276edeef7f8",
+      "internal/runtime/recovery.go": "60690a3146dd7d7669097b73e45f6e75c82570ce78f3a53229fb7704dfee5b00",
+      "internal/runtime/recovery_native_test.go": "686f9e38a4a46758cf31bbfb334b7212d7718dd70bf8e3ef4d7d1d21a04af116",
+      "internal/runtime/recovery_test.go": "58ae6ea863306906aae106717e18efd227cee8016238960837b6c14b03cc4bd7",
+      "internal/runtime/runtime.go": "e166befb2d80e0bea02a651f2cd5070c04f107871a07b0f7350182fefe7f52f5",
+      "internal/runtime/runtime_test.go": "dfaaeef75c3e05f48686a435af7085f24f87caee283877b3d45c485ec99959b5",
+      "internal/runtime/snapshot.go": "db09cabbb0b1b670b810f689bce8ce7f52f508fc083da732bf9380e4795f02f4",
+      "internal/runtime/snapshot_native_test.go": "9ae66c4b372212961c0687d8946c186d111453bc7f8092d5781b1e20f04934eb",
+      "internal/runtime/snapshot_test.go": "054aa4b6f026e755ae979e554e5ef9885ee91adb5a73bf3042702cf87dd9a1b3",
+      "internal/runtime/types.go": "c95e1a4149101a4d98e76a1f1b149d123dbd8f36217a9518890718ff89c2c7cc",
+      "internal/snapshot/codec.go": "9608a1a050abf57c883f59f6ffeefde9fad5bbb04c36143dffdda204a3abff02",
+      "internal/snapshot/codec_test.go": "3d1e1ed3231b149d18ec73ff2ad3afb54bff6b091d2b87809b45e4d0135432ef",
+      "internal/snapshot/decode.go": "1ebafc5ec8de5f495e371c9069c58358ca8f77c269fc212ef66f12cf1cf14a52",
+      "internal/snapshot/decode_test.go": "09cfcfa097ca4dd2d671b0ae8b3630ba48e47c836aa0a6cab5e344c9e4697c17",
+      "internal/snapshot/files.go": "16a15b96bccf7de8e756c3114859f1299b391e962eea8e76890367bfc003969e",
+      "internal/snapshot/files_test.go": "291a4ac9728af6f295d6043fbfbb5fe21a67af43d22af5240bc7a8dae44553b1",
+      "internal/snapshot/publish.go": "504172a1da7c4390a2a622d4e1b57967c5a122e6d0a8e1e951e54f2c3bd3ab52",
+      "internal/snapshot/publish_darwin_test.go": "f1487aa7fef9a2b527a2a125111d029d4b57b722714f8bcbe2535fc9d53e51ec",
+      "internal/snapshot/publish_test.go": "05d2d57ca2f5a3a0f84acb24f6ffa57d85a74d16c693c70a731958d3dc719c03",
+      "internal/snapshot/publish_unsupported_test.go": "70b87d429a751bc1590df310650e8c8163ebdea879b0cc5c42fa74cbb1c04d04",
+      "internal/snapshot/size.go": "97e2c639db72d90c8cdc4e4e1f4a4a9170e1e2fa8f368304559831407d10ec7b",
+      "internal/snapshot/size_test.go": "f8f42af5ae99269bfd04fb55c08ccfe3f4b111b778697685af4ea8cfaba815e2",
+      "internal/snapshot/testdata/config.json": "44ba0a000d33bee6bea01809ec0eeb47571f1bf3c35ba9bffe1a90f6b831c445",
+      "internal/snapshot/testdata/generate.py": "5110542e37bd5654ab7e06615cf42b18287763d410eaf6f2628d23a613820711",
+      "internal/snapshot/timings_test.go": "4217261834265079e0844a2f9a24d9824625d08db8a046611b245b416f4b46a6",
+      "internal/strictjson/strict.go": "b95999403261ab1b74ee68cf223eceb3521ac9a216e18a6e702abe762e34e4d9",
+      "internal/strictjson/strict_test.go": "f37ead57ccc4565d1a17092e9c3647011f32f48a8cf862fdcf52b2e5c51c9330",
+      "internal/telemetry/histogram.go": "f228ad79eacd22f8818d3b88a53a731e5a08f9e7a6e6134bc819684c560141d8",
+      "internal/telemetry/histogram_test.go": "2c6473d2e2583cbb964403fc8deb1956b314b3ab02b37ee5ff73b39f984ae1c0",
+      "internal/telemetry/process.go": "29d4c0b20e4cc8fb623e4b9ed3256daa78c2f92b83d60605450db16f0362a677",
+      "internal/telemetry/process_unix.go": "13ef53a7583ec9a511d6e8ed661895996d2b01f13e8eed8902b94c79ea1982a1",
+      "internal/telemetry/process_unsupported.go": "8bb71441ed4b51f93d064d03d6fc4123f98eeff2bb5ed5dc97a0a124e559a83d",
+      "internal/telemetry/stages.go": "5bd9ddf5272fe40534a799d5936620ed7336aeeff017bb93498a4bf8942492f1",
+      "internal/telemetry/stages_test.go": "444708829c9a02c8389f36bbcab7ae1edd4fdd2dc1fe7fc38ff3ffff68f09e9e",
+      "internal/wal/codec.go": "f12343248465b377f650c1efd43c0588b1d48fe7d0b0fd8022a07014b6605c48",
+      "internal/wal/codec_test.go": "e3dfb836ae8d84534ca9168f76cf57a8bad063e374c82211d90d366dad8985be",
+      "internal/wal/frame.go": "ac47df76ff5c1973783cc5c07626926d34e55a5106ffad831d4809a14bbe2ded",
+      "internal/wal/metrics.go": "9d4e60a064e9c661508373d82933d1b15d3dfd519c73ced74704fc7b840939a1",
+      "internal/wal/metrics_test.go": "84d96ffa618c3dfaa4202c95070e07fd8202c673120a2adff003b2cf4267e661",
+      "internal/wal/store.go": "421c21e1e45153d093b21c0954e343957d185f6374b3fd44113c742377a3f20a",
+      "internal/wal/store_darwin_test.go": "50c6bea961a6fd2d262a754804bd81706d55dfe7816cd33d015eb4e5e7288e7f",
+      "internal/wal/store_test.go": "c5d18beb7167a9f536ee706946e457372d7e701beddad3d51e662f787477703d",
+      "internal/wal/store_unsupported_test.go": "499fb21b81d3ed38cfcf4ebe78260344812d9deaf61944dfe3f16518de8d94c6",
+      "internal/wal/testdata/cancel.json": "3268ac41b83ebaaf27baf38d57a4106f59ca92888f0564567a418c818e8123d6",
+      "internal/wal/testdata/config.json": "66f7316af650b745cdf5202d08cb29a2efc35aa47c8fe7ded6140a7053b6f82b",
+      "internal/wal/testdata/generate.py": "a4ed214f78aaa2f4042101cf3fd293cd42fc7fd538264bb32afb9ab42a0d8602",
+      "internal/wal/testdata/record.json": "373923ee254b4673f0c925a3e80aca5a6f0e30fe483d3b2204d4ae0ee89a3da6",
+      "internal/wal/writer.go": "8eab4c29c67b04a0495e395773c1aa4fe841ec53b4756a7e6f331de61fac65e3",
+      "internal/wal/writer_test.go": "1d596b9a1daca22392456c6a50c3803050e25aa0ca1180a45442581b6e341cd8",
+      "scripts/ci.sh": "87cc159640861098a27a7084d15bea220ae9bcfa106311075753ffc5523af820",
+      "scripts/demo.sh": "7f2c48b8aa6ab65d287622d8a75ff1e4c8b31135e32187c2d18f03ada15173b3",
+      "scripts/go": "9c742c3ab68aea77b0dfff8904111eb17bfd43140c34e9e335878c595fe2d6cf",
+      "scripts/setup-go.sh": "6a4defcdf1763b65274ac8843521d79411b2fecc49cb9c24813c341c8c98a3d1",
+      "tools/benchreport/analyze.go": "935dbae1a717ef475e3b4fc6990ec5fbeb43f0670d745e93f3e4df570896a31a",
+      "tools/benchreport/analyze_test.go": "f4b52b40fe0104f9ff7c6a9b8db16deefd9c925d0c22cf79c10b7597b7193cb1",
+      "tools/benchreport/files.go": "79465b3e5097f6243ac9c130908df1f5172e55592b19d802ff67fa329bc11917",
+      "tools/benchreport/main.go": "b54b085351c43b8ddae5772cf30b1718a299b8010225cb2cabb3db30ec9deacc",
+      "tools/benchreport/observations.go": "7af70244f2c01c24ba418d74b4b03963a79aae3918782cc7aa56b2d17663520b",
+      "tools/benchreport/types.go": "02aa82acdb916077928d577eb747c02b331afbed4d05859f8cfc3d5d959818c3",
+      "tools/civerify/main.go": "2ed5486174fc21bc9bea8e9ea6854d6a287720e2e41bd7f259d81f9ad12ff044",
+      "tools/civerify/main_test.go": "fa532f2567b18ba576880153f4b92bac751b037c889b53013174bce2322558a9",
+      "tools/diagnostics/analysis.py": "a4e150ceec6378fbb1e07a880fa28986ecee6d33ccedb706ae6ebc6a2be12672",
+      "tools/diagnostics/archive.py": "b3096e14e3d858bd175a7c7ccda960ab6aea5ddb53c79b60db94b94b95690108",
+      "tools/diagnostics/assets/durable.go.tmpl": "7a3514fcab69b1988360c6c2902df86d488c5eba86ae213614b4bc48674086ee",
+      "tools/diagnostics/assets/exchange-main.go.tmpl": "7a3a43ac81587b3d095c6ec9f1c107f627b08c6f621d0b7fc46c084885e9808e",
+      "tools/diagnostics/assets/loadgen-main.go.tmpl": "674f3f1a05d26add7e9c4069d3e91d27717d1d1edfcf58432bfc0a9aafdd3af3",
+      "tools/diagnostics/assets/procio.c": "db8847b460830ad30f5ae94ea11d6e5d1f7e3385392c1f1434616b29c65d39a4",
+      "tools/diagnostics/assets/runner.go.tmpl": "f4e159566be99b7626733eb900fe9d5ef7d6261bfa437e5e521ea577f3cb53da",
+      "tools/diagnostics/assets/sources.json": "25338dd0066a2f5f849d12e75f7d5beb7cdae3d123365c3f935b945882e06b8c",
+      "tools/diagnostics/assets/store.go.tmpl": "424141c4bcafe1b88f5ff883adbd1562ace392782ee7a5c0d3985d8f464319d7",
+      "tools/diagnostics/baseline.py": "ade355eacac5434aa5af292803ea646c94585b778fba2b25ed55ef5c1d899a80",
+      "tools/diagnostics/build.py": "646179dc5fe0c47b6ed60b45a43589917e7d2458e044b78fecab94c86d73931f",
+      "tools/diagnostics/common.py": "db1013e0d925cede7e13c11dff31bf8aef8713542719fd9664d660f5bdd95bee",
+      "tools/diagnostics/comparison.py": "8c5fb3227adf0a9fbdc1966f7fb8786e8a0cccb3824570f583cfb4a21f28609c",
+      "tools/diagnostics/experiment.py": "1104223f5f6b0d0e5d6555c4af0670079aaa81d865e66af1319af09a3675c654",
+      "tools/diagnostics/metrics.py": "d90fb8dd3e992cfa7b618569aaa5be068ad7a1dbe5727e8dfce1513275e3471f",
+      "tools/diagnostics/recovery.py": "e8be06d7a15b97fa2eceeed4e93b46d30fc43d63668ae9d250e0704b6b81632f",
+      "tools/diagnostics/runner.py": "fcc55a0890bd6838d3f3633e84af5f9c4a7fea0f762097406c7f53321fabed3a",
+      "tools/diagnostics/samplers.py": "3202ad86a2ceb04e3e5a13cc692f712b756fac423e1b6478555d03ed7759b575",
+      "tools/diagnostics/smoke.py": "7df9588fb315c3ad7488459379a1eb064d8c92300a0a42a099373e611a64715a",
+      "tools/diagnostics/test_baseline.py": "be83d217a06c77dbabaaf27314a41a85e4fa6f4fd25bea0c0dca6ccac4b78827",
+      "tools/diagnostics/test_comparison.py": "f34e59e6d92fcad991e9b8dddcaa24eb0fb54b057c4d62cb8d79a1164e3c9608",
+      "tools/diagnostics/test_diagnostics.py": "90691f13c810d9057b164f8eb0f16b04f9649b9e92d82dd27deb2cb9de3635c9",
+      "tools/diagnostics/trace_reader.py": "5afc1dbecb50d30602b2aee5f31a0ce5f3945e2c50a54794628e1644e81bda3d",
+      "tools/experimentcheck/main.go": "fb053c9b1bac0ca6ee9c119e24a545634ca1d6f01f0a51d0ad9da8939347e3ab",
+      "tools/storageprobe/main.go": "2dd75a9da14386dd95431ad357b9463ce88ec4ad89ec2627ac42fd485771b49c",
+      "tools/storageprobe/main_test.go": "401b7a537752538043c1ed840284961d5a3a35a02b2c53dca65a49617d389539",
+      "tools/storageprobe/platform.go": "702a5e4db519de4c1fa1d997ef1091d7aa8287a6314876d4eaeccfdd25deee34",
+      "tools/storageprobe/unsupported_test.go": "73ffc5b5a4f944dfecafa03bcda67b81e4796d3cbbdc1c82d5bf700ba5d4b9d7",
+      "tools/timerprobe/main.go": "f1122ac04ebfd40a2a79cb0c5a7e70936ff35fa418b215e3a55a0a5d803976a4",
+      "tools/timerprobe/main_test.go": "e8648cd3c1f52b88538cc89a83d81324e743913995c4a5fbfddfb869fdd8bfcc"
+    },
+    "order": [
+      [
+        "normal-1",
+        "normal",
+        10000
+      ],
+      [
+        "snapshot-1",
+        "snapshot",
+        1000
+      ],
+      [
+        "snapshot-2",
+        "snapshot",
+        1000
+      ],
+      [
+        "normal-2",
+        "normal",
+        10000
+      ],
+      [
+        "normal-3",
+        "normal",
+        10000
+      ],
+      [
+        "snapshot-3",
+        "snapshot",
+        1000
+      ]
+    ],
+    "runtimeEnvironment": {
+      "GOMAXPROCS": "11",
+      "GOGC": "100",
+      "GOMEMLIMIT": "off"
+    },
+    "quietGate": {
+      "medianBusyMax": 15,
+      "peakBusyMax": 30,
+      "minimumRecords": 10,
+      "enforced": true,
+      "maximumAttempts": 15
+    },
+    "cooldownSeconds": 30,
+    "trace": false,
+    "generatorDiagnosticsNanos": 0,
+    "metricsIntervalNanos": 500000000,
+    "snapshotIntervalNanos": 5000000000,
+    "minimumFreeBytes": 8589934592,
+    "maximumBundleBytes": 4294967296,
+    "maximumProcessRSSBytes": 2147483648,
+    "maximumOwnedRSSBytes": 3221225472,
+    "hostFullyIsolated": false,
+    "powerLossTested": false,
+    "resumeFrom": {
+      "path": "var/lower-rate-resumed-2",
+      "manifestSHA256": "785d678fc613361e124250d7414634f6ffc87d8ebfd6540107c15e916ca82c02"
+    }
+  },
+  "baselineQualification": {
+    "criteriaSHA256": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+    "reportSHA256": "e6ad54f3e089c60724c28c2eae3d6aed19cfc7df3672e34636319ae7164b3bde",
+    "cases": [
+      {
+        "bundle": "var/lower-rate-reference/normal-1",
+        "runId": "8f384581-f303-4dbf-816d-f667db96e771",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7187708,
+        "worstWindowRequestP99Nanos": 8003875,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 52417,
+              "p50Nanos": 4533417,
+              "p95Nanos": 6886000,
+              "p99Nanos": 7209209,
+              "maxNanos": 14171833
+            },
+            "metricSamples": 10,
+            "queueMean": 12.5,
+            "queueMax": 30
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53042,
+              "p50Nanos": 3302542,
+              "p95Nanos": 6171291,
+              "p99Nanos": 8003875,
+              "maxNanos": 36338833
+            },
+            "metricSamples": 10,
+            "queueMean": 8.5,
+            "queueMax": 20
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 52625,
+              "p50Nanos": 3362417,
+              "p95Nanos": 6292584,
+              "p99Nanos": 7899042,
+              "maxNanos": 28837625
+            },
+            "metricSamples": 10,
+            "queueMean": 7.7,
+            "queueMax": 20
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53042,
+              "p50Nanos": 3177625,
+              "p95Nanos": 5931667,
+              "p99Nanos": 6827875,
+              "maxNanos": 10790000
+            },
+            "metricSamples": 10,
+            "queueMean": 9.9,
+            "queueMax": 30
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      },
+      {
+        "bundle": "var/lower-rate-reference/snapshot-1",
+        "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+        "scenario": "snapshot",
+        "requestsPerSecond": 1000,
+        "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": false,
+        "reasons": [
+          "WINDOW_3_P99"
+        ],
+        "measurementValid": true,
+        "requestP99Nanos": 10799209,
+        "worstWindowRequestP99Nanos": 39254708,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 100375,
+              "p50Nanos": 4180041,
+              "p95Nanos": 7147416,
+              "p99Nanos": 8549792,
+              "maxNanos": 15167417
+            },
+            "metricSamples": 10,
+            "queueMean": 0.8,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 83583,
+              "p50Nanos": 3998291,
+              "p95Nanos": 7047042,
+              "p99Nanos": 9043292,
+              "maxNanos": 28233125
+            },
+            "metricSamples": 10,
+            "queueMean": 1.3,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 95667,
+              "p50Nanos": 4171167,
+              "p95Nanos": 7031583,
+              "p99Nanos": 9975083,
+              "maxNanos": 40790750
+            },
+            "metricSamples": 10,
+            "queueMean": 1.6,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 100208,
+              "p50Nanos": 4321833,
+              "p95Nanos": 7473333,
+              "p99Nanos": 39254708,
+              "maxNanos": 87115667
+            },
+            "metricSamples": 10,
+            "queueMean": 1.2,
+            "queueMax": 3
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 4
+      },
+      {
+        "bundle": "var/lower-rate-resumed-3/snapshot-2",
+        "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+        "scenario": "snapshot",
+        "requestsPerSecond": 1000,
+        "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 10517625,
+        "worstWindowRequestP99Nanos": 12650625,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 96625,
+              "p50Nanos": 6014209,
+              "p95Nanos": 9267834,
+              "p99Nanos": 9969166,
+              "maxNanos": 24025584
+            },
+            "metricSamples": 10,
+            "queueMean": 1,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 84792,
+              "p50Nanos": 5391459,
+              "p95Nanos": 9184334,
+              "p99Nanos": 12650625,
+              "maxNanos": 35314542
+            },
+            "metricSamples": 10,
+            "queueMean": 1,
+            "queueMax": 4
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 73167,
+              "p50Nanos": 5895375,
+              "p95Nanos": 9143583,
+              "p99Nanos": 9954958,
+              "maxNanos": 34108208
+            },
+            "metricSamples": 10,
+            "queueMean": 1.4,
+            "queueMax": 4
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 93542,
+              "p50Nanos": 5984667,
+              "p95Nanos": 9264625,
+              "p99Nanos": 12193500,
+              "maxNanos": 43947917
+            },
+            "metricSamples": 10,
+            "queueMean": 1.9,
+            "queueMax": 3
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 4
+      },
+      {
+        "bundle": "var/lower-rate-resumed-3/normal-2",
+        "runId": "1998dc92-761b-4b3a-a302-4d8c27c59989",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7207208,
+        "worstWindowRequestP99Nanos": 8981750,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51917,
+              "p50Nanos": 3386709,
+              "p95Nanos": 6376250,
+              "p99Nanos": 7233833,
+              "maxNanos": 16202583
+            },
+            "metricSamples": 10,
+            "queueMean": 4.7,
+            "queueMax": 15
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53042,
+              "p50Nanos": 3338167,
+              "p95Nanos": 6291250,
+              "p99Nanos": 7100458,
+              "maxNanos": 13879084
+            },
+            "metricSamples": 10,
+            "queueMean": 5.9,
+            "queueMax": 18
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53750,
+              "p50Nanos": 3203208,
+              "p95Nanos": 6334542,
+              "p99Nanos": 8981750,
+              "maxNanos": 20729458
+            },
+            "metricSamples": 10,
+            "queueMean": 5.8,
+            "queueMax": 18
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 54333,
+              "p50Nanos": 3086250,
+              "p95Nanos": 5866875,
+              "p99Nanos": 6873667,
+              "maxNanos": 13559917
+            },
+            "metricSamples": 10,
+            "queueMean": 13.5,
+            "queueMax": 60
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      },
+      {
+        "bundle": "var/lower-rate-resumed-3/normal-3",
+        "runId": "d63c8cdd-7a83-469f-970d-fafd16ebae6f",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7032291,
+        "worstWindowRequestP99Nanos": 7079917,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 52709,
+              "p50Nanos": 3663291,
+              "p95Nanos": 6508125,
+              "p99Nanos": 7079917,
+              "maxNanos": 13652292
+            },
+            "metricSamples": 10,
+            "queueMean": 7,
+            "queueMax": 22
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53083,
+              "p50Nanos": 3402958,
+              "p95Nanos": 6240750,
+              "p99Nanos": 7003500,
+              "maxNanos": 14154583
+            },
+            "metricSamples": 10,
+            "queueMean": 2.7,
+            "queueMax": 13
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53000,
+              "p50Nanos": 3148333,
+              "p95Nanos": 5960750,
+              "p99Nanos": 6936791,
+              "maxNanos": 13982084
+            },
+            "metricSamples": 10,
+            "queueMean": 3.1,
+            "queueMax": 17
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 53459,
+              "p50Nanos": 3428750,
+              "p95Nanos": 6335958,
+              "p99Nanos": 7038208,
+              "maxNanos": 13755708
+            },
+            "metricSamples": 10,
+            "queueMean": 6.9,
+            "queueMax": 22
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      },
+      {
+        "bundle": "var/lower-rate-resumed-3/snapshot-3",
+        "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+        "scenario": "snapshot",
+        "requestsPerSecond": 1000,
+        "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 10362708,
+        "worstWindowRequestP99Nanos": 11745708,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 97333,
+              "p50Nanos": 5219250,
+              "p95Nanos": 8689583,
+              "p99Nanos": 9338708,
+              "maxNanos": 22713833
+            },
+            "metricSamples": 10,
+            "queueMean": 1,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 90959,
+              "p50Nanos": 5736958,
+              "p95Nanos": 8904042,
+              "p99Nanos": 10484875,
+              "maxNanos": 38670708
+            },
+            "metricSamples": 10,
+            "queueMean": 1.5,
+            "queueMax": 3
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 91209,
+              "p50Nanos": 5543166,
+              "p95Nanos": 8890750,
+              "p99Nanos": 11745708,
+              "maxNanos": 38916042
+            },
+            "metricSamples": 10,
+            "queueMean": 0.9,
+            "queueMax": 2
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 5000,
+            "started": 5000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 5000,
+              "minNanos": 80875,
+              "p50Nanos": 4735666,
+              "p95Nanos": 8215791,
+              "p99Nanos": 9733125,
+              "maxNanos": 38716166
+            },
+            "metricSamples": 10,
+            "queueMean": 1.1,
+            "queueMax": 4
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 4
+      }
+    ],
+    "groups": [
+      {
+        "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "runs": 3,
+        "passed": 3,
+        "qualified": true,
+        "minNewOrdersPerSecond": 6503.65,
+        "maxNewOrdersPerSecond": 6504.1,
+        "worstRequestP99Nanos": 7207208,
+        "worstScheduledP99Nanos": 7440209
+      },
+      {
+        "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+        "scenario": "snapshot",
+        "requestsPerSecond": 1000,
+        "runs": 3,
+        "passed": 2,
+        "qualified": false,
+        "minNewOrdersPerSecond": 647.45,
+        "maxNewOrdersPerSecond": 650.05,
+        "worstRequestP99Nanos": 10799209,
+        "worstScheduledP99Nanos": 11450583
+      }
+    ]
+  },
+  "candidateQualification": {
+    "criteriaSHA256": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+    "reportSHA256": "d1efd7993592e0723712f77c5fa83800eabf9a1ad5e10ed055ed33f04dc627bc",
+    "cases": [
+      {
+        "bundle": "var/lower-rate-integer-candidate/normal-1",
+        "runId": "ef51a361-9d6f-4ce7-94d8-f27bc159e1ce",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "22fa095263b2da1d20edd110e02645e753871393f718a2719840c8a1a9dc972a",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+        "generatorSHA256": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7037084,
+        "worstWindowRequestP99Nanos": 7206292,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 49625,
+              "p50Nanos": 3691333,
+              "p95Nanos": 6589791,
+              "p99Nanos": 7206292,
+              "maxNanos": 14143250
+            },
+            "metricSamples": 10,
+            "queueMean": 3.7,
+            "queueMax": 14
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51042,
+              "p50Nanos": 3465334,
+              "p95Nanos": 6347833,
+              "p99Nanos": 7026542,
+              "maxNanos": 14502958
+            },
+            "metricSamples": 10,
+            "queueMean": 3.4,
+            "queueMax": 20
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51958,
+              "p50Nanos": 3220791,
+              "p95Nanos": 5977208,
+              "p99Nanos": 6906084,
+              "maxNanos": 13825209
+            },
+            "metricSamples": 10,
+            "queueMean": 5.7,
+            "queueMax": 17
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 50333,
+              "p50Nanos": 3233709,
+              "p95Nanos": 6026750,
+              "p99Nanos": 6908583,
+              "maxNanos": 12529125
+            },
+            "metricSamples": 10,
+            "queueMean": 4.7,
+            "queueMax": 21
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      },
+      {
+        "bundle": "var/lower-rate-integer-candidate/normal-2",
+        "runId": "058050a1-3f3f-4629-915c-19defdde4968",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "22fa095263b2da1d20edd110e02645e753871393f718a2719840c8a1a9dc972a",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+        "generatorSHA256": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7181792,
+        "worstWindowRequestP99Nanos": 7305042,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 49875,
+              "p50Nanos": 4647250,
+              "p95Nanos": 6901583,
+              "p99Nanos": 7200542,
+              "maxNanos": 14436083
+            },
+            "metricSamples": 10,
+            "queueMean": 17.2,
+            "queueMax": 92
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51292,
+              "p50Nanos": 4623958,
+              "p95Nanos": 6909750,
+              "p99Nanos": 7305042,
+              "maxNanos": 14380417
+            },
+            "metricSamples": 10,
+            "queueMean": 13,
+            "queueMax": 24
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51459,
+              "p50Nanos": 3771000,
+              "p95Nanos": 6582167,
+              "p99Nanos": 7131417,
+              "maxNanos": 12498166
+            },
+            "metricSamples": 10,
+            "queueMean": 13.8,
+            "queueMax": 27
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 49875,
+              "p50Nanos": 3274333,
+              "p95Nanos": 6035042,
+              "p99Nanos": 6910292,
+              "maxNanos": 12545083
+            },
+            "metricSamples": 10,
+            "queueMean": 7.5,
+            "queueMax": 21
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      },
+      {
+        "bundle": "var/lower-rate-integer-candidate/normal-3",
+        "runId": "5b99bfad-6ce7-42d3-84aa-6856415eef6d",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "series": "22fa095263b2da1d20edd110e02645e753871393f718a2719840c8a1a9dc972a",
+        "serverBuild": {
+          "goVersion": "go1.27.3",
+          "goos": "darwin",
+          "goarch": "arm64",
+          "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+          "revisionKnown": true,
+          "modified": false
+        },
+        "serverSHA256": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+        "generatorSHA256": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322",
+        "sealed": true,
+        "summaryRecomputed": true,
+        "pass": true,
+        "reasons": [],
+        "measurementValid": true,
+        "requestP99Nanos": 7004375,
+        "worstWindowRequestP99Nanos": 7071166,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51792,
+              "p50Nanos": 3322917,
+              "p95Nanos": 6174375,
+              "p99Nanos": 6994208,
+              "maxNanos": 12465084
+            },
+            "metricSamples": 10,
+            "queueMean": 5,
+            "queueMax": 23
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51167,
+              "p50Nanos": 3360959,
+              "p95Nanos": 6185375,
+              "p99Nanos": 6963542,
+              "maxNanos": 12037458
+            },
+            "metricSamples": 10,
+            "queueMean": 11.3,
+            "queueMax": 29
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 50416,
+              "p50Nanos": 3340500,
+              "p95Nanos": 6313667,
+              "p99Nanos": 6996000,
+              "maxNanos": 12919959
+            },
+            "metricSamples": 10,
+            "queueMean": 6.8,
+            "queueMax": 18
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "scheduled": 50000,
+            "started": 50000,
+            "localFailures": 0,
+            "operationalFailures": 0,
+            "requestLatency": {
+              "count": 50000,
+              "minNanos": 51583,
+              "p50Nanos": 3233167,
+              "p95Nanos": 6247875,
+              "p99Nanos": 7071166,
+              "maxNanos": 14347917
+            },
+            "metricSamples": 10,
+            "queueMean": 7.4,
+            "queueMax": 19
+          }
+        ],
+        "generatorDropRate": 0,
+        "timeoutRate": 0,
+        "overloadRate": 0,
+        "snapshotOverlaps": 0
+      }
+    ],
+    "groups": [
+      {
+        "series": "22fa095263b2da1d20edd110e02645e753871393f718a2719840c8a1a9dc972a",
+        "scenario": "normal",
+        "requestsPerSecond": 10000,
+        "runs": 3,
+        "passed": 3,
+        "qualified": true,
+        "minNewOrdersPerSecond": 6503.1,
+        "maxNewOrdersPerSecond": 6504.05,
+        "worstRequestP99Nanos": 7181792,
+        "worstScheduledP99Nanos": 7252416
+      }
+    ]
+  },
+  "comparison": {
+    "spec": "config/comparisons/lower-rate-integer-v1.json",
+    "specSHA256": "ae5a3f6186de9191cc0a5360f9dd00fee16981ea44a1c2ab783fd1572a479d86",
+    "rawReport": "var/comparisons/lower-rate-integer-v1/report.json",
+    "rawReportSHA256": "1740768dd6d451fe94e8b559bf15ec627b42561f10658987a2b42be397fd2e93",
+    "rawMarkdownSHA256": "2591393da517b8540099168393eb3e4eb1a11d93d8f00d1c7704622ffd2bdb05",
+    "conditions": {
+      "differences": [],
+      "observedFieldsMatch": true
+    },
+    "buildDifferences": [
+      {
+        "field": "binarySHA256.exchange",
+        "baseline": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+        "candidate": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617"
+      },
+      {
+        "field": "binarySHA256.loadgen",
+        "baseline": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+        "candidate": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322"
+      },
+      {
+        "field": "generator.revision",
+        "baseline": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+        "candidate": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb"
+      },
+      {
+        "field": "server.revision",
+        "baseline": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+        "candidate": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb"
+      }
+    ],
+    "judgement": {
+      "eligibleForReview": true,
+      "improvementClaimed": false,
+      "blockers": [],
+      "meaning": "descriptive changes; no causal or statistical improvement claim"
+    },
+    "metrics": {
+      "requestP99Ms": {
+        "label": "요청 p99",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 7.187708,
+          "min": 7.032291,
+          "max": 7.207208
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 7.037084,
+          "min": 7.004375,
+          "max": 7.181792
+        },
+        "delta": -0.15062399999999965,
+        "percentChange": -2.095577616675575
+      },
+      "scheduledP99Ms": {
+        "label": "예정 시각 기준 p99",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 7.248292,
+          "min": 7.079833,
+          "max": 7.264292
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 7.082042,
+          "min": 7.053042,
+          "max": 7.224291
+        },
+        "delta": -0.1662499999999998,
+        "percentChange": -2.293643799118465
+      },
+      "newOrderScheduledP99Ms": {
+        "label": "고유 신규 승인 예정 p99",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 7.334875,
+          "min": 7.121875,
+          "max": 7.440209
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 7.125875,
+          "min": 7.103167,
+          "max": 7.252416
+        },
+        "delta": -0.20900000000000052,
+        "percentChange": -2.8494009782034526
+      },
+      "worst5sRequestP99Ms": {
+        "label": "5초 구간 요청 p99 최댓값",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 8.003875,
+          "min": 7.079917,
+          "max": 8.98175
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 7.206292,
+          "min": 7.071166,
+          "max": 7.305042
+        },
+        "delta": -0.7975830000000004,
+        "percentChange": -9.964960722150213
+      },
+      "worst5sScheduledP99Ms": {
+        "label": "5초 구간 예정 p99 최댓값",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 9.066375,
+          "min": 7.140541,
+          "max": 9.11625
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 7.252208,
+          "min": 7.110917,
+          "max": 7.361708
+        },
+        "delta": -1.8141670000000003,
+        "percentChange": -20.00983855179165
+      },
+      "windowsOverReference": {
+        "label": "참조 지연 상한 초과 구간",
+        "unit": "구간",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delta": 0,
+        "percentChange": null
+      },
+      "generatorMisses": {
+        "label": "생성기 미전송",
+        "unit": "건",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "delta": 0,
+        "percentChange": null
+      },
+      "newOrdersPerSecond": {
+        "label": "구간 내 완료 신규 승인",
+        "unit": "orders/s",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 6504,
+          "min": 6503.65,
+          "max": 6504.1
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 6503.45,
+          "min": 6503.1,
+          "max": 6504.05
+        },
+        "delta": -0.5500000000001819,
+        "percentChange": -0.00845633456334843
+      },
+      "serverLifetimeCpuSeconds": {
+        "label": "서버 생애 CPU 증분",
+        "unit": "s",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 14.411655000000001,
+          "min": 13.96393,
+          "max": 14.582156000000001
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 13.423202999999999,
+          "min": 13.21267,
+          "max": 13.894393
+        },
+        "delta": -0.9884520000000023,
+        "percentChange": -6.858698740706756
+      },
+      "serverPeakRssMiB": {
+        "label": "서버 생애 peak RSS",
+        "unit": "MiB",
+        "baseline": {
+          "observedRuns": 3,
+          "median": 426.8125,
+          "min": 419.703125,
+          "max": 431.390625
+        },
+        "candidate": {
+          "observedRuns": 3,
+          "median": 421.984375,
+          "min": 420.421875,
+          "max": 427.40625
+        },
+        "delta": -4.828125,
+        "percentChange": -1.131205154488212
+      },
+      "snapshotCompleted": {
+        "label": "서버 생애 완료 snapshot",
+        "unit": "건",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      },
+      "snapshotMedianWallMs": {
+        "label": "snapshot 호출 UTC 경과 중앙값",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      },
+      "restartReadyMs": {
+        "label": "재시작→ready/health",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      },
+      "timerSchedulerP99Ms": {
+        "label": "타이머 관찰 p99",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      },
+      "timerWorkerP99Ms": {
+        "label": "예정→worker p99",
+        "unit": "ms",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      },
+      "timerFailures": {
+        "label": "타이머/worker 실패",
+        "unit": "건",
+        "baseline": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "candidate": {
+          "observedRuns": 0,
+          "median": null,
+          "min": null,
+          "max": null
+        },
+        "delta": null,
+        "percentChange": null
+      }
+    },
+    "criteriaGroups": {
+      "baseline": [
+        {
+          "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+          "scenario": "normal",
+          "requestsPerSecond": 10000,
+          "runs": 3,
+          "passed": 3,
+          "qualified": true,
+          "minNewOrdersPerSecond": 6503.65,
+          "maxNewOrdersPerSecond": 6504.1,
+          "worstRequestP99Nanos": 7207208,
+          "worstScheduledP99Nanos": 7440209
+        }
+      ],
+      "candidate": [
+        {
+          "series": "22fa095263b2da1d20edd110e02645e753871393f718a2719840c8a1a9dc972a",
+          "scenario": "normal",
+          "requestsPerSecond": 10000,
+          "runs": 3,
+          "passed": 3,
+          "qualified": true,
+          "minNewOrdersPerSecond": 6503.1,
+          "maxNewOrdersPerSecond": 6504.05,
+          "worstRequestP99Nanos": 7181792,
+          "worstScheduledP99Nanos": 7252416
+        }
+      ]
+    },
+    "inputs": [
+      {
+        "input": {
+          "bundle": "var/lower-rate-reference/normal-1"
+        },
+        "identity": "8f384581-f303-4dbf-816d-f667db96e771",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "247b1852fcce253852bc91f26c7c14d5675d7809b3c7df204eba085ce4b5c073",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+            "loadgen": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08"
+          }
+        }
+      },
+      {
+        "input": {
+          "bundle": "var/lower-rate-resumed-3/normal-2"
+        },
+        "identity": "1998dc92-761b-4b3a-a302-4d8c27c59989",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "e30cd1805129bc9f6113d6d1dc97c4cdf5a538548a230ec65a7b931a60119d73",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+            "loadgen": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08"
+          }
+        }
+      },
+      {
+        "input": {
+          "bundle": "var/lower-rate-resumed-3/normal-3"
+        },
+        "identity": "d63c8cdd-7a83-469f-970d-fafd16ebae6f",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "cc9d0c618a34327e268119727d001b2195f15b85f71fff689919b7d01659b034",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+            "loadgen": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08"
+          }
+        }
+      },
+      {
+        "input": {
+          "bundle": "var/lower-rate-integer-candidate/normal-1"
+        },
+        "identity": "ef51a361-9d6f-4ce7-94d8-f27bc159e1ce",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "ea767958e8154d5cb695330d0a356b2cb08b3147d0b6caf669970fca5b4ae824",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+            "loadgen": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322"
+          }
+        }
+      },
+      {
+        "input": {
+          "bundle": "var/lower-rate-integer-candidate/normal-2"
+        },
+        "identity": "058050a1-3f3f-4629-915c-19defdde4968",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "8022135ef6c17f893356be45ed68f23333f0d296c65d5d3f74c6cf933ea4e3d0",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+            "loadgen": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322"
+          }
+        }
+      },
+      {
+        "input": {
+          "bundle": "var/lower-rate-integer-candidate/normal-3"
+        },
+        "identity": "5b99bfad-6ce7-42d3-84aa-6856415eef6d",
+        "status": "verified",
+        "measurementValid": true,
+        "criterionPass": true,
+        "reasons": [],
+        "evidence": {
+          "completionSHA256": "77feb8a2ad5e79d2baa30856bfa9ea3e3cd90feff9d691fea456e1af069dc3ef",
+          "sealed": true
+        },
+        "build": {
+          "server": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "generator": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "65ca1ba8b2c42cde42a51b9b8f252d3b3dd7a5eb",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "binarySHA256": {
+            "exchange": "5cc39e385e3d99533a6ba44e05e0a075b72ed97cc3363b1a12169c41c5785617",
+            "loadgen": "eb77d4a3c0d31ccacc67debe8fdd93d2998fddad08f8bc199ceda7699c7c1322"
+          }
+        }
+      }
+    ]
+  },
+  "collections": [
+    {
+      "bundle": "var/lower-rate-reference",
+      "manifestSHA256": "121be8658a364effe3aa6706789361fb842395fdc0d8211d6c97f540bf92c34c",
+      "completed": false,
+      "observations": 8,
+      "accepted": 2,
+      "rejected": 6,
+      "medianBusyRange": [
+        14.5,
+        17.5
+      ],
+      "maximumBusyRange": [
+        19.0,
+        23.0
+      ]
+    },
+    {
+      "bundle": "var/lower-rate-resumed",
+      "manifestSHA256": "9f08b8fa3023557b23a8199f1166b467990e3e751eed2abe2169a745de79c65c",
+      "completed": false,
+      "observations": 3,
+      "accepted": 0,
+      "rejected": 3,
+      "medianBusyRange": [
+        16.0,
+        17.0
+      ],
+      "maximumBusyRange": [
+        22.0,
+        23.0
+      ]
+    },
+    {
+      "bundle": "var/lower-rate-resumed-2",
+      "manifestSHA256": "785d678fc613361e124250d7414634f6ffc87d8ebfd6540107c15e916ca82c02",
+      "completed": false,
+      "observations": 15,
+      "accepted": 0,
+      "rejected": 15,
+      "medianBusyRange": [
+        16.0,
+        67.0
+      ],
+      "maximumBusyRange": [
+        19.0,
+        92.0
+      ]
+    },
+    {
+      "bundle": "var/lower-rate-resumed-3",
+      "manifestSHA256": "d83f7a6ec1a9f1f4eda5d1b7f1bdb1d98ca64c980fca19fd70b1978fb60e97ec",
+      "completed": true,
+      "observations": 4,
+      "accepted": 4,
+      "rejected": 0,
+      "medianBusyRange": [
+        4.0,
+        11.5
+      ],
+      "maximumBusyRange": [
+        11.0,
+        17.0
+      ]
+    },
+    {
+      "bundle": "var/lower-rate-integer-candidate",
+      "manifestSHA256": "f0413891f3c6d2bccafd1c6ec83fca47d6804d422acfe781351eff1a075400e8",
+      "completed": true,
+      "observations": 4,
+      "accepted": 3,
+      "rejected": 1,
+      "medianBusyRange": [
+        13.5,
+        16.0
+      ],
+      "maximumBusyRange": [
+        17.0,
+        21.0
+      ]
+    }
+  ],
+  "integrity": {
+    "baseline": {
+      "filesVerified": 166,
+      "legacyInventory": false,
+      "completed": true,
+      "archives": {},
+      "baselineDependencies": {
+        "parentCasesVerified": 2,
+        "parentManifestSHA256": "785d678fc613361e124250d7414634f6ffc87d8ebfd6540107c15e916ca82c02"
+      }
+    },
+    "candidate": {
+      "filesVerified": 121,
+      "legacyInventory": false,
+      "completed": true,
+      "archives": {}
+    },
+    "comparison": {
+      "filesVerified": 2,
+      "legacyInventory": false,
+      "completed": true,
+      "archives": {}
+    }
+  },
+  "unitBenchmark": {
+    "scope": "one positive 19-digit integer; CPU=1; benchtime=500ms; count=5",
+    "raw": "var/lower-rate-int-production-bench.txt",
+    "rawSHA256": "0add4bc236de2e913cb02a6d6a9b37c8bcc32131d6b8cbae2b8e2befcb8bd76e",
+    "variants": {
+      "legacy": {
+        "samples": [
+          {
+            "nsPerOp": 126.1,
+            "bytesPerOp": 80,
+            "allocsPerOp": 4
+          },
+          {
+            "nsPerOp": 128.1,
+            "bytesPerOp": 80,
+            "allocsPerOp": 4
+          },
+          {
+            "nsPerOp": 126.4,
+            "bytesPerOp": 80,
+            "allocsPerOp": 4
+          },
+          {
+            "nsPerOp": 132.1,
+            "bytesPerOp": 80,
+            "allocsPerOp": 4
+          },
+          {
+            "nsPerOp": 129.5,
+            "bytesPerOp": 80,
+            "allocsPerOp": 4
+          }
+        ],
+        "medianNsPerOp": 128.1
+      },
+      "append": {
+        "samples": [
+          {
+            "nsPerOp": 20.61,
+            "bytesPerOp": 24,
+            "allocsPerOp": 1
+          },
+          {
+            "nsPerOp": 20.6,
+            "bytesPerOp": 24,
+            "allocsPerOp": 1
+          },
+          {
+            "nsPerOp": 20.13,
+            "bytesPerOp": 24,
+            "allocsPerOp": 1
+          },
+          {
+            "nsPerOp": 20.53,
+            "bytesPerOp": 24,
+            "allocsPerOp": 1
+          },
+          {
+            "nsPerOp": 20.51,
+            "bytesPerOp": 24,
+            "allocsPerOp": 1
+          }
+        ],
+        "medianNsPerOp": 20.53
+      }
+    }
+  },
+  "validation": {
+    "pythonTests": 27,
+    "portableGoTests": 206,
+    "nativeRaceGoTests": 238,
+    "portableLogSHA256": "0cc5a0875bb2572adba68519a93611c43abf0d5abf9f862739b5cddb7e394853",
+    "nativeLogSHA256": "2481a2064d142546a3fea1ab686ef3b01b16502b0f2554b94e536fd5553c7a52",
+    "fullNativeStorageRecoverySmoke": true
+  },
+  "decision": {
+    "productionChangeRetained": true,
+    "reason": "Canonical bytes/errors preserved, fewer unit allocations, all three normal candidate runs pass; no maximum-throughput or causal latency claim.",
+    "normalBaselineQualified": true,
+    "snapshotBaselineQualified": false,
+    "maxThroughputImprovementClaimed": false,
+    "causalLatencyImprovementClaimed": false,
+    "snapshotPerformanceCompared": false,
+    "hostFullyIsolated": false,
+    "powerLossTested": false
+  }
+}

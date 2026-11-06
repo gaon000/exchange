@@ -15,7 +15,7 @@
 
 ## 작업별 읽기
 
-[낮은 요청률 진행 기록](benchmarks/lower-rate-progress.md)은 요청률 옵션·재개·완료한 두 실행과 호스트 gate 차단, 테스트 전용 직렬화 후보를 구분한다. 남은 반복·실제 최적화 비교는 미완료다.
+[낮은 요청률과 정수 JSON 비교](benchmarks/lower-rate-integer-comparison.md)는 정상 10,000/s 3/3 채택·snapshot 1,000/s 2/3 미채택과 JSON 할당 감소 후보의 정상 3회 비교를 기록한다. 전체 p99/CPU 차이는 관찰값이며 인과 효과·최대 처리량 향상으로 해석하지 않는다. [중단 시점 기록](benchmarks/lower-rate-progress.md)과 실패도 보존한다.
 
 [현재 기준 재측정 결과](benchmarks/controlled-baseline.md)는 유휴 gate 후 정상 29,000/s·snapshot 3,000/s 각 3회를 검증했다. 0/3·2/3 통과로 두 조건 모두 미채택했으며 실패·워밍업 누락·창별 지연을 보존한다.
 
