@@ -1,0 +1,3929 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "rawReportSHA256": "46e9ee44b050041fcd61afb755ad25ea04c8133019ae81f74b9f393453769841",
+  "integrity": {
+    "filesVerified": 3,
+    "legacyInventory": false,
+    "completed": true,
+    "archives": {}
+  },
+  "analysis": {
+    "version": 1,
+    "diagnosticOnly": true,
+    "cases": [
+      {
+        "case": "var/lower-rate-reference/snapshot-1",
+        "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+        "criterionPass": false,
+        "reasons": [
+          "WINDOW_3_P99"
+        ],
+        "inputSHA256": {
+          "loadgen/run.json": "a750b82ef9c226907ba846f215847b9fff4ee6c68ece6f684e547b8dff0715c4",
+          "loadgen/plan.jsonl": "8e3f41a350c056067335b43e9b10135a94cfeed5db6ba1eb31eaf132f76bf92e",
+          "loadgen/samples.jsonl": "77604e46d32a1c6b3146c2049913bb0158a43e254a72964e40a5c8fefe898d51",
+          "snapshot-events.jsonl": "64797f73610b76e5972ff557bbd12ba511b1e689164aef59212351dee2415268",
+          "server-metrics.jsonl": "ee305461faa4a97c9b4a80fd65ebdce43168dafa0efb9c625b7408551488a81d",
+          "../snapshot-1-host.jsonl": "6950a7d5168e93f92c357f7b547d26950c941dfc8e7a497e243421184015f67f"
+        },
+        "sourceSHA256": "ddc04ad78c5eec53a68df21ca1298626720476246bce6d376c968c84417a0dc0",
+        "utcMinusMonotonicAtEndMs": -0.3256270599365234,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "responseEndNanos": 10001618125,
+            "request": {
+              "count": 5000,
+              "p99Ms": 8.549792,
+              "maxMs": 15.167417,
+              "over20ms": 0
+            },
+            "leftExpansionMs": 453.0770778656006,
+            "rightExpansionMs": 45.2418327331543,
+            "server": {
+              "observedStartUTC": "2026-11-06T12:37:21.173853Z",
+              "observedEndUTC": "2026-11-06T12:37:26.67379Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 1971.632,
+              "gcCpuMs": 174.98645900000002,
+              "gcCycles": 17,
+              "gcPauseLargestUpperMs": 0.26214400000000004,
+              "peakRssMiB": 45.78125,
+              "liveHeapMiB": 14.861434936523438,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5500,
+                  "sumNanos": 5425703868,
+                  "meanMs": 0.9864916123636364,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.batchWait": {
+                  "count": 4683,
+                  "sumNanos": 4829275375,
+                  "meanMs": 1.0312353993166774,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1573,
+                  "sumNanos": 3561469906,
+                  "meanMs": 2.2641258143674508,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4684,
+                  "sumNanos": 33052534,
+                  "meanMs": 0.00705647608881298,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1573,
+                  "sumNanos": 3365147991,
+                  "meanMs": 2.139318493960585,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5501,
+                  "sumNanos": 21786465653,
+                  "meanMs": 3.960455490456281,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "http.encode": {
+                  "count": 5501,
+                  "sumNanos": 81793741,
+                  "meanMs": 0.014868885838938375,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5501,
+                  "sumNanos": 134805499,
+                  "meanMs": 0.02450563515724414,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 20486708,
+                  "meanMs": 10.243354,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 338014709,
+                  "meanMs": 169.0073545,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 9355958,
+                  "meanMs": 4.677979,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 11120708,
+                  "meanMs": 5.560354,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 43375,
+                  "meanMs": 0.0216875,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 1476584,
+                  "meanMs": 0.738292,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 10561375,
+                  "meanMs": 5.2806875,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 289174500,
+                  "meanMs": 144.58725,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 37916,
+                  "meanMs": 0.018958,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 15083333,
+                  "meanMs": 7.5416665,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 20345458,
+                  "meanMs": 10.172729,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 114334,
+                  "meanMs": 0.057167,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 1144293,
+                  "meanMs": 0.5721465,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 10.656208,
+                "runtime.commandQueueWait": 12.062417
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T12:37:21.900680+00:00",
+                "busyPercent": 26.0,
+                "displayedDiskMBps": 27.61
+              },
+              {
+                "utc": "2026-11-06T12:37:22.908767+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 27.02
+              },
+              {
+                "utc": "2026-11-06T12:37:23.910853+00:00",
+                "busyPercent": 27.0,
+                "displayedDiskMBps": 29.02
+              },
+              {
+                "utc": "2026-11-06T12:37:24.920222+00:00",
+                "busyPercent": 23.0,
+                "displayedDiskMBps": 26.88
+              },
+              {
+                "utc": "2026-11-06T12:37:25.924344+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 31.77
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T12:37:26.173662Z",
+                "startedUTC": "2026-11-06T12:37:26.173692Z",
+                "finishedUTC": "2026-11-06T12:37:26.379945Z",
+                "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+                "snapshotSeq": "8186",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "responseEndNanos": 15002183958,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.043292,
+              "maxMs": 28.233125,
+              "over20ms": 10
+            },
+            "leftExpansionMs": 453.1219005584717,
+            "rightExpansionMs": 44.63911056518555,
+            "server": {
+              "observedStartUTC": "2026-11-06T12:37:26.173808Z",
+              "observedEndUTC": "2026-11-06T12:37:31.673753Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 1540.217,
+              "gcCpuMs": 168.25737099999998,
+              "gcCycles": 12,
+              "gcPauseLargestUpperMs": 0.13107200000000002,
+              "peakRssMiB": 58.21875,
+              "liveHeapMiB": 20.46813201904297,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5498,
+                  "sumNanos": 5198185260,
+                  "meanMs": 0.9454683994179702,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 4
+                },
+                "runtime.batchWait": {
+                  "count": 4695,
+                  "sumNanos": 4797916261,
+                  "meanMs": 1.0219203963791268,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1635,
+                  "sumNanos": 3481224886,
+                  "meanMs": 2.1291895327217127,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4692,
+                  "sumNanos": 19621479,
+                  "meanMs": 0.004181900895140665,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1635,
+                  "sumNanos": 3357108277,
+                  "meanMs": 2.0532772336391436,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5499,
+                  "sumNanos": 20735194447,
+                  "meanMs": 3.7707209396253867,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 10
+                },
+                "http.encode": {
+                  "count": 5499,
+                  "sumNanos": 53204480,
+                  "meanMs": 0.009675300963811601,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5499,
+                  "sumNanos": 98092305,
+                  "meanMs": 0.017838207855973814,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 31278500,
+                  "meanMs": 15.63925,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 527048125,
+                  "meanMs": 263.5240625,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 13551375,
+                  "meanMs": 6.7756875,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 17721958,
+                  "meanMs": 8.860979,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 45542,
+                  "meanMs": 0.022771,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 2750834,
+                  "meanMs": 1.375417,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 9363416,
+                  "meanMs": 4.681708,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 464387500,
+                  "meanMs": 232.19375,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 23207,
+                  "meanMs": 0.0116035,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 19678124,
+                  "meanMs": 9.839062,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 29028666,
+                  "meanMs": 14.514333,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 94833,
+                  "meanMs": 0.0474165,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 1649625,
+                  "meanMs": 0.8248125,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 21.448,
+                "runtime.commandQueueWait": 23.960667
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T12:37:26.929286+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 37.4
+              },
+              {
+                "utc": "2026-11-06T12:37:27.930295+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 31.12
+              },
+              {
+                "utc": "2026-11-06T12:37:28.938521+00:00",
+                "busyPercent": 21.0,
+                "displayedDiskMBps": 30.0
+              },
+              {
+                "utc": "2026-11-06T12:37:29.941289+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 51.35
+              },
+              {
+                "utc": "2026-11-06T12:37:30.949461+00:00",
+                "busyPercent": 27.0,
+                "displayedDiskMBps": 32.03
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T12:37:31.173662Z",
+                "startedUTC": "2026-11-06T12:37:31.173614Z",
+                "finishedUTC": "2026-11-06T12:37:31.525769Z",
+                "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+                "snapshotSeq": "12451",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "responseEndNanos": 20003202083,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.975083,
+              "maxMs": 40.79075,
+              "over20ms": 24
+            },
+            "leftExpansionMs": 453.1559944152832,
+            "rightExpansionMs": 43.38383674621582,
+            "server": {
+              "observedStartUTC": "2026-11-06T12:37:31.173774Z",
+              "observedEndUTC": "2026-11-06T12:37:36.673516Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2061.137,
+              "gcCpuMs": 207.27516699999998,
+              "gcCycles": 9,
+              "gcPauseLargestUpperMs": 0.229376,
+              "peakRssMiB": 76.203125,
+              "liveHeapMiB": 29.20325469970703,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5502,
+                  "sumNanos": 6094558842,
+                  "meanMs": 1.1076988080697927,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 23
+                },
+                "runtime.batchWait": {
+                  "count": 4639,
+                  "sumNanos": 4703154454,
+                  "meanMs": 1.0138293714162534,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1560,
+                  "sumNanos": 3526907887,
+                  "meanMs": 2.260838389102564,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4639,
+                  "sumNanos": 40098123,
+                  "meanMs": 0.008643699719767192,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1560,
+                  "sumNanos": 3358583928,
+                  "meanMs": 2.1529384153846154,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5502,
+                  "sumNanos": 22298234191,
+                  "meanMs": 4.052750670846964,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 33
+                },
+                "http.encode": {
+                  "count": 5502,
+                  "sumNanos": 76231496,
+                  "meanMs": 0.013855233733187932,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5502,
+                  "sumNanos": 121546883,
+                  "meanMs": 0.022091400036350416,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 56937125,
+                  "meanMs": 28.4685625,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 667399375,
+                  "meanMs": 333.6996875,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 29319792,
+                  "meanMs": 14.659896,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 27610749,
+                  "meanMs": 13.8053745,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 37542,
+                  "meanMs": 0.018771,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 3419542,
+                  "meanMs": 1.709771,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 10654458,
+                  "meanMs": 5.327229,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 591930124,
+                  "meanMs": 295.965062,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 24124,
+                  "meanMs": 0.012062,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 19719374,
+                  "meanMs": 9.859687,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 40086333,
+                  "meanMs": 20.0431665,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 105916,
+                  "meanMs": 0.052958,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 1403832,
+                  "meanMs": 0.701916,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 35.489125,
+                "runtime.commandQueueWait": 37.854375
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T12:37:31.950511+00:00",
+                "busyPercent": 25.0,
+                "displayedDiskMBps": 38.57
+              },
+              {
+                "utc": "2026-11-06T12:37:32.951476+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 26.93
+              },
+              {
+                "utc": "2026-11-06T12:37:33.952269+00:00",
+                "busyPercent": 24.0,
+                "displayedDiskMBps": 29.9
+              },
+              {
+                "utc": "2026-11-06T12:37:34.961350+00:00",
+                "busyPercent": 24.0,
+                "displayedDiskMBps": 29.21
+              },
+              {
+                "utc": "2026-11-06T12:37:35.966399+00:00",
+                "busyPercent": 25.0,
+                "displayedDiskMBps": 26.87
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T12:37:36.173662Z",
+                "startedUTC": "2026-11-06T12:37:36.17353Z",
+                "finishedUTC": "2026-11-06T12:37:36.54579Z",
+                "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+                "snapshotSeq": "16678",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "responseEndNanos": 25011727916,
+            "request": {
+              "count": 5000,
+              "p99Ms": 39.254708,
+              "maxMs": 87.115667,
+              "over20ms": 89
+            },
+            "leftExpansionMs": 447.8468894958496,
+            "rightExpansionMs": 36.47112846374512,
+            "server": {
+              "observedStartUTC": "2026-11-06T12:37:36.179083Z",
+              "observedEndUTC": "2026-11-06T12:37:41.675129Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2017.46,
+              "gcCpuMs": 213.2029299999999,
+              "gcCycles": 9,
+              "gcPauseLargestUpperMs": 0.13107200000000002,
+              "peakRssMiB": 88.796875,
+              "liveHeapMiB": 35.62159729003906,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5456,
+                  "sumNanos": 9759604755,
+                  "meanMs": 1.7887838627199415,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 90
+                },
+                "runtime.batchWait": {
+                  "count": 4583,
+                  "sumNanos": 4662631080,
+                  "meanMs": 1.0173753174776348,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1480,
+                  "sumNanos": 3605431409,
+                  "meanMs": 2.4361023033783784,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 1
+                },
+                "runtime.apply": {
+                  "count": 4585,
+                  "sumNanos": 23270468,
+                  "meanMs": 0.005075347437295529,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1480,
+                  "sumNanos": 3461691483,
+                  "meanMs": 2.3389807317567564,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 1
+                },
+                "http.handler": {
+                  "count": 5458,
+                  "sumNanos": 26758000674,
+                  "meanMs": 4.902528522169293,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 110
+                },
+                "http.encode": {
+                  "count": 5458,
+                  "sumNanos": 73218541,
+                  "meanMs": 0.013414903078050567,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5458,
+                  "sumNanos": 118377095,
+                  "meanMs": 0.02168873122022719,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 64104916,
+                  "meanMs": 32.052458,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 809736541,
+                  "meanMs": 404.8682705,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 31200000,
+                  "meanMs": 15.6,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 32898500,
+                  "meanMs": 16.44925,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 31000,
+                  "meanMs": 0.0155,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 1244624,
+                  "meanMs": 0.622312,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 12055209,
+                  "meanMs": 6.0276045,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 732593666,
+                  "meanMs": 366.296833,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 24583,
+                  "meanMs": 0.0122915,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 14782791,
+                  "meanMs": 7.3913955,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 47462417,
+                  "meanMs": 23.7312085,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 118334,
+                  "meanMs": 0.059167,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 1407458,
+                  "meanMs": 0.703729,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": 80.855292,
+                "runtime.snapshotCapture": 35.489125,
+                "runtime.commandQueueWait": 80.895875
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T12:37:36.974451+00:00",
+                "busyPercent": 23.0,
+                "displayedDiskMBps": 44.14
+              },
+              {
+                "utc": "2026-11-06T12:37:37.981740+00:00",
+                "busyPercent": 23.0,
+                "displayedDiskMBps": 28.69
+              },
+              {
+                "utc": "2026-11-06T12:37:38.984158+00:00",
+                "busyPercent": 23.0,
+                "displayedDiskMBps": 25.53
+              },
+              {
+                "utc": "2026-11-06T12:37:39.991423+00:00",
+                "busyPercent": 25.0,
+                "displayedDiskMBps": 25.2
+              },
+              {
+                "utc": "2026-11-06T12:37:40.992873+00:00",
+                "busyPercent": 28.0,
+                "displayedDiskMBps": 29.9
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T12:37:41.173662Z",
+                "startedUTC": "2026-11-06T12:37:41.173472Z",
+                "finishedUTC": "2026-11-06T12:37:41.675081Z",
+                "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+                "snapshotSeq": "20867",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          }
+        ],
+        "slowestRequests": [
+          {
+            "index": 24919,
+            "startedNanos": 24919197458,
+            "writtenNanos": 24919204166,
+            "finishedNanos": 25006313125,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21194",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "d7f633db2f76bc6b177c0980a8e850bdf97559eb3f793d5f8abdc56e3b0fba87"
+            }
+          },
+          {
+            "index": 24920,
+            "startedNanos": 24920221708,
+            "writtenNanos": 24920228625,
+            "finishedNanos": 25006312958,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21195",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "78a98aa0233a56d6d5c4a1b242db4225a84b626f50753dd92aee067e772a2fdc"
+            }
+          },
+          {
+            "index": 24925,
+            "startedNanos": 24925222000,
+            "writtenNanos": 24925230500,
+            "finishedNanos": 25010607708,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21199",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "d051de9bf8c28798020103e9cf042b17a6520dc613b81b209469b4e57647b248"
+            }
+          },
+          {
+            "index": 24921,
+            "startedNanos": 24921206083,
+            "writtenNanos": 24921212375,
+            "finishedNanos": 25006339375,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21196",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "3fb83b3beffa41a329fcb2bf8e92dd28993bb5fb6538162ac71d5e4475dd73f3"
+            }
+          },
+          {
+            "index": 24926,
+            "startedNanos": 24926048583,
+            "writtenNanos": 24926055208,
+            "finishedNanos": 25010581000,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21200",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "9dbee43e2af7c02dd29adae1061bee222f8d52c7da935eb471d8623156230998"
+            }
+          },
+          {
+            "index": 24922,
+            "startedNanos": 24922222708,
+            "writtenNanos": 24922248333,
+            "finishedNanos": 25006330041,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21197",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "fa9e6ae6a23675b19d3cfe492307267ceb855483ff7ed419a3cafcbd7389a044"
+            }
+          },
+          {
+            "index": 24927,
+            "startedNanos": 24927252083,
+            "writtenNanos": 24927260875,
+            "finishedNanos": 25010596083,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21201",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "9b3f1562e2fe428347e3f1148ca9a6278f414fbce2f2d4d317f1691d06e47189"
+            }
+          },
+          {
+            "index": 24928,
+            "startedNanos": 24928192500,
+            "writtenNanos": 24928198875,
+            "finishedNanos": 25010566416,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ALREADY_FILLED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21202",
+              "tradeCount": "0",
+              "orderStatus": "FILLED",
+              "fingerprint": "3d8cff3c9991109abebbae202572843ceca2a7a31d660eb165af282812e7dfb4"
+            }
+          },
+          {
+            "index": 24924,
+            "startedNanos": 24924174500,
+            "writtenNanos": 24924182041,
+            "finishedNanos": 25006356833,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "21198",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "d2fa1ad10deca431135ef23d644778f179eb06ba8001b0a6e954bd29b989afee"
+            }
+          },
+          {
+            "index": 24929,
+            "startedNanos": 24929216541,
+            "writtenNanos": 24929223625,
+            "finishedNanos": 25010591791,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "INSUFFICIENT_BALANCE",
+              "certainty": "COMPLETED",
+              "commandSeq": "21203",
+              "tradeCount": "0",
+              "orderStatus": "REJECTED",
+              "fingerprint": "8834b880ef47b4867585e94ffd25a8abba02a776227a7ae0b3ae6020824605f7"
+            }
+          }
+        ],
+        "slowestEnclosingIntervals": [
+          {
+            "observedStartUTC": "2026-11-06T12:37:41.173598Z",
+            "observedEndUTC": "2026-11-06T12:37:41.675129Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 344.283,
+            "gcCpuMs": 79.951675,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.04096,
+            "peakRssMiB": 88.796875,
+            "liveHeapMiB": 35.62159729003906,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 454,
+                "sumNanos": 4111739792,
+                "meanMs": 9.056695577092512,
+                "p99BucketUpperMs": 100.0,
+                "over20ms": 71
+              },
+              "runtime.batchWait": {
+                "count": 393,
+                "sumNanos": 400109183,
+                "meanMs": 1.018089524173028,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 91,
+                "sumNanos": 333113794,
+                "meanMs": 3.6605911428571427,
+                "p99BucketUpperMs": 100.0,
+                "over20ms": 1
+              },
+              "runtime.apply": {
+                "count": 396,
+                "sumNanos": 712545,
+                "meanMs": 0.0017993560606060605,
+                "p99BucketUpperMs": 0.01,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 91,
+                "sumNanos": 330414047,
+                "meanMs": 3.6309235934065933,
+                "p99BucketUpperMs": 100.0,
+                "over20ms": 1
+              },
+              "http.handler": {
+                "count": 457,
+                "sumNanos": 6163723209,
+                "meanMs": 13.487359319474837,
+                "p99BucketUpperMs": 100.0,
+                "over20ms": 87
+              },
+              "http.encode": {
+                "count": 457,
+                "sumNanos": 2399548,
+                "meanMs": 0.005250652078774617,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 457,
+                "sumNanos": 3937251,
+                "meanMs": 0.008615428884026258,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 28615791,
+                "meanMs": 28.615791,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 472979916,
+                "meanMs": 472.979916,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 1
+          }
+        ]
+      },
+      {
+        "case": "var/lower-rate-resumed-3/snapshot-2",
+        "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+        "criterionPass": true,
+        "reasons": [],
+        "inputSHA256": {
+          "loadgen/run.json": "ea647cf3e6b0490d5316ecb78542544781ea6c11a2ea8f94e0b7ae9b8cf7a894",
+          "loadgen/plan.jsonl": "b82aa5c78f7ecd5e38700ddb9c51c3e69d6e422c80def60aaf0d0c040e86751f",
+          "loadgen/samples.jsonl": "b72424bb2d272950d2fe122ea776167f58c7e8a04c99b607a2344f402a3ab802",
+          "snapshot-events.jsonl": "0b18e4da4b9ecbe615a235d0ca3c6ea9c326acff0ed7e103e48b9e56dfd804e4",
+          "server-metrics.jsonl": "2b371835d739c18b987e8c3baa2a22dbff12c02f70b79d7254604e437ab10245",
+          "../snapshot-2-host.jsonl": "59ab2c1732a8df1bb82f5e1648c3b62c0e4f25f7312e9d246eae4c917178dd53"
+        },
+        "sourceSHA256": "ddc04ad78c5eec53a68df21ca1298626720476246bce6d376c968c84417a0dc0",
+        "utcMinusMonotonicAtEndMs": -1.2043291164550782,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "responseEndNanos": 10005305000,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.969166,
+              "maxMs": 24.025584,
+              "over20ms": 6
+            },
+            "leftExpansionMs": 28.107166290283203,
+            "rightExpansionMs": 466.4268493652344,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:17:55.382969Z",
+              "observedEndUTC": "2026-11-06T13:18:00.882808Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2395.845,
+              "gcCpuMs": 181.42977200000004,
+              "gcCycles": 13,
+              "gcPauseLargestUpperMs": 0.32768,
+              "peakRssMiB": 46.28125,
+              "liveHeapMiB": 14.971839904785156,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5501,
+                  "sumNanos": 8358639092,
+                  "meanMs": 1.5194762937647701,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.batchWait": {
+                  "count": 4697,
+                  "sumNanos": 5041368908,
+                  "meanMs": 1.0733167783691717,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1203,
+                  "sumNanos": 3971825936,
+                  "meanMs": 3.301600944305902,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4696,
+                  "sumNanos": 36288805,
+                  "meanMs": 0.00772759902044293,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1203,
+                  "sumNanos": 3769602362,
+                  "meanMs": 3.1335015477971737,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5500,
+                  "sumNanos": 30231916467,
+                  "meanMs": 5.496712084909091,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 4
+                },
+                "http.encode": {
+                  "count": 5500,
+                  "sumNanos": 114324324,
+                  "meanMs": 0.02078624072727273,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5500,
+                  "sumNanos": 215086613,
+                  "meanMs": 0.03910665690909091,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 1,
+                  "sumNanos": 18068166,
+                  "meanMs": 18.068166,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "runtime.snapshotPublish": {
+                  "count": 1,
+                  "sumNanos": 189776125,
+                  "meanMs": 189.776125,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 1
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 1,
+                  "sumNanos": 9001333,
+                  "meanMs": 9.001333,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 1,
+                  "sumNanos": 9063292,
+                  "meanMs": 9.063292,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 1,
+                  "sumNanos": 19375,
+                  "meanMs": 0.019375,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 1,
+                  "sumNanos": 386084,
+                  "meanMs": 0.386084,
+                  "p99BucketUpperMs": 0.5,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 1,
+                  "sumNanos": 6241458,
+                  "meanMs": 6.241458,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 1,
+                  "sumNanos": 160141500,
+                  "meanMs": 160.1415,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 1
+                },
+                "publish.existing": {
+                  "count": 1,
+                  "sumNanos": 10458,
+                  "meanMs": 0.010458,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 1,
+                  "sumNanos": 8301167,
+                  "meanMs": 8.301167,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 1,
+                  "sumNanos": 13880209,
+                  "meanMs": 13.880209,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 1,
+                  "sumNanos": 51833,
+                  "meanMs": 0.051833,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 1,
+                  "sumNanos": 736125,
+                  "meanMs": 0.736125,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": 10.378791,
+                "runtime.snapshotCapture": 18.068166,
+                "runtime.commandQueueWait": 18.769667
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:17:56.359853+00:00",
+                "busyPercent": 16.0,
+                "displayedDiskMBps": 21.81
+              },
+              {
+                "utc": "2026-11-06T13:17:57.368134+00:00",
+                "busyPercent": 20.0,
+                "displayedDiskMBps": 21.08
+              },
+              {
+                "utc": "2026-11-06T13:17:58.372509+00:00",
+                "busyPercent": 16.0,
+                "displayedDiskMBps": 24.21
+              },
+              {
+                "utc": "2026-11-06T13:17:59.381400+00:00",
+                "busyPercent": 20.0,
+                "displayedDiskMBps": 24.36
+              },
+              {
+                "utc": "2026-11-06T13:18:00.386470+00:00",
+                "busyPercent": 17.0,
+                "displayedDiskMBps": 32.32
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:17:59.883052Z",
+                "startedUTC": "2026-11-06T13:17:59.882646Z",
+                "finishedUTC": "2026-11-06T13:18:00.090509Z",
+                "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+                "snapshotSeq": "8127",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "responseEndNanos": 15010444791,
+            "request": {
+              "count": 5000,
+              "p99Ms": 12.650625,
+              "maxMs": 35.314542,
+              "over20ms": 29
+            },
+            "leftExpansionMs": 28.367996215820312,
+            "rightExpansionMs": 460.82401275634766,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:18:00.382708Z",
+              "observedEndUTC": "2026-11-06T13:18:05.882345Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 1758.181,
+              "gcCpuMs": 138.69192,
+              "gcCycles": 9,
+              "gcPauseLargestUpperMs": 0.196608,
+              "peakRssMiB": 58.9375,
+              "liveHeapMiB": 14.082099914550781,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5501,
+                  "sumNanos": 8329880009,
+                  "meanMs": 1.5142483201236139,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 16
+                },
+                "runtime.batchWait": {
+                  "count": 4686,
+                  "sumNanos": 5151514834,
+                  "meanMs": 1.0993416205719164,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 3
+                },
+                "runtime.append": {
+                  "count": 1263,
+                  "sumNanos": 3913572082,
+                  "meanMs": 3.0986318939034043,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 1
+                },
+                "runtime.apply": {
+                  "count": 4686,
+                  "sumNanos": 20905640,
+                  "meanMs": 0.0044612974818608615,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1263,
+                  "sumNanos": 3775721045,
+                  "meanMs": 2.9894861797307994,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 1
+                },
+                "http.handler": {
+                  "count": 5501,
+                  "sumNanos": 28986773186,
+                  "meanMs": 5.269364331212507,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 28
+                },
+                "http.encode": {
+                  "count": 5500,
+                  "sumNanos": 75599110,
+                  "meanMs": 0.013745292727272727,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5501,
+                  "sumNanos": 146272379,
+                  "meanMs": 0.026590143428467553,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 1,
+                  "sumNanos": 28404375,
+                  "meanMs": 28.404375,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "runtime.snapshotPublish": {
+                  "count": 1,
+                  "sumNanos": 269084667,
+                  "meanMs": 269.084667,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                }
+              },
+              "observedQueueDepthMax": 4,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 1,
+                  "sumNanos": 15099166,
+                  "meanMs": 15.099166,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 1,
+                  "sumNanos": 13301917,
+                  "meanMs": 13.301917,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 1,
+                  "sumNanos": 21458,
+                  "meanMs": 0.021458,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 1,
+                  "sumNanos": 104834,
+                  "meanMs": 0.104834,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 1,
+                  "sumNanos": 4606500,
+                  "meanMs": 4.6065,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 1,
+                  "sumNanos": 237892250,
+                  "meanMs": 237.89225,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                },
+                "publish.existing": {
+                  "count": 1,
+                  "sumNanos": 11000,
+                  "meanMs": 0.011,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 1,
+                  "sumNanos": 7206500,
+                  "meanMs": 7.2065,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 1,
+                  "sumNanos": 18331416,
+                  "meanMs": 18.331416,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 1,
+                  "sumNanos": 48208,
+                  "meanMs": 0.048208,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 1,
+                  "sumNanos": 851958,
+                  "meanMs": 0.851958,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": 24.77375,
+                "runtime.snapshotCapture": 28.404375,
+                "runtime.commandQueueWait": 30.074834
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:18:00.386470+00:00",
+                "busyPercent": 17.0,
+                "displayedDiskMBps": 32.32
+              },
+              {
+                "utc": "2026-11-06T13:18:01.389621+00:00",
+                "busyPercent": 17.0,
+                "displayedDiskMBps": 19.86
+              },
+              {
+                "utc": "2026-11-06T13:18:02.397474+00:00",
+                "busyPercent": 18.0,
+                "displayedDiskMBps": 51.34
+              },
+              {
+                "utc": "2026-11-06T13:18:03.400466+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 112.05
+              },
+              {
+                "utc": "2026-11-06T13:18:04.407425+00:00",
+                "busyPercent": 16.0,
+                "displayedDiskMBps": 23.67
+              },
+              {
+                "utc": "2026-11-06T13:18:05.413430+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 35.81
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:18:04.883052Z",
+                "startedUTC": "2026-11-06T13:18:04.882359Z",
+                "finishedUTC": "2026-11-06T13:18:05.179862Z",
+                "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+                "snapshotSeq": "12390",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "responseEndNanos": 20007065500,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.954958,
+              "maxMs": 34.108208,
+              "over20ms": 17
+            },
+            "leftExpansionMs": 28.463125228881836,
+            "rightExpansionMs": 464.1294479370117,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:18:05.382613Z",
+              "observedEndUTC": "2026-11-06T13:18:10.882271Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2024.93,
+              "gcCpuMs": 182.88519699999995,
+              "gcCycles": 7,
+              "gcPauseLargestUpperMs": 0.32768,
+              "peakRssMiB": 76.71875,
+              "liveHeapMiB": 29.11351776123047,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5500,
+                  "sumNanos": 8479914804,
+                  "meanMs": 1.5418026916363639,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 10
+                },
+                "runtime.batchWait": {
+                  "count": 4632,
+                  "sumNanos": 5062132076,
+                  "meanMs": 1.0928609835924008,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1224,
+                  "sumNanos": 3934158834,
+                  "meanMs": 3.2141820539215686,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4632,
+                  "sumNanos": 37818328,
+                  "meanMs": 0.008164578583765111,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1224,
+                  "sumNanos": 3764609705,
+                  "meanMs": 3.0756615236928107,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5503,
+                  "sumNanos": 29602227352,
+                  "meanMs": 5.379288997274214,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 17
+                },
+                "http.encode": {
+                  "count": 5501,
+                  "sumNanos": 89629621,
+                  "meanMs": 0.016293332303217598,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5503,
+                  "sumNanos": 171062961,
+                  "meanMs": 0.0310854008722515,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 1,
+                  "sumNanos": 29098666,
+                  "meanMs": 29.098666,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "runtime.snapshotPublish": {
+                  "count": 1,
+                  "sumNanos": 286759500,
+                  "meanMs": 286.7595,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                }
+              },
+              "observedQueueDepthMax": 4,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 1,
+                  "sumNanos": 14527083,
+                  "meanMs": 14.527083,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 1,
+                  "sumNanos": 14569333,
+                  "meanMs": 14.569333,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 1,
+                  "sumNanos": 12000,
+                  "meanMs": 0.012,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 1,
+                  "sumNanos": 562042,
+                  "meanMs": 0.562042,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 1,
+                  "sumNanos": 4255500,
+                  "meanMs": 4.2555,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 1,
+                  "sumNanos": 256617250,
+                  "meanMs": 256.61725,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                },
+                "publish.existing": {
+                  "count": 1,
+                  "sumNanos": 9750,
+                  "meanMs": 0.00975,
+                  "p99BucketUpperMs": 0.01,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 1,
+                  "sumNanos": 3119000,
+                  "meanMs": 3.119,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 1,
+                  "sumNanos": 21337625,
+                  "meanMs": 21.337625,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "publish.prepare": {
+                  "count": 1,
+                  "sumNanos": 44208,
+                  "meanMs": 0.044208,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 1,
+                  "sumNanos": 795541,
+                  "meanMs": 0.795541,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 29.098666,
+                "runtime.commandQueueWait": null
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:18:05.413430+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 35.81
+              },
+              {
+                "utc": "2026-11-06T13:18:06.421202+00:00",
+                "busyPercent": 14.0,
+                "displayedDiskMBps": 19.25
+              },
+              {
+                "utc": "2026-11-06T13:18:07.426032+00:00",
+                "busyPercent": 15.0,
+                "displayedDiskMBps": 20.64
+              },
+              {
+                "utc": "2026-11-06T13:18:08.432639+00:00",
+                "busyPercent": 14.0,
+                "displayedDiskMBps": 22.07
+              },
+              {
+                "utc": "2026-11-06T13:18:09.444276+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 23.07
+              },
+              {
+                "utc": "2026-11-06T13:18:10.452542+00:00",
+                "busyPercent": 18.0,
+                "displayedDiskMBps": 40.95
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:18:09.883052Z",
+                "startedUTC": "2026-11-06T13:18:09.882222Z",
+                "finishedUTC": "2026-11-06T13:18:10.198084Z",
+                "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+                "snapshotSeq": "16618",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "responseEndNanos": 25006193458,
+            "request": {
+              "count": 5000,
+              "p99Ms": 12.1935,
+              "maxMs": 43.947917,
+              "over20ms": 28
+            },
+            "leftExpansionMs": 28.91707420349121,
+            "rightExpansionMs": 137.71748542785645,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:18:10.382159Z",
+              "observedEndUTC": "2026-11-06T13:18:15.554987Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 1916.067,
+              "gcCpuMs": 202.15583800000005,
+              "gcCycles": 6,
+              "gcPauseLargestUpperMs": 0.32768,
+              "peakRssMiB": 88.78125,
+              "liveHeapMiB": 34.774208068847656,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5030,
+                  "sumNanos": 8465064213,
+                  "meanMs": 1.6829153504970178,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 19
+                },
+                "runtime.batchWait": {
+                  "count": 4234,
+                  "sumNanos": 4709284427,
+                  "meanMs": 1.1122542340576287,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1085,
+                  "sumNanos": 3632595516,
+                  "meanMs": 3.3480143004608296,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4236,
+                  "sumNanos": 22946685,
+                  "meanMs": 0.005417064447592068,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1085,
+                  "sumNanos": 3499716278,
+                  "meanMs": 3.2255449566820276,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5032,
+                  "sumNanos": 28436031790,
+                  "meanMs": 5.651039703895072,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 27
+                },
+                "http.encode": {
+                  "count": 5032,
+                  "sumNanos": 79839222,
+                  "meanMs": 0.015866300079491257,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5032,
+                  "sumNanos": 150900036,
+                  "meanMs": 0.02998808346581876,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 1,
+                  "sumNanos": 36949250,
+                  "meanMs": 36.94925,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "runtime.snapshotPublish": {
+                  "count": 1,
+                  "sumNanos": 477063834,
+                  "meanMs": 477.063834,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 1,
+                  "sumNanos": 17971334,
+                  "meanMs": 17.971334,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 1,
+                  "sumNanos": 18974375,
+                  "meanMs": 18.974375,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 1,
+                  "sumNanos": 18792,
+                  "meanMs": 0.018792,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 1,
+                  "sumNanos": 1485875,
+                  "meanMs": 1.485875,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 1,
+                  "sumNanos": 4288459,
+                  "meanMs": 4.288459,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 1,
+                  "sumNanos": 436747000,
+                  "meanMs": 436.747,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 1
+                },
+                "publish.existing": {
+                  "count": 1,
+                  "sumNanos": 8833,
+                  "meanMs": 0.008833,
+                  "p99BucketUpperMs": 0.01,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 1,
+                  "sumNanos": 8102333,
+                  "meanMs": 8.102333,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 1,
+                  "sumNanos": 25555333,
+                  "meanMs": 25.555333,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "publish.prepare": {
+                  "count": 1,
+                  "sumNanos": 45041,
+                  "meanMs": 0.045041,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 1,
+                  "sumNanos": 801542,
+                  "meanMs": 0.801542,
+                  "p99BucketUpperMs": 1.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 36.94925,
+                "runtime.commandQueueWait": 38.589917
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:18:10.452542+00:00",
+                "busyPercent": 18.0,
+                "displayedDiskMBps": 40.95
+              },
+              {
+                "utc": "2026-11-06T13:18:11.460907+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 25.14
+              },
+              {
+                "utc": "2026-11-06T13:18:12.468393+00:00",
+                "busyPercent": 14.0,
+                "displayedDiskMBps": 19.92
+              },
+              {
+                "utc": "2026-11-06T13:18:13.477163+00:00",
+                "busyPercent": 16.0,
+                "displayedDiskMBps": 19.47
+              },
+              {
+                "utc": "2026-11-06T13:18:14.481883+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 21.99
+              },
+              {
+                "utc": "2026-11-06T13:18:15.483541+00:00",
+                "busyPercent": 15.0,
+                "displayedDiskMBps": 40.04
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:18:14.883052Z",
+                "startedUTC": "2026-11-06T13:18:14.881891Z",
+                "finishedUTC": "2026-11-06T13:18:15.395901Z",
+                "runId": "aae7da13-3797-4458-95dc-f2c362b3cd0c",
+                "snapshotSeq": "20802",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          }
+        ],
+        "slowestRequests": [
+          {
+            "index": 24465,
+            "startedNanos": 24465208166,
+            "writtenNanos": 24465253875,
+            "finishedNanos": 24509156083,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20803",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "e04c1f37d06f82507c5d93de50731d5c03fbd0a6529624b157ccff7dec447b9c"
+            }
+          },
+          {
+            "index": 24466,
+            "startedNanos": 24466212958,
+            "writtenNanos": 24466250541,
+            "finishedNanos": 24509120250,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20804",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "8ef6dfa80ddd06ce453d1fdf123bd48b8ce7985b33a9770902d1fa026611b8f8"
+            }
+          },
+          {
+            "index": 24470,
+            "startedNanos": 24470245208,
+            "writtenNanos": 24470271791,
+            "finishedNanos": 24512336375,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20808",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "394cfbcb76cb605d10b80148039059e8e9431039ac26bacb425ac0748e3eb574"
+            }
+          },
+          {
+            "index": 24467,
+            "startedNanos": 24467237416,
+            "writtenNanos": 24467262666,
+            "finishedNanos": 24509100416,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20805",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "90d4335ec773019e7e61f0f7ecd4f10febdd15b177c3b45f4f3e35d9090146b6"
+            }
+          },
+          {
+            "index": 24471,
+            "startedNanos": 24471221958,
+            "writtenNanos": 24471261791,
+            "finishedNanos": 24512324208,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20809",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "56db24650dd6afab84051d006c3ae9b84c74f05a40f5c30b2fcd61bf93176368"
+            }
+          },
+          {
+            "index": 24468,
+            "startedNanos": 24468222041,
+            "writtenNanos": 24468267875,
+            "finishedNanos": 24509217791,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20806",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "0dce7d1fdf84fafb04d0edfa8d82971fdf58108a6d1578dbb07c780ffe09dfc5"
+            }
+          },
+          {
+            "index": 24472,
+            "startedNanos": 24472100500,
+            "writtenNanos": 24472133708,
+            "finishedNanos": 24512363583,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20810",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "cbfd2be65aff71c2f2b272194fc46452747548700dd8071c4833c143347d3c59"
+            }
+          },
+          {
+            "index": 24469,
+            "startedNanos": 24469156416,
+            "writtenNanos": 24469193416,
+            "finishedNanos": 24509152416,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20807",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "14b276f68fac2df24715cb22e980036df40cb8d3180a87c6c1cd73957818ae26"
+            }
+          },
+          {
+            "index": 24473,
+            "startedNanos": 24473271625,
+            "writtenNanos": 24473321416,
+            "finishedNanos": 24512333041,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ALREADY_FILLED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20811",
+              "tradeCount": "0",
+              "orderStatus": "FILLED",
+              "fingerprint": "593c0ce97b2f7bbbe230b6dddbddae99a6c3afce392fcb51aebc65ceb4b1dc1f"
+            }
+          },
+          {
+            "index": 24474,
+            "startedNanos": 24474203875,
+            "writtenNanos": 24474256125,
+            "finishedNanos": 24512346083,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20812",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "6c2673483368cc02e5b340e369c22b6a2013c417a53fdedcd6ed436debbfb604"
+            }
+          }
+        ],
+        "slowestEnclosingIntervals": [
+          {
+            "observedStartUTC": "2026-11-06T13:18:14.38215Z",
+            "observedEndUTC": "2026-11-06T13:18:15.381983Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 662.447,
+            "gcCpuMs": 134.663207,
+            "gcCycles": 4,
+            "gcPauseLargestUpperMs": 0.32768,
+            "peakRssMiB": 88.765625,
+            "liveHeapMiB": 34.774208068847656,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 1002,
+                "sumNanos": 2282512218,
+                "meanMs": 2.2779563053892216,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 19
+              },
+              "runtime.batchWait": {
+                "count": 845,
+                "sumNanos": 951454431,
+                "meanMs": 1.125981575147929,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 205,
+                "sumNanos": 700737420,
+                "meanMs": 3.4182313170731704,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 850,
+                "sumNanos": 7008796,
+                "meanMs": 0.008245642352941177,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 205,
+                "sumNanos": 676211575,
+                "meanMs": 3.298593048780488,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 1005,
+                "sumNanos": 6456855934,
+                "meanMs": 6.424732272636816,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 27
+              },
+              "http.encode": {
+                "count": 1005,
+                "sumNanos": 16406067,
+                "meanMs": 0.016324444776119402,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 1005,
+                "sumNanos": 29020879,
+                "meanMs": 0.028876496517412937,
+                "p99BucketUpperMs": 0.2,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 36949250,
+                "meanMs": 36.94925,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "sumNanos": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            },
+            "observedQueueDepthMax": 2
+          },
+          {
+            "observedStartUTC": "2026-11-06T13:18:14.882136Z",
+            "observedEndUTC": "2026-11-06T13:18:15.381983Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 391.814,
+            "gcCpuMs": 94.37487300000002,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.057344,
+            "peakRssMiB": 88.765625,
+            "liveHeapMiB": 34.774208068847656,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 502,
+                "sumNanos": 1464818127,
+                "meanMs": 2.9179643964143427,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 19
+              },
+              "runtime.batchWait": {
+                "count": 431,
+                "sumNanos": 493151995,
+                "meanMs": 1.1442041647331787,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 104,
+                "sumNanos": 336734875,
+                "meanMs": 3.2378353365384616,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 436,
+                "sumNanos": 845714,
+                "meanMs": 0.0019397110091743121,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 104,
+                "sumNanos": 332820163,
+                "meanMs": 3.200193875,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 505,
+                "sumNanos": 3545616234,
+                "meanMs": 7.021022245544555,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 27
+              },
+              "http.encode": {
+                "count": 505,
+                "sumNanos": 2887825,
+                "meanMs": 0.005718465346534654,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 505,
+                "sumNanos": 4235881,
+                "meanMs": 0.008387883168316831,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 36949250,
+                "meanMs": 36.94925,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 0,
+                "sumNanos": 0,
+                "meanMs": null,
+                "p99BucketUpperMs": null,
+                "over20ms": 0
+              }
+            },
+            "observedQueueDepthMax": 2
+          }
+        ]
+      },
+      {
+        "case": "var/lower-rate-resumed-3/snapshot-3",
+        "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+        "criterionPass": true,
+        "reasons": [],
+        "inputSHA256": {
+          "loadgen/run.json": "62a7e568b51f03e2823b993b7fe3ac7c155a7e0a52969b9ad009478b0071e01c",
+          "loadgen/plan.jsonl": "1d395b1258a026ccbdc6a1c0b2d8b519fe946d3a88a7693c5e46732e6c1c5a2f",
+          "loadgen/samples.jsonl": "97df4b144b5be243ab86493deaa97e86ef6ebb1c55b5ca7ae55a75eb562c9f9e",
+          "snapshot-events.jsonl": "8b69bf2b52ab1317cf9d24fc021e869c5cfbea41ed7e6d35660b6e3f8097ce6e",
+          "server-metrics.jsonl": "64e68fb0d570afa024e3e7eadedb09a6af016dfa3c43f8f7345b1f182b6d62b3",
+          "../snapshot-3-host.jsonl": "feb0283ee4f628249287986762e210d551be3903a31b415831df12cf6e406173"
+        },
+        "sourceSHA256": "ddc04ad78c5eec53a68df21ca1298626720476246bce6d376c968c84417a0dc0",
+        "utcMinusMonotonicAtEndMs": -1.2034753719482423,
+        "windows": [
+          {
+            "startNanos": 5000000000,
+            "endNanos": 10000000000,
+            "responseEndNanos": 10006949916,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.338708,
+              "maxMs": 22.713833,
+              "over20ms": 4
+            },
+            "leftExpansionMs": 470.2310562133789,
+            "rightExpansionMs": 22.717952728271484,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:21:25.676054Z",
+              "observedEndUTC": "2026-11-06T13:21:31.175953Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2290.054,
+              "gcCpuMs": 199.809971,
+              "gcCycles": 17,
+              "gcPauseLargestUpperMs": 0.229376,
+              "peakRssMiB": 46.359375,
+              "liveHeapMiB": 14.703582763671875,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5500,
+                  "sumNanos": 6762062889,
+                  "meanMs": 1.2294659798181817,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.batchWait": {
+                  "count": 4684,
+                  "sumNanos": 4817508968,
+                  "meanMs": 1.028503195559351,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1307,
+                  "sumNanos": 3871128904,
+                  "meanMs": 2.9618430788064267,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4685,
+                  "sumNanos": 32467923,
+                  "meanMs": 0.006930186339381004,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1307,
+                  "sumNanos": 3674286762,
+                  "meanMs": 2.811237002295333,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5501,
+                  "sumNanos": 26746965906,
+                  "meanMs": 4.862200673695692,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 3
+                },
+                "http.encode": {
+                  "count": 5501,
+                  "sumNanos": 93997369,
+                  "meanMs": 0.017087323941101618,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5501,
+                  "sumNanos": 183598197,
+                  "meanMs": 0.03337542210507181,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 28810917,
+                  "meanMs": 14.4054585,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 331375208,
+                  "meanMs": 165.687604,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 14469084,
+                  "meanMs": 7.234542,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 14328875,
+                  "meanMs": 7.1644375,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 32958,
+                  "meanMs": 0.016479,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 3122834,
+                  "meanMs": 1.561417,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 8907875,
+                  "meanMs": 4.4539375,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 271616125,
+                  "meanMs": 135.8080625,
+                  "p99BucketUpperMs": 200.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 43375,
+                  "meanMs": 0.0216875,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 18721000,
+                  "meanMs": 9.3605,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 25845917,
+                  "meanMs": 12.9229585,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 124541,
+                  "meanMs": 0.0622705,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 2930000,
+                  "meanMs": 1.465,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 18.017458,
+                "runtime.commandQueueWait": 17.406042
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:21:26.388983+00:00",
+                "busyPercent": 15.0,
+                "displayedDiskMBps": 24.14
+              },
+              {
+                "utc": "2026-11-06T13:21:27.389937+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 22.85
+              },
+              {
+                "utc": "2026-11-06T13:21:28.391725+00:00",
+                "busyPercent": 16.0,
+                "displayedDiskMBps": 21.13
+              },
+              {
+                "utc": "2026-11-06T13:21:29.398718+00:00",
+                "busyPercent": 12.0,
+                "displayedDiskMBps": 22.7
+              },
+              {
+                "utc": "2026-11-06T13:21:30.399599+00:00",
+                "busyPercent": 15.0,
+                "displayedDiskMBps": 23.34
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:21:30.676047Z",
+                "startedUTC": "2026-11-06T13:21:30.675719Z",
+                "finishedUTC": "2026-11-06T13:21:30.887539Z",
+                "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+                "snapshotSeq": "8175",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 10000000000,
+            "endNanos": 15000000000,
+            "responseEndNanos": 15008338541,
+            "request": {
+              "count": 5000,
+              "p99Ms": 10.484875,
+              "maxMs": 38.670708,
+              "over20ms": 24
+            },
+            "leftExpansionMs": 470.34406661987305,
+            "rightExpansionMs": 20.90144157409668,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:21:30.675941Z",
+              "observedEndUTC": "2026-11-06T13:21:36.175525Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2203.495,
+              "gcCpuMs": 186.05354700000004,
+              "gcCycles": 11,
+              "gcPauseLargestUpperMs": 0.229376,
+              "peakRssMiB": 58.515625,
+              "liveHeapMiB": 20.401199340820312,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5499,
+                  "sumNanos": 7817335756,
+                  "meanMs": 1.4215922451354792,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 14
+                },
+                "runtime.batchWait": {
+                  "count": 4688,
+                  "sumNanos": 4907024540,
+                  "meanMs": 1.0467202517064846,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1223,
+                  "sumNanos": 3945562685,
+                  "meanMs": 3.226134656582175,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4687,
+                  "sumNanos": 25968847,
+                  "meanMs": 0.005540611691913804,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1223,
+                  "sumNanos": 3777165428,
+                  "meanMs": 3.0884427048242027,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5498,
+                  "sumNanos": 29216358532,
+                  "meanMs": 5.3139975503819565,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 27
+                },
+                "http.encode": {
+                  "count": 5498,
+                  "sumNanos": 94724027,
+                  "meanMs": 0.017228815387413603,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5498,
+                  "sumNanos": 156224897,
+                  "meanMs": 0.028414859403419424,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 48547624,
+                  "meanMs": 24.273812,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 477704292,
+                  "meanMs": 238.852146,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 3,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 24691793,
+                  "meanMs": 12.3458965,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 23847250,
+                  "meanMs": 11.923625,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 34417,
+                  "meanMs": 0.0172085,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 3364251,
+                  "meanMs": 1.6821255,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 8474333,
+                  "meanMs": 4.2371665,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 412224291,
+                  "meanMs": 206.1121455,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 22541,
+                  "meanMs": 0.0112705,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 15177126,
+                  "meanMs": 7.588563,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 35782749,
+                  "meanMs": 17.8913745,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 101916,
+                  "meanMs": 0.050958,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 2501125,
+                  "meanMs": 1.2505625,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 30.530166,
+                "runtime.commandQueueWait": 32.9065
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:21:31.407934+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 33.41
+              },
+              {
+                "utc": "2026-11-06T13:21:32.408832+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 26.83
+              },
+              {
+                "utc": "2026-11-06T13:21:33.410365+00:00",
+                "busyPercent": 18.0,
+                "displayedDiskMBps": 63.47
+              },
+              {
+                "utc": "2026-11-06T13:21:34.418363+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 48.57
+              },
+              {
+                "utc": "2026-11-06T13:21:35.419357+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 23.16
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:21:35.676047Z",
+                "startedUTC": "2026-11-06T13:21:35.675468Z",
+                "finishedUTC": "2026-11-06T13:21:35.989946Z",
+                "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+                "snapshotSeq": "12437",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 15000000000,
+            "endNanos": 20000000000,
+            "responseEndNanos": 20004833750,
+            "request": {
+              "count": 5000,
+              "p99Ms": 11.745708,
+              "maxMs": 38.916042,
+              "over20ms": 24
+            },
+            "leftExpansionMs": 470.60608863830566,
+            "rightExpansionMs": 24.143218994140625,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:21:35.675679Z",
+              "observedEndUTC": "2026-11-06T13:21:41.175262Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2017.506,
+              "gcCpuMs": 254.81724700000007,
+              "gcCycles": 10,
+              "gcPauseLargestUpperMs": 0.229376,
+              "peakRssMiB": 73.109375,
+              "liveHeapMiB": 29.128753662109375,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5499,
+                  "sumNanos": 7953456761,
+                  "meanMs": 1.4463460194580833,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 28
+                },
+                "runtime.batchWait": {
+                  "count": 4632,
+                  "sumNanos": 4831256757,
+                  "meanMs": 1.0430174345854923,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                },
+                "runtime.append": {
+                  "count": 1259,
+                  "sumNanos": 3882635998,
+                  "meanMs": 3.0839046846703733,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4634,
+                  "sumNanos": 38218566,
+                  "meanMs": 0.00824742468709538,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1259,
+                  "sumNanos": 3723732635,
+                  "meanMs": 2.9576907347100874,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5501,
+                  "sumNanos": 28556913942,
+                  "meanMs": 5.1912223126704236,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 48
+                },
+                "http.encode": {
+                  "count": 5501,
+                  "sumNanos": 74705806,
+                  "meanMs": 0.013580404653699328,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5501,
+                  "sumNanos": 139679850,
+                  "meanMs": 0.025391719687329575,
+                  "p99BucketUpperMs": 0.2,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 64652374,
+                  "meanMs": 32.326187,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 624521250,
+                  "meanMs": 312.260625,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 4,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 34953292,
+                  "meanMs": 17.476646,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 29692375,
+                  "meanMs": 14.8461875,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 31167,
+                  "meanMs": 0.0155835,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 3831876,
+                  "meanMs": 1.915938,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 9207958,
+                  "meanMs": 4.603979,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 547142875,
+                  "meanMs": 273.5714375,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 23291,
+                  "meanMs": 0.0116455,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 20113126,
+                  "meanMs": 10.056563,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 41349333,
+                  "meanMs": 20.6746665,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 1
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 108916,
+                  "meanMs": 0.054458,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 2693834,
+                  "meanMs": 1.346917,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 34.122208,
+                "runtime.commandQueueWait": 33.0355
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:21:36.423036+00:00",
+                "busyPercent": 18.0,
+                "displayedDiskMBps": 58.16
+              },
+              {
+                "utc": "2026-11-06T13:21:37.428255+00:00",
+                "busyPercent": 41.0,
+                "displayedDiskMBps": 107.58
+              },
+              {
+                "utc": "2026-11-06T13:21:38.430252+00:00",
+                "busyPercent": 25.0,
+                "displayedDiskMBps": 28.32
+              },
+              {
+                "utc": "2026-11-06T13:21:39.432241+00:00",
+                "busyPercent": 17.0,
+                "displayedDiskMBps": 37.85
+              },
+              {
+                "utc": "2026-11-06T13:21:40.441278+00:00",
+                "busyPercent": 14.0,
+                "displayedDiskMBps": 20.39
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:21:40.676047Z",
+                "startedUTC": "2026-11-06T13:21:40.675222Z",
+                "finishedUTC": "2026-11-06T13:21:41.04995Z",
+                "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+                "snapshotSeq": "16661",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          },
+          {
+            "startNanos": 20000000000,
+            "endNanos": 25000000000,
+            "responseEndNanos": 25005756208,
+            "request": {
+              "count": 5000,
+              "p99Ms": 9.733125,
+              "maxMs": 38.716166,
+              "over20ms": 22
+            },
+            "leftExpansionMs": 470.07298469543457,
+            "rightExpansionMs": 24.884700775146484,
+            "server": {
+              "observedStartUTC": "2026-11-06T13:21:40.676212Z",
+              "observedEndUTC": "2026-11-06T13:21:46.176926Z",
+              "startBoundaryLagMs": 0.0,
+              "endBoundaryLagMs": 0.0,
+              "osAvailable": true,
+              "cpuMs": 2047.668,
+              "gcCpuMs": 300.319133,
+              "gcCycles": 9,
+              "gcPauseLargestUpperMs": 0.32768,
+              "peakRssMiB": 84.890625,
+              "liveHeapMiB": 34.24040222167969,
+              "stages": {
+                "runtime.commandQueueWait": {
+                  "count": 5470,
+                  "sumNanos": 7172377788,
+                  "meanMs": 1.3112208021937843,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 29
+                },
+                "runtime.batchWait": {
+                  "count": 4597,
+                  "sumNanos": 4802348525,
+                  "meanMs": 1.044670116380248,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 4
+                },
+                "runtime.append": {
+                  "count": 1353,
+                  "sumNanos": 3786439292,
+                  "meanMs": 2.7985508440502587,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "runtime.apply": {
+                  "count": 4602,
+                  "sumNanos": 20594231,
+                  "meanMs": 0.004475061060408517,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "runtime.wal.sync": {
+                  "count": 1353,
+                  "sumNanos": 3638342282,
+                  "meanMs": 2.68909259571323,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "http.handler": {
+                  "count": 5475,
+                  "sumNanos": 25879744311,
+                  "meanMs": 4.726893938082192,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 46
+                },
+                "http.encode": {
+                  "count": 5475,
+                  "sumNanos": 69595882,
+                  "meanMs": 0.012711576621004566,
+                  "p99BucketUpperMs": 0.05,
+                  "over20ms": 0
+                },
+                "http.write": {
+                  "count": 5475,
+                  "sumNanos": 128503570,
+                  "meanMs": 0.023470971689497716,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "runtime.snapshotCapture": {
+                  "count": 2,
+                  "sumNanos": 65303500,
+                  "meanMs": 32.65175,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "runtime.snapshotPublish": {
+                  "count": 2,
+                  "sumNanos": 738271542,
+                  "meanMs": 369.135771,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                }
+              },
+              "observedQueueDepthMax": 4,
+              "snapshotStages": {
+                "capture.copy": {
+                  "count": 2,
+                  "sumNanos": 33619125,
+                  "meanMs": 16.8095625,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "capture.sort": {
+                  "count": 2,
+                  "sumNanos": 31678666,
+                  "meanMs": 15.839333,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.close": {
+                  "count": 2,
+                  "sumNanos": 33166,
+                  "meanMs": 0.016583,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.createTemp": {
+                  "count": 2,
+                  "sumNanos": 3044751,
+                  "meanMs": 1.5223755,
+                  "p99BucketUpperMs": 5.0,
+                  "over20ms": 0
+                },
+                "publish.directorySync": {
+                  "count": 2,
+                  "sumNanos": 11159708,
+                  "meanMs": 5.579854,
+                  "p99BucketUpperMs": 10.0,
+                  "over20ms": 0
+                },
+                "publish.encodeWrite": {
+                  "count": 2,
+                  "sumNanos": 651406458,
+                  "meanMs": 325.703229,
+                  "p99BucketUpperMs": 500.0,
+                  "over20ms": 2
+                },
+                "publish.existing": {
+                  "count": 2,
+                  "sumNanos": 22292,
+                  "meanMs": 0.011146,
+                  "p99BucketUpperMs": 0.02,
+                  "over20ms": 0
+                },
+                "publish.fileSync": {
+                  "count": 2,
+                  "sumNanos": 23473126,
+                  "meanMs": 11.736563,
+                  "p99BucketUpperMs": 20.0,
+                  "over20ms": 0
+                },
+                "publish.measure": {
+                  "count": 2,
+                  "sumNanos": 46157876,
+                  "meanMs": 23.078938,
+                  "p99BucketUpperMs": 50.0,
+                  "over20ms": 2
+                },
+                "publish.prepare": {
+                  "count": 2,
+                  "sumNanos": 116749,
+                  "meanMs": 0.0583745,
+                  "p99BucketUpperMs": 0.1,
+                  "over20ms": 0
+                },
+                "publish.rename": {
+                  "count": 2,
+                  "sumNanos": 2839959,
+                  "meanMs": 1.4199795,
+                  "p99BucketUpperMs": 2.0,
+                  "over20ms": 0
+                }
+              },
+              "newCumulativeMaximaMs": {
+                "runtime.wal.sync": null,
+                "runtime.snapshotCapture": 34.122208,
+                "runtime.commandQueueWait": 33.535084
+              }
+            },
+            "hostRows": [
+              {
+                "utc": "2026-11-06T13:21:41.445985+00:00",
+                "busyPercent": 14.0,
+                "displayedDiskMBps": 38.83
+              },
+              {
+                "utc": "2026-11-06T13:21:42.456282+00:00",
+                "busyPercent": 22.0,
+                "displayedDiskMBps": 40.89
+              },
+              {
+                "utc": "2026-11-06T13:21:43.460167+00:00",
+                "busyPercent": 12.0,
+                "displayedDiskMBps": 24.56
+              },
+              {
+                "utc": "2026-11-06T13:21:44.461084+00:00",
+                "busyPercent": 12.0,
+                "displayedDiskMBps": 26.21
+              },
+              {
+                "utc": "2026-11-06T13:21:45.471029+00:00",
+                "busyPercent": 13.0,
+                "displayedDiskMBps": 26.44
+              }
+            ],
+            "overlappingSnapshotCalls": [
+              {
+                "scheduledUTC": "2026-11-06T13:21:45.676047Z",
+                "startedUTC": "2026-11-06T13:21:45.674917Z",
+                "finishedUTC": "2026-11-06T13:21:46.10378Z",
+                "runId": "6c7cbd05-eb17-4fb3-bd9e-e42cbde958bc",
+                "snapshotSeq": "20855",
+                "outcome": "COMPLETED",
+                "skippedIntervals": "0"
+              }
+            ]
+          }
+        ],
+        "slowestRequests": [
+          {
+            "index": 19525,
+            "startedNanos": 19525241083,
+            "writtenNanos": 19525303833,
+            "finishedNanos": 19564157125,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "16662",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "6f68c631734194a3c1f34abd4dc04624a0893ba5c20e0d161f451616271a8fcd"
+            }
+          },
+          {
+            "index": 24526,
+            "startedNanos": 24526281625,
+            "writtenNanos": 24526327541,
+            "finishedNanos": 24564997791,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20856",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "48900943b0a56ebb5151dd9c0a7963997c66f7ed978be2ea480dcfb32eeb4df2"
+            }
+          },
+          {
+            "index": 14527,
+            "startedNanos": 14527264625,
+            "writtenNanos": 14527324458,
+            "finishedNanos": 14565935333,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "12443",
+              "tradeCount": "1",
+              "orderStatus": "FILLED",
+              "fingerprint": "3e4b6670cf07a940c78ed6369e9024cc4821b88f546afe579eefa6a5593c2f23"
+            }
+          },
+          {
+            "index": 14522,
+            "startedNanos": 14522263666,
+            "writtenNanos": 14522331000,
+            "finishedNanos": 14560680916,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "12438",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "c7f834758e973c65d594a7c8234694074087b5b02fe08cd7dc69715aca1c80f2"
+            }
+          },
+          {
+            "index": 19530,
+            "startedNanos": 19530514041,
+            "writtenNanos": 19530539250,
+            "finishedNanos": 19568891250,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "CANCELLED",
+              "certainty": "COMPLETED",
+              "commandSeq": "16667",
+              "tradeCount": "0",
+              "orderStatus": "CANCELLED",
+              "fingerprint": "0402a19546301ad4cea7328683575337497f58122eeda23ab093e27904887783"
+            }
+          },
+          {
+            "index": 19526,
+            "startedNanos": 19526095875,
+            "writtenNanos": 19526138291,
+            "finishedNanos": 19564164916,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ALREADY_FILLED",
+              "certainty": "COMPLETED",
+              "commandSeq": "16663",
+              "tradeCount": "0",
+              "orderStatus": "FILLED",
+              "fingerprint": "afd97ea16f331e15ce8d577d96df8a4c41f28d5745ca50398deed4bbf01e9bd4"
+            }
+          },
+          {
+            "index": 24530,
+            "startedNanos": 24530012583,
+            "writtenNanos": 24530120333,
+            "finishedNanos": 24567930916,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "ACCEPTED",
+              "certainty": "COMPLETED",
+              "commandSeq": "20860",
+              "tradeCount": "0",
+              "orderStatus": "OPEN",
+              "fingerprint": "fa4aa7f5984570e21a4e582a724932c40b45cd0323291f57879b6aca8133e034"
+            }
+          },
+          {
+            "index": 24527,
+            "startedNanos": 24527226625,
+            "writtenNanos": 24527282916,
+            "finishedNanos": 24564975625,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "INSUFFICIENT_BALANCE",
+              "certainty": "COMPLETED",
+              "commandSeq": "20857",
+              "tradeCount": "0",
+              "orderStatus": "REJECTED",
+              "fingerprint": "5b66b6430bd69f229ab6f962b083c43fddc907d33f2d8fc438354dfd9d4c521a"
+            }
+          },
+          {
+            "index": 19531,
+            "startedNanos": 19531194208,
+            "writtenNanos": 19531230625,
+            "finishedNanos": 19568900500,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "CANCELLED",
+              "certainty": "COMPLETED",
+              "commandSeq": "16668",
+              "tradeCount": "0",
+              "orderStatus": "CANCELLED",
+              "fingerprint": "a26549c01ae0d29cf3f4b7ad05f83080f1b5371cfb6a3cacd1c8d64d42705a03"
+            }
+          },
+          {
+            "index": 14523,
+            "startedNanos": 14523231625,
+            "writtenNanos": 14523313291,
+            "finishedNanos": 14560654791,
+            "outcome": {
+              "class": "BUSINESS",
+              "httpStatus": 200,
+              "code": "INSUFFICIENT_BALANCE",
+              "certainty": "COMPLETED",
+              "commandSeq": "12439",
+              "tradeCount": "0",
+              "orderStatus": "REJECTED",
+              "fingerprint": "124a989c3eaea99b331ff58268d468ee801dbf817de512b288ff296f9df2f873"
+            }
+          }
+        ],
+        "slowestEnclosingIntervals": [
+          {
+            "observedStartUTC": "2026-11-06T13:21:40.175317Z",
+            "observedEndUTC": "2026-11-06T13:21:41.175262Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 473.319,
+            "gcCpuMs": 83.72371200000006,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.16384,
+            "peakRssMiB": 73.109375,
+            "liveHeapMiB": 29.128753662109375,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 997,
+                "sumNanos": 1903525930,
+                "meanMs": 1.9092536910732198,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 14
+              },
+              "runtime.batchWait": {
+                "count": 831,
+                "sumNanos": 875964280,
+                "meanMs": 1.0541086401925392,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 209,
+                "sumNanos": 713442088,
+                "meanMs": 3.4135985071770336,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 832,
+                "sumNanos": 5538866,
+                "meanMs": 0.006657290865384615,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 209,
+                "sumNanos": 692301253,
+                "meanMs": 3.312446186602871,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 998,
+                "sumNanos": 5912739603,
+                "meanMs": 5.924588780561122,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 24
+              },
+              "http.encode": {
+                "count": 998,
+                "sumNanos": 11091502,
+                "meanMs": 0.011113729458917837,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 998,
+                "sumNanos": 21503129,
+                "meanMs": 0.021546221442885774,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 34122208,
+                "meanMs": 34.122208,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 340598000,
+                "meanMs": 340.598,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 4
+          },
+          {
+            "observedStartUTC": "2026-11-06T13:21:45.175016Z",
+            "observedEndUTC": "2026-11-06T13:21:46.176926Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 479.75,
+            "gcCpuMs": 91.19904200000006,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.32768,
+            "peakRssMiB": 84.890625,
+            "liveHeapMiB": 34.24040222167969,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 970,
+                "sumNanos": 1672009616,
+                "meanMs": 1.7237212536082476,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 15
+              },
+              "runtime.batchWait": {
+                "count": 821,
+                "sumNanos": 957792922,
+                "meanMs": 1.1666174445797808,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 4
+              },
+              "runtime.append": {
+                "count": 231,
+                "sumNanos": 672677363,
+                "meanMs": 2.9120232164502164,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 824,
+                "sumNanos": 2622866,
+                "meanMs": 0.003183089805825243,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 231,
+                "sumNanos": 650761748,
+                "meanMs": 2.817150424242424,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 973,
+                "sumNanos": 5092569504,
+                "meanMs": 5.233884382322713,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 22
+              },
+              "http.encode": {
+                "count": 973,
+                "sumNanos": 9831333,
+                "meanMs": 0.010104144912641316,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 973,
+                "sumNanos": 16590124,
+                "meanMs": 0.017050487153134637,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 31181292,
+                "meanMs": 31.181292,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 397673542,
+                "meanMs": 397.673542,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 0
+          },
+          {
+            "observedStartUTC": "2026-11-06T13:21:35.175623Z",
+            "observedEndUTC": "2026-11-06T13:21:36.175525Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 456.346,
+            "gcCpuMs": 59.33662000000006,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.229376,
+            "peakRssMiB": 58.515625,
+            "liveHeapMiB": 20.401199340820312,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 999,
+                "sumNanos": 1724258444,
+                "meanMs": 1.7259844284284285,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 14
+              },
+              "runtime.batchWait": {
+                "count": 853,
+                "sumNanos": 885395038,
+                "meanMs": 1.0379777702227433,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 227,
+                "sumNanos": 694563081,
+                "meanMs": 3.059749255506608,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 852,
+                "sumNanos": 3382366,
+                "meanMs": 0.003969913145539906,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 227,
+                "sumNanos": 671331343,
+                "meanMs": 2.9574067973568283,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 998,
+                "sumNanos": 5555008856,
+                "meanMs": 5.566141138276553,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 24
+              },
+              "http.encode": {
+                "count": 998,
+                "sumNanos": 11635776,
+                "meanMs": 0.011659094188376753,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 998,
+                "sumNanos": 22253096,
+                "meanMs": 0.02229769138276553,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 30530166,
+                "meanMs": 30.530166,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 283923250,
+                "meanMs": 283.92325,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 3
+          },
+          {
+            "observedStartUTC": "2026-11-06T13:21:40.676212Z",
+            "observedEndUTC": "2026-11-06T13:21:41.175262Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 288.49,
+            "gcCpuMs": 82.56192100000004,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.032768000000000005,
+            "peakRssMiB": 73.109375,
+            "liveHeapMiB": 29.128753662109375,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 496,
+                "sumNanos": 1249020942,
+                "meanMs": 2.5181873830645163,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 14
+              },
+              "runtime.batchWait": {
+                "count": 408,
+                "sumNanos": 438542212,
+                "meanMs": 1.074858362745098,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 0
+              },
+              "runtime.append": {
+                "count": 99,
+                "sumNanos": 349083965,
+                "meanMs": 3.5261006565656565,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 410,
+                "sumNanos": 772248,
+                "meanMs": 0.001883531707317073,
+                "p99BucketUpperMs": 0.01,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 99,
+                "sumNanos": 344823710,
+                "meanMs": 3.483067777777778,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 498,
+                "sumNanos": 3310513591,
+                "meanMs": 6.647617652610442,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 24
+              },
+              "http.encode": {
+                "count": 498,
+                "sumNanos": 2363211,
+                "meanMs": 0.0047454036144578314,
+                "p99BucketUpperMs": 0.02,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 498,
+                "sumNanos": 3655498,
+                "meanMs": 0.0073403574297188755,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 34122208,
+                "meanMs": 34.122208,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 340598000,
+                "meanMs": 340.598,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 4
+          },
+          {
+            "observedStartUTC": "2026-11-06T13:21:45.675218Z",
+            "observedEndUTC": "2026-11-06T13:21:46.176926Z",
+            "startBoundaryLagMs": 0.0,
+            "endBoundaryLagMs": 0.0,
+            "osAvailable": true,
+            "cpuMs": 330.204,
+            "gcCpuMs": 91.19904200000006,
+            "gcCycles": 3,
+            "gcPauseLargestUpperMs": 0.32768,
+            "peakRssMiB": 84.890625,
+            "liveHeapMiB": 34.24040222167969,
+            "stages": {
+              "runtime.commandQueueWait": {
+                "count": 470,
+                "sumNanos": 1137388467,
+                "meanMs": 2.4199754617021276,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 15
+              },
+              "runtime.batchWait": {
+                "count": 408,
+                "sumNanos": 543990002,
+                "meanMs": 1.3333088284313726,
+                "p99BucketUpperMs": 2.0,
+                "over20ms": 4
+              },
+              "runtime.append": {
+                "count": 104,
+                "sumNanos": 324343910,
+                "meanMs": 3.1186914423076924,
+                "p99BucketUpperMs": 10.0,
+                "over20ms": 0
+              },
+              "runtime.apply": {
+                "count": 408,
+                "sumNanos": 605241,
+                "meanMs": 0.0014834338235294117,
+                "p99BucketUpperMs": 0.005,
+                "over20ms": 0
+              },
+              "runtime.wal.sync": {
+                "count": 104,
+                "sumNanos": 317094835,
+                "meanMs": 3.048988798076923,
+                "p99BucketUpperMs": 5.0,
+                "over20ms": 0
+              },
+              "http.handler": {
+                "count": 475,
+                "sumNanos": 2963235544,
+                "meanMs": 6.238390618947368,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 22
+              },
+              "http.encode": {
+                "count": 474,
+                "sumNanos": 2424133,
+                "meanMs": 0.0051142046413502115,
+                "p99BucketUpperMs": 0.05,
+                "over20ms": 0
+              },
+              "http.write": {
+                "count": 475,
+                "sumNanos": 3751116,
+                "meanMs": 0.007897086315789474,
+                "p99BucketUpperMs": 0.1,
+                "over20ms": 0
+              },
+              "runtime.snapshotCapture": {
+                "count": 1,
+                "sumNanos": 31181292,
+                "meanMs": 31.181292,
+                "p99BucketUpperMs": 50.0,
+                "over20ms": 1
+              },
+              "runtime.snapshotPublish": {
+                "count": 1,
+                "sumNanos": 397673542,
+                "meanMs": 397.673542,
+                "p99BucketUpperMs": 500.0,
+                "over20ms": 1
+              }
+            },
+            "observedQueueDepthMax": 0
+          }
+        ]
+      }
+    ],
+    "notes": [
+      "UTC alignment is approximate; endpoint drift is not an error bound.",
+      "Server intervals enclose the full response cohort and may contain unrelated work.",
+      "Histogram deltas measure completed calls; stage durations are not request-attributed.",
+      "Host UTC rows are coarse whole-host observations, not per-request attribution.",
+      "Generator GC is available only for its full lifetime, not per-window.",
+      "A new cumulative maximum belongs to the interval; an unchanged maximum is not its maximum.",
+      "Overlap does not establish a unique or kernel I/O cause."
+    ]
+  }
+}

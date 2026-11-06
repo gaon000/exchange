@@ -115,6 +115,16 @@ python3 tools/diagnostics/experiment.py analyze --bundle var/timer-trace-control
 
 `compare --spec ... --output 새디렉터리`는 보관 원본을 재검증해 JSON·Markdown을 함께 생성한다. P6 판정은 기존 benchreport를 재사용하고 진단·무효·반복 부족·조건 차이를 보고서에 보존한다. [비교 명세·실행·판정 안내](experiment-comparison.md)를 따른다. 보고서 생성 성공과 성능 검토 가능 상태는 별도다.
 
+## 스냅샷 창과 응답 tail 대조
+
+P6 snapshot 원본의 창별 요청과 서버 누적 계측을 대조하려면 다음 명령을 사용한다. 독립된 새 출력만 허용하며 기존 benchreport로 먼저 원본을 재검증한다. JSON과 Markdown, 원본 hash·창/응답 tail·단계 차분·coarse 호스트 UTC를 남긴다.
+
+```sh
+python3 tools/diagnostics/snapshot_windows.py --output var/snapshot-window-analysis var/lower-rate-reference/snapshot-1 var/lower-rate-resumed-3/snapshot-2 var/lower-rate-resumed-3/snapshot-3
+```
+
+이 경로는 로컬 보존 자료 예시다. 각 5초 cohort의 마지막 응답이 창 끝을 넘으면 그 응답을 포함하는 다음 서버 관측까지 확장한다. 따라서 인접 창의 서버 관측이 겹치거나 다른 작업을 포함할 수 있다. 개별 요청의 인과 관계·물리 I/O 원인이나 성능 채택을 자동 판정하지 않는다. GC pause와 병렬 GC CPU, snapshot 호출과 상태 복사, 누적 최대와 구간 최대를 구분한다.
+
 ## 자동 검증
 
 ```sh
