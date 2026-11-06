@@ -1,8 +1,7 @@
 # 낮은 요청률의 기준 확보와 비교
 
-상태: Blocked
-차단 사유: snapshot2 시작 전 호스트 busy gate 미달이 반복됐고 마지막 재개의 15개 관측도 모두 미달. 다른 앱/OS 분석 부하를 자동 중단하지 않음.
-재개 조건: 같은 host gate를 만족하거나 사용자가 새 실험 조건을 명시하면 원본 prefix를 보존해 이어간다.
+상태: In Progress
+재개: 사용자가 부하를 줄인 뒤 계속 진행하도록 요청했다. 같은 조건으로 남은 네 실행을 완료하고 원본/참조 무결성을 검증했다.
 종료일: 미종료
 
 [운영 규칙](../index.md)을 따른다.
@@ -15,7 +14,7 @@
 
 - [x] c9a9950 master 머지·push.
 - [x] 해당 원격 CI 확인·요청률 옵션·회귀 검증·clean producer 고정.
-- [ ] 낮은 두 요청률 6회와 원본/판정 검증.
+- [x] 낮은 두 요청률 6회와 원본/판정 검증. 정상 10,000/s는 3/3 통과·qualified, snapshot 1,000/s는 2/3 통과·미채택.
 - [ ] 통과 작업점에서 비교 및 필요한 경우 병목 한 곳 후보 검증.
 - [ ] 결과·한계·재현 명령과 최종 검증/커밋.
 
@@ -31,9 +30,9 @@
 
 ## Outcomes & Retrospective
 
-완료한 항목은 c9a9950 master 머지/push/실제 CI, 요청률 설정화·원본 보존 resume·조건 선택/대기 횟수 설정과 회귀 검증이다. 낮은 부하 실행은 정상1/snapshot1 두 개만 완료했다. 정상1은 단일 판정 통과, snapshot1은 WINDOW_3_P99 실패이며 두 조건 모두 반복 기준을 채택하지 않았다. 마지막 15회 gate도 모두 실패했고 남은 네 workload는 시작하지 않았다.
+완료한 항목은 c9a9950 master 머지/push/실제 CI, 요청률 설정화·원본 보존 resume·조건 선택/대기 횟수 설정과 회귀 검증이다. 최초 두 실행과 gate 실패는 보존했다. 사용자 재개 요청 뒤 var/lower-rate-resumed-3에서 나머지 네 실행을 모두 유효하게 완료했고 parent inventory/dependency와 6회 판정을 검증했다. 정상 10,000/s는 3/3 통과해 작업점으로 채택하며 snapshot 1,000/s는 최초 WINDOW_3_P99 실패를 포함해 2/3 통과여서 미채택이다.
 
-테스트 전용 Int JSON prototype은 동일 bytes/오류와 5회 단위 측정의 할당 감소를 확인했다. production 최적화 적용·전체 경로 전후 비교는 유효한 기준을 확보한 뒤에만 진행한다. [진행 기록](../../benchmarks/lower-rate-progress.md)에 원본 경로·미완료·재개 명령을 남겼다.
+테스트 전용 Int JSON prototype은 동일 bytes/오류와 5회 단위 측정의 할당 감소를 확인했다. 정상 반복 기준을 확보해 이 후보 하나를 실제 코드에 적용하고 같은 정상 10,000/s·독립 새 run 3회로 비교한다. 직접 정수 bytes를 쓰며 JSON 문자열·음수 오류·decode 계약을 유지한다. 생산 빌드와 생성기는 같은 clean revision에서 고정하므로 전체 프로그램 비교이며 서버만의 기여를 분리하지 않는다. p99·CPU·RSS 관찰을 보고하고 최대 처리량 향상은 주장하지 않는다. [진행 기록](../../benchmarks/lower-rate-progress.md)에 원본 경로·미완료·재개 명령을 남겼다.
 
 - 2026-11-06: 첫 낮은 부하 collection은 정상1/snapshot1 완료 후 snapshot2 시작 전 quiet 미달로 중단됐다. 완료 prefix를 보존하고 같은 pin/조건의 나머지만 새 root로 재개한다. 부하 시작 후 부분 실패를 교체하는 resume는 금지한다.
 
@@ -44,3 +43,5 @@
 - Python 일반/`-O` 각각 27개, portable Go 206개·native race 238개와 기존 실제 smoke 통과. `var/lower-rate-resume-ci-{portable,native}.log`에 보존.
 - producer pin 086c61a, 실제 prefix 두 개와 세 parent inventory/dependency를 검증했다. 마지막 root는 `var/lower-rate-resumed-2`이며 부하가 시작되지 않은 quiet 중단에서만 재개 가능하다.
 - benchmark prototype은 CPU1·500ms·5회, 현재 130.8ns/80B/4alloc 중앙값과 후보 20.50ns/24B/1alloc을 관찰했다. 단일 19자리 양수의 미시 측정이며 서버 개선으로 주장하지 않는다.
+
+- 2026-11-06: 후속 후보는 Int.MarshalJSON의 중첩 json.Marshal 제거 한 곳으로 제한한다. 정상 10,000/s에서 5초 warmup·20초 본 측정·3회·같은 gate/runtime/criteria로 실행한다. 모든 실패를 포함하고 후보가 반복 기준을 못 넘으면 채택하지 않는다. 스냅샷 실패 그룹은 개선 비교의 기준으로 사용하지 않는다.

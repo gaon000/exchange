@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "criteria": "../benchmarks/criteria-v1.json",
+  "comparisons": [
+    {
+      "name": "정상 10000/s 정수 JSON 직렬화 전후",
+      "baseline": [
+        {"bundle": "../../var/lower-rate-reference/normal-1"},
+        {"bundle": "../../var/lower-rate-resumed-3/normal-2"},
+        {"bundle": "../../var/lower-rate-resumed-3/normal-3"}
+      ],
+      "candidate": [
+        {"bundle": "../../var/lower-rate-integer-candidate/normal-1"},
+        {"bundle": "../../var/lower-rate-integer-candidate/normal-2"},
+        {"bundle": "../../var/lower-rate-integer-candidate/normal-3"}
+      ]
+    }
+  ]
+}

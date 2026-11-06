@@ -44,7 +44,12 @@ func (n Int) MarshalJSON() ([]byte, error) {
 	if n < 0 {
 		return nil, ErrInteger
 	}
-	return json.Marshal(n.String())
+	// Nonnegative int64 digits need no JSON escaping; reserve both quotes and
+	// the longest decimal value without creating an intermediate string.
+	out := make([]byte, 1, 21)
+	out[0] = '"'
+	out = strconv.AppendInt(out, int64(n), 10)
+	return append(out, '"'), nil
 }
 
 // UnmarshalJSON rejects numbers, null, fractions, signs, and overflow.
