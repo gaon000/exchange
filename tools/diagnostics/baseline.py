@@ -55,11 +55,18 @@ def validate_build(root):
     return record
 
 
-def order(preset):
-    return [('normal-1', 'normal', 20), ('snapshot-1', 'snapshot', 20)] if preset == 'smoke' else [
-        ('normal-1', 'normal', 29000), ('snapshot-1', 'snapshot', 3000),
-        ('snapshot-2', 'snapshot', 3000), ('normal-2', 'normal', 29000),
-        ('normal-3', 'normal', 29000), ('snapshot-3', 'snapshot', 3000)]
+def order(preset, normal_rate=None, snapshot_rate=None):
+    require(preset in ('smoke', 'reference'), 'invalid preset')
+    if preset == 'smoke':
+        require(normal_rate is None and snapshot_rate is None, 'rate overrides require reference preset')
+        return [('normal-1', 'normal', 20), ('snapshot-1', 'snapshot', 20)]
+    normal = 29000 if normal_rate is None else normal_rate
+    snapshot = 3000 if snapshot_rate is None else snapshot_rate
+    require(all(type(rate) is int and 1000 <= rate <= 80000 and rate % 1000 == 0 for rate in (normal, snapshot)),
+            'reference rates must be 1000..80000 in steps of 1000 (at most 2000000 scheduled attempts)')
+    return [('normal-1', 'normal', normal), ('snapshot-1', 'snapshot', snapshot),
+            ('snapshot-2', 'snapshot', snapshot), ('normal-2', 'normal', normal),
+            ('normal-3', 'normal', normal), ('snapshot-3', 'snapshot', snapshot)]
 
 
 def quiet_stats(path, minimum):
@@ -133,7 +140,8 @@ def power_and_thermal(root, label):
             require(int(line.rsplit('=', 1)[1].strip().rstrip(';')) == 100, 'OS reports CPU throttling')
 
 
-def run(output, build_dir, preset):
+def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None):
+    selected_order = order(preset, normal_rate, snapshot_rate)
     require(platform.system() == 'Darwin' and platform.machine() == 'arm64', 'reference measurement requires macOS arm64/APFS')
     require(preset in ('smoke', 'reference'), 'invalid preset')
     require(not output.is_symlink(), 'existing output symlink')
@@ -158,7 +166,7 @@ def run(output, build_dir, preset):
             shutil.copy2(build_dir/'bin'/name, output/'bin'/name)
         save(output/'producer-build.json', build)
         protocol = {'version': 1, 'preset': preset, 'createdUTC': now(), 'producerRevision': build['revision'],
-                    'binarySHA256': build['sha256'], 'sourceSHA256': source_hashes(), 'order': order(preset),
+                    'binarySHA256': build['sha256'], 'sourceSHA256': source_hashes(), 'order': selected_order,
                     'runtimeEnvironment': {key: env[key] for key in ('GOMAXPROCS', 'GOGC', 'GOMEMLIMIT')},
                     'quietGate': {'medianBusyMax': 15, 'peakBusyMax': 30, 'minimumRecords': 2 if preset == 'smoke' else 10,
                                   'enforced': preset == 'reference'},
@@ -171,7 +179,7 @@ def run(output, build_dir, preset):
         probe = subprocess.run([str(output/'bin/storageprobe'), '-dir', str(output)], capture_output=True, text=True, timeout=30)
         require(probe.returncode == 0, 'storage probe failed: '+probe.stderr)
         save(output/'storage-probe.json', json.loads(probe.stdout))
-        for index, (name, scenario, rate) in enumerate(order(preset)):
+        for index, (name, scenario, rate) in enumerate(selected_order):
             power_and_thermal(output, name)
             for attempt in range(3):
                 label = name+'-quiet-'+str(attempt+1)
@@ -223,10 +231,10 @@ def run(output, build_dir, preset):
             result = {'case': name, 'exit': code, 'measurementValid': summary['measurementValid']}
             results.append(result)
             print(json.dumps({'stage': 'finished', **result}), flush=True)
-            if index+1 < len(order(preset)):
+            if index+1 < len(selected_order):
                 time.sleep(protocol['cooldownSeconds'])
         judged = subprocess.run([str(output/'bin/benchreport'), '-output', str(output/'qualification.json'),
-                                 *[str(output/name) for name, _, _ in order(preset)]], capture_output=True, text=True, env=env, timeout=300)
+                                 *[str(output/name) for name, _, _ in selected_order]], capture_output=True, text=True, env=env, timeout=300)
         require(judged.returncode == 0, 'benchreport failed: '+judged.stderr)
         save(output/'suite.json', {'status': 'COLLECTION_COMPLETED', 'results': results,
                                   'meaning': 'inspect qualification.json; collection completion is not performance qualification'})

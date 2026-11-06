@@ -12,6 +12,21 @@ from common import save, verify
 
 
 class BaselineTests(unittest.TestCase):
+    def test_reference_rate_overrides_match_fixed_plan_bounds(self):
+        cases = order('reference', 10000, 1000)
+        self.assertEqual([rate for _, kind, rate in cases if kind == 'normal'], [10000]*3)
+        self.assertEqual([rate for _, kind, rate in cases if kind == 'snapshot'], [1000]*3)
+        self.assertEqual(order('reference', 80000, 1000)[0][2]*25, 2000000)
+        self.assertEqual(order('reference', snapshot_rate=1000)[0][2], 29000)
+        for rate in (0, -1000, 999, 1500, 81000, True, 1000.0):
+            with self.subTest(rate=rate), self.assertRaises(ValueError):order('reference', rate, 1000)
+        with self.assertRaisesRegex(ValueError, 'reference preset'):order('smoke', 1000, 1000)
+        with tempfile.TemporaryDirectory() as temp, patch('baseline.validate_build') as build:
+            output = Path(temp)/'output'
+            with self.assertRaises(ValueError):run(output, Path(temp), 'reference', 1500, 1000)
+            build.assert_not_called()
+            self.assertFalse(output.exists())
+
     def test_reference_never_starts_workload_when_quiet_gate_fails(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

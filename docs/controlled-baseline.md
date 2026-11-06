@@ -30,6 +30,16 @@ python3 tools/diagnostics/experiment.py verify --bundle var/baseline-reference -
 
 snapshot/정상의 요청률과 누적 상태 크기가 다르므로 두 조건의 비용 차이를 같은 상태에서의 snapshot 오버헤드로 해석하지 않는다. 이 실행 환경은 과거의 암묵적 Go 기본값과 별도 기록한 조건이며 이전 series와 자동 혼합하지 않는다.
 
+## 요청률 옵션
+
+reference의 기본 요청률은 정상 29,000/s·snapshot 3,000/s다. 다음처럼 두 요청률을 독립적으로 지정할 수 있다.
+
+```sh
+python3 tools/diagnostics/experiment.py baseline --build-dir var/baseline-build --output var/baseline-lower --preset reference --normal-rate 10000 --snapshot-rate 1000
+```
+
+reference 요청률은 1,000~80,000/s의 1,000/s 단위다. warmup+측정 25초에서 예정 시도 최대 200만을 유지한다. 높은 요청률도 자원 예산과 기존 판정을 통과해야 한다. smoke에는 요청률 override를 허용하지 않는다. 잘못된 값은 출력 생성·build 검증 전에 거절한다. protocol의 order, 개별 workload와 원본 manifest에 실제 요청률을 남기며 rate가 다른 실행은 별도 그룹이다. 실패한 rate를 삭제하거나 다른 rate의 통과로 교체하지 않는다.
+
 ## 호스트와 예산
 
 각 실행 직전 AC 전원과 `pmset -g therm`을 기록한다. CPU 제한 지표가 있으면 100%를 요구한다. `iostat`의 since-boot 행을 제외하고 reference는 최소 10개 1초 관측에서 busy 중앙값 ≤15%, 최대 ≤30%여야 한다. smoke는 최소 2개를 관찰하며 실행 경로 검사이므로 quietGate.enforced=false로 기록한다. accepted=false인 관찰을 true로 바꾸지 않는다. reference의 gate 미달은 최대 세 번 보존하고 본 실행을 중단한다. OS/runtime의 순간 지연을 보장하는 조건은 아니다.

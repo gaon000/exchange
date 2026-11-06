@@ -26,6 +26,8 @@ def main():
     baseline.add_argument('--build-dir', type=Path, required=True, help='clean frozen build directory with build.json and bin/')
     baseline.add_argument('--output', type=Path, required=True)
     baseline.add_argument('--preset', choices=['smoke', 'reference'], default='smoke')
+    baseline.add_argument('--normal-rate', type=int, help='reference only: 1000..80000, step 1000; default 29000')
+    baseline.add_argument('--snapshot-rate', type=int, help='reference only: 1000..80000, step 1000; default 3000')
     frozen = commands.add_parser('baseline-build', help='freeze clean producer binaries before recording a baseline')
     frozen.add_argument('--output', type=Path, required=True)
     for name in ['verify', 'analyze']:
@@ -40,7 +42,8 @@ def main():
         print(json.dumps({'buildDirectory': str(freeze(options.output)), 'status': 'frozen'}))
     elif options.command == 'baseline':
         from baseline import run as run_baseline
-        print(json.dumps({'bundle': str(run_baseline(options.output, options.build_dir, options.preset)), 'status': 'collected'}))
+        print(json.dumps({'bundle': str(run_baseline(options.output, options.build_dir, options.preset,
+                                                    options.normal_rate, options.snapshot_rate)), 'status': 'collected'}))
     elif options.command == 'compare':
         from comparison import compare as compare_report
         result = compare_report(options.spec, options.output)
