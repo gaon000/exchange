@@ -50,6 +50,8 @@ class BaselineTests(unittest.TestCase):
         self.assertEqual([rate for _, kind, rate in cases if kind == 'snapshot'], [1000]*3)
         self.assertEqual(order('reference', 80000, 1000)[0][2]*25, 2000000)
         self.assertEqual(order('reference', snapshot_rate=1000)[0][2], 29000)
+        self.assertEqual([c[0] for c in order('reference', 10000, 1000, 'normal')], ['normal-1', 'normal-2', 'normal-3'])
+        self.assertEqual(len(order('reference', 10000, 1000, 'snapshot')), 3)
         for rate in (0, -1000, 999, 1500, 81000, True, 1000.0):
             with self.subTest(rate=rate), self.assertRaises(ValueError):order('reference', rate, 1000)
         with self.assertRaisesRegex(ValueError, 'reference preset'):order('smoke', 1000, 1000)

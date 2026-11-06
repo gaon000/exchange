@@ -29,6 +29,8 @@ def main():
     baseline.add_argument('--normal-rate', type=int, help='reference only: 1000..80000, step 1000; default 29000')
     baseline.add_argument('--snapshot-rate', type=int, help='reference only: 1000..80000, step 1000; default 3000')
     baseline.add_argument('--resume-from', type=Path, help='preserve completed prefix after a quiet-gate-only interruption')
+    baseline.add_argument('--condition', choices=['both', 'normal', 'snapshot'], default='both', help='reference scenarios to measure')
+    baseline.add_argument('--quiet-attempts', type=int, default=3, help='1..60 observations before stopping; thresholds unchanged')
     frozen = commands.add_parser('baseline-build', help='freeze clean producer binaries before recording a baseline')
     frozen.add_argument('--output', type=Path, required=True)
     for name in ['verify', 'analyze']:
@@ -44,7 +46,8 @@ def main():
     elif options.command == 'baseline':
         from baseline import run as run_baseline
         print(json.dumps({'bundle': str(run_baseline(options.output, options.build_dir, options.preset,
-                                                    options.normal_rate, options.snapshot_rate, options.resume_from)), 'status': 'collected'}))
+                                                    options.normal_rate, options.snapshot_rate, options.resume_from,
+                                                    options.condition, options.quiet_attempts)), 'status': 'collected'}))
     elif options.command == 'compare':
         from comparison import compare as compare_report
         result = compare_report(options.spec, options.output)

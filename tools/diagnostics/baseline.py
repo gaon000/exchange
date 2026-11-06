@@ -55,18 +55,20 @@ def validate_build(root):
     return record
 
 
-def order(preset, normal_rate=None, snapshot_rate=None):
+def order(preset, normal_rate=None, snapshot_rate=None, condition='both'):
     require(preset in ('smoke', 'reference'), 'invalid preset')
+    require(condition in ('both', 'normal', 'snapshot'), 'invalid condition')
     if preset == 'smoke':
-        require(normal_rate is None and snapshot_rate is None, 'rate overrides require reference preset')
+        require(normal_rate is None and snapshot_rate is None and condition == 'both', 'overrides require reference preset')
         return [('normal-1', 'normal', 20), ('snapshot-1', 'snapshot', 20)]
     normal = 29000 if normal_rate is None else normal_rate
     snapshot = 3000 if snapshot_rate is None else snapshot_rate
     require(all(type(rate) is int and 1000 <= rate <= 80000 and rate % 1000 == 0 for rate in (normal, snapshot)),
             'reference rates must be 1000..80000 in steps of 1000 (at most 2000000 scheduled attempts)')
-    return [('normal-1', 'normal', normal), ('snapshot-1', 'snapshot', snapshot),
+    cases = [('normal-1', 'normal', normal), ('snapshot-1', 'snapshot', snapshot),
             ('snapshot-2', 'snapshot', snapshot), ('normal-2', 'normal', normal),
             ('normal-3', 'normal', normal), ('snapshot-3', 'snapshot', snapshot)]
+    return cases if condition == 'both' else [case for case in cases if case[1] == condition]
 
 
 def quiet_stats(path, minimum):
@@ -188,8 +190,9 @@ def verify_dependencies(root):
     return {'parentCasesVerified': len(results), 'parentManifestSHA256': reference['manifestSHA256']}
 
 
-def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None, resume_from=None):
-    selected_order = order(preset, normal_rate, snapshot_rate)
+def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None, resume_from=None, condition='both', quiet_attempts=3):
+    selected_order = order(preset, normal_rate, snapshot_rate, condition)
+    require(type(quiet_attempts) is int and 1 <= quiet_attempts <= 60, 'quiet attempts must be 1..60')
     require(platform.system() == 'Darwin' and platform.machine() == 'arm64', 'reference measurement requires macOS arm64/APFS')
     require(preset in ('smoke', 'reference'), 'invalid preset')
     require(not output.is_symlink(), 'existing output symlink')
@@ -224,7 +227,7 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None, resume_
                     'binarySHA256': build['sha256'], 'sourceSHA256': source_hashes(), 'order': selected_order,
                     'runtimeEnvironment': runtime_env,
                     'quietGate': {'medianBusyMax': 15, 'peakBusyMax': 30, 'minimumRecords': 2 if preset == 'smoke' else 10,
-                                  'enforced': preset == 'reference'},
+                                  'enforced': preset == 'reference', 'maximumAttempts': quiet_attempts},
                     'cooldownSeconds': 0 if preset == 'smoke' else 30, 'trace': False, 'generatorDiagnosticsNanos': 0,
                     'metricsIntervalNanos': 500000000, 'snapshotIntervalNanos': 5000000000,
                     'minimumFreeBytes': 8*2**30, 'maximumBundleBytes': 4*2**30,
@@ -238,7 +241,7 @@ def run(output, build_dir, preset, normal_rate=None, snapshot_rate=None, resume_
         save(output/'storage-probe.json', json.loads(probe.stdout))
         for index, (name, scenario, rate) in enumerate(pending_order):
             power_and_thermal(output, name)
-            for attempt in range(3):
+            for attempt in range(quiet_attempts):
                 label = name+'-quiet-'+str(attempt+1)
                 with Samplers(output, label):
                     time.sleep(3 if preset == 'smoke' else 11)

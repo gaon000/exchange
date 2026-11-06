@@ -42,7 +42,7 @@ reference 요청률은 1,000~80,000/s의 1,000/s 단위다. warmup+측정 25초�
 
 ## 호스트와 예산
 
-각 실행 직전 AC 전원과 `pmset -g therm`을 기록한다. CPU 제한 지표가 있으면 100%를 요구한다. `iostat`의 since-boot 행을 제외하고 reference는 최소 10개 1초 관측에서 busy 중앙값 ≤15%, 최대 ≤30%여야 한다. smoke는 최소 2개를 관찰하며 실행 경로 검사이므로 quietGate.enforced=false로 기록한다. accepted=false인 관찰을 true로 바꾸지 않는다. reference의 gate 미달은 최대 세 번 보존하고 본 실행을 중단한다. OS/runtime의 순간 지연을 보장하는 조건은 아니다.
+각 실행 직전 AC 전원과 `pmset -g therm`을 기록한다. CPU 제한 지표가 있으면 100%를 요구한다. `iostat`의 since-boot 행을 제외하고 reference는 최소 10개 1초 관측에서 busy 중앙값 ≤15%, 최대 ≤30%여야 한다. smoke는 최소 2개를 관찰하며 실행 경로 검사이므로 quietGate.enforced=false로 기록한다. accepted=false인 관찰을 true로 바꾸지 않는다. reference의 gate 미달은 기본 세 번 보존하고 본 실행을 중단한다. --quiet-attempts 1~60으로 대기 관측 횟수만 바꿀 수 있으며 busy 상한·최소 관측 수는 유지한다. OS/runtime의 순간 지연을 보장하는 조건은 아니다.
 
 측정 중 별도 host sampler와 소유 프로세스 트리의 RSS·디스크를 관찰한다. 타 앱·시스템 프로세스를 종료하거나 OS 설정을 바꾸지 않는다. 호스트 관찰 자체의 비용도 0으로 가정하지 않는다. 다른 로컬 빌드·테스트·성능 실행을 겹치지 않고, user 작업·열 상태·캐시·OS 서비스를 완전히 격리하지 못한 한계를 기록한다.
 
@@ -67,3 +67,5 @@ python3 tools/diagnostics/experiment.py baseline --build-dir var/baseline-build 
 ```
 
 이전 조건·runtime 환경·producer hash·완료 순서와 전체 inventory를 검사한다. 완료한 prefix는 원래 디렉터리에서 참조하고 남은 실행만 새 root에 생성한다. 판정에는 이전 완료 실행도 모두 포함한다. 이미 부하가 시작된 부분 실행, 기준/바이너리 변경, 완료 수집, 순서 누락/중복은 재개로 대체할 수 없다. 연결은 최대 16단계이며 각 parent manifest hash를 고정한다. 새 root의 `verify`도 참조한 parent의 무결성과 prefix를 검증한다. 새 root만 복사하면 외부 원본이 빠질 수 있으므로 resumeFrom으로 연결된 parent도 함께 보존한다.
+
+`--condition normal|snapshot|both`로 reference의 조건을 선택할 수 있다. 기본 both이고 각 선택 조건은 항상 독립된 새 run 3회다. 이미 완료한 수집을 이 옵션으로 축소해 재개할 수는 없으며, 재개는 원래 order 전체와 일치해야 한다.
