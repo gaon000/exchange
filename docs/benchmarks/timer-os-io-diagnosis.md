@@ -1,5 +1,7 @@
 # 타이머 분리 재현과 저장 호출의 OS I/O 관찰
 
+현재 저장소에서 다시 실행·검증·분석하는 명령은 [실험 도구 안내](../diagnostic-tools.md)를 따른다. 아래 경로·명령은 당시 측정 근거로 보존한다.
+
 2026-11-03, [이전 trace 진단](trace-host-diagnosis.md)에 이어 타이머 단독·worker 전달만 각각 10분 스케줄, 실제 거래소의 snapshot 켬을 10분 실행했다. **HTTP·거래 엔진·WAL/snapshot 작업 없이 worker의 예정 대비 50ms 초과가 1건 재현됐다. 다만 추가 지연 대부분이 worker가 runnable로 바뀌기 전이었으며 원인은 미확정이다. 저장에서는 WAL F_FULLFSYNC 최대 39.639ms와 프로세스 I/O 누계를 관찰했지만, 관리자 권한이 필요한 커널 이벤트 추적은 확보하지 못했다.**
 
 [기계 판독 근거](20261103-timer-os-io-report.json)에 전체 집계·선택 호출·시간 전이·원본 해시를 남긴다. 원본·도구·overlay·trace는 Git 제외 `var/timer-io-20261103.01lq38i1`에 보존한다.

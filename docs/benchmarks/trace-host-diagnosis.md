@@ -1,5 +1,7 @@
 # 실행 trace·호스트 CPU/I/O 지연 진단
 
+현재 저장소에서 다시 실행·검증·분석하는 명령은 [실험 도구 안내](../diagnostic-tools.md)를 따른다. 아래 경로·명령은 당시 측정 근거로 보존한다.
+
 2026-11-03, [반복 측정](diagnostic-soak-repeats.md)에 이어 스냅샷 끔/켬을 각각 600초 실행했다. **50ms 초과 생성기 미전송은 재현되지 않았다. 10~40ms 전달 지연에서는 timer/select 대기와 runnable 실행 대기가 서로 다른 사례로 나타났고, 서버에서는 최대 505.110ms WAL sync를 관찰했다. 두 실행의 전체 복구는 일치했다.** 특정 엔진 최적화나 호스트 프로그램을 원인으로 확정하지 않는다.
 
 [기계 판독 근거](20261103-trace-host-report.json)와 Git 제외 `var/trace-diagnosis-20261103.xu6tpijk`의 trace·호스트 원본·overlay·검증 결과를 함께 보존한다.

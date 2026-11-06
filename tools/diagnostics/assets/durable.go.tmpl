@@ -1,0 +1,129 @@
+//go:build darwin && cgo
+
+// Package durable provides the verified local-APFS persistence boundary.
+package durable
+
+/*
+#include <errno.h>
+#include <fcntl.h>
+#include <time.h>
+#include <stdint.h>
+struct exchange_sync_record { int64_t start,end,cpu_start,cpu_end; int attempts,clock_ok; };
+static int64_t read_clock(clockid_t id,int*ok){struct timespec t;if(clock_gettime(id,&t)){*ok=0;return 0;}return (int64_t)t.tv_sec*1000000000+t.tv_nsec;}
+static int exchange_full_sync(int fd,struct exchange_sync_record* r) {
+ r->clock_ok=1;r->attempts=0;r->start=read_clock(CLOCK_MONOTONIC,&r->clock_ok);r->cpu_start=read_clock(CLOCK_THREAD_CPUTIME_ID,&r->clock_ok);
+    int result;
+    do { result = fcntl(fd, F_FULLFSYNC);r->attempts++; } while (result == -1 && errno == EINTR);
+    int saved=result == -1 ? errno : 0;r->cpu_end=read_clock(CLOCK_THREAD_CPUTIME_ID,&r->clock_ok);r->end=read_clock(CLOCK_MONOTONIC,&r->clock_ok);return saved;
+}
+*/
+import "C"
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sync"
+	"syscall"
+	"time"
+)
+
+// Sync requires F_FULLFSYNC and never falls back to a weaker operation.
+func Sync(file *os.File) error {
+	raw, err := file.SyscallConn()
+	if err != nil {
+		return err
+	}
+	var syncErr error
+	var cdata C.struct_exchange_sync_record
+	observed := time.Now().UTC()
+	err = raw.Control(func(fd uintptr) {
+		if code := C.exchange_full_sync(C.int(fd), &cdata); code != 0 {
+			syncErr = syscall.Errno(code)
+		}
+	})
+	if os.Getenv("EXCHANGE_TRACE") == "1" {
+		syncRecords.Lock()
+		if len(syncRecords.rows) >= 200000 {
+			syncRecords.Unlock()
+			return errors.Join(err, syncErr, fmt.Errorf("sync record limit"))
+		}
+		syncRecords.rows = append(syncRecords.rows, ioRecord{observed, filepath.Base(file.Name()), int64(cdata.start), int64(cdata.end), int64(cdata.cpu_start), int64(cdata.cpu_end), int(cdata.attempts), cdata.clock_ok != 0, fmt.Sprint(errors.Join(err, syncErr))})
+		syncRecords.Unlock()
+	}
+	return errors.Join(err, syncErr)
+}
+
+// Lock takes an exclusive nonblocking advisory lock until the file is closed.
+func Lock(file *os.File) error {
+	raw, err := file.SyscallConn()
+	if err != nil {
+		return err
+	}
+	var lockErr error
+	err = raw.Control(func(fd uintptr) {
+		for {
+			lockErr = syscall.Flock(int(fd), syscall.LOCK_EX|syscall.LOCK_NB)
+			if !errors.Is(lockErr, syscall.EINTR) {
+				break
+			}
+		}
+	})
+	return errors.Join(err, lockErr)
+}
+
+// Contended identifies a lock already held by another open file description.
+func Contended(err error) bool { return errors.Is(err, syscall.EWOULDBLOCK) }
+
+// CheckFilesystem rejects filesystems outside the verified v1 APFS scope.
+func CheckFilesystem(path string) error {
+	var info syscall.Statfs_t
+	if err := syscall.Statfs(path, &info); err != nil {
+		return err
+	}
+	var name []byte
+	for _, c := range info.Fstypename {
+		if c == 0 {
+			break
+		}
+		name = append(name, byte(c))
+	}
+	if string(name) != "apfs" {
+		return fmt.Errorf("unsupported filesystem: %s", name)
+	}
+	return nil
+}
+
+type ioRecord struct {
+	ObservedUTC                  time.Time
+	File                         string
+	Start, End, CPUStart, CPUEnd int64
+	Attempts                     int
+	ClockAvailable               bool
+	Error                        string
+}
+
+var syncRecords struct {
+	sync.Mutex
+	rows []ioRecord
+}
+
+// WriteIORecords writes task-local observations after both storage workers drain.
+func WriteIORecords(path string) error {
+	syncRecords.Lock()
+	defer syncRecords.Unlock()
+	f, e := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	if e != nil {
+		return e
+	}
+	enc := json.NewEncoder(f)
+	for _, r := range syncRecords.rows {
+		if e = enc.Encode(r); e != nil {
+			f.Close()
+			return e
+		}
+	}
+	return errors.Join(f.Sync(), f.Close())
+}

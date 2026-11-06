@@ -72,6 +72,10 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 
 `git diff --check`만으로 untracked 새 파일은 검사되지 않는다. `--no-index --check`는 정상 새 파일에도 차이가 있으면 종료 코드 1을 반환할 수 있으므로 공백 오류 진단과 종료 코드를 함께 확인한다. 문서 검증에는 상대 링크·제목 앵커·경로 대소문자·설명과 실제 설정의 일치 여부를 포함한다. 프로젝트 설명에는 미치환 입력 항목을 남기지 않고, 복사해서 쓸 `template.md`의 작업별 입력 안내는 유지한다. 현재 프로젝트 전용 자동 문서 검사 명령은 미구성이다.
 
+## 재현 가능한 진단 실험
+
+[실험 도구 안내](diagnostic-tools.md)에서 `python3 tools/diagnostics/experiment.py run|verify|analyze`의 실행 가능한 명령을 관리한다. Python 3.9 이상 표준 라이브러리와 프로젝트 Go wrapper를 사용한다. 기본은 짧은 smoke, 10분 조건은 명시적으로 선택한다. 공용 CI 스크립트에도 Python 회귀 검사와 portable 타이머/native 거래·복구·trace·OS I/O smoke를 연결했다.
+
 ## 생성기 지연 진단
 
 `loadgen`과 `experiment`의 `--diagnostics-interval 500ms`는 선택적 scheduler/worker 시각과 생성기 주기 자원을 남긴다. 기본값은 0이며 100ms~1m를 허용한다. 기존 실행 인자에 이 옵션을 추가하고 새 출력 디렉터리를 사용한다. `dispatch.jsonl`, `generator-metrics.jsonl`과 설정/해시가 보존된다. 측정 종료 후 저장하고, 취소·수집 지연·상한도 기록한다. [측정 계약](design-docs/benchmark-v1.md#생성기-진단-옵션)과 [기존 10분 지연 분석](benchmarks/latency-diagnostics.md)을 따른다. 추가 계측 비용은 아직 정량화하지 않았으며 성능 비교 양쪽에서 같은 설정을 사용한다.

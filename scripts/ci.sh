@@ -65,3 +65,7 @@ if [ "$test_status" -ne 0 ] || [ "$verify_status" -ne 0 ]; then
   tail -n 50 "$report/tests.jsonl" >&2
   exit 1
 fi
+
+echo 'Checking repository diagnostic tools...'
+python3 -m unittest discover -s tools/diagnostics -p 'test_*.py'
+python3 tools/diagnostics/smoke.py --mode "$mode" --parent "$project_dir/$report"

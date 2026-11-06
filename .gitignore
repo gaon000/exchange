@@ -3,3 +3,6 @@
 /var/
 /bin/
 .DS_Store
+
+# Python experiment tooling
+__pycache__/

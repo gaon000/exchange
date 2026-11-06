@@ -1,0 +1,126 @@
+// exchange initializes and serves one local simulated exchange run.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/gaon000/exchange/internal/durable"
+	"io"
+	"os"
+	"os/signal"
+	"path/filepath"
+	"runtime/trace"
+	"sync"
+	"syscall"
+	"time"
+)
+
+func main() { os.Exit(tracedMain()) }
+func tracedMain() (code int) {
+	finish, err := beginTaskTrace()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 2
+	}
+	defer func() {
+		if err := finish(); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			code = 2
+		}
+	}()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	if err := run(ctx, os.Args[1:], os.Stdout, os.Stderr); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 1
+	}
+	return 0
+}
+
+type boundedTrace struct {
+	f   *os.File
+	mu  sync.Mutex
+	n   int64
+	err error
+}
+
+func (w *boundedTrace) Write(b []byte) (int, error) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	if w.n+int64(len(b)) > 512<<20 {
+		w.err = fmt.Errorf("trace exceeded 512MiB")
+		return 0, w.err
+	}
+	n, e := w.f.Write(b)
+	w.n += int64(n)
+	if e != nil {
+		w.err = e
+	}
+	return n, e
+}
+func beginTaskTrace() (func() error, error) {
+	noop := func() error { return nil }
+	if os.Getenv("EXCHANGE_TRACE") != "1" {
+		return noop, nil
+	}
+	path := ""
+	for i, a := range os.Args {
+		if i+1 < len(os.Args) {
+			if a == "--output" {
+				path = filepath.Join(filepath.Dir(os.Args[i+1]), "generator.trace")
+			}
+			if a == "--metrics-file" {
+				path = filepath.Join(filepath.Dir(os.Args[i+1]), "server.trace")
+			}
+		}
+	}
+	if path == "" {
+		return noop, nil
+	}
+	f, e := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	if e != nil {
+		return noop, e
+	}
+	w := &boundedTrace{f: f}
+	start := time.Now()
+	if e = trace.Start(w); e != nil {
+		f.Close()
+		return noop, e
+	}
+	trace.Log(context.Background(), "clock", time.Now().UTC().Format(time.RFC3339Nano))
+	return func() error {
+		trace.Log(context.Background(), "clock", time.Now().UTC().Format(time.RFC3339Nano))
+		trace.Stop()
+		var ioErr error
+		ioErr = durable.WriteIORecords(path + ".sync.jsonl")
+		e := errors.Join(w.err, ioErr)
+		if x := f.Sync(); e == nil {
+			e = x
+		}
+		if x := f.Close(); e == nil {
+			e = x
+		}
+		meta := struct {
+			StartedUTC, FinishedUTC time.Time
+			Bytes                   int64
+			Error                   string
+		}{start.UTC(), time.Now().UTC(), w.n, ""}
+		if e != nil {
+			meta.Error = e.Error()
+		}
+		b, _ := json.Marshal(meta)
+		m, x := os.OpenFile(path+".json", os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+		if x != nil {
+			return x
+		}
+		_, x = m.Write(append(b, '\n'))
+		if x == nil {
+			x = m.Sync()
+		}
+		return errors.Join(e, x, m.Close())
+	}, nil
+}
+
+var _ io.Writer = (*boundedTrace)(nil)
