@@ -1,0 +1,3810 @@
+{
+  "sourceRoot": "var/diagnostic-soak-20261103.fz83p2f4",
+  "sourceRevision": "74a1206af94ada42eabbc5440e651c779bf181e5",
+  "analysisSHA256": "c1b27644097b60c7e97ecb4d603a37227f3e3055587baed1d079113cc78503b0",
+  "analysisScriptSHA256": "9803999feaf7b3a9a5e731c8977135b994d92ebfc2a25dbd94562360eabd10f7",
+  "reportScriptSHA256": "3a59c183a42c4e8b25fd77e37204bc28a47631fe55bbdbd376973b0045f387fb",
+  "protocolSHA256": "08bc35f7ba1f00038f3994e5033b27c041d2bcd12d7ca97716ab45d7821ef0ac",
+  "order": [
+    "off-1",
+    "on-1",
+    "on-2",
+    "off-2",
+    "off-3",
+    "on-3"
+  ],
+  "diagnosticsIntervalNanos": 500000000,
+  "measurementSecondsEach": 600,
+  "requestsPerSecond": 100,
+  "normalizedPlanSHA256": {
+    "off-1": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7",
+    "on-1": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7",
+    "on-2": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7",
+    "off-2": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7",
+    "off-3": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7",
+    "on-3": "22f039c6f59e445b5b1dd2539f4c1ad447a0ce35029a954476768a07bd3f34f7"
+  },
+  "baselineQualification": "GENERATOR_DIAGNOSTICS_ENABLED",
+  "conditions": {
+    "off": {
+      "runCount": 3,
+      "measurementValidRuns": 1,
+      "metrics": {
+        "requestP99Ms": {
+          "median": 7.283875,
+          "min": 6.696666,
+          "max": 15.83525
+        },
+        "scheduledRequestP99Ms": {
+          "median": 8.346625,
+          "min": 8.304375,
+          "max": 17.9415
+        },
+        "requestMaxMs": {
+          "median": 122.02125,
+          "min": 35.347667,
+          "max": 140.632542
+        },
+        "missed": {
+          "median": 3,
+          "min": 0,
+          "max": 8
+        },
+        "over20msWindows": {
+          "median": 4,
+          "min": 0,
+          "max": 14
+        },
+        "serverCPUSeconds": {
+          "median": 58.077218,
+          "min": 47.709061,
+          "max": 61.274041
+        },
+        "generatorCPUSeconds": {
+          "median": 36.769545,
+          "min": 31.194321,
+          "max": 37.805471
+        },
+        "serverPeakRssMiB": {
+          "median": 107.0,
+          "min": 106.296875,
+          "max": 107.578125
+        },
+        "walSyncOver20ms": {
+          "median": 0,
+          "min": 0,
+          "max": 38
+        }
+      }
+    },
+    "on": {
+      "runCount": 3,
+      "measurementValidRuns": 1,
+      "metrics": {
+        "requestP99Ms": {
+          "median": 16.046666,
+          "min": 14.555041,
+          "max": 18.104667
+        },
+        "scheduledRequestP99Ms": {
+          "median": 17.528083,
+          "min": 16.333167,
+          "max": 19.709292
+        },
+        "requestMaxMs": {
+          "median": 136.763791,
+          "min": 115.4135,
+          "max": 177.233
+        },
+        "missed": {
+          "median": 1,
+          "min": 0,
+          "max": 3
+        },
+        "over20msWindows": {
+          "median": 24,
+          "min": 12,
+          "max": 24
+        },
+        "serverCPUSeconds": {
+          "median": 88.320301,
+          "min": 87.77083400000001,
+          "max": 91.979036
+        },
+        "generatorCPUSeconds": {
+          "median": 34.446403,
+          "min": 33.162716,
+          "max": 34.693289
+        },
+        "serverPeakRssMiB": {
+          "median": 195.3125,
+          "min": 194.96875,
+          "max": 196.96875
+        },
+        "walSyncOver20ms": {
+          "median": 17,
+          "min": 8,
+          "max": 19
+        }
+      }
+    }
+  },
+  "runs": [
+    {
+      "case": "off-1",
+      "condition": "off",
+      "measurementStartUTC": "2026-11-03T02:17:18.059352Z",
+      "measurementEndUTC": "2026-11-03T02:27:18.059352Z",
+      "scheduled": 60000,
+      "started": 59992,
+      "missed": 8,
+      "missedBoundaries": {
+        "worker": 4,
+        "scheduler": 4
+      },
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "requestP99Ms": 15.83525,
+      "scheduledRequestP99Ms": 17.9415,
+      "requestMaxMs": 122.02125,
+      "over20msWindows": 14,
+      "responses": {
+        "BUSINESS": 59992
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.09166666666667,
+      "generatorExit": 1,
+      "generatorCPUSeconds": 31.194321,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 0.65536,
+      "generatorCollectionDelayMaxMs": 6.999625,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 47.709061,
+      "serverGCCycles": 65,
+      "serverGCPauseUpperMs": 1.835008,
+      "serverPeakRssMiB": 107.0,
+      "walSyncOver20ms": 38,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 1.322791,
+        "maxMs": 78.342791,
+        "over20ms": 32
+      },
+      "dispatchToWorker": {
+        "count": 59996,
+        "p99Ms": 0.144042,
+        "maxMs": 35.097125,
+        "over20ms": 2
+      },
+      "transportWrite": {
+        "count": 59992,
+        "p99Ms": 0.298208,
+        "maxMs": 66.649958,
+        "over20ms": 12
+      },
+      "snapshotEvents": {
+        "count": 0,
+        "statuses": {},
+        "medianMs": null,
+        "maxMs": null
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45274,
+          "results": 51378,
+          "trades": 12123
+        },
+        "stateSHA256": "e5ba008ea45620332b49501fda617c5f9f39109cfdb949c63edd024980cdd9a8",
+        "sequence": 51378,
+        "restartReadyMs": 1195.037709,
+        "snapshotSeq": "0",
+        "replayedCommands": "51378",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": -0.8218142238769531,
+      "snapshotArchive": {
+        "files": 0,
+        "originalBytes": 165711087,
+        "compressedBytes": 8656731,
+        "sha256": "ee1df8311d9463d4187071e9881bb070ec19f184267aa859e31c177b6d38d2ab"
+      }
+    },
+    {
+      "case": "on-1",
+      "condition": "on",
+      "measurementStartUTC": "2026-11-03T02:28:22.900759Z",
+      "measurementEndUTC": "2026-11-03T02:38:22.900759Z",
+      "scheduled": 60000,
+      "started": 59999,
+      "missed": 1,
+      "missedBoundaries": {
+        "worker": 1
+      },
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "requestP99Ms": 18.104667,
+      "scheduledRequestP99Ms": 19.709292,
+      "requestMaxMs": 136.763791,
+      "over20msWindows": 24,
+      "responses": {
+        "BUSINESS": 59999
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.1,
+      "generatorExit": 1,
+      "generatorCPUSeconds": 34.693289,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 1.0485760000000002,
+      "generatorCollectionDelayMaxMs": 7.293708,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 87.77083400000001,
+      "serverGCCycles": 354,
+      "serverGCPauseUpperMs": 8.388608000000001,
+      "serverPeakRssMiB": 194.96875,
+      "walSyncOver20ms": 17,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 1.210875,
+        "maxMs": 49.685958,
+        "over20ms": 8
+      },
+      "dispatchToWorker": {
+        "count": 60000,
+        "p99Ms": 0.141,
+        "maxMs": 39.037208,
+        "over20ms": 3
+      },
+      "transportWrite": {
+        "count": 59999,
+        "p99Ms": 0.237042,
+        "maxMs": 42.99075,
+        "over20ms": 6
+      },
+      "snapshotEvents": {
+        "count": 120,
+        "statuses": {
+          "COMPLETED": 120
+        },
+        "medianMs": 256.7631006240845,
+        "maxMs": 978.9130687713623
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45280,
+          "results": 51385,
+          "trades": 12117
+        },
+        "stateSHA256": "1b891ec487510401cd54d8f6f18030fff7783f3eadaaab2d9737dc47af69bfe7",
+        "sequence": 51385,
+        "restartReadyMs": 2445.90275,
+        "snapshotSeq": "51385",
+        "replayedCommands": "0",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": -0.80058643359375,
+      "snapshotArchive": {
+        "files": 122,
+        "originalBytes": 3404387018,
+        "compressedBytes": 209196464,
+        "sha256": "4196ae4211d6995173144ab440ccbbafa7d32f69bfad9ce9cedaef7f57c61d43"
+      }
+    },
+    {
+      "case": "on-2",
+      "condition": "on",
+      "measurementStartUTC": "2026-11-03T02:39:40.979769Z",
+      "measurementEndUTC": "2026-11-03T02:49:40.979769Z",
+      "scheduled": 60000,
+      "started": 59997,
+      "missed": 3,
+      "missedBoundaries": {
+        "worker": 1,
+        "scheduler": 2
+      },
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "requestP99Ms": 16.046666,
+      "scheduledRequestP99Ms": 17.528083,
+      "requestMaxMs": 115.4135,
+      "over20msWindows": 24,
+      "responses": {
+        "BUSINESS": 59997
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.09833333333333,
+      "generatorExit": 1,
+      "generatorCPUSeconds": 34.446403,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 1.572864,
+      "generatorCollectionDelayMaxMs": 16.733625,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 88.320301,
+      "serverGCCycles": 356,
+      "serverGCPauseUpperMs": 5.24288,
+      "serverPeakRssMiB": 195.3125,
+      "walSyncOver20ms": 8,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 1.158708,
+        "maxMs": 64.397125,
+        "over20ms": 13
+      },
+      "dispatchToWorker": {
+        "count": 59998,
+        "p99Ms": 0.09075,
+        "maxMs": 39.861542,
+        "over20ms": 1
+      },
+      "transportWrite": {
+        "count": 59997,
+        "p99Ms": 0.256166,
+        "maxMs": 32.689208,
+        "over20ms": 2
+      },
+      "snapshotEvents": {
+        "count": 120,
+        "statuses": {
+          "COMPLETED": 120
+        },
+        "medianMs": 287.0420217514038,
+        "maxMs": 511.48200035095215
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45279,
+          "results": 51384,
+          "trades": 12117
+        },
+        "stateSHA256": "2c360a4bed80f69b403710140e80bc3271cb8b32543e97f5dd4741d45233372b",
+        "sequence": 51384,
+        "restartReadyMs": 2461.592791,
+        "snapshotSeq": "51384",
+        "replayedCommands": "0",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": 29.830505966552735,
+      "snapshotArchive": {
+        "files": 122,
+        "originalBytes": 3404257721,
+        "compressedBytes": 209168752,
+        "sha256": "ecf17ea2013752be9ffd6a86eee69a6dc8e157f0497e08dd1e2174d4211907a3"
+      }
+    },
+    {
+      "case": "off-2",
+      "condition": "off",
+      "measurementStartUTC": "2026-11-03T02:50:58.312211Z",
+      "measurementEndUTC": "2026-11-03T03:00:58.312211Z",
+      "scheduled": 60000,
+      "started": 59997,
+      "missed": 3,
+      "missedBoundaries": {
+        "worker": 1,
+        "scheduler": 2
+      },
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "requestP99Ms": 7.283875,
+      "scheduledRequestP99Ms": 8.346625,
+      "requestMaxMs": 140.632542,
+      "over20msWindows": 4,
+      "responses": {
+        "BUSINESS": 59997
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.09666666666666,
+      "generatorExit": 1,
+      "generatorCPUSeconds": 36.769545,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 0.786432,
+      "generatorCollectionDelayMaxMs": 9.185167,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 58.077218,
+      "serverGCCycles": 64,
+      "serverGCPauseUpperMs": 0.917504,
+      "serverPeakRssMiB": 106.296875,
+      "walSyncOver20ms": 0,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 1.17175,
+        "maxMs": 62.445334,
+        "over20ms": 11
+      },
+      "dispatchToWorker": {
+        "count": 59998,
+        "p99Ms": 0.105042,
+        "maxMs": 32.612083,
+        "over20ms": 2
+      },
+      "transportWrite": {
+        "count": 59997,
+        "p99Ms": 0.2855,
+        "maxMs": 93.864875,
+        "over20ms": 13
+      },
+      "snapshotEvents": {
+        "count": 0,
+        "statuses": {},
+        "medianMs": null,
+        "maxMs": null
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45278,
+          "results": 51383,
+          "trades": 12117
+        },
+        "stateSHA256": "291cf5f101271b56ffdfc29efc9157ad6b9868026873c473636f43d2fab01225",
+        "sequence": 51383,
+        "restartReadyMs": 1143.616,
+        "snapshotSeq": "0",
+        "replayedCommands": "51383",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": 4.880803817749023,
+      "snapshotArchive": {
+        "files": 0,
+        "originalBytes": 165724575,
+        "compressedBytes": 8660169,
+        "sha256": "cd9eb02ec30c2b637761b5b701c73c5eb2f9779ad59732138833a64799f850c1"
+      }
+    },
+    {
+      "case": "off-3",
+      "condition": "off",
+      "measurementStartUTC": "2026-11-03T03:02:03.579411Z",
+      "measurementEndUTC": "2026-11-03T03:12:03.579411Z",
+      "scheduled": 60000,
+      "started": 60000,
+      "missed": 0,
+      "missedBoundaries": {},
+      "measurementValid": true,
+      "invalidReasons": [],
+      "requestP99Ms": 6.696666,
+      "scheduledRequestP99Ms": 8.304375,
+      "requestMaxMs": 35.347667,
+      "over20msWindows": 0,
+      "responses": {
+        "BUSINESS": 60000
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.1,
+      "generatorExit": 0,
+      "generatorCPUSeconds": 37.805471,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 2.62144,
+      "generatorCollectionDelayMaxMs": 2.369833,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 61.274041,
+      "serverGCCycles": 66,
+      "serverGCPauseUpperMs": 1.31072,
+      "serverPeakRssMiB": 107.578125,
+      "walSyncOver20ms": 0,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 2.113041,
+        "maxMs": 16.340666,
+        "over20ms": 0
+      },
+      "dispatchToWorker": {
+        "count": 60000,
+        "p99Ms": 0.091541,
+        "maxMs": 7.654917,
+        "over20ms": 0
+      },
+      "transportWrite": {
+        "count": 60000,
+        "p99Ms": 0.268333,
+        "maxMs": 12.124209,
+        "over20ms": 0
+      },
+      "snapshotEvents": {
+        "count": 0,
+        "statuses": {},
+        "medianMs": null,
+        "maxMs": null
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45280,
+          "results": 51385,
+          "trades": 12117
+        },
+        "stateSHA256": "04d04e4c9623322fbae8b280403977dda58c15f07019d8c7ff8c694b64883a6f",
+        "sequence": 51385,
+        "restartReadyMs": 1122.786667,
+        "snapshotSeq": "0",
+        "replayedCommands": "51385",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": 4.880218262084961,
+      "snapshotArchive": {
+        "files": 0,
+        "originalBytes": 165731601,
+        "compressedBytes": 8651702,
+        "sha256": "95046d12992eb461cb0a596a046b6d9679b6adaa502c2cd6a7c7905c49e75be4"
+      }
+    },
+    {
+      "case": "on-3",
+      "condition": "on",
+      "measurementStartUTC": "2026-11-03T03:13:08.81069Z",
+      "measurementEndUTC": "2026-11-03T03:23:08.81069Z",
+      "scheduled": 60000,
+      "started": 60000,
+      "missed": 0,
+      "missedBoundaries": {},
+      "measurementValid": true,
+      "invalidReasons": [],
+      "requestP99Ms": 14.555041,
+      "scheduledRequestP99Ms": 16.333167,
+      "requestMaxMs": 177.233,
+      "over20msWindows": 12,
+      "responses": {
+        "BUSINESS": 60000
+      },
+      "unknownLogicalCommands": 0,
+      "newOrdersPerSecond": 65.1,
+      "generatorExit": 0,
+      "generatorCPUSeconds": 33.162716,
+      "generatorGCCycles": 21,
+      "generatorGCPauseUpperMs": 1.572864,
+      "generatorCollectionDelayMaxMs": 9.048208,
+      "generatorSkippedIntervals": 0,
+      "serverCPUSeconds": 91.979036,
+      "serverGCCycles": 355,
+      "serverGCPauseUpperMs": 0.393216,
+      "serverPeakRssMiB": 196.96875,
+      "walSyncOver20ms": 19,
+      "schedulerObservationDelay": {
+        "count": 60000,
+        "p99Ms": 2.122458,
+        "maxMs": 43.912,
+        "over20ms": 4
+      },
+      "dispatchToWorker": {
+        "count": 60000,
+        "p99Ms": 0.065041,
+        "maxMs": 5.216583,
+        "over20ms": 0
+      },
+      "transportWrite": {
+        "count": 60000,
+        "p99Ms": 0.176833,
+        "maxMs": 35.740875,
+        "over20ms": 1
+      },
+      "snapshotEvents": {
+        "count": 120,
+        "statuses": {
+          "COMPLETED": 120
+        },
+        "medianMs": 250.83649158477783,
+        "maxMs": 554.1698932647705
+      },
+      "recovery": {
+        "status": "PASSED",
+        "counts": {
+          "balances": 4,
+          "orders": 45280,
+          "results": 51385,
+          "trades": 12117
+        },
+        "stateSHA256": "cf6629030307d75e115b9b85dbfc48150739e7d3b5cb0fbfbcb662d37588510a",
+        "sequence": 51385,
+        "restartReadyMs": 2393.356458,
+        "snapshotSeq": "51385",
+        "replayedCommands": "0",
+        "retryCount": 12
+      },
+      "wallMinusMonotonicEndMs": -14.480080589111328,
+      "snapshotArchive": {
+        "files": 122,
+        "originalBytes": 3404180557,
+        "compressedBytes": 209243351,
+        "sha256": "84b96ef27659d294f21f4a621bff4fc576426ab9375199dbd06388bbad5f9a8f"
+      }
+    }
+  ],
+  "selectedWindows": {
+    "off-1": [
+      {
+        "scheduled": 500,
+        "started": 498,
+        "missed": 2,
+        "request": {
+          "count": 498,
+          "p99Ms": 26.975042,
+          "maxMs": 99.57875,
+          "over20ms": 8
+        },
+        "scheduledRequest": {
+          "count": 498,
+          "p99Ms": 68.574625,
+          "maxMs": 120.052416,
+          "over20ms": 9
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 19.465208,
+          "maxMs": 46.899958,
+          "over20ms": 5
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 4.1095,
+          "maxMs": 14.882458,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 498,
+          "p99Ms": 14.614375,
+          "maxMs": 66.649958,
+          "over20ms": 3
+        },
+        "missedBoundaries": {
+          "worker": 2
+        },
+        "startSeconds": 300,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:22:18.036126Z",
+          "observedEndUTC": "2026-11-03T02:22:23.036217Z",
+          "startBoundaryLagMs": 23.226022720336914,
+          "endBoundaryLagMs": 23.134946823120117,
+          "cpuMs": 431.489,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 60.078125,
+          "liveHeapMiB": 25.20135498046875,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 498,
+              "sumNanos": 29619299,
+              "meanMs": 0.05947650401606426,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 439,
+              "sumNanos": 522448037,
+              "meanMs": 1.190086644646925,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 430,
+              "sumNanos": 1161452864,
+              "meanMs": 2.701053172093023,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 439,
+              "sumNanos": 7342162,
+              "meanMs": 0.016724742596810935,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 430,
+              "sumNanos": 1084687749,
+              "meanMs": 2.5225296488372093,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 498,
+              "sumNanos": 1901185937,
+              "meanMs": 3.8176424437751004,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "http.encode": {
+              "count": 498,
+              "sumNanos": 13688695,
+              "meanMs": 0.027487339357429717,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 498,
+              "sumNanos": 30717639,
+              "meanMs": 0.06168200602409639,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:22:18.038179Z",
+          "observedEndUTC": "2026-11-03T02:22:23.037978Z",
+          "startBoundaryLagMs": 21.17300033569336,
+          "endBoundaryLagMs": 21.373987197875977,
+          "cpuMs": 249.858,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 114.34375,
+          "liveHeapMiB": 40.25702667236328,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.986958,
+          "maxCollectionDurationMs": 0.105875
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 498,
+        "missed": 2,
+        "request": {
+          "count": 498,
+          "p99Ms": 70.439083,
+          "maxMs": 116.149791,
+          "over20ms": 47
+        },
+        "scheduledRequest": {
+          "count": 498,
+          "p99Ms": 83.167083,
+          "maxMs": 116.601666,
+          "over20ms": 56
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 28.849208,
+          "maxMs": 58.70125,
+          "over20ms": 7
+        },
+        "dispatchToWorker": {
+          "count": 499,
+          "p99Ms": 1.775791,
+          "maxMs": 35.097125,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 498,
+          "p99Ms": 1.831583,
+          "maxMs": 36.294709,
+          "over20ms": 1
+        },
+        "missedBoundaries": {
+          "scheduler": 1,
+          "worker": 1
+        },
+        "startSeconds": 310,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:22:28.035642Z",
+          "observedEndUTC": "2026-11-03T02:22:33.035761Z",
+          "startBoundaryLagMs": 23.710012435913086,
+          "endBoundaryLagMs": 23.590803146362305,
+          "cpuMs": 382.415,
+          "gcCpuMs": 110.90420899999998,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.65536,
+          "peakRssMiB": 60.078125,
+          "liveHeapMiB": 26.745384216308594,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 498,
+              "sumNanos": 931266253,
+              "meanMs": 1.8700125562248997,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 8
+            },
+            "runtime.batchWait": {
+              "count": 412,
+              "sumNanos": 487179789,
+              "meanMs": 1.1824752160194174,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 386,
+              "sumNanos": 2404238210,
+              "meanMs": 6.228596398963731,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 9
+            },
+            "runtime.apply": {
+              "count": 411,
+              "sumNanos": 20453837,
+              "meanMs": 0.049766026763990265,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 386,
+              "sumNanos": 2351753740,
+              "meanMs": 6.092626269430052,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 9
+            },
+            "http.handler": {
+              "count": 497,
+              "sumNanos": 4424327109,
+              "meanMs": 8.902066617706238,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 43
+            },
+            "http.encode": {
+              "count": 497,
+              "sumNanos": 46654088,
+              "meanMs": 0.09387140442655935,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 1
+            },
+            "http.write": {
+              "count": 497,
+              "sumNanos": 23865998,
+              "meanMs": 0.04802011670020121,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:22:28.037247Z",
+          "observedEndUTC": "2026-11-03T02:22:33.037487Z",
+          "startBoundaryLagMs": 22.104978561401367,
+          "endBoundaryLagMs": 21.864891052246094,
+          "cpuMs": 232.886,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 114.34375,
+          "liveHeapMiB": 40.25702667236328,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.964958,
+          "maxCollectionDurationMs": 0.5425
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 499,
+        "missed": 1,
+        "request": {
+          "count": 499,
+          "p99Ms": 15.327334,
+          "maxMs": 17.073834,
+          "over20ms": 0
+        },
+        "scheduledRequest": {
+          "count": 499,
+          "p99Ms": 21.388208,
+          "maxMs": 58.026166,
+          "over20ms": 5
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 9.19325,
+          "maxMs": 44.785958,
+          "over20ms": 3
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 2.252166,
+          "maxMs": 8.145875,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 499,
+          "p99Ms": 0.636875,
+          "maxMs": 4.0775,
+          "over20ms": 0
+        },
+        "missedBoundaries": {
+          "worker": 1
+        },
+        "startSeconds": 395,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:23:53.035614Z",
+          "observedEndUTC": "2026-11-03T02:23:58.035585Z",
+          "startBoundaryLagMs": 23.73790740966797,
+          "endBoundaryLagMs": 23.76699447631836,
+          "cpuMs": 284.894,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 78.1875,
+          "liveHeapMiB": 35.68425750732422,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 499,
+              "sumNanos": 14165833,
+              "meanMs": 0.028388442885771543,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 412,
+              "sumNanos": 515939370,
+              "meanMs": 1.2522800242718446,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 407,
+              "sumNanos": 1000424498,
+              "meanMs": 2.4580454496314497,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 412,
+              "sumNanos": 7241495,
+              "meanMs": 0.01757644417475728,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 407,
+              "sumNanos": 962985539,
+              "meanMs": 2.3660578353808353,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 499,
+              "sumNanos": 1677798464,
+              "meanMs": 3.3623215711422847,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.encode": {
+              "count": 499,
+              "sumNanos": 9853563,
+              "meanMs": 0.019746619238476953,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 499,
+              "sumNanos": 25272550,
+              "meanMs": 0.05064639278557114,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:23:53.037201Z",
+          "observedEndUTC": "2026-11-03T02:23:58.037601Z",
+          "startBoundaryLagMs": 22.15099334716797,
+          "endBoundaryLagMs": 21.750926971435547,
+          "cpuMs": 189.315,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 117.375,
+          "liveHeapMiB": 41.10870361328125,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.956916,
+          "maxCollectionDurationMs": 0.074375
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 497,
+        "missed": 3,
+        "request": {
+          "count": 497,
+          "p99Ms": 85.320917,
+          "maxMs": 122.02125,
+          "over20ms": 42
+        },
+        "scheduledRequest": {
+          "count": 497,
+          "p99Ms": 90.544583,
+          "maxMs": 128.600916,
+          "over20ms": 56
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 38.36,
+          "maxMs": 78.342791,
+          "over20ms": 10
+        },
+        "dispatchToWorker": {
+          "count": 497,
+          "p99Ms": 5.342167,
+          "maxMs": 11.772917,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 497,
+          "p99Ms": 5.174125,
+          "maxMs": 37.442125,
+          "over20ms": 2
+        },
+        "missedBoundaries": {
+          "scheduler": 3
+        },
+        "startSeconds": 400,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:23:58.035585Z",
+          "observedEndUTC": "2026-11-03T02:24:03.035448Z",
+          "startBoundaryLagMs": 23.76699447631836,
+          "endBoundaryLagMs": 23.903846740722656,
+          "cpuMs": 350.438,
+          "gcCpuMs": 185.25733399999987,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 1.572864,
+          "peakRssMiB": 79.8125,
+          "liveHeapMiB": 38.08390808105469,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 497,
+              "sumNanos": 366577961,
+              "meanMs": 0.7375814104627767,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 4
+            },
+            "runtime.batchWait": {
+              "count": 419,
+              "sumNanos": 754167833,
+              "meanMs": 1.7999232291169451,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 385,
+              "sumNanos": 1376421706,
+              "meanMs": 3.575121314285714,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 3
+            },
+            "runtime.apply": {
+              "count": 419,
+              "sumNanos": 158048719,
+              "meanMs": 0.3772045799522673,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 3
+            },
+            "runtime.wal.sync": {
+              "count": 385,
+              "sumNanos": 1265200920,
+              "meanMs": 3.2862361558441555,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 1
+            },
+            "http.handler": {
+              "count": 497,
+              "sumNanos": 3333795457,
+              "meanMs": 6.7078379416499,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 21
+            },
+            "http.encode": {
+              "count": 497,
+              "sumNanos": 38904419,
+              "meanMs": 0.07827850905432596,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 497,
+              "sumNanos": 79754684,
+              "meanMs": 0.16047220120724345,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:23:58.037601Z",
+          "observedEndUTC": "2026-11-03T02:24:03.037479Z",
+          "startBoundaryLagMs": 21.750926971435547,
+          "endBoundaryLagMs": 21.872997283935547,
+          "cpuMs": 195.079,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 117.375,
+          "liveHeapMiB": 41.10870361328125,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 2.6165,
+          "maxCollectionDurationMs": 0.388666
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 44.471417,
+          "maxMs": 85.062125,
+          "over20ms": 16
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 46.02375,
+          "maxMs": 85.942916,
+          "over20ms": 22
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 8.455833,
+          "maxMs": 16.730083,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.489708,
+          "maxMs": 2.35575,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 1.200958,
+          "maxMs": 2.382459,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 405,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:24:03.035448Z",
+          "observedEndUTC": "2026-11-03T02:24:08.035518Z",
+          "startBoundaryLagMs": 23.903846740722656,
+          "endBoundaryLagMs": 23.8339900970459,
+          "cpuMs": 277.29,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 79.8125,
+          "liveHeapMiB": 38.08390808105469,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 348892048,
+              "meanMs": 0.697784096,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 6
+            },
+            "runtime.batchWait": {
+              "count": 432,
+              "sumNanos": 594221341,
+              "meanMs": 1.3755123634259259,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 418,
+              "sumNanos": 1297227495,
+              "meanMs": 3.1034150598086123,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 2
+            },
+            "runtime.apply": {
+              "count": 432,
+              "sumNanos": 28213199,
+              "meanMs": 0.06530833101851852,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 418,
+              "sumNanos": 1246726375,
+              "meanMs": 2.9825989832535886,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 2
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2562749586,
+              "meanMs": 5.1254991720000005,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 12
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 12228469,
+              "meanMs": 0.024456937999999998,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 27559833,
+              "meanMs": 0.055119666,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:24:03.037479Z",
+          "observedEndUTC": "2026-11-03T02:24:08.037156Z",
+          "startBoundaryLagMs": 21.872997283935547,
+          "endBoundaryLagMs": 22.195816040039062,
+          "cpuMs": 167.02,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 117.375,
+          "liveHeapMiB": 41.10870361328125,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.167916,
+          "maxCollectionDurationMs": 0.518042
+        },
+        "snapshotEventsOverlapping": 0
+      }
+    ],
+    "on-1": [
+      {
+        "scheduled": 500,
+        "started": 499,
+        "missed": 1,
+        "request": {
+          "count": 499,
+          "p99Ms": 40.94875,
+          "maxMs": 79.263583,
+          "over20ms": 14
+        },
+        "scheduledRequest": {
+          "count": 499,
+          "p99Ms": 55.474292,
+          "maxMs": 80.414458,
+          "over20ms": 24
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 11.51225,
+          "maxMs": 49.685958,
+          "over20ms": 3
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 4.817416,
+          "maxMs": 39.037208,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 499,
+          "p99Ms": 0.818542,
+          "maxMs": 9.861958,
+          "over20ms": 0
+        },
+        "missedBoundaries": {
+          "worker": 1
+        },
+        "startSeconds": 35,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:28:57.408582Z",
+          "observedEndUTC": "2026-11-03T02:29:02.41897Z",
+          "startBoundaryLagMs": 492.17700958251953,
+          "endBoundaryLagMs": 481.78887367248535,
+          "cpuMs": 480.119,
+          "gcCpuMs": 18.491883,
+          "gcCycles": 4,
+          "gcPauseLargestUpperMs": 0.13107200000000002,
+          "peakRssMiB": 26.484375,
+          "liveHeapMiB": 4.815742492675781,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 499,
+              "sumNanos": 102090340,
+              "meanMs": 0.20458985971943888,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 3
+            },
+            "runtime.batchWait": {
+              "count": 422,
+              "sumNanos": 540827218,
+              "meanMs": 1.2815810853080567,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 413,
+              "sumNanos": 1155542332,
+              "meanMs": 2.7979233220338986,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "runtime.apply": {
+              "count": 422,
+              "sumNanos": 21230755,
+              "meanMs": 0.05030984597156398,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 413,
+              "sumNanos": 1063581335,
+              "meanMs": 2.5752574697336565,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 499,
+              "sumNanos": 1987877419,
+              "meanMs": 3.98372228256513,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 5
+            },
+            "http.encode": {
+              "count": 499,
+              "sumNanos": 12328166,
+              "meanMs": 0.02470574348697395,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 499,
+              "sumNanos": 42787093,
+              "meanMs": 0.08574567735470942,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 4138958,
+              "meanMs": 4.138958,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 53047792,
+              "meanMs": 53.047792,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:28:57.876518Z",
+          "observedEndUTC": "2026-11-03T02:29:02.876899Z",
+          "startBoundaryLagMs": 24.240970611572266,
+          "endBoundaryLagMs": 23.85997772216797,
+          "cpuMs": 262.425,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 102.171875,
+          "liveHeapMiB": 37.53142547607422,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.616542,
+          "maxCollectionDurationMs": 0.090958
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 65.124208,
+          "maxMs": 87.783792,
+          "over20ms": 24
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 68.548,
+          "maxMs": 99.03225,
+          "over20ms": 34
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 10.199,
+          "maxMs": 23.610042,
+          "over20ms": 1
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 2.365,
+          "maxMs": 23.323292,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.778208,
+          "maxMs": 18.220208,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 495,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:36:37.407654Z",
+          "observedEndUTC": "2026-11-03T02:36:42.408006Z",
+          "startBoundaryLagMs": 493.1049346923828,
+          "endBoundaryLagMs": 492.7530288696289,
+          "cpuMs": 791.516,
+          "gcCpuMs": 89.90070999999932,
+          "gcCycles": 2,
+          "gcPauseLargestUpperMs": 0.393216,
+          "peakRssMiB": 163.40625,
+          "liveHeapMiB": 67.84076690673828,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 258213744,
+              "meanMs": 0.516427488,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 6
+            },
+            "runtime.batchWait": {
+              "count": 421,
+              "sumNanos": 564959957,
+              "meanMs": 1.3419476413301663,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 409,
+              "sumNanos": 1273442921,
+              "meanMs": 3.1135523740831297,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 2
+            },
+            "runtime.apply": {
+              "count": 421,
+              "sumNanos": 21332659,
+              "meanMs": 0.05067139904988124,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 409,
+              "sumNanos": 1203044541,
+              "meanMs": 2.9414291955990217,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2400788002,
+              "meanMs": 4.801576003999999,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 13
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 20203000,
+              "meanMs": 0.040406,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 34159495,
+              "meanMs": 0.06831899000000001,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 48527916,
+              "meanMs": 48.527916,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 325959584,
+              "meanMs": 325.959584,
+              "p99BucketUpperMs": 500.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:36:37.876411Z",
+          "observedEndUTC": "2026-11-03T02:36:42.875845Z",
+          "startBoundaryLagMs": 24.348020553588867,
+          "endBoundaryLagMs": 24.914026260375977,
+          "cpuMs": 248.914,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 120.5,
+          "liveHeapMiB": 42.352760314941406,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.640208,
+          "maxCollectionDurationMs": 0.180291
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 58.573792,
+          "maxMs": 106.998333,
+          "over20ms": 9
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 59.704375,
+          "maxMs": 109.694208,
+          "over20ms": 9
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.156625,
+          "maxMs": 4.273167,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.48,
+          "maxMs": 5.178,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.720833,
+          "maxMs": 5.301375,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 505,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:36:47.407374Z",
+          "observedEndUTC": "2026-11-03T02:36:52.407374Z",
+          "startBoundaryLagMs": 493.38507652282715,
+          "endBoundaryLagMs": 493.38507652282715,
+          "cpuMs": 965.508,
+          "gcCpuMs": 177.6716950000008,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.229376,
+          "peakRssMiB": 163.40625,
+          "liveHeapMiB": 69.04007720947266,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 427671828,
+              "meanMs": 0.855343656,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 7
+            },
+            "runtime.batchWait": {
+              "count": 428,
+              "sumNanos": 503177252,
+              "meanMs": 1.175647785046729,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 420,
+              "sumNanos": 1196835840,
+              "meanMs": 2.8496091428571426,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 428,
+              "sumNanos": 13703041,
+              "meanMs": 0.032016450934579437,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 420,
+              "sumNanos": 1151737586,
+              "meanMs": 2.7422323476190473,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2284623169,
+              "meanMs": 4.569246338,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 8
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 10177045,
+              "meanMs": 0.020354090000000002,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 23108828,
+              "meanMs": 0.046217656,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 89696750,
+              "meanMs": 89.69675,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 434750375,
+              "meanMs": 434.750375,
+              "p99BucketUpperMs": 500.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:36:47.876087Z",
+          "observedEndUTC": "2026-11-03T02:36:52.876028Z",
+          "startBoundaryLagMs": 24.67203140258789,
+          "endBoundaryLagMs": 24.730920791625977,
+          "cpuMs": 265.852,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 120.5,
+          "liveHeapMiB": 42.352760314941406,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.700583,
+          "maxCollectionDurationMs": 0.094833
+        },
+        "snapshotEventsOverlapping": 2
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 84.076375,
+          "maxMs": 136.763791,
+          "over20ms": 12
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 87.14325,
+          "maxMs": 136.905083,
+          "over20ms": 13
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.132375,
+          "maxMs": 8.95575,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 1.656833,
+          "maxMs": 16.541708,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.494542,
+          "maxMs": 0.770041,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 595,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:38:17.407054Z",
+          "observedEndUTC": "2026-11-03T02:38:22.407321Z",
+          "startBoundaryLagMs": 493.70503425598145,
+          "endBoundaryLagMs": 493.4380054473877,
+          "cpuMs": 839.754,
+          "gcCpuMs": 152.1011750000003,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.057344,
+          "peakRssMiB": 194.96875,
+          "liveHeapMiB": 77.66568756103516,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 155701329,
+              "meanMs": 0.311402658,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 3
+            },
+            "runtime.batchWait": {
+              "count": 423,
+              "sumNanos": 490327182,
+              "meanMs": 1.1591659148936169,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 418,
+              "sumNanos": 1053651583,
+              "meanMs": 2.5206975669856457,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 423,
+              "sumNanos": 10598206,
+              "meanMs": 0.025054860520094563,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 418,
+              "sumNanos": 1013380767,
+              "meanMs": 2.424355901913876,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 1811725173,
+              "meanMs": 3.623450346,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 4
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 8273661,
+              "meanMs": 0.016547322,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 20376164,
+              "meanMs": 0.040752328000000004,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 53681542,
+              "meanMs": 53.681542,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 461769917,
+              "meanMs": 461.769917,
+              "p99BucketUpperMs": 500.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:38:17.891892Z",
+          "observedEndUTC": "2026-11-03T02:38:22.876246Z",
+          "startBoundaryLagMs": 8.867025375366211,
+          "endBoundaryLagMs": 24.51300621032715,
+          "cpuMs": 219.946,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 121.421875,
+          "liveHeapMiB": 43.26502227783203,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.644125,
+          "maxCollectionDurationMs": 9.022209
+        },
+        "snapshotEventsOverlapping": 2
+      }
+    ],
+    "on-2": [
+      {
+        "scheduled": 500,
+        "started": 497,
+        "missed": 3,
+        "request": {
+          "count": 497,
+          "p99Ms": 26.035417,
+          "maxMs": 59.126875,
+          "over20ms": 8
+        },
+        "scheduledRequest": {
+          "count": 497,
+          "p99Ms": 41.279875,
+          "maxMs": 103.708875,
+          "over20ms": 9
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 34.408041,
+          "maxMs": 64.397125,
+          "over20ms": 7
+        },
+        "dispatchToWorker": {
+          "count": 498,
+          "p99Ms": 0.80625,
+          "maxMs": 39.861542,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 497,
+          "p99Ms": 0.640458,
+          "maxMs": 13.195291,
+          "over20ms": 0
+        },
+        "missedBoundaries": {
+          "worker": 1,
+          "scheduler": 2
+        },
+        "startSeconds": 150,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:42:10.491219Z",
+          "observedEndUTC": "2026-11-03T02:42:15.49113Z",
+          "startBoundaryLagMs": 488.54994773864746,
+          "endBoundaryLagMs": 488.63887786865234,
+          "cpuMs": 604.098,
+          "gcCpuMs": 45.238370999999944,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.098304,
+          "peakRssMiB": 61.65625,
+          "liveHeapMiB": 13.457550048828125,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 498,
+              "sumNanos": 96900001,
+              "meanMs": 0.1945783152610442,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "runtime.batchWait": {
+              "count": 409,
+              "sumNanos": 543741930,
+              "meanMs": 1.3294423716381418,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "runtime.append": {
+              "count": 401,
+              "sumNanos": 1086735208,
+              "meanMs": 2.710062862842893,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 409,
+              "sumNanos": 7800620,
+              "meanMs": 0.01907242053789731,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 401,
+              "sumNanos": 1027411915,
+              "meanMs": 2.562124476309227,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 497,
+              "sumNanos": 1883875613,
+              "meanMs": 3.7904941911468812,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 3
+            },
+            "http.encode": {
+              "count": 497,
+              "sumNanos": 11252828,
+              "meanMs": 0.02264150503018109,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 497,
+              "sumNanos": 29590175,
+              "meanMs": 0.059537575452716304,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 28643667,
+              "meanMs": 28.643667,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 121189416,
+              "meanMs": 121.189416,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 1
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:42:10.958201Z",
+          "observedEndUTC": "2026-11-03T02:42:15.958772Z",
+          "startBoundaryLagMs": 21.56805992126465,
+          "endBoundaryLagMs": 20.997047424316406,
+          "cpuMs": 278.293,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 112.1875,
+          "liveHeapMiB": 38.44648742675781,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.973417,
+          "maxCollectionDurationMs": 0.065125
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 61.332166,
+          "maxMs": 109.78525,
+          "over20ms": 16
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 70.688416,
+          "maxMs": 110.816583,
+          "over20ms": 20
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 11.346125,
+          "maxMs": 31.892083,
+          "over20ms": 2
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.592416,
+          "maxMs": 3.283958,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 2.533583,
+          "maxMs": 32.689208,
+          "over20ms": 1
+        },
+        "missedBoundaries": {},
+        "startSeconds": 215,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:43:15.491096Z",
+          "observedEndUTC": "2026-11-03T02:43:20.490952Z",
+          "startBoundaryLagMs": 488.67297172546387,
+          "endBoundaryLagMs": 488.8169765472412,
+          "cpuMs": 587.583,
+          "gcCpuMs": 55.48379399999992,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.049152,
+          "peakRssMiB": 82.359375,
+          "liveHeapMiB": 20.526344299316406,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 62924456,
+              "meanMs": 0.125848912,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 1
+            },
+            "runtime.batchWait": {
+              "count": 422,
+              "sumNanos": 532099549,
+              "meanMs": 1.26089940521327,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 413,
+              "sumNanos": 941757703,
+              "meanMs": 2.280284995157385,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 419,
+              "sumNanos": 4682610,
+              "meanMs": 0.011175680190930787,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 413,
+              "sumNanos": 877307245,
+              "meanMs": 2.124230617433414,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 497,
+              "sumNanos": 1683564504,
+              "meanMs": 3.387453730382294,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 2
+            },
+            "http.encode": {
+              "count": 497,
+              "sumNanos": 8766334,
+              "meanMs": 0.017638498993963782,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 497,
+              "sumNanos": 23053247,
+              "meanMs": 0.04638480281690141,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 35226084,
+              "meanMs": 35.226084,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 161274000,
+              "meanMs": 161.274,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:43:15.958317Z",
+          "observedEndUTC": "2026-11-03T02:43:20.958252Z",
+          "startBoundaryLagMs": 21.451950073242188,
+          "endBoundaryLagMs": 21.517038345336914,
+          "cpuMs": 215.23,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 114.203125,
+          "liveHeapMiB": 39.24823760986328,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 16.733625,
+          "maxCollectionDurationMs": 0.066209
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 53.9015,
+          "maxMs": 97.288625,
+          "over20ms": 10
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 55.328375,
+          "maxMs": 98.837,
+          "over20ms": 12
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.536375,
+          "maxMs": 9.358416,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.057792,
+          "maxMs": 3.093166,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.588458,
+          "maxMs": 2.43625,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 270,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:44:10.516736Z",
+          "observedEndUTC": "2026-11-03T02:44:15.517279Z",
+          "startBoundaryLagMs": 463.03296089172363,
+          "endBoundaryLagMs": 462.4900817871094,
+          "cpuMs": 692.831,
+          "gcCpuMs": 83.30095400000026,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.06553600000000001,
+          "peakRssMiB": 99.15625,
+          "liveHeapMiB": 37.063255310058594,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 499,
+              "sumNanos": 58220271,
+              "meanMs": 0.11667388977955911,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 1
+            },
+            "runtime.batchWait": {
+              "count": 420,
+              "sumNanos": 506034702,
+              "meanMs": 1.2048445285714284,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 418,
+              "sumNanos": 1086649870,
+              "meanMs": 2.599640837320574,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 419,
+              "sumNanos": 5359507,
+              "meanMs": 0.0127911861575179,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 418,
+              "sumNanos": 1031022073,
+              "meanMs": 2.4665599832535885,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 498,
+              "sumNanos": 1761463462,
+              "meanMs": 3.5370752248995982,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 1
+            },
+            "http.encode": {
+              "count": 498,
+              "sumNanos": 10038721,
+              "meanMs": 0.020158074297188754,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 498,
+              "sumNanos": 32268534,
+              "meanMs": 0.0647962530120482,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 33967292,
+              "meanMs": 33.967292,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 192461667,
+              "meanMs": 192.461667,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 1
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:44:10.483985Z",
+          "observedEndUTC": "2026-11-03T02:44:15.489043Z",
+          "startBoundaryLagMs": 495.78404426574707,
+          "endBoundaryLagMs": 490.7259941101074,
+          "cpuMs": 276.45,
+          "gcCpuMs": 34.471919000000014,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.114688,
+          "peakRssMiB": 115.515625,
+          "liveHeapMiB": 39.89202117919922,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 5.129667,
+          "maxCollectionDurationMs": 0.067042
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 65.342583,
+          "maxMs": 115.4135,
+          "over20ms": 9
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 66.475541,
+          "maxMs": 116.101541,
+          "over20ms": 10
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.140541,
+          "maxMs": 2.825625,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.286834,
+          "maxMs": 0.452083,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.34475,
+          "maxMs": 1.104667,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 555,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:48:55.5208Z",
+          "observedEndUTC": "2026-11-03T02:49:00.522253Z",
+          "startBoundaryLagMs": 458.9688777923584,
+          "endBoundaryLagMs": 457.5159549713135,
+          "cpuMs": 1022.131,
+          "gcCpuMs": 233.56593499999968,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.16384,
+          "peakRssMiB": 181.03125,
+          "liveHeapMiB": 74.37832641601562,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 499,
+              "sumNanos": 224519654,
+              "meanMs": 0.4499391863727455,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 5
+            },
+            "runtime.batchWait": {
+              "count": 428,
+              "sumNanos": 575151084,
+              "meanMs": 1.3438109439252335,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 1
+            },
+            "runtime.append": {
+              "count": 423,
+              "sumNanos": 1111109745,
+              "meanMs": 2.6267369858156027,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 428,
+              "sumNanos": 10402741,
+              "meanMs": 0.024305469626168225,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 423,
+              "sumNanos": 1051023299,
+              "meanMs": 2.4846886501182035,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2082369024,
+              "meanMs": 4.164738048,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 6
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 15639859,
+              "meanMs": 0.031279718,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 42232424,
+              "meanMs": 0.084464848,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 68567750,
+              "meanMs": 68.56775,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 401235916,
+              "meanMs": 401.235916,
+              "p99BucketUpperMs": 500.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 1
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:48:55.487965Z",
+          "observedEndUTC": "2026-11-03T02:49:00.487808Z",
+          "startBoundaryLagMs": 491.8038845062256,
+          "endBoundaryLagMs": 491.9610023498535,
+          "cpuMs": 352.74,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 121.34375,
+          "liveHeapMiB": 42.801841735839844,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.616917,
+          "maxCollectionDurationMs": 0.097
+        },
+        "snapshotEventsOverlapping": 2
+      }
+    ],
+    "off-2": [
+      {
+        "scheduled": 500,
+        "started": 497,
+        "missed": 3,
+        "request": {
+          "count": 497,
+          "p99Ms": 19.136083,
+          "maxMs": 92.908667,
+          "over20ms": 4
+        },
+        "scheduledRequest": {
+          "count": 497,
+          "p99Ms": 36.604917,
+          "maxMs": 97.402959,
+          "over20ms": 6
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 22.478792,
+          "maxMs": 62.445334,
+          "over20ms": 6
+        },
+        "dispatchToWorker": {
+          "count": 498,
+          "p99Ms": 3.052833,
+          "maxMs": 32.612083,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 497,
+          "p99Ms": 2.470875,
+          "maxMs": 9.270833,
+          "over20ms": 0
+        },
+        "missedBoundaries": {
+          "worker": 1,
+          "scheduler": 2
+        },
+        "startSeconds": 160,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:53:37.822552Z",
+          "observedEndUTC": "2026-11-03T02:53:42.824045Z",
+          "startBoundaryLagMs": 489.65907096862793,
+          "endBoundaryLagMs": 488.16609382629395,
+          "cpuMs": 290.419,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 38.046875,
+          "liveHeapMiB": 14.2896728515625,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 497,
+              "sumNanos": 41479842,
+              "meanMs": 0.08346044668008049,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 418,
+              "sumNanos": 571561829,
+              "meanMs": 1.3673727966507176,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 411,
+              "sumNanos": 1311654376,
+              "meanMs": 3.1913731776155716,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "runtime.apply": {
+              "count": 418,
+              "sumNanos": 10427100,
+              "meanMs": 0.024945215311004784,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 411,
+              "sumNanos": 1209350453,
+              "meanMs": 2.942458523114355,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 497,
+              "sumNanos": 2070912826,
+              "meanMs": 4.16682661167002,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 1
+            },
+            "http.encode": {
+              "count": 497,
+              "sumNanos": 11842597,
+              "meanMs": 0.023828162977867204,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 497,
+              "sumNanos": 21939197,
+              "meanMs": 0.04414325352112676,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:53:38.292045Z",
+          "observedEndUTC": "2026-11-03T02:53:43.294401Z",
+          "startBoundaryLagMs": 20.16592025756836,
+          "endBoundaryLagMs": 17.81010627746582,
+          "cpuMs": 194.116,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 112.328125,
+          "liveHeapMiB": 38.70947265625,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 9.185167,
+          "maxCollectionDurationMs": 1.079209
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 71.619375,
+          "maxMs": 140.632542,
+          "over20ms": 12
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 99.476709,
+          "maxMs": 156.652834,
+          "over20ms": 12
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 3.621542,
+          "maxMs": 23.956084,
+          "over20ms": 1
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.954792,
+          "maxMs": 29.9995,
+          "over20ms": 1
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 24.380084,
+          "maxMs": 93.864875,
+          "over20ms": 8
+        },
+        "missedBoundaries": {},
+        "startSeconds": 220,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:54:37.823247Z",
+          "observedEndUTC": "2026-11-03T02:54:42.823876Z",
+          "startBoundaryLagMs": 488.9640808105469,
+          "endBoundaryLagMs": 488.33513259887695,
+          "cpuMs": 270.019,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 51.1875,
+          "liveHeapMiB": 20.660812377929688,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 8086757,
+              "meanMs": 0.016173514,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 426,
+              "sumNanos": 499645204,
+              "meanMs": 1.1728760657276995,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 426,
+              "sumNanos": 1197666199,
+              "meanMs": 2.811423002347418,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 426,
+              "sumNanos": 6722958,
+              "meanMs": 0.015781591549295773,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 426,
+              "sumNanos": 1165429873,
+              "meanMs": 2.7357508755868545,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 1784831166,
+              "meanMs": 3.569662332,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 9857045,
+              "meanMs": 0.01971409,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 16648411,
+              "meanMs": 0.033296822,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:54:38.292717Z",
+          "observedEndUTC": "2026-11-03T02:54:42.792406Z",
+          "startBoundaryLagMs": 19.494056701660156,
+          "endBoundaryLagMs": 519.8049545288086,
+          "cpuMs": 163.785,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 113.609375,
+          "liveHeapMiB": 39.14373779296875,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.453042,
+          "maxCollectionDurationMs": 0.062709
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 28.172375,
+          "maxMs": 65.148958,
+          "over20ms": 6
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 38.184042,
+          "maxMs": 79.452167,
+          "over20ms": 6
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.589875,
+          "maxMs": 13.957042,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 1.28325,
+          "maxMs": 9.188875,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 12.381292,
+          "maxMs": 39.719625,
+          "over20ms": 3
+        },
+        "missedBoundaries": {},
+        "startSeconds": 225,
+        "server": {
+          "observedStartUTC": "2026-11-03T02:54:42.823876Z",
+          "observedEndUTC": "2026-11-03T02:54:47.823507Z",
+          "startBoundaryLagMs": 488.33513259887695,
+          "endBoundaryLagMs": 488.70396614074707,
+          "cpuMs": 391.074,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 51.1875,
+          "liveHeapMiB": 20.660812377929688,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 74558957,
+              "meanMs": 0.149117914,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 423,
+              "sumNanos": 523044377,
+              "meanMs": 1.2365115295508273,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 413,
+              "sumNanos": 1156638033,
+              "meanMs": 2.8005763510895885,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 423,
+              "sumNanos": 14360407,
+              "meanMs": 0.03394895271867612,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 413,
+              "sumNanos": 1087389110,
+              "meanMs": 2.6329034140435836,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2130092249,
+              "meanMs": 4.260184498,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 7
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 36820430,
+              "meanMs": 0.07364086,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 54466498,
+              "meanMs": 0.108932996,
+              "p99BucketUpperMs": 1.0,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T02:54:42.792406Z",
+          "observedEndUTC": "2026-11-03T02:54:48.293196Z",
+          "startBoundaryLagMs": 519.8049545288086,
+          "endBoundaryLagMs": 19.015073776245117,
+          "cpuMs": 295.068,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 113.609375,
+          "liveHeapMiB": 39.14373779296875,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.010667,
+          "maxCollectionDurationMs": 33.993875
+        },
+        "snapshotEventsOverlapping": 0
+      }
+    ],
+    "off-3": [
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 8.851792,
+          "maxMs": 35.347667,
+          "over20ms": 2
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 10.454791,
+          "maxMs": 36.610333,
+          "over20ms": 2
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 2.163875,
+          "maxMs": 3.823333,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.075541,
+          "maxMs": 0.472,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.225041,
+          "maxMs": 12.124209,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 115,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:03:58.472261Z",
+          "observedEndUTC": "2026-11-03T03:04:03.472417Z",
+          "startBoundaryLagMs": 107.15007781982422,
+          "endBoundaryLagMs": 106.9939136505127,
+          "cpuMs": 468.712,
+          "gcCpuMs": 7.344800000000013,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.049152,
+          "peakRssMiB": 33.1875,
+          "liveHeapMiB": 11.184295654296875,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 18061763,
+              "meanMs": 0.036123525999999996,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 425,
+              "sumNanos": 545663662,
+              "meanMs": 1.2839144988235294,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 422,
+              "sumNanos": 1049945289,
+              "meanMs": 2.4880220118483414,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 425,
+              "sumNanos": 6778284,
+              "meanMs": 0.015948903529411765,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 422,
+              "sumNanos": 996244529,
+              "meanMs": 2.3607690260663508,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 1773480494,
+              "meanMs": 3.546960988,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 12520821,
+              "meanMs": 0.025041642,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 36868246,
+              "meanMs": 0.073736492,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:03:58.556724Z",
+          "observedEndUTC": "2026-11-03T03:04:03.556813Z",
+          "startBoundaryLagMs": 22.68695831298828,
+          "endBoundaryLagMs": 22.5980281829834,
+          "cpuMs": 300.329,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 111.6875,
+          "liveHeapMiB": 38.11939239501953,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.174958,
+          "maxCollectionDurationMs": 0.05775
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 8.401458,
+          "maxMs": 22.048833,
+          "over20ms": 2
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 9.717125,
+          "maxMs": 23.638083,
+          "over20ms": 3
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 1.839458,
+          "maxMs": 12.21925,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.216792,
+          "maxMs": 0.294333,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.873958,
+          "maxMs": 3.565375,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 405,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:08:48.47494Z",
+          "observedEndUTC": "2026-11-03T03:08:53.474818Z",
+          "startBoundaryLagMs": 104.47096824645996,
+          "endBoundaryLagMs": 104.59303855895996,
+          "cpuMs": 551.668,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 81.78125,
+          "liveHeapMiB": 37.91265106201172,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 9830667,
+              "meanMs": 0.019661334,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 431,
+              "sumNanos": 513176887,
+              "meanMs": 1.1906656310904873,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 432,
+              "sumNanos": 1203519080,
+              "meanMs": 2.7859237962962964,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 432,
+              "sumNanos": 6403028,
+              "meanMs": 0.014821824074074074,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 432,
+              "sumNanos": 1127462084,
+              "meanMs": 2.609865935185185,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 1879228001,
+              "meanMs": 3.758456002,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 1
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 13416883,
+              "meanMs": 0.026833766,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 38272666,
+              "meanMs": 0.076545332,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:08:48.559361Z",
+          "observedEndUTC": "2026-11-03T03:08:53.559334Z",
+          "startBoundaryLagMs": 20.050048828125,
+          "endBoundaryLagMs": 20.076990127563477,
+          "cpuMs": 399.262,
+          "gcCpuMs": 149.98450999999991,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.458752,
+          "peakRssMiB": 117.765625,
+          "liveHeapMiB": 41.108856201171875,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 0.772458,
+          "maxCollectionDurationMs": 0.056792
+        },
+        "snapshotEventsOverlapping": 0
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 8.395833,
+          "maxMs": 16.525458,
+          "over20ms": 0
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 9.944291,
+          "maxMs": 16.800333,
+          "over20ms": 0
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 2.102541,
+          "maxMs": 3.578416,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.072042,
+          "maxMs": 0.378917,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.174375,
+          "maxMs": 0.371709,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 595,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:11:58.476272Z",
+          "observedEndUTC": "2026-11-03T03:12:03.476256Z",
+          "startBoundaryLagMs": 103.13892364501953,
+          "endBoundaryLagMs": 103.15513610839844,
+          "cpuMs": 601.039,
+          "gcCpuMs": 223.17258299999997,
+          "gcCycles": 1,
+          "gcPauseLargestUpperMs": 0.393216,
+          "peakRssMiB": 107.578125,
+          "liveHeapMiB": 49.81145477294922,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 499,
+              "sumNanos": 5111957,
+              "meanMs": 0.010244402805611222,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.batchWait": {
+              "count": 423,
+              "sumNanos": 548906463,
+              "meanMs": 1.2976512127659574,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 423,
+              "sumNanos": 1100860131,
+              "meanMs": 2.602506219858156,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 423,
+              "sumNanos": 8212997,
+              "meanMs": 0.019416068557919622,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 423,
+              "sumNanos": 1035833493,
+              "meanMs": 2.448778943262411,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 1801297207,
+              "meanMs": 3.602594414,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 0
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 12602823,
+              "meanMs": 0.025205646,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 32167202,
+              "meanMs": 0.064334404,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:11:58.561747Z",
+          "observedEndUTC": "2026-11-03T03:12:03.560969Z",
+          "startBoundaryLagMs": 17.663955688476562,
+          "endBoundaryLagMs": 18.44191551208496,
+          "cpuMs": 294.76,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 122.203125,
+          "liveHeapMiB": 43.027244567871094,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.28925,
+          "maxCollectionDurationMs": 0.11525
+        },
+        "snapshotEventsOverlapping": 0
+      }
+    ],
+    "on-3": [
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 137.718042,
+          "maxMs": 177.233,
+          "over20ms": 102
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 138.328792,
+          "maxMs": 178.730208,
+          "over20ms": 110
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 2.113875,
+          "maxMs": 2.314958,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.0675,
+          "maxMs": 0.10775,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.589583,
+          "maxMs": 1.029333,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 140,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:15:28.799471Z",
+          "observedEndUTC": "2026-11-03T03:15:33.7995Z",
+          "startBoundaryLagMs": 11.219024658203125,
+          "endBoundaryLagMs": 11.189937591552734,
+          "cpuMs": 495.629,
+          "gcCpuMs": 22.638839000000075,
+          "gcCycles": 2,
+          "gcPauseLargestUpperMs": 0.06553600000000001,
+          "peakRssMiB": 57.5625,
+          "liveHeapMiB": 20.40544891357422,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 2426733855,
+              "meanMs": 4.85346771,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 23
+            },
+            "runtime.batchWait": {
+              "count": 420,
+              "sumNanos": 525348880,
+              "meanMs": 1.2508306666666666,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 368,
+              "sumNanos": 2782223097,
+              "meanMs": 7.560388850543479,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 15
+            },
+            "runtime.apply": {
+              "count": 420,
+              "sumNanos": 8165976,
+              "meanMs": 0.0194428,
+              "p99BucketUpperMs": 0.1,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 368,
+              "sumNanos": 2725060748,
+              "meanMs": 7.405056380434782,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 14
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 6679932408,
+              "meanMs": 13.359864816,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 97
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 14471713,
+              "meanMs": 0.028943425999999998,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 36702886,
+              "meanMs": 0.073405772,
+              "p99BucketUpperMs": 0.5,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 18968708,
+              "meanMs": 18.968708,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 0
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 183602750,
+              "meanMs": 183.60275,
+              "p99BucketUpperMs": 200.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 1
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:15:28.790093Z",
+          "observedEndUTC": "2026-11-03T03:15:33.790081Z",
+          "startBoundaryLagMs": 20.596981048583984,
+          "endBoundaryLagMs": 20.608901977539062,
+          "cpuMs": 269.701,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 111.109375,
+          "liveHeapMiB": 38.504905700683594,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.733666,
+          "maxCollectionDurationMs": 0.094333
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 39.089125,
+          "maxMs": 63.594583,
+          "over20ms": 36
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 41.178708,
+          "maxMs": 64.743875,
+          "over20ms": 41
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 2.122,
+          "maxMs": 5.435042,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.040042,
+          "maxMs": 0.055208,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.166708,
+          "maxMs": 0.242833,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 455,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:20:43.800332Z",
+          "observedEndUTC": "2026-11-03T03:20:48.796762Z",
+          "startBoundaryLagMs": 10.357856750488281,
+          "endBoundaryLagMs": 13.927936553955078,
+          "cpuMs": 900.458,
+          "gcCpuMs": 145.0388760000001,
+          "gcCycles": 2,
+          "gcPauseLargestUpperMs": 0.114688,
+          "peakRssMiB": 163.75,
+          "liveHeapMiB": 63.634002685546875,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 758607166,
+              "meanMs": 1.517214332,
+              "p99BucketUpperMs": 20.0,
+              "over20ms": 4
+            },
+            "runtime.batchWait": {
+              "count": 417,
+              "sumNanos": 531071459,
+              "meanMs": 1.273552659472422,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 394,
+              "sumNanos": 2436432320,
+              "meanMs": 6.183838375634518,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 6
+            },
+            "runtime.apply": {
+              "count": 417,
+              "sumNanos": 4301761,
+              "meanMs": 0.010315973621103118,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 394,
+              "sumNanos": 2386738378,
+              "meanMs": 6.05771161928934,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 5
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 4187340048,
+              "meanMs": 8.374680096,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 36
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 10162220,
+              "meanMs": 0.02032444,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 34101794,
+              "meanMs": 0.06820358800000001,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 54986000,
+              "meanMs": 54.986,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 0,
+              "sumNanos": 0,
+              "meanMs": null,
+              "p99BucketUpperMs": null,
+              "over20ms": 0
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:20:43.791545Z",
+          "observedEndUTC": "2026-11-03T03:20:48.786764Z",
+          "startBoundaryLagMs": 19.14501190185547,
+          "endBoundaryLagMs": 23.9260196685791,
+          "cpuMs": 305.431,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 118.28125,
+          "liveHeapMiB": 41.775291442871094,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.605083,
+          "maxCollectionDurationMs": 0.067292
+        },
+        "snapshotEventsOverlapping": 1
+      },
+      {
+        "scheduled": 500,
+        "started": 500,
+        "missed": 0,
+        "request": {
+          "count": 500,
+          "p99Ms": 25.411958,
+          "maxMs": 71.559,
+          "over20ms": 6
+        },
+        "scheduledRequest": {
+          "count": 500,
+          "p99Ms": 27.396083,
+          "maxMs": 71.911792,
+          "over20ms": 6
+        },
+        "schedulerObservationDelay": {
+          "count": 500,
+          "p99Ms": 2.126667,
+          "maxMs": 2.161667,
+          "over20ms": 0
+        },
+        "dispatchToWorker": {
+          "count": 500,
+          "p99Ms": 0.022334,
+          "maxMs": 0.048959,
+          "over20ms": 0
+        },
+        "transportWrite": {
+          "count": 500,
+          "p99Ms": 0.151083,
+          "maxMs": 0.658916,
+          "over20ms": 0
+        },
+        "missedBoundaries": {},
+        "startSeconds": 515,
+        "server": {
+          "observedStartUTC": "2026-11-03T03:21:43.784796Z",
+          "observedEndUTC": "2026-11-03T03:21:48.784244Z",
+          "startBoundaryLagMs": 25.8939266204834,
+          "endBoundaryLagMs": 26.445865631103516,
+          "cpuMs": 970.233,
+          "gcCpuMs": 108.53498599999955,
+          "gcCycles": 3,
+          "gcPauseLargestUpperMs": 0.049152,
+          "peakRssMiB": 179.953125,
+          "liveHeapMiB": 69.98587799072266,
+          "stages": {
+            "runtime.commandQueueWait": {
+              "count": 500,
+              "sumNanos": 210450141,
+              "meanMs": 0.420900282,
+              "p99BucketUpperMs": 10.0,
+              "over20ms": 4
+            },
+            "runtime.batchWait": {
+              "count": 414,
+              "sumNanos": 537748652,
+              "meanMs": 1.2989097874396136,
+              "p99BucketUpperMs": 2.0,
+              "over20ms": 0
+            },
+            "runtime.append": {
+              "count": 410,
+              "sumNanos": 1186553703,
+              "meanMs": 2.8940334219512196,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "runtime.apply": {
+              "count": 414,
+              "sumNanos": 4481086,
+              "meanMs": 0.01082387922705314,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "runtime.wal.sync": {
+              "count": 410,
+              "sumNanos": 1136227176,
+              "meanMs": 2.771285795121951,
+              "p99BucketUpperMs": 5.0,
+              "over20ms": 0
+            },
+            "http.handler": {
+              "count": 500,
+              "sumNanos": 2109655039,
+              "meanMs": 4.2193100779999995,
+              "p99BucketUpperMs": 50.0,
+              "over20ms": 6
+            },
+            "http.encode": {
+              "count": 500,
+              "sumNanos": 8933718,
+              "meanMs": 0.017867436,
+              "p99BucketUpperMs": 0.05,
+              "over20ms": 0
+            },
+            "http.write": {
+              "count": 500,
+              "sumNanos": 32504238,
+              "meanMs": 0.065008476,
+              "p99BucketUpperMs": 0.2,
+              "over20ms": 0
+            },
+            "runtime.snapshotCapture": {
+              "count": 1,
+              "sumNanos": 63761292,
+              "meanMs": 63.761292,
+              "p99BucketUpperMs": 100.0,
+              "over20ms": 1
+            },
+            "runtime.snapshotPublish": {
+              "count": 1,
+              "sumNanos": 331897792,
+              "meanMs": 331.897792,
+              "p99BucketUpperMs": 500.0,
+              "over20ms": 1
+            }
+          },
+          "observedQueueDepthMax": 0
+        },
+        "generator": {
+          "observedStartUTC": "2026-11-03T03:21:43.775365Z",
+          "observedEndUTC": "2026-11-03T03:21:48.775232Z",
+          "startBoundaryLagMs": 35.324811935424805,
+          "endBoundaryLagMs": 35.45784950256348,
+          "cpuMs": 280.895,
+          "gcCpuMs": 0.0,
+          "gcCycles": 0,
+          "gcPauseLargestUpperMs": null,
+          "peakRssMiB": 120.046875,
+          "liveHeapMiB": 42.37932586669922,
+          "skippedIntervals": 0,
+          "maxCollectionDelayMs": 1.854166,
+          "maxCollectionDurationMs": 0.077834
+        },
+        "snapshotEventsOverlapping": 1
+      }
+    ]
+  },
+  "sourceHashes": {
+    "off-1": {
+      "analysis.json": "8006a41531c201f2ac9b75f4ba24df40e28c267df458ed5eea4cc883cdcec857",
+      "server-metrics.jsonl": "cdd1e6a163b1778cf21bbd9d9e47e689d4d02aa4aa9edde3d1c3b7ce277994d1",
+      "verification.json": "48b5a861bd621cda280276efa0449ef9f0265d59c66650db1157859ce8043136",
+      "archive-manifest.json": "1636a1d873772745cddbbb3f743fbd16be94d7c113e4ac2f9dc373d0d787678d",
+      "archive-completed.json": "f753fdea3b2cdf14b9dc7704e4a7e509115f62cdcba91bb6b150946da1178972",
+      "server-ready.json": "3ee14acccc617a9c065a44ecc6e63de64244f0437085ca961d65d8b59c559ca4",
+      "restarted.json": "925922ce11cc0cf909abb603df0994b676616dbfe39d38f34270462f7460b4b5",
+      "loadgen/dispatch.jsonl": "089e8f56f307d277939ced2e7e95c13edd7c0fa64c03ab57b4f51f3a6cc683ae",
+      "loadgen/generator-metrics.jsonl": "47b12c018cbab3218327ea046d41cac8f708ac51a44bdc83caa240c248de6573",
+      "loadgen/manifest.json": "9621b161203d346a68081799a8079af625f75af341889a03e495be6d530720b1",
+      "loadgen/plan.jsonl": "25370eb17db159a75563db8fb1859c59c66ce3438d6a33f556c916af4da0221a",
+      "loadgen/preparation.json": "d348299a7b690a49d2979d38a1e6fc6b5ad89bf978195017c694017b1faf3703",
+      "loadgen/run.json": "17cbc919399a4d253167998a6d521b4aa04999b15e663323f2a9760d1857eacb",
+      "loadgen/samples.jsonl": "978874433eb37fbc1ef32b8e7bae82f31799baf04a55c44d84c3643b9c9cfa26",
+      "loadgen/summary.json": "dbe515a6e78ad7762a1c91805228b15766ecce9b97933577b1d82606fd8efc15"
+    },
+    "on-1": {
+      "analysis.json": "a9a7c4c3ce02fbbb72d0d9c443dcda62cae9723408ff58b7791a49fd7687932e",
+      "server-metrics.jsonl": "70c34d66dae1513f4a2d10f3b7500521c9b1da686aff3b048cd32e767a4fcd65",
+      "verification.json": "4799787b6b8bb189b7fb96e16c9da9d864ae3cb6b3a42840c3039acc84d17c89",
+      "archive-manifest.json": "130f8eafd7eacf7d54314559c26b935a89d231008aace9884953e839bf7a1804",
+      "archive-completed.json": "3009888e835597bc689310941fd8fd63c7d23a99e782b26b7df49868bfe15ad1",
+      "server-ready.json": "2de3de4ceb772a5dd4ed1688ddc0eb229e95ce5edd5838f7ea7a277346f2e638",
+      "restarted.json": "caa2e8e44a4b9b29fdd20a4dd249d259541cf666b63e428be5d57b5985fab214",
+      "loadgen/dispatch.jsonl": "44334fb9880ccece366d155a300b6f2dad138424e9c2dbe1e589177322c5b9c4",
+      "loadgen/generator-metrics.jsonl": "325c91782ceadada3f9e14c76254e032ee9ff555528dccd9fe4aa4706591b68a",
+      "loadgen/manifest.json": "499473b66bc6ce94c1276b13f4a0289bdf25804b3d3c22f94ed4728f630de1d8",
+      "loadgen/plan.jsonl": "c06053ca89e9a18b8079527bfbd63fc25e967017f4395e09bb1de7eb2282bc16",
+      "loadgen/preparation.json": "6786e638179e078db17574ce9968afdfcf73bee04ccd5516dc321d9dae84b34d",
+      "loadgen/run.json": "ac6c92bdd3d46ff55e3137da5946c6f3eaf2efbf591706a75b4c12af324a57b3",
+      "loadgen/samples.jsonl": "bb7d97347c7198ab08bc49171ca3dd88a123bc3cb1396f2d009877fac699785a",
+      "loadgen/summary.json": "b49fa7e6c53ed93ad419e7c9728aa1f3223f15509538fa7a9c59d466578f7e20",
+      "snapshot-events.jsonl": "ef1d303fd95cd0dc018cdb8a2753e6bcb811ccd27c7a4e584f40f2de99a6abd7"
+    },
+    "on-2": {
+      "analysis.json": "b1e50f619af36ff0570c9eff0d39f1d91bfd9d45c200200acf2c495d1a49a0df",
+      "server-metrics.jsonl": "e454ee6807397eea2ab9105aea18e34ce3756500e607f1b6ee01a0dac1feb4ae",
+      "verification.json": "216e0b006f6092fb1e2986824b2e419dec82dd1ab84e0f7f9c8959197372cb94",
+      "archive-manifest.json": "c6c8a148efc0374baf57baf7b31706f6fadafc7db695efbd1d641fbf3cfc2913",
+      "archive-completed.json": "7cd8bee1e3c9d7a927807971b1d7bfc53477ebe48d0302a5fbd1e69ea03928c3",
+      "server-ready.json": "85c8e7fbcbf730ea2a47d44a298b0b1061b0b131795147d957d072f4b149c13a",
+      "restarted.json": "bc361a669ac52680abb864094f3f796a10f416e8e45485df2a196e3230fec6ca",
+      "loadgen/dispatch.jsonl": "5764b58251d290bea7cec39f0917920bdfe77958ae4d67998c78f5500a66b25a",
+      "loadgen/generator-metrics.jsonl": "0a6f8980e210cd0b7d8edf6d4ff787d286283c19345d1646fb70dec249c6dc28",
+      "loadgen/manifest.json": "8cf2a6d9d2398c1faf69c507230ff078ab57c48e8fc8fece972a6480894598cb",
+      "loadgen/plan.jsonl": "028b7c660a213c96094bcc5f0b024b4a976e435d3c95ab5bdc4e3585169ac8a9",
+      "loadgen/preparation.json": "a36ed189a182ab59d54bc74c29f588bee8cc0eaa7839157ec9dcb5cdb33aaeb1",
+      "loadgen/run.json": "33aa689398adbe6c4b369cdb888e74e8e7b0ec7d90644fd451b660d4411fcbf9",
+      "loadgen/samples.jsonl": "0cb457e17b0e59a938d229b860c2f1adc218a454ae0d087696748096e74cde1f",
+      "loadgen/summary.json": "5592681c32fa7a3ceb06950691c71f38f1a107db3905ed326104fc24d6619a25",
+      "snapshot-events.jsonl": "127abe3a1fa880734bfde059340fcce790402b17695a7e596522db7177c9b046"
+    },
+    "off-2": {
+      "analysis.json": "f3fab8ce095b536318b7dbce948092747a2e0c71ddf42b9e7b27d630a4450992",
+      "server-metrics.jsonl": "6e91fbc6f0b6e1ad22bd07ff1ee334c6540f1bea997efc139d9c45d7bf5dfe60",
+      "verification.json": "50a7c021e94a1fe549f089666e9104d2cf88c8e6945354c32dfc9fdc91959a40",
+      "archive-manifest.json": "2e4832992a017b10e58558057fbc8f24cf34d19bab79b081984ff55229482250",
+      "archive-completed.json": "09a66e75c05b0c7ae9dffbc4baaa2b6d900a10b354902f2d76ca80aba25e62bc",
+      "server-ready.json": "1aa4ecb90e453189c501750b87510e6d28acdeddb8e1ea5ef793e2978c6007e0",
+      "restarted.json": "dd760768483b5437909ce93743cd4e19a1b5b6556fc91e58e18c27fd2fd2f906",
+      "loadgen/dispatch.jsonl": "d41bbc6d677b593fe2d02260dc7d43e6cda07275b904102a75436359ae381eb3",
+      "loadgen/generator-metrics.jsonl": "3c4970b007e36de96f33f4e7db3f2aaf9f3f7d43a2eeeccbc1f98d16f0708a85",
+      "loadgen/manifest.json": "b41c3eb93dc7908ea0b674d9b5fad150b8202aa09372b7657aa26ee30c2b7724",
+      "loadgen/plan.jsonl": "5601569c453b147f864fb847aa315def72f286493eab1a961711088924d75e9e",
+      "loadgen/preparation.json": "36b57d7ae048a8b18b102099c646b6d88c891f1075aaf7ac1b1d146a52ffb8b2",
+      "loadgen/run.json": "e642c8ce0abace0431f82fcbae8f17b9c839bf2729d456b7356ff5674b7230f6",
+      "loadgen/samples.jsonl": "26e8bacfe390ddaaf5517d363450ad550f4bdc2c626cdc2b9b6baa0a1c4be3e3",
+      "loadgen/summary.json": "23007e07eb5934a7d09809211955270ec5052f6c72815a66f5fc0adf1871aa05"
+    },
+    "off-3": {
+      "analysis.json": "304acc38197f7a8a20747be431b81078892463956181198a4d7d5b6bcc69d5b9",
+      "server-metrics.jsonl": "c551edcd0420cb6301e47e74ac5e2e2d2760bf1b87bd2c38402e669707552b2f",
+      "verification.json": "e2a93eb0c952e9269f3ce1bf2a1d94183afb13470490ec5316c91f661c5179a0",
+      "archive-manifest.json": "7624c4caa8b352fae43e20d456d05d84a1cfbe320ea57416b3386451647ea474",
+      "archive-completed.json": "f7c250ae2f5cabaa6d1c1bf28c2f99eb87d41be1ca6f0e145c58a580c3580394",
+      "server-ready.json": "95b75c7765dcf81ecc5a5c641e701f38955f846e1e9397179fd069aa5c855aee",
+      "restarted.json": "b7084b514e88717032da0069aac7dd083db144e9308c3b34843f29390e6f924b",
+      "loadgen/dispatch.jsonl": "a4ce6473732dfd7a09ed508909c1aac47e77804df5d7888f53e7fa90602bf6b7",
+      "loadgen/generator-metrics.jsonl": "a39f0a6eb88cde28f08051755aa65dd50930412c12e18a806a17044c9e320b16",
+      "loadgen/manifest.json": "688f2b41a6b223a43669de5e48e0bec7b8fdc146c042cd668f606847caecdc08",
+      "loadgen/plan.jsonl": "6bb6af9c431e1dfb862ab641b7b196396aa2edbc5f6e7ebbd313a852703f7335",
+      "loadgen/preparation.json": "d9cf578140af26e6095b744bbd47e31d1cdc716219cc7600250b1edd5453a3a4",
+      "loadgen/run.json": "f03d15a6feeb6f83babc0d006be0f23ca3078f3abce3c0b61272ddc2b86ed3ea",
+      "loadgen/samples.jsonl": "6beeff54900aa1872ebdcbd81caaa501fd83bbd441d5de68ac72ed7d5b66ef50",
+      "loadgen/summary.json": "d4fcbcea129cd7a33f4634a8afa49f82462685aff56fcb93b95c776a2470eac3"
+    },
+    "on-3": {
+      "analysis.json": "4531f32d415c3d2e1d80d7ec4e61bbfb7a550c5305bd08b1157ed52d578c195e",
+      "server-metrics.jsonl": "ee35e993125f3b247b4bb69154582537f89d408b217a7ba43d8cd4b3f33bbe24",
+      "verification.json": "6126357861a111a202ff92f071aad3dcc67cb4c9aed43d432a6b2886e94c59c6",
+      "archive-manifest.json": "d4729f16ac7587e8527d78b6838a662563c9445240c9988745d8553375c92085",
+      "archive-completed.json": "103e0daeb69b849e34b5cc93077d56afc2ad15e27474c2fbf3531b8a0426ea3a",
+      "server-ready.json": "c675e7a56372b10194cf3f38900e01b96b543ed9f8447226ede46cba7e929edb",
+      "restarted.json": "9bb873cda596639e85bb1f8311c8470c251879340c31dd6c8bd0f7444c935da5",
+      "loadgen/dispatch.jsonl": "a7de86ffe62892cbf7a2c2bc1ef817460f377d1ddc340166b16c43936334e1cf",
+      "loadgen/generator-metrics.jsonl": "380c6f572176cf457cf5365a71d7e316c8f5b84730918365892573fb0933ca7a",
+      "loadgen/manifest.json": "d26aabcef40fa29a693674ebf7a444674aed54c88d0e224c0a07c8c89accbba2",
+      "loadgen/plan.jsonl": "a2eedc522109aeac81968f2007efc61cbcd164017d6fda82619ab9ad17234d4d",
+      "loadgen/preparation.json": "1cfb85876db264c16822dfae889c55930793674cbb985ea897848b55420144df",
+      "loadgen/run.json": "d8da38165d5214a98bd3c8d98a2b383ba07acb3cf55d23bfd32bcbc333ce93e6",
+      "loadgen/samples.jsonl": "0e5e2d900f09d0ad472a02b24a4fd5bcc80ff7539e27f64d7b41fd77621d14f4",
+      "loadgen/summary.json": "a457ec0d37059fceab820e4f2596eef39649adb9419d5763d87d44ee018f377e",
+      "snapshot-events.jsonl": "184e927aff45ccb8e17c3c44b123d5ab5ce9b9f5e88ae8b81f7e6b1fb700a794"
+    }
+  },
+  "validation": {
+    "goRawSummaries": 6,
+    "pythonMeasurementAndWarmupSummaries": 12,
+    "fiveSecondWindows": 720,
+    "oneMinuteWindows": 60,
+    "histogramWindowSumsEqualTotals": true,
+    "fullRecoveryCases": 6,
+    "powerLossTested": false
+  }
+}

@@ -29,6 +29,14 @@
 
 [지연 구간 분석과 생성기 진단](benchmarks/latency-diagnostics.md)은 기존 10분 표본의 서버 저장 지연과 생성기 지연을 대조하고, 다음 실험을 위한 선택적 전달 경계·CPU/GC 계측을 설명한다. 원인은 확정하지 않았으며 새 장시간 반복 측정은 별도 단계다.
 
+[진단 계측 10분 반복](benchmarks/diagnostic-soak-repeats.md)은 끔/켬 각 3회와 전체 복구 일치, scheduler/worker 미전송 8/7건을 기록한다. 켬 세 실행 모두 구간별 지연 초과가 남았고 원인은 미확정이다.
+
+[실행 trace·호스트 진단](benchmarks/trace-host-diagnosis.md)은 끔/켬 각 600초에서 timer/select·runnable 대기를 구분하고 긴 WAL sync의 Syscall 상태를 확인했다. 50ms 미전송은 재현하지 못했으며 두 실행의 전체 복구는 일치했다.
+
+[타이머 분리·저장 OS I/O 관찰](benchmarks/timer-os-io-diagnosis.md)은 타이머만·worker 전달만 각 10분에서 지연 경계를 확인하고, 별도 거래 10분의 실제 C 저장 호출과 프로세스 I/O 누계를 대조했다. 관리자 커널 추적은 미확보이며 전체 복구는 일치했다.
+
+[타이머 trace 켬·끔 대조](benchmarks/timer-trace-control.md)는 같은 binary의 네 조건 각 10분에서 trace 비활성에서도 50ms 한도 초과가 발생함을 확인했다. 켬/끔의 인과 효과는 호스트 상태 차이로 미확정이며 monotonic·UTC 차이도 기록했다.
+
 v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4까지 완료했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6의 [HTTP 부하 생성·집계·원본 기록](design-docs/benchmark-v1.md)을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/바이너리/원본 묶음을 연결했다. 반복 기준 측정을 완료했고 P7 정렬 이동 후보의 비교를 마쳤다. 후보는 미채택했으며 [스냅샷 처리 한계](benchmarks/p7-snapshot-capacity.md)는 추가 5회 탐색으로 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미완료다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이다. [P6 기준과 결과](benchmarks/p6-baseline.md)는 전체 경로 초기 탐색·고정 조건·14개 실행의 재검증과 정상 조건의 반복 baseline을 기록한다. [P7 정렬 이동 비교](benchmarks/p7-snapshot-sorting.md)는 25회 실행과 미채택 판정·기준 구현 복원을 기록한다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
 
 [실제 OS·전원 장애 시험 절차](power-loss-validation.md)는 별도 시험 장비·외부 관찰자·재시도 전 조회·미확정 명령의 판정과 보존 자료를 정한다. 현재는 예제의 정상 재시작만 검증했으며 실제 전원 장애 시험은 미완료다.

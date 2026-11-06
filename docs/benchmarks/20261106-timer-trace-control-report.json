@@ -1,0 +1,5545 @@
+{
+  "protocol": {
+    "createdUTC": "2026-11-06T04:33:59.193888+00:00",
+    "baseRevision": "74a1206af94ada42eabbc5440e651c779bf181e5",
+    "order": [
+      "only-off",
+      "only-on",
+      "handoff-on",
+      "handoff-off"
+    ],
+    "durationSecondsEach": 600,
+    "requestsPerSecond": 100,
+    "countEach": 60000,
+    "traceTreatment": "runtime trace, clock logs and conditional delay fmt/Log together",
+    "cooldownSeconds": 30,
+    "freeBytesMinimum": 8589934592,
+    "rssBytesMaximum": 2147483648,
+    "powerLossTested": false,
+    "sha256": {
+      "timer/main.go": "8ff2a20a49ef879ea19593544c2a1ca1dd5a8e6d900afe441bf683f003ad88d7",
+      "timer/main_test.go": "eb60724d49d0a29411cbc44ec06be7b384b0c13ae49e0e32972ee0f3d0114448",
+      "bin/timer": "8169731080cfe6b19abf66a29ad4245c7c2f3e1dcfa42b3bc90807beebeacf30",
+      "suite.py": "dd3aa4bbf7af13525933e9726cd90d2ca727f1c69ea0b15af384ac3417161440",
+      "environment.json": "2deaa44b13728c63c02b7c927a38de05fd19e992113490725d6f7adf3986c5e9"
+    }
+  },
+  "analysisScriptSHA256": "65938115d3d5131188c5f953d9b207b6800df4c33111247c06ca6e8d6a89a58e",
+  "validation": {
+    "rows": 240000,
+    "fiveSecondWindows": 480,
+    "traceEnabledCasesParsed": 2,
+    "traceDisabledCasesWithoutFile": 2
+  },
+  "kernelEventsAvailable": false,
+  "cases": {
+    "only-off": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-06T04:34:05.193639Z",
+        "finishedUTC": "2026-11-06T04:44:05.329906Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 0,
+        "traceEnabled": false,
+        "workers": 0
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.038,
+        "p99Ms": 1.154375,
+        "maxMs": 43.895084,
+        "over10ms": 23,
+        "over50ms": 0
+      },
+      "handoff": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "workerScheduled": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "failures": {},
+      "failureRows": [],
+      "hashes": {
+        "run.json": "224a94dbac2c03db51b0ff8f74353a70fdf43b9d35deb6ba3da693fd27275f92",
+        "samples.jsonl": "9f0a6f3fb778bcc4270503c1315a0acbe7c48fbb350b9a66f344423f352ac5f6"
+      },
+      "trace": null,
+      "selectedWindows": [
+        {
+          "startSeconds": 185,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039625,
+            "p99Ms": 13.896209,
+            "maxMs": 43.895084,
+            "over10ms": 8,
+            "over50ms": 0
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {}
+        },
+        {
+          "startSeconds": 220,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.01675,
+            "p99Ms": 7.78,
+            "maxMs": 17.778709,
+            "over10ms": 3,
+            "over50ms": 0
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {}
+        },
+        {
+          "startSeconds": 525,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.02775,
+            "p99Ms": 6.543542,
+            "maxMs": 24.388917,
+            "over10ms": 3,
+            "over50ms": 0
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {}
+        }
+      ],
+      "guard": {
+        "freeBytesMin": 17065512960,
+        "freeBytesMax": 18152554496,
+        "observedRssBytesMax": 11616256
+      }
+    },
+    "only-on": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-06T04:44:36.893285Z",
+        "finishedUTC": "2026-11-06T04:54:37.040497Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 4818149,
+        "traceEnabled": true,
+        "workers": 0
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.02875,
+        "p99Ms": 4.222458,
+        "maxMs": 131.542875,
+        "over10ms": 193,
+        "over50ms": 22
+      },
+      "handoff": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "workerScheduled": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "failures": {
+        "scheduler": 22
+      },
+      "failureRows": [
+        {
+          "index": 2651,
+          "scheduledNanos": 26510000000,
+          "waitStartNanos": 26572704791,
+          "waitEndNanos": 26572705333,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 2652,
+          "scheduledNanos": 26520000000,
+          "waitStartNanos": 26572706833,
+          "waitEndNanos": 26572706916,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 2765,
+          "scheduledNanos": 27650000000,
+          "waitStartNanos": 27641395458,
+          "waitEndNanos": 27706307916,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 30432,
+          "scheduledNanos": 304320000000,
+          "waitStartNanos": 304310950208,
+          "waitEndNanos": 304385376333,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 30433,
+          "scheduledNanos": 304330000000,
+          "waitStartNanos": 304386447250,
+          "waitEndNanos": 304386447791,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 30447,
+          "scheduledNanos": 304470000000,
+          "waitStartNanos": 304461029833,
+          "waitEndNanos": 304523962125,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47446,
+          "scheduledNanos": 474460000000,
+          "waitStartNanos": 474591542416,
+          "waitEndNanos": 474591542875,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47447,
+          "scheduledNanos": 474470000000,
+          "waitStartNanos": 474591544541,
+          "waitEndNanos": 474591544583,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47448,
+          "scheduledNanos": 474480000000,
+          "waitStartNanos": 474591545041,
+          "waitEndNanos": 474591545083,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47449,
+          "scheduledNanos": 474490000000,
+          "waitStartNanos": 474591545333,
+          "waitEndNanos": 474591545375,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47450,
+          "scheduledNanos": 474500000000,
+          "waitStartNanos": 474591545666,
+          "waitEndNanos": 474591545708,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47451,
+          "scheduledNanos": 474510000000,
+          "waitStartNanos": 474591545958,
+          "waitEndNanos": 474591546000,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47452,
+          "scheduledNanos": 474520000000,
+          "waitStartNanos": 474591546250,
+          "waitEndNanos": 474591546291,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47453,
+          "scheduledNanos": 474530000000,
+          "waitStartNanos": 474591546541,
+          "waitEndNanos": 474591546583,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 47454,
+          "scheduledNanos": 474540000000,
+          "waitStartNanos": 474591546833,
+          "waitEndNanos": 474591546875,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48371,
+          "scheduledNanos": 483710000000,
+          "waitStartNanos": 483765709416,
+          "waitEndNanos": 483765710750,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48601,
+          "scheduledNanos": 486010000000,
+          "waitStartNanos": 486001619583,
+          "waitEndNanos": 486113456625,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48602,
+          "scheduledNanos": 486020000000,
+          "waitStartNanos": 486113481750,
+          "waitEndNanos": 486113481916,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48603,
+          "scheduledNanos": 486030000000,
+          "waitStartNanos": 486113482583,
+          "waitEndNanos": 486113482625,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48604,
+          "scheduledNanos": 486040000000,
+          "waitStartNanos": 486113483000,
+          "waitEndNanos": 486113483041,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48605,
+          "scheduledNanos": 486050000000,
+          "waitStartNanos": 486113483291,
+          "waitEndNanos": 486113483333,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 48606,
+          "scheduledNanos": 486060000000,
+          "waitStartNanos": 486113483625,
+          "waitEndNanos": 486113483666,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        }
+      ],
+      "hashes": {
+        "run.json": "111c9fb3850b95d8fbef76e6b4ce3a5cc61b83e0532f512baf1696800ed3ab7c",
+        "samples.jsonl": "6a7521306ec4140ee7aa7adb917d52612d6252c1f05007367a07d2075360bb8d",
+        "timer.trace": "248e8d6a56afc5298594b7ecba38fe59341e9956821cce3ef8d6f3144c6458b7"
+      },
+      "trace": {
+        "sha256": "248e8d6a56afc5298594b7ecba38fe59341e9956821cce3ef8d6f3144c6458b7",
+        "bytes": 4818149,
+        "eventCounts": {
+          "Sync": 601,
+          "StateTransition": 544647,
+          "Metric": 3519,
+          "RangeBegin": 17,
+          "RangeEnd": 17,
+          "Log": 195,
+          "Label": 24
+        },
+        "clocks": [
+          {
+            "time": 869176698740288,
+            "utc": "2026-11-06T04:44:36.872774Z"
+          },
+          {
+            "time": 869776710349632,
+            "utc": "2026-11-06T04:54:36.88703Z"
+          }
+        ],
+        "clockResidualMs": 2.6466565187774904,
+        "longRunnable": [],
+        "syncCount": 0,
+        "syncOver20ms": 0,
+        "topSyncs": [],
+        "markerCount": 193,
+        "selectedMarkers": [
+          {
+            "gid": 1,
+            "time": 869203291934400,
+            "category": "scheduler-delay",
+            "index": 2651,
+            "offset": 26572705333,
+            "delay": 62705333,
+            "lastRunnable": {
+              "started": 869203291911488,
+              "runnableMs": 0.007424
+            },
+            "transitions": [
+              {
+                "time": 869203189371072,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203189378560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203199321344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203199337152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203199346816,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203210508608,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203210519168,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203210528960,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203232431680,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203232435648,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203291904064,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869203291911488,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940303.465968
+          },
+          {
+            "gid": 1,
+            "time": 869203291934784,
+            "category": "scheduler-delay",
+            "index": 2652,
+            "offset": 26572706916,
+            "delay": 52706916,
+            "lastRunnable": {
+              "started": 869203291911488,
+              "runnableMs": 0.007424
+            },
+            "transitions": [
+              {
+                "time": 869203189371072,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203189378560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203199321344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203199337152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203199346816,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203210508608,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203210519168,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203210528960,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869203232431680,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869203232435648,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869203291904064,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869203291911488,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940303.4659684
+          },
+          {
+            "gid": 1,
+            "time": 869204425551360,
+            "category": "scheduler-delay",
+            "index": 2765,
+            "offset": 27706307916,
+            "delay": 56307916,
+            "lastRunnable": {
+              "started": 869204425534080,
+              "runnableMs": 0.00352
+            },
+            "transitions": [
+              {
+                "time": 869204333799616,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869204341948096,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869204341953856,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869204341966592,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869204351503872,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869204351509120,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869204351518848,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869204360616320,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869204360620736,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869204360630784,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869204425530560,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869204425534080,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940304.599585
+          },
+          {
+            "gid": 1,
+            "time": 869481105674496,
+            "category": "scheduler-delay",
+            "index": 30432,
+            "offset": 304385376333,
+            "delay": 65376333,
+            "lastRunnable": {
+              "started": 869481104602816,
+              "runnableMs": 0.003456
+            },
+            "transitions": [
+              {
+                "time": 869481000003200,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481009903232,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481009907520,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481009920448,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481020889664,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481024617216,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481024630784,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481030172288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481030176000,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481030182784,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481104599360,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481104602816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940581.2797081
+          },
+          {
+            "gid": 1,
+            "time": 869481105677760,
+            "category": "scheduler-delay",
+            "index": 30433,
+            "offset": 304386447791,
+            "delay": 56447791,
+            "lastRunnable": {
+              "started": 869481104602816,
+              "runnableMs": 0.003456
+            },
+            "transitions": [
+              {
+                "time": 869481000003200,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481009903232,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481009907520,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481009920448,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481020889664,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481024617216,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481024630784,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481030172288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481030176000,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481030182784,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481104599360,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481104602816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940581.2797112
+          },
+          {
+            "gid": 1,
+            "time": 869481243198144,
+            "category": "scheduler-delay",
+            "index": 30447,
+            "offset": 304523962125,
+            "delay": 53962125,
+            "lastRunnable": {
+              "started": 869481243188608,
+              "runnableMs": 0.001536
+            },
+            "transitions": [
+              {
+                "time": 869481150155200,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481160258176,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481160270080,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481160282752,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481170250880,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481170262656,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481170273408,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481180250368,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481180255744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869481180263232,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869481243187072,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869481243188608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940581.4172318
+          },
+          {
+            "gid": 1,
+            "time": 869651310772032,
+            "category": "scheduler-delay",
+            "index": 47446,
+            "offset": 474591542875,
+            "delay": 131542875,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848056
+          },
+          {
+            "gid": 1,
+            "time": 869651310772608,
+            "category": "scheduler-delay",
+            "index": 47447,
+            "offset": 474591544583,
+            "delay": 121544583,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848063
+          },
+          {
+            "gid": 1,
+            "time": 869651310772864,
+            "category": "scheduler-delay",
+            "index": 47448,
+            "offset": 474591545083,
+            "delay": 111545083,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848065
+          },
+          {
+            "gid": 1,
+            "time": 869651310773248,
+            "category": "scheduler-delay",
+            "index": 47449,
+            "offset": 474591545375,
+            "delay": 101545375,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848068
+          },
+          {
+            "gid": 1,
+            "time": 869651310773504,
+            "category": "scheduler-delay",
+            "index": 47450,
+            "offset": 474591545708,
+            "delay": 91545708,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.484807
+          },
+          {
+            "gid": 1,
+            "time": 869651310773824,
+            "category": "scheduler-delay",
+            "index": 47451,
+            "offset": 474591546000,
+            "delay": 81546000,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848075
+          },
+          {
+            "gid": 1,
+            "time": 869651310774144,
+            "category": "scheduler-delay",
+            "index": 47452,
+            "offset": 474591546291,
+            "delay": 71546291,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848077
+          },
+          {
+            "gid": 1,
+            "time": 869651310774400,
+            "category": "scheduler-delay",
+            "index": 47453,
+            "offset": 474591546583,
+            "delay": 61546583,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.484808
+          },
+          {
+            "gid": 1,
+            "time": 869651310774720,
+            "category": "scheduler-delay",
+            "index": 47454,
+            "offset": 474591546875,
+            "delay": 51546875,
+            "lastRunnable": {
+              "started": 869651310741760,
+              "runnableMs": 0.007552
+            },
+            "transitions": [
+              {
+                "time": 869651152931776,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651152935744,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651152942528,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651160813312,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651160817536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651160824064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869651199263744,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869651199267904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651257280576,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651257287040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869651310734208,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869651310741760,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940751.4848082
+          },
+          {
+            "gid": 1,
+            "time": 869660484945600,
+            "category": "scheduler-delay",
+            "index": 48371,
+            "offset": 483765710750,
+            "delay": 55710750,
+            "lastRunnable": {
+              "started": 869660484936896,
+              "runnableMs": 0.059712
+            },
+            "transitions": [
+              {
+                "time": 869660390306880,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869660390316288,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869660401428736,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869660401433408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869660402389568,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869660412521152,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869660412524992,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869660412533824,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869660447420800,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869660447427904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869660484877184,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869660484936896,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940760.6589792
+          },
+          {
+            "gid": 1,
+            "time": 869662832709312,
+            "category": "scheduler-delay",
+            "index": 48601,
+            "offset": 486113456625,
+            "delay": 103456625,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.006743
+          },
+          {
+            "gid": 1,
+            "time": 869662832710144,
+            "category": "scheduler-delay",
+            "index": 48602,
+            "offset": 486113481916,
+            "delay": 93481916,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.0067437
+          },
+          {
+            "gid": 1,
+            "time": 869662832710528,
+            "category": "scheduler-delay",
+            "index": 48603,
+            "offset": 486113482625,
+            "delay": 83482625,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.0067441
+          },
+          {
+            "gid": 1,
+            "time": 869662832710912,
+            "category": "scheduler-delay",
+            "index": 48604,
+            "offset": 486113483041,
+            "delay": 73483041,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.0067446
+          },
+          {
+            "gid": 1,
+            "time": 869662832711168,
+            "category": "scheduler-delay",
+            "index": 48605,
+            "offset": 486113483333,
+            "delay": 63483333,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.0067449
+          },
+          {
+            "gid": 1,
+            "time": 869662832711488,
+            "category": "scheduler-delay",
+            "index": 48606,
+            "offset": 486113483666,
+            "delay": 53483666,
+            "lastRunnable": {
+              "started": 869662832683008,
+              "runnableMs": 0.012352
+            },
+            "transitions": [
+              {
+                "time": 869662691708608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662700287104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662700290944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662700297472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662710271488,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662710275584,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662710281984,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662720840448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662720844544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869662720873152,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869662832670656,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869662832683008,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940763.006745
+          }
+        ]
+      },
+      "selectedWindows": [
+        {
+          "startSeconds": 25,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039125,
+            "p99Ms": 42.707291,
+            "maxMs": 62.705333,
+            "over10ms": 25,
+            "over50ms": 3
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 3
+          }
+        },
+        {
+          "startSeconds": 300,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.019083,
+            "p99Ms": 36.45075,
+            "maxMs": 65.376333,
+            "over10ms": 16,
+            "over50ms": 3
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 3
+          }
+        },
+        {
+          "startSeconds": 470,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.04975,
+            "p99Ms": 81.546,
+            "maxMs": 131.542875,
+            "over10ms": 35,
+            "over50ms": 9
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 9
+          }
+        },
+        {
+          "startSeconds": 480,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051833,
+            "p99Ms": 17.882958,
+            "maxMs": 55.71075,
+            "over10ms": 8,
+            "over50ms": 1
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 1
+          }
+        },
+        {
+          "startSeconds": 485,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.031291,
+            "p99Ms": 53.483666,
+            "maxMs": 103.456625,
+            "over10ms": 15,
+            "over50ms": 6
+          },
+          "worker": {
+            "count": 0,
+            "p50Ms": null,
+            "p99Ms": null,
+            "maxMs": null,
+            "over10ms": 0,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 6
+          }
+        }
+      ],
+      "guard": {
+        "freeBytesMin": 14068670464,
+        "freeBytesMax": 18073927680,
+        "observedRssBytesMax": 14270464
+      }
+    },
+    "handoff-on": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-06T04:55:08.348026Z",
+        "finishedUTC": "2026-11-06T05:05:06.423577Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 25438677,
+        "traceEnabled": true,
+        "workers": 2048
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.020125,
+        "p99Ms": 5.821583,
+        "maxMs": 92.057292,
+        "over10ms": 243,
+        "over50ms": 25
+      },
+      "handoff": {
+        "count": 59975,
+        "p50Ms": 0.0085,
+        "p99Ms": 0.059375,
+        "maxMs": 57.145458,
+        "over10ms": 5,
+        "over50ms": 1
+      },
+      "workerScheduled": {
+        "count": 59975,
+        "p50Ms": 1.027125,
+        "p99Ms": 5.734792,
+        "maxMs": 72.402167,
+        "over10ms": 222,
+        "over50ms": 2
+      },
+      "failures": {
+        "scheduler": 25,
+        "worker": 2
+      },
+      "failureRows": [
+        {
+          "index": 5572,
+          "scheduledNanos": 55720000000,
+          "waitStartNanos": 55711034667,
+          "waitEndNanos": 55792123875,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5573,
+          "scheduledNanos": 55730000000,
+          "waitStartNanos": 55792294083,
+          "waitEndNanos": 55792294500,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5574,
+          "scheduledNanos": 55740000000,
+          "waitStartNanos": 55792295625,
+          "waitEndNanos": 55792295750,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5815,
+          "scheduledNanos": 58150000000,
+          "waitStartNanos": 58141042042,
+          "waitEndNanos": 58242057292,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5816,
+          "scheduledNanos": 58160000000,
+          "waitStartNanos": 58242115208,
+          "waitEndNanos": 58242115542,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5817,
+          "scheduledNanos": 58170000000,
+          "waitStartNanos": 58242116125,
+          "waitEndNanos": 58242116208,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5818,
+          "scheduledNanos": 58180000000,
+          "waitStartNanos": 58242116542,
+          "waitEndNanos": 58242116583,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 5819,
+          "scheduledNanos": 58190000000,
+          "waitStartNanos": 58242116875,
+          "waitEndNanos": 58242116917,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15089,
+          "scheduledNanos": 150890000000,
+          "waitStartNanos": 150881496125,
+          "waitEndNanos": 150982013167,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15090,
+          "scheduledNanos": 150900000000,
+          "waitStartNanos": 150988263542,
+          "waitEndNanos": 150988263917,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15091,
+          "scheduledNanos": 150910000000,
+          "waitStartNanos": 150988265583,
+          "waitEndNanos": 150988265625,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15092,
+          "scheduledNanos": 150920000000,
+          "waitStartNanos": 150988266042,
+          "waitEndNanos": 150988266292,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15093,
+          "scheduledNanos": 150930000000,
+          "waitStartNanos": 150988266583,
+          "waitEndNanos": 150988266625,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 15940,
+          "scheduledNanos": 159400000000,
+          "waitStartNanos": 159390649750,
+          "waitEndNanos": 159454983000,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 16743,
+          "scheduledNanos": 167430000000,
+          "waitStartNanos": 167420122042,
+          "waitEndNanos": 167495538375,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 16744,
+          "scheduledNanos": 167440000000,
+          "waitStartNanos": 167495552708,
+          "waitEndNanos": 167495552833,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 24260,
+          "scheduledNanos": 242600000000,
+          "waitStartNanos": 242596274917,
+          "waitEndNanos": 242614031292,
+          "workerNanos": 242671176750,
+          "failure": "worker"
+        },
+        {
+          "index": 24261,
+          "scheduledNanos": 242610000000,
+          "waitStartNanos": 242671060917,
+          "waitEndNanos": 242671061792,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 24262,
+          "scheduledNanos": 242620000000,
+          "waitStartNanos": 242671091917,
+          "waitEndNanos": 242671092250,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 24268,
+          "scheduledNanos": 242680000000,
+          "waitStartNanos": 242679411792,
+          "waitEndNanos": 242753082875,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 24269,
+          "scheduledNanos": 242690000000,
+          "waitStartNanos": 242753091750,
+          "waitEndNanos": 242753091875,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 24270,
+          "scheduledNanos": 242700000000,
+          "waitStartNanos": 242753092417,
+          "waitEndNanos": 242753092458,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 37310,
+          "scheduledNanos": 373100000000,
+          "waitStartNanos": 373090486917,
+          "waitEndNanos": 373148506708,
+          "workerNanos": 373172402167,
+          "failure": "worker"
+        },
+        {
+          "index": 37311,
+          "scheduledNanos": 373110000000,
+          "waitStartNanos": 373170933125,
+          "waitEndNanos": 373170933458,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 37312,
+          "scheduledNanos": 373120000000,
+          "waitStartNanos": 373171923958,
+          "waitEndNanos": 373171924500,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 46258,
+          "scheduledNanos": 462580000000,
+          "waitStartNanos": 462573857583,
+          "waitEndNanos": 462645504625,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        },
+        {
+          "index": 46259,
+          "scheduledNanos": 462590000000,
+          "waitStartNanos": 462645609667,
+          "waitEndNanos": 462645610083,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        }
+      ],
+      "hashes": {
+        "run.json": "9840f12c365b863686f347ceca8a7db52b5f6d21bc09381befa9272c97e636a0",
+        "samples.jsonl": "fbb7a033f7309a57a545756fb2da7e327a8c23ff7c3d43aa4c206ef61235ceca",
+        "timer.trace": "3dd694f682c2f7c7988df4ab0caa96abb19da3503ce060525c2a0fd50150b807"
+      },
+      "trace": {
+        "sha256": "3dd694f682c2f7c7988df4ab0caa96abb19da3503ce060525c2a0fd50150b807",
+        "bytes": 25438677,
+        "eventCounts": {
+          "Sync": 600,
+          "StateTransition": 1962707,
+          "Metric": 8216,
+          "RangeBegin": 96,
+          "RangeEnd": 96,
+          "Log": 467,
+          "Label": 365,
+          "RangeActive": 19
+        },
+        "clocks": [
+          {
+            "time": 869808149156736,
+            "utc": "2026-11-06T04:55:08.326398Z"
+          },
+          {
+            "time": 870408162723520,
+            "utc": "2026-11-06T05:05:06.283516Z"
+          }
+        ],
+        "clockResidualMs": -2056.448749637184,
+        "longRunnable": [
+          {
+            "gid": 109,
+            "started": 870279863983040,
+            "runnableMs": 22.921728
+          }
+        ],
+        "syncCount": 0,
+        "syncOver20ms": 0,
+        "topSyncs": [],
+        "markerCount": 465,
+        "selectedMarkers": [
+          {
+            "gid": 1,
+            "time": 869863963056640,
+            "category": "scheduler-delay",
+            "index": 5572,
+            "offset": 55792123875,
+            "delay": 72123875,
+            "lastRunnable": {
+              "started": 869863962885504,
+              "runnableMs": 0.01056
+            },
+            "transitions": [
+              {
+                "time": 869863851791232,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863861779648,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863861783872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863861790592,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863871776512,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863871779712,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863871786496,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863881786112,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863881792896,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863881803968,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863962874944,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863962885504,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940964.140298
+          },
+          {
+            "gid": 1,
+            "time": 869863963058496,
+            "category": "scheduler-delay",
+            "index": 5573,
+            "offset": 55792294500,
+            "delay": 62294500,
+            "lastRunnable": {
+              "started": 869863962885504,
+              "runnableMs": 0.01056
+            },
+            "transitions": [
+              {
+                "time": 869863851791232,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863861779648,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863861783872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863861790592,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863871776512,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863871779712,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863871786496,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863881786112,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863881792896,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863881803968,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863962874944,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863962885504,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940964.1402996
+          },
+          {
+            "gid": 1,
+            "time": 869863963059328,
+            "category": "scheduler-delay",
+            "index": 5574,
+            "offset": 55792295750,
+            "delay": 52295750,
+            "lastRunnable": {
+              "started": 869863962885504,
+              "runnableMs": 0.01056
+            },
+            "transitions": [
+              {
+                "time": 869863851791232,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863861779648,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863861783872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863861790592,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863871776512,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863871779712,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863871786496,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863881786112,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863881792896,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869863881803968,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869863962874944,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869863962885504,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940964.1403005
+          },
+          {
+            "gid": 1,
+            "time": 869866412878080,
+            "category": "scheduler-delay",
+            "index": 5815,
+            "offset": 58242057292,
+            "delay": 92057292,
+            "lastRunnable": {
+              "started": 869866412831104,
+              "runnableMs": 0.000384
+            },
+            "transitions": [
+              {
+                "time": 869866291662464,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866291669184,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866300829248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866300835136,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866300846912,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866311789952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866311799680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866311853120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866412813632,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866412818688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866412830720,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869866412831104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940966.5901191
+          },
+          {
+            "gid": 1,
+            "time": 869866412879040,
+            "category": "scheduler-delay",
+            "index": 5816,
+            "offset": 58242115542,
+            "delay": 82115542,
+            "lastRunnable": {
+              "started": 869866412831104,
+              "runnableMs": 0.000384
+            },
+            "transitions": [
+              {
+                "time": 869866291662464,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866291669184,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866300829248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866300835136,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866300846912,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866311789952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866311799680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866311853120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866412813632,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866412818688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866412830720,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869866412831104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940966.5901203
+          },
+          {
+            "gid": 1,
+            "time": 869866412879488,
+            "category": "scheduler-delay",
+            "index": 5817,
+            "offset": 58242116208,
+            "delay": 72116208,
+            "lastRunnable": {
+              "started": 869866412831104,
+              "runnableMs": 0.000384
+            },
+            "transitions": [
+              {
+                "time": 869866291662464,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866291669184,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866300829248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866300835136,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866300846912,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866311789952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866311799680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866311853120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866412813632,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866412818688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866412830720,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869866412831104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940966.5901206
+          },
+          {
+            "gid": 1,
+            "time": 869866412879744,
+            "category": "scheduler-delay",
+            "index": 5818,
+            "offset": 58242116583,
+            "delay": 62116583,
+            "lastRunnable": {
+              "started": 869866412831104,
+              "runnableMs": 0.000384
+            },
+            "transitions": [
+              {
+                "time": 869866291662464,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866291669184,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866300829248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866300835136,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866300846912,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866311789952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866311799680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866311853120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866412813632,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866412818688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866412830720,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869866412831104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940966.5901208
+          },
+          {
+            "gid": 1,
+            "time": 869866412880064,
+            "category": "scheduler-delay",
+            "index": 5819,
+            "offset": 58242116917,
+            "delay": 52116917,
+            "lastRunnable": {
+              "started": 869866412831104,
+              "runnableMs": 0.000384
+            },
+            "transitions": [
+              {
+                "time": 869866291662464,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866291669184,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866300829248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866300835136,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866300846912,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866311789952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866311799680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866311853120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869866412813632,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869866412818688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869866412830720,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 869866412831104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793940966.5901213
+          },
+          {
+            "gid": 1,
+            "time": 869959159025984,
+            "category": "scheduler-delay",
+            "index": 15089,
+            "offset": 150982013167,
+            "delay": 92013167,
+            "lastRunnable": {
+              "started": 869959152774848,
+              "runnableMs": 0.013504
+            },
+            "transitions": [
+              {
+                "time": 869959010972416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959024791808,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959024806528,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959024816704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959031420480,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959031423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959031433536,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959050696896,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959052209152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959052264128,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959152761344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959152774848,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941059.3362672
+          },
+          {
+            "gid": 1,
+            "time": 869959159028480,
+            "category": "scheduler-delay",
+            "index": 15090,
+            "offset": 150988263917,
+            "delay": 88263917,
+            "lastRunnable": {
+              "started": 869959152774848,
+              "runnableMs": 0.013504
+            },
+            "transitions": [
+              {
+                "time": 869959010972416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959024791808,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959024806528,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959024816704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959031420480,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959031423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959031433536,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959050696896,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959052209152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959052264128,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959152761344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959152774848,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941059.3362696
+          },
+          {
+            "gid": 1,
+            "time": 869959159028928,
+            "category": "scheduler-delay",
+            "index": 15091,
+            "offset": 150988265625,
+            "delay": 78265625,
+            "lastRunnable": {
+              "started": 869959152774848,
+              "runnableMs": 0.013504
+            },
+            "transitions": [
+              {
+                "time": 869959010972416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959024791808,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959024806528,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959024816704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959031420480,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959031423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959031433536,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959050696896,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959052209152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959052264128,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959152761344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959152774848,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941059.33627
+          },
+          {
+            "gid": 1,
+            "time": 869959159029504,
+            "category": "scheduler-delay",
+            "index": 15092,
+            "offset": 150988266292,
+            "delay": 68266292,
+            "lastRunnable": {
+              "started": 869959152774848,
+              "runnableMs": 0.013504
+            },
+            "transitions": [
+              {
+                "time": 869959010972416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959024791808,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959024806528,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959024816704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959031420480,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959031423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959031433536,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959050696896,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959052209152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959052264128,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959152761344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959152774848,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941059.3362706
+          },
+          {
+            "gid": 1,
+            "time": 869959159029952,
+            "category": "scheduler-delay",
+            "index": 15093,
+            "offset": 150988266625,
+            "delay": 58266625,
+            "lastRunnable": {
+              "started": 869959152774848,
+              "runnableMs": 0.013504
+            },
+            "transitions": [
+              {
+                "time": 869959010972416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959024791808,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959024806528,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959024816704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959031420480,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959031423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959031433536,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959050696896,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959052209152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869959052264128,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869959152761344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869959152774848,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941059.336271
+          },
+          {
+            "gid": 1,
+            "time": 869967625866496,
+            "category": "scheduler-delay",
+            "index": 15940,
+            "offset": 159454983000,
+            "delay": 54983000,
+            "lastRunnable": {
+              "started": 869967625740544,
+              "runnableMs": 0.008128
+            },
+            "transitions": [
+              {
+                "time": 869967531507904,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869967541782976,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869967541786688,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869967541795904,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869967560656512,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869967560660608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869967560667520,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869967561408064,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869967561410752,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869967561415040,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869967625732416,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869967625740544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941067.8031077
+          },
+          {
+            "gid": 1,
+            "time": 869975666315520,
+            "category": "scheduler-delay",
+            "index": 16743,
+            "offset": 167495538375,
+            "delay": 65538375,
+            "lastRunnable": {
+              "started": 869975666297408,
+              "runnableMs": 0.011328
+            },
+            "transitions": [
+              {
+                "time": 869975561784256,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975571254848,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975571257664,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975571264576,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975581780160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975581783872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975581791680,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975590877824,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975590881280,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975590889472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975666286080,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975666297408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941075.8435566
+          },
+          {
+            "gid": 1,
+            "time": 869975666316224,
+            "category": "scheduler-delay",
+            "index": 16744,
+            "offset": 167495552833,
+            "delay": 55552833,
+            "lastRunnable": {
+              "started": 869975666297408,
+              "runnableMs": 0.011328
+            },
+            "transitions": [
+              {
+                "time": 869975561784256,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975571254848,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975571257664,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975571264576,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975581780160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975581783872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975581791680,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975590877824,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975590881280,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 869975590889472,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 869975666286080,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 869975666297408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941075.8435574
+          },
+          {
+            "gid": 1,
+            "time": 870050841812160,
+            "category": "scheduler-delay",
+            "index": 24260,
+            "offset": 242614031292,
+            "delay": 14031292,
+            "lastRunnable": {
+              "started": 870050822116544,
+              "runnableMs": 0.000704
+            },
+            "transitions": [
+              {
+                "time": 870050741210432,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050741225408,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050751029504,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050751033408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050751059008,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.0190532
+          },
+          {
+            "gid": 1,
+            "time": 870050841854464,
+            "category": "scheduler-delay",
+            "index": 24261,
+            "offset": 242671061792,
+            "delay": 61061792,
+            "lastRunnable": {
+              "started": 870050822116544,
+              "runnableMs": 0.000704
+            },
+            "transitions": [
+              {
+                "time": 870050741210432,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050741225408,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050751029504,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050751033408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050751059008,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.0190957
+          },
+          {
+            "gid": 1,
+            "time": 870050841856640,
+            "category": "scheduler-delay",
+            "index": 24262,
+            "offset": 242671092250,
+            "delay": 51092250,
+            "lastRunnable": {
+              "started": 870050822116544,
+              "runnableMs": 0.000704
+            },
+            "transitions": [
+              {
+                "time": 870050741210432,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050741225408,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050751029504,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050751033408,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050751059008,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.0190978
+          },
+          {
+            "gid": 1790,
+            "time": 870050845169344,
+            "category": "worker-delay",
+            "index": 24260,
+            "offset": 242671176750,
+            "delay": 71176750,
+            "lastRunnable": {
+              "started": 870050841938944,
+              "runnableMs": 0.12288
+            },
+            "transitions": [
+              {
+                "time": 870041832718400,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870042833577280,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870043841323456,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870044849652352,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870045852144256,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870046853941120,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870047855554368,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870048856854016,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870049858424832,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870050841814720,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870050841816064,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050841938944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.0224104
+          },
+          {
+            "gid": 1,
+            "time": 870050923854464,
+            "category": "scheduler-delay",
+            "index": 24268,
+            "offset": 242753082875,
+            "delay": 73082875,
+            "lastRunnable": {
+              "started": 870050923844416,
+              "runnableMs": 0.000128
+            },
+            "transitions": [
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050847158848,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050847168320,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050850189120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050923844288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050923844416,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.1010957
+          },
+          {
+            "gid": 1,
+            "time": 870050923855296,
+            "category": "scheduler-delay",
+            "index": 24269,
+            "offset": 242753091875,
+            "delay": 63091875,
+            "lastRunnable": {
+              "started": 870050923844416,
+              "runnableMs": 0.000128
+            },
+            "transitions": [
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050847158848,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050847168320,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050850189120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050923844288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050923844416,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.1010964
+          },
+          {
+            "gid": 1,
+            "time": 870050923855680,
+            "category": "scheduler-delay",
+            "index": 24270,
+            "offset": 242753092458,
+            "delay": 53092458,
+            "lastRunnable": {
+              "started": 870050923844416,
+              "runnableMs": 0.000128
+            },
+            "transitions": [
+              {
+                "time": 870050767024832,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050767028608,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050767042560,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050784787456,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050784792064,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050822115840,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050822116544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050847158848,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870050847168320,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870050850189120,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870050923844288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870050923844416,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941151.1010969
+          },
+          {
+            "gid": 1,
+            "time": 870181341691520,
+            "category": "scheduler-delay",
+            "index": 37310,
+            "offset": 373148506708,
+            "delay": 48506708,
+            "lastRunnable": {
+              "started": 870181340978816,
+              "runnableMs": 0.001216
+            },
+            "transitions": [
+              {
+                "time": 870181245130496,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181245137920,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181254124032,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181254135040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181254142720,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181261241088,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181261245824,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181261254656,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181319262208,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181319267264,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181340977600,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870181340978816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941281.5189326
+          },
+          {
+            "gid": 1,
+            "time": 870181342686784,
+            "category": "scheduler-delay",
+            "index": 37311,
+            "offset": 373170933458,
+            "delay": 60933458,
+            "lastRunnable": {
+              "started": 870181340978816,
+              "runnableMs": 0.001216
+            },
+            "transitions": [
+              {
+                "time": 870181245130496,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181245137920,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181254124032,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181254135040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181254142720,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181261241088,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181261245824,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181261254656,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181319262208,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181319267264,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181340977600,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870181340978816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941281.519928
+          },
+          {
+            "gid": 1,
+            "time": 870181342690496,
+            "category": "scheduler-delay",
+            "index": 37312,
+            "offset": 373171924500,
+            "delay": 51924500,
+            "lastRunnable": {
+              "started": 870181340978816,
+              "runnableMs": 0.001216
+            },
+            "transitions": [
+              {
+                "time": 870181245130496,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181245137920,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181254124032,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181254135040,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181254142720,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181261241088,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181261245824,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181261254656,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870181319262208,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181319267264,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870181340977600,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 870181340978816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941281.5199316
+          },
+          {
+            "gid": 504,
+            "time": 870181348133376,
+            "category": "worker-delay",
+            "index": 37310,
+            "offset": 373172402167,
+            "delay": 72402167,
+            "lastRunnable": {
+              "started": 870181343164544,
+              "runnableMs": 1.471744
+            },
+            "transitions": [
+              {
+                "time": 870172311964928,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870173315465792,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870174317340352,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870175318469248,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870176319923008,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870177321782336,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870178323421696,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870179326111232,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870180327846528,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870181341692480,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 870181341692800,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870181343164544,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941281.5253747
+          },
+          {
+            "gid": 1,
+            "time": 870270816372352,
+            "category": "scheduler-delay",
+            "index": 46258,
+            "offset": 462645504625,
+            "delay": 65504625,
+            "lastRunnable": {
+              "started": 870270816265984,
+              "runnableMs": 0.00928
+            },
+            "transitions": [
+              {
+                "time": 870270701424448,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270712765568,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270712780352,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270712792192,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270724246400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270724250560,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270724263744,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270742867328,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270742873536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270744627840,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270816256704,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270816265984,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941370.9936135
+          },
+          {
+            "gid": 1,
+            "time": 870270816373632,
+            "category": "scheduler-delay",
+            "index": 46259,
+            "offset": 462645610083,
+            "delay": 55610083,
+            "lastRunnable": {
+              "started": 870270816265984,
+              "runnableMs": 0.00928
+            },
+            "transitions": [
+              {
+                "time": 870270701424448,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270712765568,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270712780352,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270712792192,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270724246400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270724250560,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270724263744,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270742867328,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270742873536,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 870270744627840,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 870270816256704,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 870270816265984,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793941370.9936147
+          }
+        ]
+      },
+      "selectedWindows": [
+        {
+          "startSeconds": 55,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.024,
+            "p99Ms": 62.116583,
+            "maxMs": 92.057292,
+            "over10ms": 18,
+            "over50ms": 8
+          },
+          "worker": {
+            "count": 492,
+            "p50Ms": 1.030958,
+            "p99Ms": 25.986917,
+            "maxMs": 42.313208,
+            "over10ms": 10,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 8
+          }
+        },
+        {
+          "startSeconds": 150,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.024083,
+            "p99Ms": 48.267083,
+            "maxMs": 92.013167,
+            "over10ms": 17,
+            "over50ms": 5
+          },
+          "worker": {
+            "count": 495,
+            "p50Ms": 1.034625,
+            "p99Ms": 18.35075,
+            "maxMs": 48.324667,
+            "over10ms": 12,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 5
+          }
+        },
+        {
+          "startSeconds": 155,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028667,
+            "p99Ms": 25.1095,
+            "maxMs": 54.983,
+            "over10ms": 13,
+            "over50ms": 1
+          },
+          "worker": {
+            "count": 499,
+            "p50Ms": 1.03875,
+            "p99Ms": 25.158667,
+            "maxMs": 45.119,
+            "over10ms": 12,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 1
+          }
+        },
+        {
+          "startSeconds": 165,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028292,
+            "p99Ms": 15.773667,
+            "maxMs": 65.538375,
+            "over10ms": 15,
+            "over50ms": 2
+          },
+          "worker": {
+            "count": 498,
+            "p50Ms": 1.036792,
+            "p99Ms": 14.752375,
+            "maxMs": 45.782708,
+            "over10ms": 13,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 2
+          }
+        },
+        {
+          "startSeconds": 240,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.021042,
+            "p99Ms": 43.092833,
+            "maxMs": 73.082875,
+            "over10ms": 14,
+            "over50ms": 5
+          },
+          "worker": {
+            "count": 495,
+            "p50Ms": 1.028042,
+            "p99Ms": 33.130792,
+            "maxMs": 71.17675,
+            "over10ms": 9,
+            "over50ms": 1
+          },
+          "failures": {
+            "worker": 1,
+            "scheduler": 5
+          }
+        },
+        {
+          "startSeconds": 370,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.854792,
+            "p99Ms": 31.92925,
+            "maxMs": 60.933458,
+            "over10ms": 14,
+            "over50ms": 2
+          },
+          "worker": {
+            "count": 498,
+            "p50Ms": 0.863292,
+            "p99Ms": 31.6215,
+            "maxMs": 72.402167,
+            "over10ms": 12,
+            "over50ms": 1
+          },
+          "failures": {
+            "worker": 1,
+            "scheduler": 2
+          }
+        },
+        {
+          "startSeconds": 460,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.041375,
+            "p99Ms": 25.136958,
+            "maxMs": 65.504625,
+            "over10ms": 10,
+            "over50ms": 2
+          },
+          "worker": {
+            "count": 498,
+            "p50Ms": 1.055417,
+            "p99Ms": 19.264042,
+            "maxMs": 48.666375,
+            "over10ms": 8,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 2
+          }
+        }
+      ],
+      "guard": {
+        "freeBytesMin": 10950795264,
+        "freeBytesMax": 15547400192,
+        "observedRssBytesMax": 26116096
+      }
+    },
+    "handoff-off": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-06T05:05:37.620104Z",
+        "finishedUTC": "2026-11-06T05:15:37.767226Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 0,
+        "traceEnabled": false,
+        "workers": 2048
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.033208,
+        "p99Ms": 2.741708,
+        "maxMs": 55.609958,
+        "over10ms": 46,
+        "over50ms": 1
+      },
+      "handoff": {
+        "count": 59999,
+        "p50Ms": 0.008417,
+        "p99Ms": 0.064708,
+        "maxMs": 6.045083,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "workerScheduled": {
+        "count": 59999,
+        "p50Ms": 1.043083,
+        "p99Ms": 2.795916,
+        "maxMs": 45.891958,
+        "over10ms": 48,
+        "over50ms": 0
+      },
+      "failures": {
+        "scheduler": 1
+      },
+      "failureRows": [
+        {
+          "index": 38026,
+          "scheduledNanos": 380260000000,
+          "waitStartNanos": 380251151333,
+          "waitEndNanos": 380315609958,
+          "workerNanos": -1,
+          "failure": "scheduler"
+        }
+      ],
+      "hashes": {
+        "run.json": "bce7989d336acc22976fdd7b7238b36b406109e3f0e6922fd2f0c4ab10657b53",
+        "samples.jsonl": "cab85c93a8d4b7bc33bece85a8077ef5cd4af7b2be20d39e78b427746f6ceeb8"
+      },
+      "trace": null,
+      "selectedWindows": [
+        {
+          "startSeconds": 375,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.630708,
+            "p99Ms": 12.84725,
+            "maxMs": 36.326833,
+            "over10ms": 7,
+            "over50ms": 0
+          },
+          "worker": {
+            "count": 500,
+            "p50Ms": 1.646625,
+            "p99Ms": 12.853583,
+            "maxMs": 36.334458,
+            "over10ms": 7,
+            "over50ms": 0
+          },
+          "failures": {}
+        },
+        {
+          "startSeconds": 380,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03875,
+            "p99Ms": 20.957916,
+            "maxMs": 55.609958,
+            "over10ms": 10,
+            "over50ms": 1
+          },
+          "worker": {
+            "count": 499,
+            "p50Ms": 1.052916,
+            "p99Ms": 21.586666,
+            "maxMs": 45.891958,
+            "over10ms": 10,
+            "over50ms": 0
+          },
+          "failures": {
+            "scheduler": 1
+          }
+        },
+        {
+          "startSeconds": 465,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.018625,
+            "p99Ms": 6.397,
+            "maxMs": 32.298416,
+            "over10ms": 3,
+            "over50ms": 0
+          },
+          "worker": {
+            "count": 500,
+            "p50Ms": 1.023916,
+            "p99Ms": 6.40325,
+            "maxMs": 32.306291,
+            "over10ms": 3,
+            "over50ms": 0
+          },
+          "failures": {}
+        }
+      ],
+      "guard": {
+        "freeBytesMin": 14492246016,
+        "freeBytesMax": 15428222976,
+        "observedRssBytesMax": 17678336
+      }
+    }
+  },
+  "fullAnalysisSHA256": "f5c8c2a21a6d9f231c925c1c9b6978e7a5e619571634c2203139994def5c872a",
+  "parseHelperSHA256": "bc7ffd83bddd0c08196859475e2cf6cc418fdee5bcdf7b546430cbd4c9c44924",
+  "runHelperSHA256": "8ffec486ad34f5e7c21c1c334e01a9483b92ad8c2106f09ab64adf1fb4706354",
+  "reportBuilderSHA256": "0b324a49103edc35190b6bc2a0a22dc893d9f0bcd294b38645464d12409bc9f2"
+}

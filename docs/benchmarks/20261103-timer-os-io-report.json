@@ -1,0 +1,5717 @@
+{
+  "protocol": {
+    "baseRevision": "74a1206af94ada42eabbc5440e651c779bf181e5",
+    "createdUTC": "2026-11-03T05:29:32.523051+00:00",
+    "order": [
+      "timer-only",
+      "timer-handoff",
+      "storage-on"
+    ],
+    "timerSecondsEach": 600,
+    "storageSeconds": 600,
+    "frequency": 100,
+    "osCounterIntervalMs": 200,
+    "kernelEventsAvailable": false,
+    "fsUsageError": "sudo: a password is required",
+    "instrumentsError": "xcrun: unable to find utility xctrace",
+    "sha256": {
+      "run.py": "8ffec486ad34f5e7c21c1c334e01a9483b92ad8c2106f09ab64adf1fb4706354",
+      "storage_suite.py": "11a1215878d285046bc9f0b531422ffa14a313a67aab3a9fec467e8df4f8c0b5",
+      "config.json": "aea894a634d8fa7d37d9c0f342e43d50abb368bab62f495689851c70540b8695",
+      "workload.json": "000a5351a7b71d318bc4e57642e8407ddb9c122f44f3b64a161628a8333233d0",
+      "procio.c": "db8847b460830ad30f5ae94ea11d6e5d1f7e3385392c1f1434616b29c65d39a4",
+      "archive_case.py": "e93c7598e86e90d7967f067a5122a26131361a854491f20be2abb51873ebae0e",
+      "full_suite.py": "a5769e2d36494ed6130d5477998e2a79f9763b5202c759e37c6c566efc1994d7",
+      "smoke/config.json": "aea894a634d8fa7d37d9c0f342e43d50abb368bab62f495689851c70540b8695",
+      "bin/exchange": "a70a4a24877d43d2430a2f89256cd824cdcd34332a7fe9efea1332620cf7e725",
+      "bin/procio": "ca63ce91f3cfc1ecfb2fa1c26adfce079efa9abf578a1d4ec9bc83a70f49d351",
+      "bin/timer": "b545764a33b73db3964568cf298383b37134faf277786832c58c4ef8e38390ef",
+      "bin/analyze": "1875a85132bac207c5a86f8b69f28d62f18393b0127a3f16f9e819462c8055b0",
+      "bin/loadgen": "611f30856d8fc69c468d35b47c7007e300a561e72cc7010cd4a92511e6ebe6ef",
+      "timer/main.go": "282119afc4fb0f72c2fc2117d01a2e3d67f0124bd12ab5578d6e8efa81feef68",
+      "timer/main_test.go": "47829d4485302a94e450f7791b63b152eeef414467e97dbec54af3fb371d2dd9",
+      "overlay/exchange-main.go": "026c079ce29a5bcf8a0104aa77de6fb3d0da3f5c82b7c9cf0da31743b80b8090",
+      "overlay/runner.go": "f4e159566be99b7626733eb900fe9d5ef7d6261bfa437e5e521ea577f3cb53da",
+      "overlay/durable.go": "7a3514fcab69b1988360c6c2902df86d488c5eba86ae213614b4bc48674086ee",
+      "overlay/store.go": "424141c4bcafe1b88f5ff883adbd1562ace392782ee7a5c0d3985d8f464319d7",
+      "overlay/loadgen-main.go": "674f3f1a05d26add7e9c4069d3e91d27717d1d1edfcf58432bfc0a9aafdd3af3"
+    }
+  },
+  "analysisScriptSHA256": "ccbd3aa328d8727655c3ddb68a7fc21ecd6646152655bc17adde1404997c6a40",
+  "timers": {
+    "timer-only": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-03T05:29:34.59334Z",
+        "finishedUTC": "2026-11-03T05:39:34.714769Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 4795205,
+        "traceEnabled": true,
+        "workers": 0
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.044167,
+        "p99Ms": 1.1895,
+        "maxMs": 29.9865,
+        "over10ms": 12,
+        "over50ms": 0
+      },
+      "handoff": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "workerScheduled": {
+        "count": 0,
+        "p50Ms": null,
+        "p99Ms": null,
+        "maxMs": null,
+        "over10ms": 0,
+        "over50ms": 0
+      },
+      "failures": {},
+      "trace": {
+        "sha256": "742289c41e070c0412ed4c005151d9471eced94c0c9bb363370715af50fa2575",
+        "bytes": 4795205,
+        "eventCounts": {
+          "Sync": 601,
+          "StateTransition": 533192,
+          "Metric": 3526,
+          "RangeBegin": 17,
+          "RangeEnd": 17,
+          "Log": 14,
+          "Label": 24
+        },
+        "clocks": [
+          {
+            "time": 618822920197120,
+            "utc": "2026-11-03T05:29:34.573178Z"
+          },
+          {
+            "time": 619422930843200,
+            "utc": "2026-11-03T05:39:34.57783Z"
+          }
+        ],
+        "clockResidualMs": -5.994056684585303,
+        "markers": [
+          {
+            "gid": 1,
+            "time": 618978930425920,
+            "category": "scheduler-delay",
+            "index": 15596,
+            "offset": 155989986500,
+            "delay": 29986500,
+            "lastRunnable": {
+              "started": 618978930416768,
+              "runnableMs": 0.006272
+            },
+            "transitions": [
+              {
+                "time": 618978874141120,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978874152064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978881206400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978881217728,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978881227584,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978891625408,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978891629632,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978891636608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978930311552,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978930322624,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978930410496,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 618978930416768,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793683930.583407
+          },
+          {
+            "gid": 1,
+            "time": 618978930427200,
+            "category": "scheduler-delay",
+            "index": 15597,
+            "offset": 155990088458,
+            "delay": 20088458,
+            "lastRunnable": {
+              "started": 618978930416768,
+              "runnableMs": 0.006272
+            },
+            "transitions": [
+              {
+                "time": 618978874141120,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978874152064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978881206400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978881217728,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978881227584,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978891625408,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978891629632,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978891636608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978930311552,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978930322624,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978930410496,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 618978930416768,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793683930.583408
+          },
+          {
+            "gid": 1,
+            "time": 618978930427584,
+            "category": "scheduler-delay",
+            "index": 15598,
+            "offset": 155990089500,
+            "delay": 10089500,
+            "lastRunnable": {
+              "started": 618978930416768,
+              "runnableMs": 0.006272
+            },
+            "transitions": [
+              {
+                "time": 618978874141120,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978874152064,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978881206400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978881217728,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978881227584,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978891625408,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978891629632,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978891636608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618978930311552,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618978930322624,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618978930410496,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 618978930416768,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793683930.5834086
+          },
+          {
+            "gid": 1,
+            "time": 618981014593728,
+            "category": "scheduler-delay",
+            "index": 15806,
+            "offset": 158074081458,
+            "delay": 14081458,
+            "lastRunnable": {
+              "started": 618981014417984,
+              "runnableMs": 0.006016
+            },
+            "transitions": [
+              {
+                "time": 618980961128576,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618980971363584,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618980971368448,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618980971378688,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618980980571392,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618980980577280,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618980980586688,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618980990992320,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618980990999872,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 618980991023744,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 618981014411968,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 618981014417984,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793683932.6675746
+          },
+          {
+            "gid": 1,
+            "time": 619098898978816,
+            "category": "scheduler-delay",
+            "index": 27592,
+            "offset": 275931087000,
+            "delay": 11087000,
+            "lastRunnable": {
+              "started": 619098898826816,
+              "runnableMs": 0.009088
+            },
+            "transitions": [
+              {
+                "time": 619098831349568,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098831352704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098841353280,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098841356672,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098841361280,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098852037248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098852048128,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098852064896,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098871421952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098871423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098898817728,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619098898826816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684050.5519598
+          },
+          {
+            "gid": 1,
+            "time": 619098898988032,
+            "category": "scheduler-delay",
+            "index": 27593,
+            "offset": 275958647083,
+            "delay": 28647083,
+            "lastRunnable": {
+              "started": 619098898826816,
+              "runnableMs": 0.009088
+            },
+            "transitions": [
+              {
+                "time": 619098831349568,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098831352704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098841353280,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098841356672,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098841361280,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098852037248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098852048128,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098852064896,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098871421952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098871423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098898817728,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619098898826816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684050.551969
+          },
+          {
+            "gid": 1,
+            "time": 619098898988608,
+            "category": "scheduler-delay",
+            "index": 27594,
+            "offset": 275958650375,
+            "delay": 18650375,
+            "lastRunnable": {
+              "started": 619098898826816,
+              "runnableMs": 0.009088
+            },
+            "transitions": [
+              {
+                "time": 619098831349568,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098831352704,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098841353280,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098841356672,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098841361280,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098852037248,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098852048128,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098852064896,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098871421952,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098871423616,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098898817728,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619098898826816,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684050.5519695
+          },
+          {
+            "gid": 1,
+            "time": 619098998693568,
+            "category": "scheduler-delay",
+            "index": 27604,
+            "offset": 276052227833,
+            "delay": 12227833,
+            "lastRunnable": {
+              "started": 619098998680000,
+              "runnableMs": 0.005696
+            },
+            "transitions": [
+              {
+                "time": 619098951391552,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098951416960,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098961782784,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098961788352,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098961902080,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098970978688,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098970984256,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098970995072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619098992527040,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619098992563904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619098998674304,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619098998680000,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684050.6516745
+          },
+          {
+            "gid": 1,
+            "time": 619123180846656,
+            "category": "scheduler-delay",
+            "index": 30023,
+            "offset": 300240474417,
+            "delay": 10474417,
+            "lastRunnable": {
+              "started": 619123180809664,
+              "runnableMs": 0.009792
+            },
+            "transitions": [
+              {
+                "time": 619123131424960,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619123141402368,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619123141419456,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619123141452864,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619123150772032,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619123150780352,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619123150789504,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619123161378816,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619123161389184,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619123161400576,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619123180799872,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619123180809664,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684074.8338275
+          },
+          {
+            "gid": 1,
+            "time": 619215922757888,
+            "category": "scheduler-delay",
+            "index": 39297,
+            "offset": 392980016292,
+            "delay": 10016292,
+            "lastRunnable": {
+              "started": 619215920352512,
+              "runnableMs": 0.003072
+            },
+            "transitions": [
+              {
+                "time": 619215871361728,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619215880734400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619215880737984,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619215880745600,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619215890637568,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619215890651840,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619215890666944,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619215901366400,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619215901372480,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619215901384192,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619215920349440,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619215920352512,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684167.575739
+          },
+          {
+            "gid": 1,
+            "time": 619228745518656,
+            "category": "scheduler-delay",
+            "index": 40579,
+            "offset": 405804186958,
+            "delay": 14186958,
+            "lastRunnable": {
+              "started": 619228744520512,
+              "runnableMs": 0.011648
+            },
+            "transitions": [
+              {
+                "time": 619228691437248,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619228700550272,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619228700664384,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619228700684992,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619228711398912,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619228711415808,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619228711441856,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619228721399616,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619228721417344,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619228721438848,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619228744508864,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619228744520512,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684180.3984995
+          },
+          {
+            "gid": 1,
+            "time": 619366964008704,
+            "category": "scheduler-delay",
+            "index": 54401,
+            "offset": 544023614208,
+            "delay": 13614208,
+            "lastRunnable": {
+              "started": 619366963948864,
+              "runnableMs": 0.0048
+            },
+            "transitions": [
+              {
+                "time": 619366913643968,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619366926088576,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619366926092864,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619366926098752,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619366934393280,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619366934397440,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619366934403840,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619366940494720,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619366940498368,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619366940503232,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619366963944064,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619366963948864,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684318.6169896
+          }
+        ],
+        "longRunnable": [],
+        "syncCount": 0,
+        "syncOver20ms": 0,
+        "topSyncs": []
+      },
+      "sourceHashes": {
+        "run.json": "2f4a79818dec8a60ca49a630ae945c20aa22aa20eed2e3711c8989bde4bcb73c",
+        "samples.jsonl": "c964e1bde1673188fc211afa9a7a6e6c8a7ad8b80f516d06dddecd454f8da80d",
+        "timer.trace": "742289c41e070c0412ed4c005151d9471eced94c0c9bb363370715af50fa2575"
+      },
+      "windows": [
+        {
+          "startSeconds": 0,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057292,
+            "p99Ms": 1.110375,
+            "maxMs": 1.122583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 5,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.060458,
+            "p99Ms": 1.13225,
+            "maxMs": 1.355042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 10,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03875,
+            "p99Ms": 1.108542,
+            "maxMs": 9.622333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 15,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.041792,
+            "p99Ms": 1.097167,
+            "maxMs": 1.115625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 20,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046417,
+            "p99Ms": 1.122625,
+            "maxMs": 1.257875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 25,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.053125,
+            "p99Ms": 1.394,
+            "maxMs": 2.588917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 30,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.907875,
+            "p99Ms": 1.230083,
+            "maxMs": 2.030958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 35,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048833,
+            "p99Ms": 1.283417,
+            "maxMs": 1.693125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 40,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051667,
+            "p99Ms": 1.119375,
+            "maxMs": 1.188958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 45,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0545,
+            "p99Ms": 1.103917,
+            "maxMs": 1.170833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 50,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0475,
+            "p99Ms": 1.105542,
+            "maxMs": 1.151417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 55,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038583,
+            "p99Ms": 1.092917,
+            "maxMs": 1.162792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 60,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.037417,
+            "p99Ms": 1.096208,
+            "maxMs": 1.194708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 65,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.030542,
+            "p99Ms": 1.099292,
+            "maxMs": 1.291417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 70,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043458,
+            "p99Ms": 1.117458,
+            "maxMs": 1.1815,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 75,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049,
+            "p99Ms": 1.099792,
+            "maxMs": 1.2665,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 80,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047083,
+            "p99Ms": 1.142375,
+            "maxMs": 2.478208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 85,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.8,
+            "p99Ms": 2.055125,
+            "maxMs": 3.466833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 90,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039167,
+            "p99Ms": 1.363375,
+            "maxMs": 1.890708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 95,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.037125,
+            "p99Ms": 1.125625,
+            "maxMs": 3.353792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 100,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054792,
+            "p99Ms": 1.127375,
+            "maxMs": 2.713375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 105,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.055583,
+            "p99Ms": 1.099042,
+            "maxMs": 1.128,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 110,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05475,
+            "p99Ms": 1.098167,
+            "maxMs": 1.30525,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 115,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046333,
+            "p99Ms": 1.102292,
+            "maxMs": 3.943917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 120,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039792,
+            "p99Ms": 1.102958,
+            "maxMs": 3.999625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 125,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047375,
+            "p99Ms": 1.105667,
+            "maxMs": 1.191375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 130,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052125,
+            "p99Ms": 1.14675,
+            "maxMs": 2.095583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 135,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.066917,
+            "p99Ms": 1.397667,
+            "maxMs": 1.984625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 140,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.764417,
+            "p99Ms": 1.287833,
+            "maxMs": 1.794792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 145,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05825,
+            "p99Ms": 1.176708,
+            "maxMs": 4.783667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 150,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0525,
+            "p99Ms": 1.122833,
+            "maxMs": 1.412333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 155,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.025375,
+            "p99Ms": 4.256667,
+            "maxMs": 29.9865,
+            "over10ms": 4,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 160,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.025542,
+            "p99Ms": 1.337833,
+            "maxMs": 1.719875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 165,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043875,
+            "p99Ms": 1.155042,
+            "maxMs": 1.581583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 170,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043208,
+            "p99Ms": 1.093458,
+            "maxMs": 1.268042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 175,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050333,
+            "p99Ms": 1.108833,
+            "maxMs": 2.249458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 180,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039208,
+            "p99Ms": 1.083875,
+            "maxMs": 1.1075,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 185,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043083,
+            "p99Ms": 1.158625,
+            "maxMs": 2.835958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 190,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.040625,
+            "p99Ms": 1.178708,
+            "maxMs": 1.485208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 195,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.873917,
+            "p99Ms": 1.292417,
+            "maxMs": 3.968458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 200,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.030792,
+            "p99Ms": 1.123,
+            "maxMs": 2.286958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 205,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.036,
+            "p99Ms": 1.101625,
+            "maxMs": 1.287792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 210,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.039333,
+            "p99Ms": 1.089,
+            "maxMs": 1.120958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 215,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035208,
+            "p99Ms": 1.174708,
+            "maxMs": 3.428417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 220,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0345,
+            "p99Ms": 1.086917,
+            "maxMs": 1.258167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 225,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042083,
+            "p99Ms": 1.097125,
+            "maxMs": 1.114708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 230,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049417,
+            "p99Ms": 1.106333,
+            "maxMs": 8.117167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 235,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049333,
+            "p99Ms": 1.105458,
+            "maxMs": 1.190208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 240,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045375,
+            "p99Ms": 1.09325,
+            "maxMs": 2.329125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 245,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028708,
+            "p99Ms": 1.138375,
+            "maxMs": 1.437708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 250,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.949542,
+            "p99Ms": 1.69325,
+            "maxMs": 3.083792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 255,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057417,
+            "p99Ms": 1.161875,
+            "maxMs": 1.230292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 260,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054958,
+            "p99Ms": 1.106667,
+            "maxMs": 1.128292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 265,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.070833,
+            "p99Ms": 1.137417,
+            "maxMs": 2.932958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 270,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.034125,
+            "p99Ms": 1.136208,
+            "maxMs": 2.367417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 275,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.020375,
+            "p99Ms": 8.3845,
+            "maxMs": 28.647083,
+            "over10ms": 4,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 280,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.041208,
+            "p99Ms": 1.214958,
+            "maxMs": 1.529583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 285,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046833,
+            "p99Ms": 1.100792,
+            "maxMs": 1.133833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 290,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.032417,
+            "p99Ms": 1.092833,
+            "maxMs": 2.048292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 295,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03375,
+            "p99Ms": 1.107083,
+            "maxMs": 1.356833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 300,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.032958,
+            "p99Ms": 1.908333,
+            "maxMs": 10.474417,
+            "over10ms": 1,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 305,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.036458,
+            "p99Ms": 1.43625,
+            "maxMs": 2.687083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 310,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049917,
+            "p99Ms": 1.129583,
+            "maxMs": 1.372125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 315,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05875,
+            "p99Ms": 1.113792,
+            "maxMs": 1.17175,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 320,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.056375,
+            "p99Ms": 1.108583,
+            "maxMs": 1.125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 325,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045667,
+            "p99Ms": 1.124542,
+            "maxMs": 1.615583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 330,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.034917,
+            "p99Ms": 1.147083,
+            "maxMs": 3.166292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 335,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.032375,
+            "p99Ms": 1.088917,
+            "maxMs": 1.455125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 340,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035958,
+            "p99Ms": 1.101833,
+            "maxMs": 1.788042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 345,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.034833,
+            "p99Ms": 1.087875,
+            "maxMs": 1.099833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 350,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035708,
+            "p99Ms": 1.139667,
+            "maxMs": 2.485292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 355,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.980167,
+            "p99Ms": 1.321708,
+            "maxMs": 3.463,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 360,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045917,
+            "p99Ms": 1.439,
+            "maxMs": 3.011833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 365,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057417,
+            "p99Ms": 1.132917,
+            "maxMs": 1.483625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 370,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058083,
+            "p99Ms": 1.093917,
+            "maxMs": 1.104333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 375,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.059,
+            "p99Ms": 1.116625,
+            "maxMs": 1.300792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 380,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044792,
+            "p99Ms": 1.098708,
+            "maxMs": 1.212667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 385,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035292,
+            "p99Ms": 1.278125,
+            "maxMs": 2.256083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 390,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03575,
+            "p99Ms": 1.780208,
+            "maxMs": 10.016292,
+            "over10ms": 1,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 395,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0465,
+            "p99Ms": 1.172458,
+            "maxMs": 2.210625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 400,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045125,
+            "p99Ms": 1.180792,
+            "maxMs": 1.599125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 405,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043583,
+            "p99Ms": 1.423917,
+            "maxMs": 14.186958,
+            "over10ms": 1,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 410,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.904458,
+            "p99Ms": 1.218958,
+            "maxMs": 2.785667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 415,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047458,
+            "p99Ms": 1.669083,
+            "maxMs": 5.849792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 420,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058417,
+            "p99Ms": 1.1345,
+            "maxMs": 1.8085,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 425,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0515,
+            "p99Ms": 1.10575,
+            "maxMs": 2.2165,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 430,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057542,
+            "p99Ms": 1.112083,
+            "maxMs": 1.140167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 435,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049667,
+            "p99Ms": 1.139208,
+            "maxMs": 1.698917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 440,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.033333,
+            "p99Ms": 1.0855,
+            "maxMs": 2.071917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 445,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.041958,
+            "p99Ms": 1.134,
+            "maxMs": 2.36275,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 450,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048667,
+            "p99Ms": 1.110667,
+            "maxMs": 4.401125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 455,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049792,
+            "p99Ms": 1.110208,
+            "maxMs": 1.176083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 460,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047417,
+            "p99Ms": 1.1255,
+            "maxMs": 1.606875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 465,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.734375,
+            "p99Ms": 1.286333,
+            "maxMs": 4.329458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 470,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05225,
+            "p99Ms": 1.224167,
+            "maxMs": 1.893417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 475,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.055208,
+            "p99Ms": 1.129792,
+            "maxMs": 3.59725,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 480,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057875,
+            "p99Ms": 1.1005,
+            "maxMs": 1.145,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 485,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054625,
+            "p99Ms": 1.099125,
+            "maxMs": 1.192667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 490,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05325,
+            "p99Ms": 1.103667,
+            "maxMs": 1.261292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 495,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03025,
+            "p99Ms": 1.089083,
+            "maxMs": 1.110458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 500,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050792,
+            "p99Ms": 1.093583,
+            "maxMs": 1.109208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 505,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049583,
+            "p99Ms": 1.098125,
+            "maxMs": 1.142208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 510,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048792,
+            "p99Ms": 1.157417,
+            "maxMs": 1.45425,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 515,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045667,
+            "p99Ms": 1.225333,
+            "maxMs": 2.194542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 520,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.773208,
+            "p99Ms": 1.686333,
+            "maxMs": 3.003583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 525,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.040625,
+            "p99Ms": 1.258792,
+            "maxMs": 5.33375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 530,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.055208,
+            "p99Ms": 1.112667,
+            "maxMs": 1.763333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 535,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03225,
+            "p99Ms": 2.227625,
+            "maxMs": 9.312292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 540,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.030792,
+            "p99Ms": 4.612167,
+            "maxMs": 13.614208,
+            "over10ms": 1,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 545,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035833,
+            "p99Ms": 1.243542,
+            "maxMs": 8.520708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 550,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.034875,
+            "p99Ms": 1.096333,
+            "maxMs": 4.846958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 555,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0415,
+            "p99Ms": 1.084917,
+            "maxMs": 1.255458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 560,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046042,
+            "p99Ms": 1.099583,
+            "maxMs": 1.38575,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 565,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048958,
+            "p99Ms": 1.105583,
+            "maxMs": 1.446042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 570,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046208,
+            "p99Ms": 1.189333,
+            "maxMs": 1.694875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 575,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.950083,
+            "p99Ms": 1.688042,
+            "maxMs": 3.583417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 580,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057083,
+            "p99Ms": 1.152333,
+            "maxMs": 1.882375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 585,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058667,
+            "p99Ms": 1.129958,
+            "maxMs": 1.185,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 590,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058458,
+            "p99Ms": 1.10075,
+            "maxMs": 1.150208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 595,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.053542,
+            "p99Ms": 1.116292,
+            "maxMs": 6.513958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        }
+      ]
+    },
+    "timer-handoff": {
+      "meta": {
+        "count": 60000,
+        "durationNanos": 600000000000,
+        "epochUTC": "2026-11-03T05:40:05.092359Z",
+        "finishedUTC": "2026-11-03T05:50:05.209692Z",
+        "requestsPerSecond": 100,
+        "traceBytes": 25399805,
+        "traceEnabled": true,
+        "workers": 2048
+      },
+      "scheduler": {
+        "count": 60000,
+        "p50Ms": 1.044125,
+        "p99Ms": 1.179208,
+        "maxMs": 45.726083,
+        "over10ms": 7,
+        "over50ms": 0
+      },
+      "handoff": {
+        "count": 60000,
+        "p50Ms": 0.014792,
+        "p99Ms": 0.0655,
+        "maxMs": 30.603375,
+        "over10ms": 1,
+        "over50ms": 0
+      },
+      "workerScheduled": {
+        "count": 60000,
+        "p50Ms": 1.057333,
+        "p99Ms": 1.224708,
+        "maxMs": 55.973583,
+        "over10ms": 7,
+        "over50ms": 1
+      },
+      "failures": {
+        "worker": 1
+      },
+      "trace": {
+        "sha256": "7e98e1c962f52a195da02dbe7027ec7507f8bc7e3cd11c87041e5c2c09d71b3c",
+        "bytes": 25399805,
+        "eventCounts": {
+          "Sync": 600,
+          "StateTransition": 1948225,
+          "Metric": 7927,
+          "RangeBegin": 83,
+          "RangeEnd": 83,
+          "Log": 16,
+          "Label": 334,
+          "RangeActive": 14
+        },
+        "clocks": [
+          {
+            "time": 619453423216064,
+            "utc": "2026-11-03T05:40:05.069879Z"
+          },
+          {
+            "time": 620053439730944,
+            "utc": "2026-11-03T05:50:05.07881Z"
+          }
+        ],
+        "clockResidualMs": -7.583958445479766,
+        "markers": [
+          {
+            "gid": 1,
+            "time": 619492977171904,
+            "category": "scheduler-delay",
+            "index": 3951,
+            "offset": 39529485542,
+            "delay": 19485542,
+            "lastRunnable": {
+              "started": 619492975146944,
+              "runnableMs": 0.022784
+            },
+            "transitions": [
+              {
+                "time": 619492916726016,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492925719360,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492925728128,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492925784192,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492936567104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492936578432,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492936594624,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492946696448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492946703680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492946720256,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492975124160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492975146944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684444.6238348
+          },
+          {
+            "gid": 1,
+            "time": 619492977179776,
+            "category": "scheduler-delay",
+            "index": 3952,
+            "offset": 39531515583,
+            "delay": 11515583,
+            "lastRunnable": {
+              "started": 619492975146944,
+              "runnableMs": 0.022784
+            },
+            "transitions": [
+              {
+                "time": 619492916726016,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492925719360,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492925728128,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492925784192,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492936567104,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492936578432,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492936594624,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492946696448,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492946703680,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619492946720256,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619492975124160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492975146944,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684444.6238427
+          },
+          {
+            "gid": 1992,
+            "time": 619492977217408,
+            "category": "worker-delay",
+            "index": 3952,
+            "offset": 39531531333,
+            "delay": 11531333,
+            "lastRunnable": {
+              "started": 619492977193728,
+              "runnableMs": 0.01344
+            },
+            "transitions": [
+              {
+                "time": 619484514124416,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619485520992448,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525467712,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532628672,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534708032,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538916992,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541680576,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545489728,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548923648,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492977180160,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492977180288,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492977193728,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684444.6238804
+          },
+          {
+            "gid": 1925,
+            "time": 619492977219328,
+            "category": "worker-delay",
+            "index": 3951,
+            "offset": 39531525667,
+            "delay": 21525667,
+            "lastRunnable": {
+              "started": 619492977187648,
+              "runnableMs": 0.013568
+            },
+            "transitions": [
+              {
+                "time": 619484514107776,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619485520979200,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525459136,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532624320,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534699584,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538899136,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541670528,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545480192,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548907136,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492977173824,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492977174080,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619492977187648,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684444.6238823
+          },
+          {
+            "gid": 1,
+            "time": 619494401200704,
+            "category": "scheduler-delay",
+            "index": 4093,
+            "offset": 40955370208,
+            "delay": 25370208,
+            "lastRunnable": {
+              "started": 619494401031104,
+              "runnableMs": 0.006912
+            },
+            "transitions": [
+              {
+                "time": 619494336724416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494345907264,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494345915776,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494345939072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494356785344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494356795904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494356814208,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494367740160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494367872192,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494367884608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494401024192,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494401031104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0478637
+          },
+          {
+            "gid": 1,
+            "time": 619494431407040,
+            "category": "scheduler-delay",
+            "index": 4094,
+            "offset": 40985726083,
+            "delay": 45726083,
+            "lastRunnable": {
+              "started": 619494401031104,
+              "runnableMs": 0.006912
+            },
+            "transitions": [
+              {
+                "time": 619494336724416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494345907264,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494345915776,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494345939072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494356785344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494356795904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494356814208,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494367740160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494367872192,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494367884608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494401024192,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494401031104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.07807
+          },
+          {
+            "gid": 1,
+            "time": 619494431414784,
+            "category": "scheduler-delay",
+            "index": 4095,
+            "offset": 40985751292,
+            "delay": 35751292,
+            "lastRunnable": {
+              "started": 619494401031104,
+              "runnableMs": 0.006912
+            },
+            "transitions": [
+              {
+                "time": 619494336724416,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494345907264,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494345915776,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494345939072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494356785344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494356795904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494356814208,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494367740160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494367872192,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494367884608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494401024192,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494401031104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0780778
+          },
+          {
+            "gid": 1927,
+            "time": 619494431677248,
+            "category": "worker-delay",
+            "index": 4095,
+            "offset": 40985994708,
+            "delay": 35994708,
+            "lastRunnable": {
+              "started": 619494431656704,
+              "runnableMs": 0.008704
+            },
+            "transitions": [
+              {
+                "time": 619485520979456,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525459328,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532624448,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534699904,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538899584,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541670912,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545480576,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548907520,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619493552398464,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431647232,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431648000,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494431656704,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0783403
+          },
+          {
+            "gid": 1845,
+            "time": 619494431685696,
+            "category": "worker-delay",
+            "index": 4094,
+            "offset": 40986019583,
+            "delay": 46019583,
+            "lastRunnable": {
+              "started": 619494431681728,
+              "runnableMs": 0.268224
+            },
+            "transitions": [
+              {
+                "time": 619485520963072,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525448704,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532618752,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534689856,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538876736,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541657280,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545468608,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548903552,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619493552390784,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431413312,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431413504,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494431681728,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0783486
+          },
+          {
+            "gid": 2105,
+            "time": 619494431687296,
+            "category": "worker-delay",
+            "index": 4093,
+            "offset": 40985973583,
+            "delay": 55973583,
+            "lastRunnable": {
+              "started": 619494431634752,
+              "runnableMs": 0.250368
+            },
+            "transitions": [
+              {
+                "time": 619485521013952,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525478656,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532636416,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534722176,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538945920,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541697536,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545507200,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548962816,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619493552409408,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431376000,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431384384,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494431634752,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0783503
+          },
+          {
+            "gid": 1,
+            "time": 619494431688320,
+            "category": "scheduler-delay",
+            "index": 4096,
+            "offset": 40986024250,
+            "delay": 26024250,
+            "lastRunnable": {
+              "started": 619494431686656,
+              "runnableMs": 0.031616
+            },
+            "transitions": [
+              {
+                "time": 619494345915776,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494345939072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494356785344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494356795904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494356814208,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494367740160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494367872192,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494367884608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494401024192,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494401031104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494431655040,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619494431686656,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0783513
+          },
+          {
+            "gid": 1,
+            "time": 619494431691776,
+            "category": "scheduler-delay",
+            "index": 4097,
+            "offset": 40986028000,
+            "delay": 16028000,
+            "lastRunnable": {
+              "started": 619494431686656,
+              "runnableMs": 0.031616
+            },
+            "transitions": [
+              {
+                "time": 619494345915776,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494345939072,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494356785344,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494356795904,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494356814208,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494367740160,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494367872192,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494367884608,
+                "old": "Running",
+                "new": "Waiting",
+                "reason": "select"
+              },
+              {
+                "time": 619494401024192,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494401031104,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              },
+              {
+                "time": 619494431655040,
+                "old": "Running",
+                "new": "Runnable",
+                "reason": "preempted"
+              },
+              {
+                "time": 619494431686656,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0783548
+          },
+          {
+            "gid": 60,
+            "time": 619494431788992,
+            "category": "worker-delay",
+            "index": 4096,
+            "offset": 40986123750,
+            "delay": 26123750,
+            "lastRunnable": {
+              "started": 619494431785152,
+              "runnableMs": 0.094528
+            },
+            "transitions": [
+              {
+                "time": 619485520603904,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525066112,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532422528,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534367744,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538309312,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541281024,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545116736,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548293120,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619493552276544,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431690432,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431690624,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494431785152,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0784519
+          },
+          {
+            "gid": 56,
+            "time": 619494431792640,
+            "category": "worker-delay",
+            "index": 4097,
+            "offset": 40986126750,
+            "delay": 16126750,
+            "lastRunnable": {
+              "started": 619494431789248,
+              "runnableMs": 0.09472
+            },
+            "transitions": [
+              {
+                "time": 619485520602944,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619486525065152,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619487532421760,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619488534366720,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619489538307584,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619490541279936,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619491545115456,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619492548291968,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619493552276288,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431694336,
+                "old": "Waiting",
+                "new": "Waiting",
+                "reason": ""
+              },
+              {
+                "time": 619494431694528,
+                "old": "Waiting",
+                "new": "Runnable",
+                "reason": ""
+              },
+              {
+                "time": 619494431789248,
+                "old": "Runnable",
+                "new": "Running",
+                "reason": ""
+              }
+            ],
+            "utcSeconds": 1793684446.0784557
+          }
+        ],
+        "longRunnable": [],
+        "syncCount": 0,
+        "syncOver20ms": 0,
+        "topSyncs": []
+      },
+      "sourceHashes": {
+        "run.json": "d88ed2cac8c4ff9bcc71e05763b5e458e73dc77d009a33ab51a37a9ea2f84046",
+        "samples.jsonl": "4414016c9106b4957e7ea7ce4804decdcbf6034123f2339500ca70bc81c0b001",
+        "timer.trace": "7e98e1c962f52a195da02dbe7027ec7507f8bc7e3cd11c87041e5c2c09d71b3c"
+      },
+      "windows": [
+        {
+          "startSeconds": 0,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049667,
+            "p99Ms": 1.120792,
+            "maxMs": 2.224,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 5,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043375,
+            "p99Ms": 1.109417,
+            "maxMs": 1.172292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 10,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052708,
+            "p99Ms": 1.118917,
+            "maxMs": 1.407083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 15,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044708,
+            "p99Ms": 1.10575,
+            "maxMs": 1.324708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 20,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042875,
+            "p99Ms": 1.109958,
+            "maxMs": 1.321417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 25,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.973208,
+            "p99Ms": 1.541333,
+            "maxMs": 8.713167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 30,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049125,
+            "p99Ms": 1.637208,
+            "maxMs": 3.869958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 35,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.060917,
+            "p99Ms": 1.27175,
+            "maxMs": 19.485542,
+            "over10ms": 2,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 40,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038333,
+            "p99Ms": 8.027333,
+            "maxMs": 45.726083,
+            "over10ms": 5,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 45,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.034875,
+            "p99Ms": 1.3435,
+            "maxMs": 1.731042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 50,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.04275,
+            "p99Ms": 1.124458,
+            "maxMs": 1.892708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 55,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.033875,
+            "p99Ms": 1.088292,
+            "maxMs": 4.303375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 60,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046,
+            "p99Ms": 1.109208,
+            "maxMs": 1.832708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 65,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051458,
+            "p99Ms": 1.094042,
+            "maxMs": 1.121083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 70,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051583,
+            "p99Ms": 1.121875,
+            "maxMs": 2.313292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 75,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049458,
+            "p99Ms": 1.140375,
+            "maxMs": 1.232208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 80,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.740708,
+            "p99Ms": 1.3145,
+            "maxMs": 1.79275,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 85,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044333,
+            "p99Ms": 1.697083,
+            "maxMs": 4.448083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 90,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058375,
+            "p99Ms": 1.113792,
+            "maxMs": 1.17425,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 95,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054875,
+            "p99Ms": 1.111708,
+            "maxMs": 1.214958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 100,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054583,
+            "p99Ms": 1.126292,
+            "maxMs": 1.739583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 105,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.031833,
+            "p99Ms": 1.097125,
+            "maxMs": 1.189833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 110,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038708,
+            "p99Ms": 1.085167,
+            "maxMs": 1.33925,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 115,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042083,
+            "p99Ms": 1.102792,
+            "maxMs": 1.163375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 120,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051375,
+            "p99Ms": 1.095375,
+            "maxMs": 1.162583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 125,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.04425,
+            "p99Ms": 1.172583,
+            "maxMs": 2.218167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 130,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.037417,
+            "p99Ms": 1.180417,
+            "maxMs": 5.1775,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 135,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.823208,
+            "p99Ms": 1.231542,
+            "maxMs": 1.626667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 140,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.058167,
+            "p99Ms": 1.271417,
+            "maxMs": 1.625667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 145,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054708,
+            "p99Ms": 1.109708,
+            "maxMs": 1.128333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 150,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.056458,
+            "p99Ms": 1.093792,
+            "maxMs": 1.136375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 155,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.056542,
+            "p99Ms": 1.10375,
+            "maxMs": 2.554458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 160,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052333,
+            "p99Ms": 1.119375,
+            "maxMs": 1.413833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 165,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042458,
+            "p99Ms": 1.119375,
+            "maxMs": 2.016542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 170,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.010917,
+            "p99Ms": 1.034917,
+            "maxMs": 1.058625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 175,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049083,
+            "p99Ms": 1.090917,
+            "maxMs": 1.280208,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 180,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046667,
+            "p99Ms": 1.122667,
+            "maxMs": 2.099667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 185,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.036458,
+            "p99Ms": 1.269542,
+            "maxMs": 2.383667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 190,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.892833,
+            "p99Ms": 1.50925,
+            "maxMs": 2.266333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 195,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.037042,
+            "p99Ms": 1.140208,
+            "maxMs": 2.410542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 200,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047667,
+            "p99Ms": 1.099667,
+            "maxMs": 1.163917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 205,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045833,
+            "p99Ms": 2.31925,
+            "maxMs": 8.468,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 210,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054708,
+            "p99Ms": 1.106333,
+            "maxMs": 1.123542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 215,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050417,
+            "p99Ms": 1.094458,
+            "maxMs": 1.162583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 220,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038667,
+            "p99Ms": 1.091542,
+            "maxMs": 1.160042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 225,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045917,
+            "p99Ms": 1.1035,
+            "maxMs": 1.205542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 230,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048958,
+            "p99Ms": 1.126625,
+            "maxMs": 2.409292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 235,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043792,
+            "p99Ms": 1.102417,
+            "maxMs": 1.498083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 240,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03625,
+            "p99Ms": 1.172167,
+            "maxMs": 2.862708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 245,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028042,
+            "p99Ms": 1.445083,
+            "maxMs": 2.142417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 250,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05475,
+            "p99Ms": 1.173083,
+            "maxMs": 2.600625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 255,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.040583,
+            "p99Ms": 1.09675,
+            "maxMs": 2.043833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 260,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042917,
+            "p99Ms": 1.098833,
+            "maxMs": 1.317625,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 265,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035875,
+            "p99Ms": 1.100333,
+            "maxMs": 1.203042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 270,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.030833,
+            "p99Ms": 1.085708,
+            "maxMs": 1.111333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 275,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.024833,
+            "p99Ms": 1.081208,
+            "maxMs": 1.09925,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 280,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038958,
+            "p99Ms": 1.102625,
+            "maxMs": 1.93875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 285,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.03725,
+            "p99Ms": 1.870375,
+            "maxMs": 6.527542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 290,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.040208,
+            "p99Ms": 1.101083,
+            "maxMs": 2.615792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 295,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.018333,
+            "p99Ms": 1.811083,
+            "maxMs": 2.541583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 300,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.033292,
+            "p99Ms": 2.016875,
+            "maxMs": 4.032375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 305,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049542,
+            "p99Ms": 1.119417,
+            "maxMs": 1.282375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 310,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.054292,
+            "p99Ms": 1.111292,
+            "maxMs": 1.204042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 315,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047375,
+            "p99Ms": 1.091167,
+            "maxMs": 1.098792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 320,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.032458,
+            "p99Ms": 1.092417,
+            "maxMs": 1.137417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 325,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.042708,
+            "p99Ms": 1.488667,
+            "maxMs": 5.107667,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 330,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044458,
+            "p99Ms": 1.099625,
+            "maxMs": 5.365958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 335,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044083,
+            "p99Ms": 1.086625,
+            "maxMs": 1.249333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 340,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0335,
+            "p99Ms": 1.118958,
+            "maxMs": 6.94125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 345,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043292,
+            "p99Ms": 1.11875,
+            "maxMs": 1.3575,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 350,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.010458,
+            "p99Ms": 1.239667,
+            "maxMs": 1.715042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 355,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.026,
+            "p99Ms": 1.356542,
+            "maxMs": 3.734833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 360,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0385,
+            "p99Ms": 1.124208,
+            "maxMs": 3.338708,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 365,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.031458,
+            "p99Ms": 1.105375,
+            "maxMs": 3.144333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 370,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.044083,
+            "p99Ms": 1.118042,
+            "maxMs": 1.906125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 375,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048833,
+            "p99Ms": 1.100125,
+            "maxMs": 1.48825,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 380,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045292,
+            "p99Ms": 1.103167,
+            "maxMs": 2.313458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 385,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.04775,
+            "p99Ms": 1.11,
+            "maxMs": 8.043167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 390,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051042,
+            "p99Ms": 1.098667,
+            "maxMs": 1.16275,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 395,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045917,
+            "p99Ms": 1.137458,
+            "maxMs": 2.818042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 400,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038792,
+            "p99Ms": 1.217792,
+            "maxMs": 2.61225,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 405,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.864958,
+            "p99Ms": 1.241875,
+            "maxMs": 1.869917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 410,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050375,
+            "p99Ms": 1.355042,
+            "maxMs": 4.12225,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 415,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052625,
+            "p99Ms": 1.1055,
+            "maxMs": 1.236833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 420,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.055417,
+            "p99Ms": 1.107042,
+            "maxMs": 1.126792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 425,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.055917,
+            "p99Ms": 1.109833,
+            "maxMs": 1.133583,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 430,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.068417,
+            "p99Ms": 1.118292,
+            "maxMs": 1.18725,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 435,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.057583,
+            "p99Ms": 1.103792,
+            "maxMs": 1.460292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 440,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.031958,
+            "p99Ms": 1.103875,
+            "maxMs": 1.191083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 445,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.045667,
+            "p99Ms": 1.090375,
+            "maxMs": 1.152167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 450,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.046583,
+            "p99Ms": 1.127083,
+            "maxMs": 1.990375,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 455,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.038167,
+            "p99Ms": 1.141667,
+            "maxMs": 2.024042,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 460,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.911875,
+            "p99Ms": 1.868917,
+            "maxMs": 6.128958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 465,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047333,
+            "p99Ms": 1.2075,
+            "maxMs": 1.488083,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 470,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.053375,
+            "p99Ms": 1.109708,
+            "maxMs": 1.141792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 475,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028917,
+            "p99Ms": 1.092833,
+            "maxMs": 1.117875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 480,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.0385,
+            "p99Ms": 1.1065,
+            "maxMs": 2.589167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 485,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.040625,
+            "p99Ms": 1.109417,
+            "maxMs": 1.466917,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 490,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.027958,
+            "p99Ms": 1.111125,
+            "maxMs": 3.56475,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 495,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.036708,
+            "p99Ms": 1.173917,
+            "maxMs": 2.669875,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 500,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.05,
+            "p99Ms": 1.114083,
+            "maxMs": 1.352167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 505,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.043792,
+            "p99Ms": 1.135292,
+            "maxMs": 1.904458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 510,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047208,
+            "p99Ms": 1.126833,
+            "maxMs": 1.457458,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 515,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.894208,
+            "p99Ms": 1.534667,
+            "maxMs": 1.995292,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 520,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.059917,
+            "p99Ms": 1.157917,
+            "maxMs": 1.394792,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 525,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.053167,
+            "p99Ms": 1.160542,
+            "maxMs": 3.0685,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 530,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052458,
+            "p99Ms": 1.099458,
+            "maxMs": 1.119125,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 535,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.049083,
+            "p99Ms": 1.111375,
+            "maxMs": 1.397333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 540,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050375,
+            "p99Ms": 1.09875,
+            "maxMs": 1.5675,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 545,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.048208,
+            "p99Ms": 1.108833,
+            "maxMs": 1.566167,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 550,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.050708,
+            "p99Ms": 1.091042,
+            "maxMs": 1.145417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 555,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.052292,
+            "p99Ms": 1.102917,
+            "maxMs": 1.15025,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 560,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.051,
+            "p99Ms": 1.104958,
+            "maxMs": 1.705417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 565,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.028458,
+            "p99Ms": 1.224833,
+            "maxMs": 1.856542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 570,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 0.988833,
+            "p99Ms": 1.365833,
+            "maxMs": 2.797542,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 575,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.06,
+            "p99Ms": 1.151917,
+            "maxMs": 1.179417,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 580,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.056125,
+            "p99Ms": 1.104833,
+            "maxMs": 1.392333,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 585,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.056333,
+            "p99Ms": 1.098542,
+            "maxMs": 2.48,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 590,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.035667,
+            "p99Ms": 1.110833,
+            "maxMs": 1.172833,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        },
+        {
+          "startSeconds": 595,
+          "scheduler": {
+            "count": 500,
+            "p50Ms": 1.047333,
+            "p99Ms": 1.096042,
+            "maxMs": 1.131958,
+            "over10ms": 0,
+            "over50ms": 0
+          }
+        }
+      ]
+    }
+  },
+  "storage": {
+    "kernelEventsAvailable": false,
+    "kernelUnavailableReason": "fs_usage requires administrator password; Instruments unavailable",
+    "summary": {
+      "version": 1,
+      "planDigest": "b5c2fce2982d2801972ac6dd03c596efa2c0ead45e57a55196a8dcd0524f8bad",
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "warmup": {
+        "phase": "WARMUP",
+        "durationNanos": 5000000000,
+        "scheduled": 500,
+        "started": 500,
+        "localFailures": {},
+        "intents": {
+          "CANCEL": 60,
+          "DUPLICATE": 65,
+          "MARKETABLE": 160,
+          "REJECT_PROBE": 41,
+          "REST": 174
+        },
+        "responses": {
+          "BUSINESS": 500
+        },
+        "codes": {
+          "ACCEPTED": 387,
+          "ALREADY_CANCELLED": 14,
+          "ALREADY_FILLED": 19,
+          "CANCELLED": 35,
+          "INSUFFICIENT_BALANCE": 45
+        },
+        "repeatedResults": 58,
+        "uniqueBusinessResults": 435,
+        "uniqueAcceptedOrders": 334,
+        "uniqueMatchedOrders": 100,
+        "uniqueSuccessfulCancels": 30,
+        "uniqueBusinessRejections": 41,
+        "uniqueTrades": "100",
+        "unknownLogicalCommands": 0,
+        "newOrdersFinishedWithinWindow": 334,
+        "cancelsFinishedWithinWindow": 30,
+        "tradesFinishedWithinWindow": "100",
+        "newOrdersPerSecond": 66.8,
+        "cancelsPerSecond": 6,
+        "tradesPerSecond": 20,
+        "generatorDropRateOfScheduled": 0,
+        "timeoutRateOfStarted": 0,
+        "overloadRateOfStarted": 0,
+        "schedulerDelay": {
+          "count": 500,
+          "minNanos": 82000,
+          "p50Nanos": 589666,
+          "p95Nanos": 1095458,
+          "p99Nanos": 1129041,
+          "maxNanos": 1456833
+        },
+        "requestLatency": {
+          "count": 500,
+          "minNanos": 262958,
+          "p50Nanos": 5265833,
+          "p95Nanos": 6200250,
+          "p99Nanos": 6776000,
+          "maxNanos": 8949208
+        },
+        "scheduledAttemptLatency": {
+          "count": 500,
+          "minNanos": 642458,
+          "p50Nanos": 5965583,
+          "p95Nanos": 7194208,
+          "p99Nanos": 7507958,
+          "maxNanos": 9437500
+        },
+        "transportWriteDelay": {
+          "count": 500,
+          "minNanos": 16209,
+          "p50Nanos": 98042,
+          "p95Nanos": 161542,
+          "p99Nanos": 230250,
+          "maxNanos": 402792
+        },
+        "uniqueNewOrderScheduledLatency": {
+          "count": 334,
+          "minNanos": 3557208,
+          "p50Nanos": 6079291,
+          "p95Nanos": 7242666,
+          "p99Nanos": 7507958,
+          "maxNanos": 9437500
+        },
+        "requestLatencyByIntent": {
+          "CANCEL": {
+            "count": 60,
+            "minNanos": 3417292,
+            "p50Nanos": 5355167,
+            "p95Nanos": 6492958,
+            "p99Nanos": 7111042,
+            "maxNanos": 7111042
+          },
+          "DUPLICATE": {
+            "count": 65,
+            "minNanos": 262958,
+            "p50Nanos": 681250,
+            "p95Nanos": 938500,
+            "p99Nanos": 1024209,
+            "maxNanos": 1024209
+          },
+          "MARKETABLE": {
+            "count": 160,
+            "minNanos": 3095709,
+            "p50Nanos": 5386000,
+            "p95Nanos": 6209375,
+            "p99Nanos": 7980667,
+            "maxNanos": 8949208
+          },
+          "REJECT_PROBE": {
+            "count": 41,
+            "minNanos": 3492000,
+            "p50Nanos": 5401041,
+            "p95Nanos": 5892625,
+            "p99Nanos": 6776000,
+            "maxNanos": 6776000
+          },
+          "REST": {
+            "count": 174,
+            "minNanos": 3180042,
+            "p50Nanos": 5388584,
+            "p95Nanos": 6219375,
+            "p99Nanos": 6744834,
+            "maxNanos": 7811625
+          }
+        },
+        "requestLatencyByClass": {
+          "BUSINESS": {
+            "count": 500,
+            "minNanos": 262958,
+            "p50Nanos": 5265833,
+            "p95Nanos": 6200250,
+            "p99Nanos": 6776000,
+            "maxNanos": 8949208
+          }
+        }
+      },
+      "measurement": {
+        "phase": "MEASURE",
+        "durationNanos": 600000000000,
+        "scheduled": 60000,
+        "started": 59998,
+        "localFailures": {
+          "GENERATOR_LATE": 2
+        },
+        "intents": {
+          "CANCEL": 6045,
+          "DUPLICATE": 9070,
+          "MARKETABLE": 17988,
+          "REJECT_PROBE": 5825,
+          "REST": 21072
+        },
+        "responses": {
+          "BUSINESS": 59998
+        },
+        "codes": {
+          "ACCEPTED": 45980,
+          "ALREADY_CANCELLED": 1412,
+          "ALREADY_FILLED": 3977,
+          "CANCELLED": 1740,
+          "INSUFFICIENT_BALANCE": 6889
+        },
+        "repeatedResults": 9062,
+        "uniqueBusinessResults": 50929,
+        "uniqueAcceptedOrders": 39060,
+        "uniqueMatchedOrders": 12017,
+        "uniqueSuccessfulCancels": 1432,
+        "uniqueBusinessRejections": 5825,
+        "uniqueTrades": "12017",
+        "unknownLogicalCommands": 0,
+        "newOrdersFinishedWithinWindow": 39060,
+        "cancelsFinishedWithinWindow": 1432,
+        "tradesFinishedWithinWindow": "12017",
+        "newOrdersPerSecond": 65.1,
+        "cancelsPerSecond": 2.3866666666666667,
+        "tradesPerSecond": 20.028333333333332,
+        "generatorDropRateOfScheduled": 3.3333333333333335e-05,
+        "timeoutRateOfStarted": 0,
+        "overloadRateOfStarted": 0,
+        "schedulerDelay": {
+          "count": 60000,
+          "minNanos": 15541,
+          "p50Nanos": 793666,
+          "p95Nanos": 1789791,
+          "p99Nanos": 2147916,
+          "maxNanos": 61439291
+        },
+        "requestLatency": {
+          "count": 59998,
+          "minNanos": 122834,
+          "p50Nanos": 4711875,
+          "p95Nanos": 6414458,
+          "p99Nanos": 20366125,
+          "maxNanos": 150070583
+        },
+        "scheduledAttemptLatency": {
+          "count": 59998,
+          "minNanos": 197833,
+          "p50Nanos": 5595541,
+          "p95Nanos": 7578000,
+          "p99Nanos": 21971416,
+          "maxNanos": 150557958
+        },
+        "transportWriteDelay": {
+          "count": 59998,
+          "minNanos": 8250,
+          "p50Nanos": 80625,
+          "p95Nanos": 164542,
+          "p99Nanos": 311417,
+          "maxNanos": 22845708
+        },
+        "uniqueNewOrderScheduledLatency": {
+          "count": 39060,
+          "minNanos": 2538333,
+          "p50Nanos": 5939708,
+          "p95Nanos": 7964375,
+          "p99Nanos": 23102875,
+          "maxNanos": 281314895791
+        },
+        "requestLatencyByIntent": {
+          "CANCEL": {
+            "count": 6044,
+            "minNanos": 2734625,
+            "p50Nanos": 4967291,
+            "p95Nanos": 6540333,
+            "p99Nanos": 19614791,
+            "maxNanos": 96844417
+          },
+          "DUPLICATE": {
+            "count": 9070,
+            "minNanos": 122834,
+            "p50Nanos": 661292,
+            "p95Nanos": 1318125,
+            "p99Nanos": 8886292,
+            "maxNanos": 110179375
+          },
+          "MARKETABLE": {
+            "count": 17988,
+            "minNanos": 2673792,
+            "p50Nanos": 5003583,
+            "p95Nanos": 6543791,
+            "p99Nanos": 21347875,
+            "maxNanos": 106856334
+          },
+          "REJECT_PROBE": {
+            "count": 5825,
+            "minNanos": 2725916,
+            "p50Nanos": 5014834,
+            "p95Nanos": 6505750,
+            "p99Nanos": 22002917,
+            "maxNanos": 150070583
+          },
+          "REST": {
+            "count": 21071,
+            "minNanos": 2405333,
+            "p50Nanos": 4983792,
+            "p95Nanos": 6556667,
+            "p99Nanos": 22042833,
+            "maxNanos": 145654292
+          }
+        },
+        "requestLatencyByClass": {
+          "BUSINESS": {
+            "count": 59998,
+            "minNanos": 122834,
+            "p50Nanos": 4711875,
+            "p95Nanos": 6414458,
+            "p99Nanos": 20366125,
+            "maxNanos": 150070583
+          }
+        }
+      }
+    },
+    "over20msWindows": 31,
+    "cCalls": 51178,
+    "walCalls": 50928,
+    "walWall": {
+      "count": 50928,
+      "p50Ms": 2.855,
+      "p99Ms": 8.794,
+      "maxMs": 39.639,
+      "over10ms": 354,
+      "over50ms": 0
+    },
+    "walThreadCpu": {
+      "count": 50928,
+      "p50Ms": 0.098625,
+      "p99Ms": 0.22375,
+      "maxMs": 0.61525,
+      "over10ms": 0,
+      "over50ms": 0
+    },
+    "walEintrRetries": 0,
+    "selectedWalCalls": [
+      {
+        "ObservedUTC": "2026-11-03T05:55:36.347689Z",
+        "File": "commands.wal",
+        "Start": 624669793494000,
+        "End": 624669833133000,
+        "CPUStart": 2024745875,
+        "CPUEnd": 2024782250,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 39.639,
+        "threadCpuMs": 0.036375,
+        "osBracket": {
+          "startedNanos": 624669637984000,
+          "finishedNanos": 624669839943000,
+          "elapsedMs": 201.959,
+          "readBytesDelta": 368640,
+          "writeBytesDelta": 7974912,
+          "userCpuMsDelta": 0.579319,
+          "systemCpuMsDelta": 0.24326
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:58:31.152242Z",
+        "File": "commands.wal",
+        "Start": 624844598047000,
+        "End": 624844633856000,
+        "CPUStart": 4484390000,
+        "CPUEnd": 4484418958,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 35.809,
+        "threadCpuMs": 0.028958,
+        "osBracket": {
+          "startedNanos": 624844466473000,
+          "finishedNanos": 624844667750000,
+          "elapsedMs": 201.277,
+          "readBytesDelta": 3883008,
+          "writeBytesDelta": 24502272,
+          "userCpuMsDelta": 2.258056,
+          "systemCpuMsDelta": 0.511967
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:57:32.764147Z",
+        "File": "commands.wal",
+        "Start": 624786209955000,
+        "End": 624786242407000,
+        "CPUStart": 3014355125,
+        "CPUEnd": 3014499541,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 32.452,
+        "threadCpuMs": 0.144416,
+        "osBracket": {
+          "startedNanos": 624786047443000,
+          "finishedNanos": 624786257253000,
+          "elapsedMs": 209.81,
+          "readBytesDelta": 0,
+          "writeBytesDelta": 294912,
+          "userCpuMsDelta": 0.283021,
+          "systemCpuMsDelta": 0.285038
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:56:31.663958Z",
+        "File": "commands.wal",
+        "Start": 624725109763000,
+        "End": 624725140643000,
+        "CPUStart": 2481744583,
+        "CPUEnd": 2481802208,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 30.88,
+        "threadCpuMs": 0.057625,
+        "osBracket": {
+          "startedNanos": 624725087987000,
+          "finishedNanos": 624725312364000,
+          "elapsedMs": 224.377,
+          "readBytesDelta": 4096,
+          "writeBytesDelta": 212992,
+          "userCpuMsDelta": 0.09952,
+          "systemCpuMsDelta": 0.108827
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T06:00:27.190501Z",
+        "File": "commands.wal",
+        "Start": 624960636307000,
+        "End": 624960666615000,
+        "CPUStart": 5170664708,
+        "CPUEnd": 5170703375,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 30.308,
+        "threadCpuMs": 0.038667,
+        "osBracket": {
+          "startedNanos": 624960576680000,
+          "finishedNanos": 624960777364000,
+          "elapsedMs": 200.684,
+          "readBytesDelta": 0,
+          "writeBytesDelta": 229376,
+          "userCpuMsDelta": 0.147735,
+          "systemCpuMsDelta": 0.13576
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:53:54.595257Z",
+        "File": "commands.wal",
+        "Start": 624568041064000,
+        "End": 624568069327000,
+        "CPUStart": 2013787000,
+        "CPUEnd": 2013854750,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 28.263,
+        "threadCpuMs": 0.06775,
+        "osBracket": {
+          "startedNanos": 624567869643000,
+          "finishedNanos": 624568079154000,
+          "elapsedMs": 209.511,
+          "readBytesDelta": 0,
+          "writeBytesDelta": 278528,
+          "userCpuMsDelta": 0.204557,
+          "systemCpuMsDelta": 0.180265
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:53:33.454913Z",
+        "File": "commands.wal",
+        "Start": 624546900718000,
+        "End": 624546927324000,
+        "CPUStart": 1172521541,
+        "CPUEnd": 1172577291,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 26.606,
+        "threadCpuMs": 0.05575,
+        "osBracket": {
+          "startedNanos": 624546788308000,
+          "finishedNanos": 624546994372000,
+          "elapsedMs": 206.064,
+          "readBytesDelta": 0,
+          "writeBytesDelta": 229376,
+          "userCpuMsDelta": 0.079807,
+          "systemCpuMsDelta": 0.107734
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:55:55.932858Z",
+        "File": "commands.wal",
+        "Start": 624689378664000,
+        "End": 624689404922000,
+        "CPUStart": 2210304958,
+        "CPUEnd": 2210332083,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 26.258,
+        "threadCpuMs": 0.027125,
+        "osBracket": {
+          "startedNanos": 624689310306000,
+          "finishedNanos": 624689513142000,
+          "elapsedMs": 202.836,
+          "readBytesDelta": 2768896,
+          "writeBytesDelta": 25378816,
+          "userCpuMsDelta": 2.891814,
+          "systemCpuMsDelta": 0.428765
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:56:31.593684Z",
+        "File": "commands.wal",
+        "Start": 624725039489000,
+        "End": 624725064895000,
+        "CPUStart": 2750155416,
+        "CPUEnd": 2750186291,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 25.406,
+        "threadCpuMs": 0.030875,
+        "osBracket": {
+          "startedNanos": 624724884837000,
+          "finishedNanos": 624725087987000,
+          "elapsedMs": 203.15,
+          "readBytesDelta": 122880,
+          "writeBytesDelta": 14131200,
+          "userCpuMsDelta": 2.126063,
+          "systemCpuMsDelta": 0.296036
+        }
+      },
+      {
+        "ObservedUTC": "2026-11-03T05:55:33.903864Z",
+        "File": "commands.wal",
+        "Start": 624667349672000,
+        "End": 624667374483000,
+        "CPUStart": 1516681083,
+        "CPUEnd": 1516892000,
+        "Attempts": 1,
+        "ClockAvailable": true,
+        "Error": "<nil>",
+        "wallMs": 24.811,
+        "threadCpuMs": 0.210917,
+        "osBracket": {
+          "startedNanos": 624667166563000,
+          "finishedNanos": 624667374705000,
+          "elapsedMs": 208.142,
+          "readBytesDelta": 0,
+          "writeBytesDelta": 245760,
+          "userCpuMsDelta": 0.310639,
+          "systemCpuMsDelta": 0.235134
+        }
+      }
+    ],
+    "osRecords": 3022,
+    "osIntervalMs": {
+      "median": 204.658,
+      "max": 224.376
+    },
+    "osTerminalRows": [
+      {
+        "available": false,
+        "errno": 3,
+        "pid": 91540,
+        "utcNanos": 1793685654455690000
+      }
+    ],
+    "recovery": {
+      "status": "PASSED",
+      "counts": {
+        "balances": 4,
+        "orders": 45280,
+        "results": 51384,
+        "trades": 12117
+      },
+      "sequence": 51384,
+      "restartReadyMs": 3104.121167,
+      "retryCount": 12
+    },
+    "sourceHashes": {
+      "server.trace.sync.jsonl": "bff30188661f1e88a8b5cbbc24f478afb6da28a3dcceadf624f944b9d0cff0e3",
+      "server-ready-procio.jsonl": "4e27400650a78f2dc834792ca94f392cf5ceb398b864a7417daf3738f2ed2187",
+      "analysis.json": "652a0956e30f360fe0e464c6fa1a1b360159d00c9e7fcbc98153c83d4b5cf91d",
+      "verification.json": "1ced9616d21a5b543045db75dd8bef10ed781157ee18837b4ceb8783dee381c7"
+    }
+  },
+  "supplement": {
+    "timerFailureRows": [
+      {
+        "index": 4093,
+        "scheduledNanos": 40930000000,
+        "waitStartNanos": 40922215667,
+        "waitEndNanos": 40955370208,
+        "workerNanos": 40985973583,
+        "failure": "worker"
+      }
+    ],
+    "failureStateEvents": [
+      "M=6100414464 P=7 G=-1 StateTransition Time=619494401024192 GoID=1 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=-1 StateTransition Time=619494401031104 GoID=1 Runnable->Running Reason=\"\"",
+      "M=6100414464 P=7 G=1 Metric Time=619494401038528 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7519904)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401045888 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7528080)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401061824 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7534736)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401063616 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7542752)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401069888 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7550656)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401075392 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7558400)}",
+      "M=6100414464 P=7 G=1 Metric Time=619494401077504 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7566112)}",
+      "M=6100414464 P=7 G=1 Log Time=619494401200704 Task=0 Category=\"scheduler-delay\" Message=\"index=4093 offset=40955370208 delay=25370208\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431376000 GoID=2105 Waiting->Waiting Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431384384 GoID=2105 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 Log Time=619494431407040 Task=0 Category=\"scheduler-delay\" Message=\"index=4094 offset=40985726083 delay=45726083\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431413312 GoID=1845 Waiting->Waiting Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431413504 GoID=1845 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 Log Time=619494431414784 Task=0 Category=\"scheduler-delay\" Message=\"index=4095 offset=40985751292 delay=35751292\"",
+      "M=6100987904 P=9 G=-1 StateTransition Time=619494431634752 GoID=2105 Runnable->Running Reason=\"\"",
+      "M=6100987904 P=9 G=2105 Metric Time=619494431639488 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7574288)}",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431647232 GoID=1927 Waiting->Waiting Reason=\"\"",
+      "M=6100987904 P=9 G=2105 Metric Time=619494431647872 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7582304)}",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431648000 GoID=1927 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431655040 GoID=1 Running->Runnable Reason=\"preempted\"",
+      "M=6100987904 P=9 G=2105 Metric Time=619494431667904 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7590400)}",
+      "M=6100987904 P=9 G=2105 Metric Time=619494431670976 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7598528)}",
+      "M=6100987904 P=9 G=2105 Metric Time=619494431685248 Name=\"/memory/classes/heap/objects:bytes\" Value=Value{Uint64(7606720)}",
+      "M=6100414464 P=7 G=-1 StateTransition Time=619494431686656 GoID=1 Runnable->Running Reason=\"\"",
+      "M=6100987904 P=9 G=2105 Log Time=619494431687296 Task=0 Category=\"worker-delay\" Message=\"index=4093 offset=40985973583 delay=55973583\"",
+      "M=6100987904 P=9 G=2105 StateTransition Time=619494431688256 GoID=2105 Running->Waiting Reason=\"chan receive\"",
+      "M=6100414464 P=7 G=1 Log Time=619494431688320 Task=0 Category=\"scheduler-delay\" Message=\"index=4096 offset=40986024250 delay=26024250\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431690432 GoID=60 Waiting->Waiting Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431690624 GoID=60 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 Log Time=619494431691776 Task=0 Category=\"scheduler-delay\" Message=\"index=4097 offset=40986028000 delay=16028000\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431694336 GoID=56 Waiting->Waiting Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431694528 GoID=56 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431695360 GoID=53 Waiting->Waiting Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431695488 GoID=53 Waiting->Runnable Reason=\"\"",
+      "M=6100414464 P=7 G=1 StateTransition Time=619494431752640 GoID=1 Running->Waiting Reason=\"select\""
+    ],
+    "snapshotMax": {
+      "ObservedUTC": "2026-11-03T05:56:31.592728Z",
+      "File": ".snapshot-2408671185.tmp",
+      "Start": 624725038533000,
+      "End": 624725120467000,
+      "CPUStart": 2707605166,
+      "CPUEnd": 2708949166,
+      "Attempts": 1,
+      "ClockAvailable": true,
+      "Error": "<nil>",
+      "wallMs": 81.934,
+      "threadCpuMs": 1.344
+    },
+    "kernelTraceObtained": false,
+    "actualTradeOrdersMissing": {
+      "GENERATOR_LATE": 2
+    }
+  }
+}
