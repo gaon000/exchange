@@ -1,0 +1,954 @@
+{
+  "version": 1,
+  "status": "blocked-by-host-gate",
+  "producerRevision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+  "completedInputs": [
+    {
+      "bundle": "var/lower-rate-reference/normal-1",
+      "runId": "8f384581-f303-4dbf-816d-f667db96e771",
+      "scenario": "normal",
+      "requestsPerSecond": 10000,
+      "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+      "serverBuild": {
+        "goVersion": "go1.27.3",
+        "goos": "darwin",
+        "goarch": "arm64",
+        "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+        "revisionKnown": true,
+        "modified": false
+      },
+      "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+      "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+      "sealed": true,
+      "summaryRecomputed": true,
+      "pass": true,
+      "reasons": [],
+      "summary": {
+        "version": 1,
+        "planDigest": "fd4ee097c9943043dbecbf9cb01e36a8dec9d5d1d4b24b67c88b069029ce887a",
+        "measurementValid": true,
+        "invalidReasons": [],
+        "warmup": {
+          "phase": "WARMUP",
+          "durationNanos": 5000000000,
+          "scheduled": 50000,
+          "started": 50000,
+          "localFailures": {},
+          "intents": {
+            "CANCEL": 5043,
+            "DUPLICATE": 7541,
+            "MARKETABLE": 15051,
+            "REJECT_PROBE": 4879,
+            "REST": 17486
+          },
+          "responses": {
+            "BUSINESS": 50000
+          },
+          "codes": {
+            "ACCEPTED": 38324,
+            "ALREADY_CANCELLED": 1188,
+            "ALREADY_FILLED": 3229,
+            "CANCELLED": 1505,
+            "INSUFFICIENT_BALANCE": 5754
+          },
+          "repeatedResults": 7527,
+          "uniqueBusinessResults": 42459,
+          "uniqueAcceptedOrders": 32537,
+          "uniqueMatchedOrders": 10133,
+          "uniqueSuccessfulCancels": 1236,
+          "uniqueBusinessRejections": 4879,
+          "uniqueTrades": "10133",
+          "unknownLogicalCommands": 0,
+          "newOrdersFinishedWithinWindow": 32499,
+          "cancelsFinishedWithinWindow": 1236,
+          "tradesFinishedWithinWindow": "10121",
+          "newOrdersPerSecond": 6499.8,
+          "cancelsPerSecond": 247.2,
+          "tradesPerSecond": 2024.2,
+          "generatorDropRateOfScheduled": 0,
+          "timeoutRateOfStarted": 0,
+          "overloadRateOfStarted": 0,
+          "schedulerDelay": {
+            "count": 50000,
+            "minNanos": 792,
+            "p50Nanos": 38542,
+            "p95Nanos": 45834,
+            "p99Nanos": 188417,
+            "maxNanos": 2678834
+          },
+          "requestLatency": {
+            "count": 50000,
+            "minNanos": 52291,
+            "p50Nanos": 4651083,
+            "p95Nanos": 6898167,
+            "p99Nanos": 7171208,
+            "maxNanos": 14160500
+          },
+          "scheduledAttemptLatency": {
+            "count": 50000,
+            "minNanos": 61125,
+            "p50Nanos": 4698167,
+            "p95Nanos": 6938125,
+            "p99Nanos": 7211625,
+            "maxNanos": 14199625
+          },
+          "transportWriteDelay": {
+            "count": 50000,
+            "minNanos": 3417,
+            "p50Nanos": 4583,
+            "p95Nanos": 13417,
+            "p99Nanos": 48708,
+            "maxNanos": 797792
+          },
+          "uniqueNewOrderScheduledLatency": {
+            "count": 32537,
+            "minNanos": 1371667,
+            "p50Nanos": 5055292,
+            "p95Nanos": 6982125,
+            "p99Nanos": 7232667,
+            "maxNanos": 13941584
+          },
+          "requestLatencyByIntent": {
+            "CANCEL": {
+              "count": 5043,
+              "minNanos": 1409208,
+              "p50Nanos": 4968750,
+              "p95Nanos": 6946833,
+              "p99Nanos": 7208500,
+              "maxNanos": 14160500
+            },
+            "DUPLICATE": {
+              "count": 7541,
+              "minNanos": 52291,
+              "p50Nanos": 1083333,
+              "p95Nanos": 2985625,
+              "p99Nanos": 3267000,
+              "maxNanos": 9950042
+            },
+            "MARKETABLE": {
+              "count": 15051,
+              "minNanos": 1334667,
+              "p50Nanos": 4998750,
+              "p95Nanos": 6927167,
+              "p99Nanos": 7172083,
+              "maxNanos": 13863125
+            },
+            "REJECT_PROBE": {
+              "count": 4879,
+              "minNanos": 1398750,
+              "p50Nanos": 5011750,
+              "p95Nanos": 6911333,
+              "p99Nanos": 7169792,
+              "maxNanos": 12841334
+            },
+            "REST": {
+              "count": 17486,
+              "minNanos": 1396500,
+              "p50Nanos": 5021291,
+              "p95Nanos": 6950750,
+              "p99Nanos": 7200458,
+              "maxNanos": 13902625
+            }
+          },
+          "requestLatencyByClass": {
+            "BUSINESS": {
+              "count": 50000,
+              "minNanos": 52291,
+              "p50Nanos": 4651083,
+              "p95Nanos": 6898167,
+              "p99Nanos": 7171208,
+              "maxNanos": 14160500
+            }
+          }
+        },
+        "measurement": {
+          "phase": "MEASURE",
+          "durationNanos": 20000000000,
+          "scheduled": 200000,
+          "started": 200000,
+          "localFailures": {},
+          "intents": {
+            "CANCEL": 20210,
+            "DUPLICATE": 29859,
+            "MARKETABLE": 59921,
+            "REJECT_PROBE": 19836,
+            "REST": 70174
+          },
+          "responses": {
+            "BUSINESS": 200000
+          },
+          "codes": {
+            "ACCEPTED": 152948,
+            "ALREADY_CANCELLED": 4414,
+            "ALREADY_FILLED": 14380,
+            "CANCELLED": 4919,
+            "INSUFFICIENT_BALANCE": 23339
+          },
+          "repeatedResults": 29857,
+          "uniqueBusinessResults": 170141,
+          "uniqueAcceptedOrders": 130095,
+          "uniqueMatchedOrders": 39757,
+          "uniqueSuccessfulCancels": 4156,
+          "uniqueBusinessRejections": 19836,
+          "uniqueTrades": "39757",
+          "unknownLogicalCommands": 0,
+          "newOrdersFinishedWithinWindow": 130080,
+          "cancelsFinishedWithinWindow": 4156,
+          "tradesFinishedWithinWindow": "39754",
+          "newOrdersPerSecond": 6504,
+          "cancelsPerSecond": 207.8,
+          "tradesPerSecond": 1987.7,
+          "generatorDropRateOfScheduled": 0,
+          "timeoutRateOfStarted": 0,
+          "overloadRateOfStarted": 0,
+          "schedulerDelay": {
+            "count": 200000,
+            "minNanos": 917,
+            "p50Nanos": 38584,
+            "p95Nanos": 47042,
+            "p99Nanos": 183584,
+            "maxNanos": 10441042
+          },
+          "requestLatency": {
+            "count": 200000,
+            "minNanos": 52417,
+            "p50Nanos": 3545833,
+            "p95Nanos": 6540958,
+            "p99Nanos": 7187708,
+            "maxNanos": 36338833
+          },
+          "scheduledAttemptLatency": {
+            "count": 200000,
+            "minNanos": 59459,
+            "p50Nanos": 3587459,
+            "p95Nanos": 6588584,
+            "p99Nanos": 7248292,
+            "maxNanos": 36377500
+          },
+          "transportWriteDelay": {
+            "count": 200000,
+            "minNanos": 3416,
+            "p50Nanos": 4625,
+            "p95Nanos": 13958,
+            "p99Nanos": 44625,
+            "maxNanos": 8453541
+          },
+          "uniqueNewOrderScheduledLatency": {
+            "count": 130095,
+            "minNanos": 1195042,
+            "p50Nanos": 3931625,
+            "p95Nanos": 6677625,
+            "p99Nanos": 7334875,
+            "maxNanos": 36377500
+          },
+          "requestLatencyByIntent": {
+            "CANCEL": {
+              "count": 20210,
+              "minNanos": 1207541,
+              "p50Nanos": 3853209,
+              "p95Nanos": 6621042,
+              "p99Nanos": 7195875,
+              "maxNanos": 28592792
+            },
+            "DUPLICATE": {
+              "count": 29859,
+              "minNanos": 52417,
+              "p50Nanos": 717583,
+              "p95Nanos": 2815166,
+              "p99Nanos": 3246750,
+              "maxNanos": 24413583
+            },
+            "MARKETABLE": {
+              "count": 59921,
+              "minNanos": 1175125,
+              "p50Nanos": 3885958,
+              "p95Nanos": 6636791,
+              "p99Nanos": 7239791,
+              "maxNanos": 36338833
+            },
+            "REJECT_PROBE": {
+              "count": 19836,
+              "minNanos": 1167625,
+              "p50Nanos": 3883084,
+              "p95Nanos": 6628209,
+              "p99Nanos": 7220500,
+              "maxNanos": 28297500
+            },
+            "REST": {
+              "count": 70174,
+              "minNanos": 1155667,
+              "p50Nanos": 3890875,
+              "p95Nanos": 6628417,
+              "p99Nanos": 7267375,
+              "maxNanos": 33023917
+            }
+          },
+          "requestLatencyByClass": {
+            "BUSINESS": {
+              "count": 200000,
+              "minNanos": 52417,
+              "p50Nanos": 3545833,
+              "p95Nanos": 6540958,
+              "p99Nanos": 7187708,
+              "maxNanos": 36338833
+            }
+          }
+        }
+      },
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 50000,
+          "started": 50000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 50000,
+            "minNanos": 52417,
+            "p50Nanos": 4533417,
+            "p95Nanos": 6886000,
+            "p99Nanos": 7209209,
+            "maxNanos": 14171833
+          },
+          "scheduledAttemptLatency": {
+            "count": 50000,
+            "minNanos": 59542,
+            "p50Nanos": 4579500,
+            "p95Nanos": 6927125,
+            "p99Nanos": 7251375,
+            "maxNanos": 14181000
+          },
+          "metricSamples": 10,
+          "queueMean": 12.5,
+          "queueMax": 30
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 50000,
+          "started": 50000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 50000,
+            "minNanos": 53042,
+            "p50Nanos": 3302542,
+            "p95Nanos": 6171291,
+            "p99Nanos": 8003875,
+            "maxNanos": 36338833
+          },
+          "scheduledAttemptLatency": {
+            "count": 50000,
+            "minNanos": 59667,
+            "p50Nanos": 3344250,
+            "p95Nanos": 6245084,
+            "p99Nanos": 9066375,
+            "maxNanos": 36377500
+          },
+          "metricSamples": 10,
+          "queueMean": 8.5,
+          "queueMax": 20
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 50000,
+          "started": 50000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 50000,
+            "minNanos": 52625,
+            "p50Nanos": 3362417,
+            "p95Nanos": 6292584,
+            "p99Nanos": 7899042,
+            "maxNanos": 28837625
+          },
+          "scheduledAttemptLatency": {
+            "count": 50000,
+            "minNanos": 60250,
+            "p50Nanos": 3403792,
+            "p95Nanos": 6335209,
+            "p99Nanos": 7947125,
+            "maxNanos": 28876084
+          },
+          "metricSamples": 10,
+          "queueMean": 7.7,
+          "queueMax": 20
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 50000,
+          "started": 50000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 50000,
+            "minNanos": 53042,
+            "p50Nanos": 3177625,
+            "p95Nanos": 5931667,
+            "p99Nanos": 6827875,
+            "maxNanos": 10790000
+          },
+          "scheduledAttemptLatency": {
+            "count": 50000,
+            "minNanos": 59459,
+            "p50Nanos": 3220209,
+            "p95Nanos": 5976250,
+            "p99Nanos": 6871500,
+            "maxNanos": 10827292
+          },
+          "metricSamples": 10,
+          "queueMean": 9.9,
+          "queueMax": 30
+        }
+      ],
+      "snapshotOverlaps": 0,
+      "snapshotCaptureTotalNanos": "0",
+      "snapshotPublishTotalNanos": "0",
+      "walBytes": "47092833",
+      "peakRssBytes": "452345856",
+      "serverCpuSeconds": 13.972211
+    },
+    {
+      "bundle": "var/lower-rate-reference/snapshot-1",
+      "runId": "a0077033-5f71-4f66-b2f6-47f07a2c758b",
+      "scenario": "snapshot",
+      "requestsPerSecond": 1000,
+      "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+      "serverBuild": {
+        "goVersion": "go1.27.3",
+        "goos": "darwin",
+        "goarch": "arm64",
+        "revision": "086c61a78517cfcc8cb475f5ed447268118a23b5",
+        "revisionKnown": true,
+        "modified": false
+      },
+      "serverSHA256": "3ccb69f1b07f593e2bf91568b39bc56e72c1ad7c18384375033ae3a809d6291f",
+      "generatorSHA256": "4fe6796602fab902a6de6bb3b65e2f13ee866d9315fa1e3f19f7775078c21c08",
+      "sealed": true,
+      "summaryRecomputed": true,
+      "pass": false,
+      "reasons": [
+        "WINDOW_3_P99"
+      ],
+      "summary": {
+        "version": 1,
+        "planDigest": "a51a0be86b26cee4358dfe3db267d869c9d9ccc899aac893c7c5d26c331d1e16",
+        "measurementValid": true,
+        "invalidReasons": [],
+        "warmup": {
+          "phase": "WARMUP",
+          "durationNanos": 5000000000,
+          "scheduled": 5000,
+          "started": 5000,
+          "localFailures": {},
+          "intents": {
+            "CANCEL": 534,
+            "DUPLICATE": 698,
+            "MARKETABLE": 1518,
+            "REJECT_PROBE": 466,
+            "REST": 1784
+          },
+          "responses": {
+            "BUSINESS": 5000
+          },
+          "codes": {
+            "ACCEPTED": 3824,
+            "ALREADY_CANCELLED": 142,
+            "ALREADY_FILLED": 257,
+            "CANCELLED": 230,
+            "INSUFFICIENT_BALANCE": 547
+          },
+          "repeatedResults": 687,
+          "uniqueBusinessResults": 4302,
+          "uniqueAcceptedOrders": 3302,
+          "uniqueMatchedOrders": 1019,
+          "uniqueSuccessfulCancels": 192,
+          "uniqueBusinessRejections": 466,
+          "uniqueTrades": "1019",
+          "unknownLogicalCommands": 0,
+          "newOrdersFinishedWithinWindow": 3299,
+          "cancelsFinishedWithinWindow": 192,
+          "tradesFinishedWithinWindow": "1018",
+          "newOrdersPerSecond": 659.8,
+          "cancelsPerSecond": 38.4,
+          "tradesPerSecond": 203.6,
+          "generatorDropRateOfScheduled": 0,
+          "timeoutRateOfStarted": 0,
+          "overloadRateOfStarted": 0,
+          "schedulerDelay": {
+            "count": 5000,
+            "minNanos": 9625,
+            "p50Nanos": 216708,
+            "p95Nanos": 268083,
+            "p99Nanos": 328500,
+            "maxNanos": 8441041
+          },
+          "requestLatency": {
+            "count": 5000,
+            "minNanos": 122084,
+            "p50Nanos": 5309125,
+            "p95Nanos": 8937875,
+            "p99Nanos": 10216834,
+            "maxNanos": 18697208
+          },
+          "scheduledAttemptLatency": {
+            "count": 5000,
+            "minNanos": 190291,
+            "p50Nanos": 5536125,
+            "p95Nanos": 9208541,
+            "p99Nanos": 10494625,
+            "maxNanos": 18958666
+          },
+          "transportWriteDelay": {
+            "count": 5000,
+            "minNanos": 4291,
+            "p50Nanos": 34958,
+            "p95Nanos": 91875,
+            "p99Nanos": 142833,
+            "maxNanos": 5039750
+          },
+          "uniqueNewOrderScheduledLatency": {
+            "count": 3302,
+            "minNanos": 1789958,
+            "p50Nanos": 6176500,
+            "p95Nanos": 9328083,
+            "p99Nanos": 10622083,
+            "maxNanos": 18958666
+          },
+          "requestLatencyByIntent": {
+            "CANCEL": {
+              "count": 534,
+              "minNanos": 2093500,
+              "p50Nanos": 5918750,
+              "p95Nanos": 8921083,
+              "p99Nanos": 10843167,
+              "maxNanos": 16708958
+            },
+            "DUPLICATE": {
+              "count": 698,
+              "minNanos": 122084,
+              "p50Nanos": 1528667,
+              "p95Nanos": 4279084,
+              "p99Nanos": 4848417,
+              "maxNanos": 7812500
+            },
+            "MARKETABLE": {
+              "count": 1518,
+              "minNanos": 2130875,
+              "p50Nanos": 5896917,
+              "p95Nanos": 9095917,
+              "p99Nanos": 10403334,
+              "maxNanos": 15018125
+            },
+            "REJECT_PROBE": {
+              "count": 466,
+              "minNanos": 1820041,
+              "p50Nanos": 5999833,
+              "p95Nanos": 9247084,
+              "p99Nanos": 9923125,
+              "maxNanos": 15920083
+            },
+            "REST": {
+              "count": 1784,
+              "minNanos": 1579083,
+              "p50Nanos": 5966375,
+              "p95Nanos": 9023541,
+              "p99Nanos": 10418250,
+              "maxNanos": 18697208
+            }
+          },
+          "requestLatencyByClass": {
+            "BUSINESS": {
+              "count": 5000,
+              "minNanos": 122084,
+              "p50Nanos": 5309125,
+              "p95Nanos": 8937875,
+              "p99Nanos": 10216834,
+              "maxNanos": 18697208
+            }
+          }
+        },
+        "measurement": {
+          "phase": "MEASURE",
+          "durationNanos": 20000000000,
+          "scheduled": 20000,
+          "started": 20000,
+          "localFailures": {},
+          "intents": {
+            "CANCEL": 2001,
+            "DUPLICATE": 3059,
+            "MARKETABLE": 5905,
+            "REJECT_PROBE": 1937,
+            "REST": 7098
+          },
+          "responses": {
+            "BUSINESS": 20000
+          },
+          "codes": {
+            "ACCEPTED": 15355,
+            "ALREADY_CANCELLED": 489,
+            "ALREADY_FILLED": 1249,
+            "CANCELLED": 614,
+            "INSUFFICIENT_BALANCE": 2293
+          },
+          "repeatedResults": 3056,
+          "uniqueBusinessResults": 16941,
+          "uniqueAcceptedOrders": 13003,
+          "uniqueMatchedOrders": 3982,
+          "uniqueSuccessfulCancels": 498,
+          "uniqueBusinessRejections": 1937,
+          "uniqueTrades": "3982",
+          "unknownLogicalCommands": 0,
+          "newOrdersFinishedWithinWindow": 12949,
+          "cancelsFinishedWithinWindow": 496,
+          "tradesFinishedWithinWindow": "3968",
+          "newOrdersPerSecond": 647.45,
+          "cancelsPerSecond": 24.8,
+          "tradesPerSecond": 198.4,
+          "generatorDropRateOfScheduled": 0,
+          "timeoutRateOfStarted": 0,
+          "overloadRateOfStarted": 0,
+          "schedulerDelay": {
+            "count": 20000,
+            "minNanos": 2666,
+            "p50Nanos": 214416,
+            "p95Nanos": 268791,
+            "p99Nanos": 301833,
+            "maxNanos": 4760583
+          },
+          "requestLatency": {
+            "count": 20000,
+            "minNanos": 83583,
+            "p50Nanos": 4159208,
+            "p95Nanos": 7158458,
+            "p99Nanos": 10799209,
+            "maxNanos": 87115667
+          },
+          "scheduledAttemptLatency": {
+            "count": 20000,
+            "minNanos": 107208,
+            "p50Nanos": 4317583,
+            "p95Nanos": 7384708,
+            "p99Nanos": 11051500,
+            "maxNanos": 87313125
+          },
+          "transportWriteDelay": {
+            "count": 20000,
+            "minNanos": 4083,
+            "p50Nanos": 31000,
+            "p95Nanos": 67208,
+            "p99Nanos": 98208,
+            "maxNanos": 1633542
+          },
+          "uniqueNewOrderScheduledLatency": {
+            "count": 13003,
+            "minNanos": 1572375,
+            "p50Nanos": 4698750,
+            "p95Nanos": 7479000,
+            "p99Nanos": 11450583,
+            "maxNanos": 87313125
+          },
+          "requestLatencyByIntent": {
+            "CANCEL": {
+              "count": 2001,
+              "minNanos": 1344875,
+              "p50Nanos": 4448458,
+              "p95Nanos": 7330792,
+              "p99Nanos": 11298208,
+              "maxNanos": 82373916
+            },
+            "DUPLICATE": {
+              "count": 3059,
+              "minNanos": 83583,
+              "p50Nanos": 1062458,
+              "p95Nanos": 3240709,
+              "p99Nanos": 5402416,
+              "maxNanos": 73147167
+            },
+            "MARKETABLE": {
+              "count": 5905,
+              "minNanos": 1373709,
+              "p50Nanos": 4491875,
+              "p95Nanos": 7226625,
+              "p99Nanos": 11720417,
+              "maxNanos": 85385708
+            },
+            "REJECT_PROBE": {
+              "count": 1937,
+              "minNanos": 1397875,
+              "p50Nanos": 4519500,
+              "p95Nanos": 7221875,
+              "p99Nanos": 11275709,
+              "maxNanos": 81375250
+            },
+            "REST": {
+              "count": 7098,
+              "minNanos": 1431375,
+              "p50Nanos": 4486458,
+              "p95Nanos": 7291125,
+              "p99Nanos": 11169541,
+              "maxNanos": 87115667
+            }
+          },
+          "requestLatencyByClass": {
+            "BUSINESS": {
+              "count": 20000,
+              "minNanos": 83583,
+              "p50Nanos": 4159208,
+              "p95Nanos": 7158458,
+              "p99Nanos": 10799209,
+              "maxNanos": 87115667
+            }
+          }
+        }
+      },
+      "windows": [
+        {
+          "startNanos": 5000000000,
+          "endNanos": 10000000000,
+          "scheduled": 5000,
+          "started": 5000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 5000,
+            "minNanos": 100375,
+            "p50Nanos": 4180041,
+            "p95Nanos": 7147416,
+            "p99Nanos": 8549792,
+            "maxNanos": 15167417
+          },
+          "scheduledAttemptLatency": {
+            "count": 5000,
+            "minNanos": 160125,
+            "p50Nanos": 4332541,
+            "p95Nanos": 7388041,
+            "p99Nanos": 8789750,
+            "maxNanos": 15361083
+          },
+          "metricSamples": 10,
+          "queueMean": 0.8,
+          "queueMax": 3
+        },
+        {
+          "startNanos": 10000000000,
+          "endNanos": 15000000000,
+          "scheduled": 5000,
+          "started": 5000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 5000,
+            "minNanos": 83583,
+            "p50Nanos": 3998291,
+            "p95Nanos": 7047042,
+            "p99Nanos": 9043292,
+            "maxNanos": 28233125
+          },
+          "scheduledAttemptLatency": {
+            "count": 5000,
+            "minNanos": 107208,
+            "p50Nanos": 4169541,
+            "p95Nanos": 7270250,
+            "p99Nanos": 9349541,
+            "maxNanos": 28497625
+          },
+          "metricSamples": 10,
+          "queueMean": 1.3,
+          "queueMax": 3
+        },
+        {
+          "startNanos": 15000000000,
+          "endNanos": 20000000000,
+          "scheduled": 5000,
+          "started": 5000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 5000,
+            "minNanos": 95667,
+            "p50Nanos": 4171167,
+            "p95Nanos": 7031583,
+            "p99Nanos": 9975083,
+            "maxNanos": 40790750
+          },
+          "scheduledAttemptLatency": {
+            "count": 5000,
+            "minNanos": 158083,
+            "p50Nanos": 4334500,
+            "p95Nanos": 7269333,
+            "p99Nanos": 10193291,
+            "maxNanos": 41030291
+          },
+          "metricSamples": 10,
+          "queueMean": 1.6,
+          "queueMax": 3
+        },
+        {
+          "startNanos": 20000000000,
+          "endNanos": 25000000000,
+          "scheduled": 5000,
+          "started": 5000,
+          "localFailures": 0,
+          "operationalFailures": 0,
+          "requestLatency": {
+            "count": 5000,
+            "minNanos": 100208,
+            "p50Nanos": 4321833,
+            "p95Nanos": 7473333,
+            "p99Nanos": 39254708,
+            "maxNanos": 87115667
+          },
+          "scheduledAttemptLatency": {
+            "count": 5000,
+            "minNanos": 141416,
+            "p50Nanos": 4471916,
+            "p95Nanos": 7688166,
+            "p99Nanos": 39449666,
+            "maxNanos": 87313125
+          },
+          "metricSamples": 10,
+          "queueMean": 1.2,
+          "queueMax": 3
+        }
+      ],
+      "snapshotOverlaps": 4,
+      "snapshotCaptureTotalNanos": "106039624",
+      "snapshotPublishTotalNanos": "1478394000",
+      "walBytes": "4984457",
+      "peakRssBytes": "93110272",
+      "serverCpuSeconds": 8.33319
+    }
+  ],
+  "groups": [
+    {
+      "series": "30d88c47488cbadd71ae32e2104708ea1c007b4de947847cfbf64e61fb45e873",
+      "scenario": "normal",
+      "requestsPerSecond": 10000,
+      "runs": 1,
+      "passed": 1,
+      "qualified": false,
+      "minNewOrdersPerSecond": 6504,
+      "maxNewOrdersPerSecond": 6504,
+      "worstRequestP99Nanos": 7187708,
+      "worstScheduledP99Nanos": 7334875
+    },
+    {
+      "series": "ae1a315ebf446b3836eda32ca6a9fd702a536136c1db29ed5366e530fd42d129",
+      "scenario": "snapshot",
+      "requestsPerSecond": 1000,
+      "runs": 1,
+      "passed": 0,
+      "qualified": false,
+      "minNewOrdersPerSecond": 647.45,
+      "maxNewOrdersPerSecond": 647.45,
+      "worstRequestP99Nanos": 10799209,
+      "worstScheduledP99Nanos": 11450583
+    }
+  ],
+  "collections": [
+    {
+      "root": "var/lower-rate-reference",
+      "manifestSHA256": "121be8658a364effe3aa6706789361fb842395fdc0d8211d6c97f540bf92c34c",
+      "integrity": {
+        "filesVerified": 106,
+        "legacyInventory": false,
+        "completed": false
+      },
+      "dependencies": {
+        "parentCasesVerified": 0
+      },
+      "observations": 8,
+      "accepted": 2,
+      "rejectedMedians": [
+        16.0,
+        16.0,
+        16.0,
+        17.5,
+        17.5,
+        16.5
+      ]
+    },
+    {
+      "root": "var/lower-rate-resumed",
+      "manifestSHA256": "9f08b8fa3023557b23a8199f1166b467990e3e751eed2abe2169a745de79c65c",
+      "integrity": {
+        "filesVerified": 19,
+        "legacyInventory": false,
+        "completed": false
+      },
+      "dependencies": {
+        "parentCasesVerified": 2,
+        "parentManifestSHA256": "121be8658a364effe3aa6706789361fb842395fdc0d8211d6c97f540bf92c34c"
+      },
+      "observations": 3,
+      "accepted": 0,
+      "rejectedMedians": [
+        16.0,
+        16.5,
+        17.0
+      ]
+    },
+    {
+      "root": "var/lower-rate-resumed-2",
+      "manifestSHA256": "785d678fc613361e124250d7414634f6ffc87d8ebfd6540107c15e916ca82c02",
+      "integrity": {
+        "filesVerified": 55,
+        "legacyInventory": false,
+        "completed": false
+      },
+      "dependencies": {
+        "parentCasesVerified": 2,
+        "parentManifestSHA256": "9f08b8fa3023557b23a8199f1166b467990e3e751eed2abe2169a745de79c65c"
+      },
+      "observations": 15,
+      "accepted": 0,
+      "rejectedMedians": [
+        19.5,
+        26.5,
+        42.0,
+        24.0,
+        67.0,
+        35.5,
+        18.0,
+        17.5,
+        18.5,
+        17.0,
+        17.0,
+        21.5,
+        18.5,
+        17.0,
+        16.0
+      ]
+    }
+  ],
+  "prototype": {
+    "current": {
+      "runs": 5,
+      "medianNanosPerOp": 130.8,
+      "bytesPerOp": 80,
+      "allocationsPerOp": 4
+    },
+    "append-prototype": {
+      "runs": 5,
+      "medianNanosPerOp": 20.5,
+      "bytesPerOp": 24,
+      "allocationsPerOp": 1
+    }
+  },
+  "prototypeBenchmarkSHA256": "9e4dacb41a201039c14c260a8d74337fd27934175ad68a9bfde4799d9e71b43c",
+  "productionOptimizationApplied": false,
+  "qualifiedBaselineAvailable": false,
+  "powerLossTested": false,
+  "localValidation": {
+    "pythonTests": 27,
+    "portableGoTests": 206,
+    "nativeRaceGoTests": 238
+  },
+  "masterMerged": "c9a9950bc20b7bc573eb7c0a7861e518c0800d8b",
+  "featureHead": "b30a8711bcca875bac06f84e1b7d0857ac00f070"
+}

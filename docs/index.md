@@ -15,6 +15,8 @@
 
 ## 작업별 읽기
 
+[낮은 요청률 진행 기록](benchmarks/lower-rate-progress.md)은 요청률 옵션·재개·완료한 두 실행과 호스트 gate 차단, 테스트 전용 직렬화 후보를 구분한다. 남은 반복·실제 최적화 비교는 미완료다.
+
 [현재 기준 재측정 결과](benchmarks/controlled-baseline.md)는 유휴 gate 후 정상 29,000/s·snapshot 3,000/s 각 3회를 검증했다. 0/3·2/3 통과로 두 조건 모두 미채택했으며 실패·워밍업 누락·창별 지연을 보존한다.
 
 [현재 기준 반복 측정](controlled-baseline.md)은 clean 생산 바이너리·유휴 gate·전원·예산·고정 조건과 실패 보존을 설명한다.
