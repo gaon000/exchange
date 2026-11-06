@@ -1,6 +1,6 @@
 # 스냅샷 실패 구간과 현재 정상 처리량
 
-2026-11-07, 최근 요청률/재개 기능·정수 JSON 최적화 6개 커밋을 master d2d70ce로 반영했다. 기존 snapshot 실패의 마지막 응답까지 포함해 분석한 결과 같은 서버 관측 구간에 긴 WAL sync가 있었다. 정상 처리량 경계 탐색은 아래 사전 조건으로 진행 중이다. 실제 전원 장애는 계속 보류한다.
+2026-11-07, 최근 요청률/재개 기능·정수 JSON 최적화 6개 커밋을 master d2d70ce로 반영했다. 기존 snapshot 실패의 마지막 응답까지 포함해 분석한 결과 같은 서버 관측 구간에 긴 WAL sync가 있었다. 정상 처리량 탐색은 두 요청률을 관찰한 뒤 디스크 자원 기준 때문에 중단됐다. 현재 최대 처리량·유효한 하한은 미확정이다. 실제 전원 장애는 계속 보류한다.
 
 ## 스냅샷 실패 구간 분석
 
@@ -31,4 +31,37 @@ snapshot1의 가장 긴 요청은 epoch+24.919197458초에 시작해 25.00631312
 
 [사전 계획](../exec-plans/active/20261107-snapshot-window-capacity.md)의 20,000/s 시작·두 배 상한 탐색·1,000/s 해상도 축소를 따른다. 요청률별 독립 3회 전부를 같은 clean 생산 빌드로 실행하고 실패도 포함한다. warmup 5초·본 측정 20초·각 5초 창 p99 20ms·누락/운영 오류 0·기존 criteria-v1·500ms 서버 계측·snapshot 끔·trace/생성기 진단 끔·30초 cooldown과 전원/유휴/메모리/디스크 기준을 유지한다.
 
-최고 채택점과 바로 위 실패점을 확인하면 이 호스트·시드·20초 조건의 관찰 경계로 보고한다. 모든 rate의 단조 통과나 전역 최대·장시간 보장을 주장하지 않는다. 원본과 실제 탐색 결과는 완료 후 이 문서에 추가한다.
+최고 채택점과 바로 위 실패점을 확인하면 이 호스트·시드·20초 조건의 관찰 경계로 보고한다. 모든 rate의 단조 통과나 전역 최대·장시간 보장을 주장하지 않는다. 아래에 실제 진행과 중단을 기록한다.
+
+
+## 정상 탐색의 실제 진행과 차단
+
+[기계 판독 진행 기록](20261107-normal-capacity-progress.json)에 고정 생산 빌드 7b9e720, 각 실행의 hash/판정/5초 창/호스트·마지막 자원 관찰과 inventory 검증을 보존한다. 7b9e720의 cmd/internal 생산 코드는 master d2d70ce와 같다. 추가된 것은 분석 도구·테스트·문서이며 정상 부하에는 진단을 켜지 않았다. master push의 [portable/native CI](https://github.com/gaon000/exchange/actions/runs/42245700854)는 모두 통과했다.
+
+| 요청률·실행 | 전체 요청 p99 | 최악 5초 창 p99 | 판정 |
+| --- | ---: | ---: | --- |
+| 20,000/s, 1 | 7.675125ms | 7.984667ms | 통과 |
+| 20,000/s, 2 | 9.071833ms | 12.397750ms | 통과 |
+| 20,000/s, 3 | 22.109750ms | 29.249958ms | GLOBAL_P99·WINDOW_1/2/3_P99 실패 |
+| 10,000/s, 1 | 7.184500ms | 7.248750ms | 통과 |
+| 10,000/s, 2 | 7.190667ms | 7.228917ms | 통과 |
+| 10,000/s, 3 | 16.451084ms | 30.083375ms | WINDOW_2_P99·UNSEALED_EXPERIMENT |
+
+20,000/s는 독립 3회 2/3 통과·미채택이다. 10,000/s도 같은 생산 빌드로 새 3회 실행을 시도했으나 세 번째 실행의 자원 감시에서 여유 공간이 **8,544,423,936bytes**로 내려가 최소 **8,589,934,592bytes(8GiB)** 기준에 걸렸다. 같은 시점 새 묶음은 954,348,293bytes, 소유 프로세스 RSS 합계는 약 870MB로 다른 자원 상한 아래였다. 종료 처리는 오류 없이 합류했다. 거래 표본은 저장돼 measurementValid=true로 재집계됐지만 실험은 context canceled로 끝나 완료 봉인이 없으며, 이미 창별 지연 실패도 있다. 이를 완료된 유효 반복이나 용량 상한으로 채택하지 않는다.
+
+10,000/s의 세 번째 실행 직전 유휴 검사는 9회 연속 거절된 뒤 통과했다. CPU 순간 busy는 91%까지 관찰됐다. 실제 실행 동안 호스트 busy 중앙값은 20,000/s 세 실행에서 31/33/80%, 10,000/s에서 16/17/16%였다. 프로세스 전체 생애의 coarse 관찰이며 서버만의 CPU나 독립적인 외부 부하를 분리하지 못한다. 시작 gate 통과가 실행 중 호스트 안정성을 보장하지 않았음을 남긴다.
+
+**이번 새 탐색에서는 아직 qualified 하한이나 최고 처리량을 확보하지 못했다.** 이전 빌드 65ca1ba의 정상 10,000/s 3/3 결과를 이번 series에 합치지 않는다. 중단된 10,000/s 세 번째 실행을 지우거나 재시도로 대체하지 않는다. 두 collection의 완료/실패 inventory는 모두 검증했고 원본을 삭제하지 않았다.
+
+사용자에게 다른 CPU 작업을 줄일 수 있는지, 기존 원본을 보존하면서 약 10GiB를 추가로 확보할 수 있는지 질문했다. 현재 추가 부하는 중단했다. 공간·호스트 조건을 확보하면 같은 빌드의 사전 계획상 다음 하한 5,000/s를 새 3회로 확인할 수 있다. 자원 중단 지점 10,000/s는 용량 상한으로 쓰지 않고, 유효한 실패 반복이 있는 20,000/s를 기존 상한으로 유지해 후속 탐색 범위를 정한다. 디스크 기준 완화·시스템 프로세스 중단·기존 자료 자동 삭제는 하지 않았다.
+
+원본 재현 명령은 다음과 같다. 기존 경로를 덮어쓰지 말고 새 이름을 사용한다.
+
+```sh
+python3 tools/diagnostics/experiment.py baseline-build --output var/normal-capacity-build-20261107
+python3 tools/diagnostics/experiment.py baseline --build-dir var/normal-capacity-build-20261107 --output var/normal-capacity-20261107-20000 --preset reference --normal-rate 20000 --condition normal --quiet-attempts 15
+python3 tools/diagnostics/experiment.py verify --bundle var/normal-capacity-20261107-20000 --output var/normal-capacity-20261107-20000-integrity.json
+python3 tools/diagnostics/experiment.py verify --bundle var/normal-capacity-20261107-10000 --allow-failed --output var/normal-capacity-20261107-10000-integrity.json
+```
+
+새 빌드 명령은 당시 revision에서 실행한 기록이다. 현재 source를 새로 빌드하면 실제 revision/hash를 새로 기록한다. 최종 처리량 경계·추가 rate 탐색은 미완료이며, 분석 도구 source의 원격 CI와 완료 master CI도 별도로 관리한다.

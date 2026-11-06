@@ -1,0 +1,1389 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "status": "blocked-disk-and-host-availability",
+  "maximumRateDetermined": false,
+  "highestQualifiedRateThisCampaign": null,
+  "master": {
+    "revision": "d2d70ce658e6ee99a7f22fdd775ffd2ac0573669",
+    "pushed": true,
+    "ci": "https://github.com/gaon000/exchange/actions/runs/42245700854",
+    "ciConclusion": "success"
+  },
+  "producerBuild": {
+    "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+    "argv": [
+      "scripts/go",
+      "build",
+      "-o",
+      "var/normal-capacity-build-20261107/bin",
+      "./cmd/exchange",
+      "./cmd/loadgen",
+      "./cmd/experiment",
+      "./tools/benchreport",
+      "./tools/storageprobe"
+    ],
+    "sha256": {
+      "exchange": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+      "loadgen": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+      "experiment": "2a175fb63c60b1d2294112758f3c431280732c0a9b3aa107ceaf8ebec1850202",
+      "benchreport": "7b409a367f1669fb8d73ede01537accd989fe20c5601c43118e45e15455a14d1",
+      "storageprobe": "3485a2e66a569df67a332ed81c0f42565222348fec824d7aab95b5f4f2268347"
+    },
+    "goBuild": {
+      "exchange": "var/normal-capacity-build-20261107/bin/exchange: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/cmd/exchange\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261106154853-7b9e7207268f\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=7b9e7207268f409723d7242d95f41c820975825d\n\tbuild\tvcs.time=2026-11-06T15:48:53Z\n\tbuild\tvcs.modified=false\n",
+      "loadgen": "var/normal-capacity-build-20261107/bin/loadgen: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/cmd/loadgen\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261106154853-7b9e7207268f\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=7b9e7207268f409723d7242d95f41c820975825d\n\tbuild\tvcs.time=2026-11-06T15:48:53Z\n\tbuild\tvcs.modified=false\n",
+      "experiment": "var/normal-capacity-build-20261107/bin/experiment: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/cmd/experiment\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261106154853-7b9e7207268f\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=7b9e7207268f409723d7242d95f41c820975825d\n\tbuild\tvcs.time=2026-11-06T15:48:53Z\n\tbuild\tvcs.modified=false\n",
+      "benchreport": "var/normal-capacity-build-20261107/bin/benchreport: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/tools/benchreport\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261106154853-7b9e7207268f\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=7b9e7207268f409723d7242d95f41c820975825d\n\tbuild\tvcs.time=2026-11-06T15:48:53Z\n\tbuild\tvcs.modified=false\n",
+      "storageprobe": "var/normal-capacity-build-20261107/bin/storageprobe: go1.27.3\n\tpath\tgithub.com/gaon000/exchange/tools/storageprobe\n\tmod\tgithub.com/gaon000/exchange\tv0.0.0-20261106154853-7b9e7207268f\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n\tbuild\tGOARM64=v8.0\n\tbuild\tvcs=git\n\tbuild\tvcs.revision=7b9e7207268f409723d7242d95f41c820975825d\n\tbuild\tvcs.time=2026-11-06T15:48:53Z\n\tbuild\tvcs.modified=false\n"
+    }
+  },
+  "protocol": {
+    "version": 1,
+    "preset": "reference",
+    "createdUTC": "2026-11-06T15:49:09.069534+00:00",
+    "producerRevision": "7b9e7207268f409723d7242d95f41c820975825d",
+    "binarySHA256": {
+      "exchange": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+      "loadgen": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+      "experiment": "2a175fb63c60b1d2294112758f3c431280732c0a9b3aa107ceaf8ebec1850202",
+      "benchreport": "7b409a367f1669fb8d73ede01537accd989fe20c5601c43118e45e15455a14d1",
+      "storageprobe": "3485a2e66a569df67a332ed81c0f42565222348fec824d7aab95b5f4f2268347"
+    },
+    "sourceSHA256": {
+      ".go-version": "55a45ba2851dc159876cb8854f80bf67b9eae781e67ce179708ea2e4f990fcd8",
+      "cmd/demo/command.go": "ab183f62322971e1446f5732d0250c49a4998a868117a4ee1a9c1f1f1000884e",
+      "cmd/demo/command_test.go": "d4820c14ae2c30407df7c0b8ee26f2a9d8252a458f60a44b04bd73c206c1f728",
+      "cmd/demo/http.go": "391a4d06c2dac05ca88a063b101d50b83cc32444f0279ba4d8946948c00ba1a1",
+      "cmd/demo/main.go": "1fc91a149f723a7cd12e0cd36f01e03b30fcccb34c513d524321b92c5e6617e3",
+      "cmd/demo/native_test.go": "3e9bcf5782d89394d9b861201738b9b24b96558b39393ddb1176a534bf2277d2",
+      "cmd/demo/process.go": "1f312fb40a60ca7c2278550097fae534b17cb5de06cdd83d02af37c04bc37e51",
+      "cmd/demo/scenario.go": "cffb19e6293f9cf690b7e736dd6f2d5ae37d9f8def4d3eef5883d40384675aac",
+      "cmd/demo/unsupported_test.go": "c77666000e351cf8eafcc5a78deaf50ab05b802507cc6d7a00c3c5c16cc51104",
+      "cmd/exchange/command.go": "bb19b1cb9c2fde17222c0a56fa8ab363743122c780834096c1f2fce2b6f42fad",
+      "cmd/exchange/command_test.go": "1a29269567c113fa07c060809075cc984df1c4bc6fb4db5c36be796cbf8d33e4",
+      "cmd/exchange/experiments.go": "d5c2d266aac088e7c9c6661c599f960c206c3c93d7cd77c994af53ae0cd75a5a",
+      "cmd/exchange/experiments_native_test.go": "e9b13866154ec7d3b73cc2eed3fc945fa412748a5c19ae5a7404376008796ca6",
+      "cmd/exchange/experiments_test.go": "9cf858d11e52abe80f0162cf10f91ee879f527d5b34fa8abd91db2939f9cb6e9",
+      "cmd/exchange/lifecycle.go": "bf2332d1a4a5554cc0931f1c58631addc9ba1a3a9aaa127c8a7bbae73634b168",
+      "cmd/exchange/lifecycle_test.go": "bb6a930cee919f11ca3e37256d1f8bbb11239b65e9319ed6c9f41ae7567c5975",
+      "cmd/exchange/main.go": "4e402e28b4e71454f91138cac0faaa4831a4436a86905a6c1bcc8ef5545e1eea",
+      "cmd/exchange/metrics.go": "f4d6dba7c51785306d0c1bbb99d404a211202eb948c5df0573263f52bbc4ee7a",
+      "cmd/exchange/metrics_native_test.go": "127cfeb01d90c5ee591c1d7e3c7e9402d4a939e7b83c98d062d128293026023c",
+      "cmd/exchange/metrics_test.go": "755b8629233891eec09b6626494790f2775e36b90df58156bce81a71fd9b4d9c",
+      "cmd/exchange/native_test.go": "4806b67f0ae398c5c7bc801c92b56c3a14a31309835a10ac6df770e46ee37503",
+      "cmd/exchange/report.go": "3ed52ec401e57f501c5d43c25f3531589f73cd8b3ecc58f24c80b6f3b16e5577",
+      "cmd/exchange/unsupported_test.go": "2f82dda183c2aee9f65c5f452497f0c2e430d2e6b1d186227d159e90c81d881b",
+      "cmd/experiment/command.go": "fc71439274bcf23267b22c5648f3f76a116355ba3fb0e35a6686d535ca802a31",
+      "cmd/experiment/command_test.go": "d7e8f8c762649b99cddbd9645f01f5df993f701188cac9df2cfb4f47d0469db5",
+      "cmd/experiment/diagnostics.go": "bc1182ea5876acc18075c59efb3257adddf16a923fccecead755b0d0d82b1f15",
+      "cmd/experiment/environment.go": "f0de11bc89c54b75164411ea04e0694f7e549e1bc551f15dbd21f364286ae5d2",
+      "cmd/experiment/environment_darwin.go": "2426dd51afc8f222580fedd137a672378172ee74959f69b9db0aafb1a49d0211",
+      "cmd/experiment/environment_other.go": "087200c69ca2e37ba8201194d01651cbc1827c45466699ba26d6352c298d9162",
+      "cmd/experiment/files.go": "7688964f7ccc0c46b828d5226a7127236f8550868cb5d04bae0c59354cbddd1c",
+      "cmd/experiment/main.go": "fb899ef716f809938a9a47438629c09a44ff79c69d5047ac0599963b3691da1c",
+      "cmd/experiment/native_test.go": "3f7332659498078186ab175ccdb0ab85d450ea134f6aff5e127871fc25b3c904",
+      "cmd/experiment/process.go": "e0514938e96dc1443b93a58bde181cb84cb843adf7712af4ae7d8a03cf2fad69",
+      "cmd/experiment/verify.go": "3ec09e6a670116c53e9a5d509d54a98ce032b89edb57316f0b94254795adaae0",
+      "cmd/loadgen/artifacts.go": "db8a2b666ccfeacace7628f0d8d3bb1aa8171d0e63a5dbc373d97e365f75dd51",
+      "cmd/loadgen/command.go": "414ba59f3f24b074a8bc9d574090cb1bbb4e1b6f3e5ee38e94eb24cbb6ed557f",
+      "cmd/loadgen/command_test.go": "758358ac121333bd09bd333cbd9d8dd2aaa542d1ad45433b7b32da18f1c2f559",
+      "cmd/loadgen/diagnostics.go": "55a7dbf89afa9889982551ff3e8288aec484ba786a207156f08e25f9ae04b5e2",
+      "cmd/loadgen/diagnostics_test.go": "b2735e383124a2f0c997e4ce9219174de8de14f274e396da831ecce36dffe4b6",
+      "cmd/loadgen/main.go": "89ff5ca5db9ed071da0dfdb8d62f1769799b120806ef6c3e9a290ae6c0f6fefd",
+      "cmd/loadgen/native_test.go": "d5c6b99d6ad138f4d90ab88eea3a50b47a91919860bfb5848437743beb473ffc",
+      "config/benchmarks/config-v1.json": "aea894a634d8fa7d37d9c0f342e43d50abb368bab62f495689851c70540b8695",
+      "config/benchmarks/criteria-v1.json": "87ba06c9a4651a658a332ef90cdc6136436cc70b7b5f205f8cd9e939f94769e6",
+      "config/benchmarks/soak-10m-v1.json": "000a5351a7b71d318bc4e57642e8407ddb9c122f44f3b64a161628a8333233d0",
+      "config/benchmarks/workload-v1.json": "13473954df0bdf39ed0f060335601760909f2db3c14efa02e090138c880b5adb",
+      "config/comparisons/lower-rate-integer-v1.json": "ae5a3f6186de9191cc0a5360f9dd00fee16981ea44a1c2ab783fd1572a479d86",
+      "config/comparisons/soak-before-after-v1.json": "d4f285e74a601b4031da5e8401b72dd89adf67a5119f4700b8d647dd5212bd5c",
+      "config/examples/benchmark.json": "f4f5dba09c9f2c8725e5464beef7b253884beda32117400ecdc4a76446a4c8ac",
+      "config/examples/local.json": "5f074e545d2e92d88eea397f7d152a219ae8241384261debeb199b772991b4be",
+      "config/examples/workload.json": "3f8276d5de56a9cb86e4f4bc97d5df35a88d170cc75f9fd53e9ef1685e359724",
+      "go.mod": "8ccb41e981a1929f96b29313306d95f93cf575c0e6c0235b0dca85646d33ca33",
+      "internal/api/metrics.go": "17f1a9ac6816102f2e4d6daee6f927078f7b35663786c231a9a64ac108bb7064",
+      "internal/api/metrics_test.go": "84165d446ff1fba7cfbd416a2511f12013440621d03fd38839568a6cb4593ae6",
+      "internal/api/native_test.go": "23c70b1a94d920fecece1f641038287e25bfac598aa426f612810e4327f0d434",
+      "internal/api/network_test.go": "d30bd017d8ffa1a38e7ac7e92246392c480246512390aa239ef9990d341f51ba",
+      "internal/api/request.go": "a3eef2e0f6441b2b1f426dbc5fecba3125582e480040b8f0fda67b9f20f1ea01",
+      "internal/api/response.go": "17b8c12ae5cb6d840976d1d8a3814c17ee076504fa84a228b0b0b84b848435f9",
+      "internal/api/server.go": "3e9869d5dc1c8365626c34baf842da4a434b1f1ae577b2bdbda0768af741484a",
+      "internal/api/server_test.go": "9f2e77c8e849d5bdb3ac4eaeee10acedc475331b6b5e73cd349511abda003170",
+      "internal/bench/dispatch.go": "a869aa46e8279f1bf27d9e8b31502e020e1e809037ffadb162fab1cb2653df26",
+      "internal/bench/http.go": "c5b83430c29b013e681a4caacc43e3a2d02d9f32e7b82b9269201cf83ba89dea",
+      "internal/bench/http_test.go": "3833d9db5cc61588a710567691ac5ca77bab63553bc2cf20198412e356b74e7b",
+      "internal/bench/plan.go": "cbcf9b8b1e9f8391094a7075639d98e7308b7d757ee6e3f0234d948dd9faecfa",
+      "internal/bench/plan_test.go": "f087c07cd30c2dbee2259e2eea712e7316db2e288c59ca146cce1d5add8dfa94",
+      "internal/bench/prepare.go": "90900c12ec632cc35e2dfba83193c974414f3a1c445709878c822b69ea3992e0",
+      "internal/bench/prepare_test.go": "e907145513bc027fd07235f621ecaef02f6cc309c0f7b18da93c436239badd81",
+      "internal/bench/runner.go": "12a176212349900095073875b986f085b1b3fe3ec1d3bdecbed15cd0dfd7bb9f",
+      "internal/bench/runner_test.go": "283dae85378f7a16cdb504dfafeaca0a67550778538d6b62afda6028331436cc",
+      "internal/bench/summary.go": "538a62d0b6e845358a133cf87cd0a0e339dbcdd7940b07f9083293a0521d5e16",
+      "internal/bench/summary_test.go": "418e3bd974b48735f63c21ea5c7d0cceb686178d0eb1ca500cdbad1e237a1521",
+      "internal/bench/windows.go": "4150eab98323c283583d14a33feee486a2b164fba4983ea79fbd312297b41231",
+      "internal/bench/windows_test.go": "24138e531c40a91c2bc4ed19b7545c6a0b27feba2922a58b752219d9b319a754",
+      "internal/buildinfo/info.go": "111e3dc1586a7f368e59c051dd552a467045f693e9a4e9a46bbb346d0ce10eb5",
+      "internal/domain/checkpoint.go": "5be76424f37d41d484e3052ed1bd423c7e0b24b4c029e0e9f58b8f42392095a6",
+      "internal/domain/domain_test.go": "d92ed27e60c563bffae60d0c187fed43fbacfdf4c153c18e6bcd6c6c89543a09",
+      "internal/domain/integer.go": "43390c7885187248583dd426999fc908b6506f22d548a748e19d007fb5b35188",
+      "internal/domain/integer_benchmark_test.go": "5443ae42b8fa6cc72e1348b47fe1c818c58ebfad57f47630dbc6d898a64430a2",
+      "internal/domain/types.go": "c59f7817675f9fd46c8c35b739c66c7078e68627202682889fd530e5933fb2d5",
+      "internal/domain/validation.go": "4b1a49f3b6699eba998b212881215b7e4c4bbf2430f7a23871958531f5bad572",
+      "internal/durable/darwin.go": "70c7990762d0ba7b07c45117aa0a81dcb8d7b9db204a0aef223a797b8dbcd7ec",
+      "internal/durable/rename_darwin.go": "1db22be26163bdc71d3e8cfd7ee5f7021f067751ab5114a2a2fc9d629d30b64d",
+      "internal/durable/rename_unsupported.go": "691085a18aac5bb0f3c887cbca246d27800676a3ffdb28543216db949da290ef",
+      "internal/durable/unsupported.go": "8e4bede2f8ebc1163a25e933cf32ed8fb36d450079b812d5541f597588bdea4b",
+      "internal/engine/benchmark_test.go": "20cd9db6bdc56351b2f5cf23be6df87c6494604a4f8480710ddc992bb4283471",
+      "internal/engine/book.go": "44def6168da19a7427f18533f26c02e89aa45e9612187b88305e7109939fc595",
+      "internal/engine/checkpoint.go": "ca03e5f17ea8cdee1efc41c03469328f09f586b367157d826bc76c3fe23b3234",
+      "internal/engine/checkpoint_test.go": "563161a978075c718924ae28f69568bc5c3bc9fddba991d5acec3c70b3bf25fa",
+      "internal/engine/engine.go": "4e3ae6a89751044266e6b4a7d5c714def5d2e2e90039410da5d8a18ee92b3c03",
+      "internal/engine/engine_test.go": "7bc889405dc9003346b093169f99ce94f350f58d301e60c46bedac033b87e3e4",
+      "internal/engine/invariants.go": "ad48ebe5aceaab92b90bad67089eda71199180cad243d7e5ee864aec6b73ef73",
+      "internal/engine/reference_test.go": "4062f2a2e35695b03948745d6287c63bcc1f74ced529775aca044349a45fe509",
+      "internal/engine/testdata/checkpoint-v1.json": "6a16a637647a23adb061d4d35d2a0e7d21ae78197ccfd2bbbd0412a78f958932",
+      "internal/engine/testdata/generate_checkpoint.py": "b4e8893522f3025893a3ba554af790999e5263c919d011d3c4db1f3dec74282b",
+      "internal/engine/view.go": "3ed48a5f909340ab9cdaedbe12114130f99d1f92b0220e6e7912691746929ef8",
+      "internal/runtime/http_bridge_test.go": "a71e0bdb6e00c1583d7e51133352844cfc34134ffb662dd1a2e5708e0f13ca0a",
+      "internal/runtime/http_concurrent_native_test.go": "c782c5a4ca5724e517812c232c5a0c6a2cab5a98b9f58c31c219d1ee874fc7e8",
+      "internal/runtime/http_fault_native_test.go": "a42870503b3c1851f56fb4531ec24be8a972bba0211c029f01d02533fdab36c7",
+      "internal/runtime/http_helpers_native_test.go": "1a0d5c5c9517641f03a44fa50099ae75265f560cae4770879074e369ec92dae7",
+      "internal/runtime/http_process_native_test.go": "70a619e6f4e127c091e9ee457f9b03a656b016d7922df90c7fa8cdff54c732d8",
+      "internal/runtime/http_rules_native_test.go": "15b3b74386bd754849e9ee30f489f6a25b97d14c4182b09fc2f6e6e5d477dee4",
+      "internal/runtime/lifecycle_test.go": "2ddddc8a2f244c10607fd9c06726a34b641d87d7a8ab00a16e5d7c95a3972727",
+      "internal/runtime/metrics.go": "5a79632f0ebcf6377e731c7a72ad24c95093911856962435d67c05ccb746a73c",
+      "internal/runtime/metrics_test.go": "de2f79389691c4b275d77a5d16a4afc2514af5cf0c87266a39605e3fd01de947",
+      "internal/runtime/native_test.go": "de67528dbbd5016c74dc59d0b10b54a1ec131e0141da9220343afc5c654cbcbd",
+      "internal/runtime/owner.go": "4ecf6a600ea7f56223bffcf7802cd94e24a902128f42264b7f1b294683a30612",
+      "internal/runtime/query.go": "b25de2898f3eced45d926baf05b21ee61312aca47bc4159eac1842a5c791b592",
+      "internal/runtime/query_test.go": "fd5aa3d0148f77ecfb463552a20e618f92574f149cf6812254426276edeef7f8",
+      "internal/runtime/recovery.go": "60690a3146dd7d7669097b73e45f6e75c82570ce78f3a53229fb7704dfee5b00",
+      "internal/runtime/recovery_native_test.go": "686f9e38a4a46758cf31bbfb334b7212d7718dd70bf8e3ef4d7d1d21a04af116",
+      "internal/runtime/recovery_test.go": "58ae6ea863306906aae106717e18efd227cee8016238960837b6c14b03cc4bd7",
+      "internal/runtime/runtime.go": "e166befb2d80e0bea02a651f2cd5070c04f107871a07b0f7350182fefe7f52f5",
+      "internal/runtime/runtime_test.go": "dfaaeef75c3e05f48686a435af7085f24f87caee283877b3d45c485ec99959b5",
+      "internal/runtime/snapshot.go": "db09cabbb0b1b670b810f689bce8ce7f52f508fc083da732bf9380e4795f02f4",
+      "internal/runtime/snapshot_native_test.go": "9ae66c4b372212961c0687d8946c186d111453bc7f8092d5781b1e20f04934eb",
+      "internal/runtime/snapshot_test.go": "054aa4b6f026e755ae979e554e5ef9885ee91adb5a73bf3042702cf87dd9a1b3",
+      "internal/runtime/types.go": "c95e1a4149101a4d98e76a1f1b149d123dbd8f36217a9518890718ff89c2c7cc",
+      "internal/snapshot/codec.go": "9608a1a050abf57c883f59f6ffeefde9fad5bbb04c36143dffdda204a3abff02",
+      "internal/snapshot/codec_test.go": "3d1e1ed3231b149d18ec73ff2ad3afb54bff6b091d2b87809b45e4d0135432ef",
+      "internal/snapshot/decode.go": "1ebafc5ec8de5f495e371c9069c58358ca8f77c269fc212ef66f12cf1cf14a52",
+      "internal/snapshot/decode_test.go": "09cfcfa097ca4dd2d671b0ae8b3630ba48e47c836aa0a6cab5e344c9e4697c17",
+      "internal/snapshot/files.go": "16a15b96bccf7de8e756c3114859f1299b391e962eea8e76890367bfc003969e",
+      "internal/snapshot/files_test.go": "291a4ac9728af6f295d6043fbfbb5fe21a67af43d22af5240bc7a8dae44553b1",
+      "internal/snapshot/publish.go": "504172a1da7c4390a2a622d4e1b57967c5a122e6d0a8e1e951e54f2c3bd3ab52",
+      "internal/snapshot/publish_darwin_test.go": "f1487aa7fef9a2b527a2a125111d029d4b57b722714f8bcbe2535fc9d53e51ec",
+      "internal/snapshot/publish_test.go": "05d2d57ca2f5a3a0f84acb24f6ffa57d85a74d16c693c70a731958d3dc719c03",
+      "internal/snapshot/publish_unsupported_test.go": "70b87d429a751bc1590df310650e8c8163ebdea879b0cc5c42fa74cbb1c04d04",
+      "internal/snapshot/size.go": "97e2c639db72d90c8cdc4e4e1f4a4a9170e1e2fa8f368304559831407d10ec7b",
+      "internal/snapshot/size_test.go": "f8f42af5ae99269bfd04fb55c08ccfe3f4b111b778697685af4ea8cfaba815e2",
+      "internal/snapshot/testdata/config.json": "44ba0a000d33bee6bea01809ec0eeb47571f1bf3c35ba9bffe1a90f6b831c445",
+      "internal/snapshot/testdata/generate.py": "5110542e37bd5654ab7e06615cf42b18287763d410eaf6f2628d23a613820711",
+      "internal/snapshot/timings_test.go": "4217261834265079e0844a2f9a24d9824625d08db8a046611b245b416f4b46a6",
+      "internal/strictjson/strict.go": "b95999403261ab1b74ee68cf223eceb3521ac9a216e18a6e702abe762e34e4d9",
+      "internal/strictjson/strict_test.go": "f37ead57ccc4565d1a17092e9c3647011f32f48a8cf862fdcf52b2e5c51c9330",
+      "internal/telemetry/histogram.go": "f228ad79eacd22f8818d3b88a53a731e5a08f9e7a6e6134bc819684c560141d8",
+      "internal/telemetry/histogram_test.go": "2c6473d2e2583cbb964403fc8deb1956b314b3ab02b37ee5ff73b39f984ae1c0",
+      "internal/telemetry/process.go": "29d4c0b20e4cc8fb623e4b9ed3256daa78c2f92b83d60605450db16f0362a677",
+      "internal/telemetry/process_unix.go": "13ef53a7583ec9a511d6e8ed661895996d2b01f13e8eed8902b94c79ea1982a1",
+      "internal/telemetry/process_unsupported.go": "8bb71441ed4b51f93d064d03d6fc4123f98eeff2bb5ed5dc97a0a124e559a83d",
+      "internal/telemetry/stages.go": "5bd9ddf5272fe40534a799d5936620ed7336aeeff017bb93498a4bf8942492f1",
+      "internal/telemetry/stages_test.go": "444708829c9a02c8389f36bbcab7ae1edd4fdd2dc1fe7fc38ff3ffff68f09e9e",
+      "internal/wal/codec.go": "f12343248465b377f650c1efd43c0588b1d48fe7d0b0fd8022a07014b6605c48",
+      "internal/wal/codec_test.go": "e3dfb836ae8d84534ca9168f76cf57a8bad063e374c82211d90d366dad8985be",
+      "internal/wal/frame.go": "ac47df76ff5c1973783cc5c07626926d34e55a5106ffad831d4809a14bbe2ded",
+      "internal/wal/metrics.go": "9d4e60a064e9c661508373d82933d1b15d3dfd519c73ced74704fc7b840939a1",
+      "internal/wal/metrics_test.go": "84d96ffa618c3dfaa4202c95070e07fd8202c673120a2adff003b2cf4267e661",
+      "internal/wal/store.go": "421c21e1e45153d093b21c0954e343957d185f6374b3fd44113c742377a3f20a",
+      "internal/wal/store_darwin_test.go": "50c6bea961a6fd2d262a754804bd81706d55dfe7816cd33d015eb4e5e7288e7f",
+      "internal/wal/store_test.go": "c5d18beb7167a9f536ee706946e457372d7e701beddad3d51e662f787477703d",
+      "internal/wal/store_unsupported_test.go": "499fb21b81d3ed38cfcf4ebe78260344812d9deaf61944dfe3f16518de8d94c6",
+      "internal/wal/testdata/cancel.json": "3268ac41b83ebaaf27baf38d57a4106f59ca92888f0564567a418c818e8123d6",
+      "internal/wal/testdata/config.json": "66f7316af650b745cdf5202d08cb29a2efc35aa47c8fe7ded6140a7053b6f82b",
+      "internal/wal/testdata/generate.py": "a4ed214f78aaa2f4042101cf3fd293cd42fc7fd538264bb32afb9ab42a0d8602",
+      "internal/wal/testdata/record.json": "373923ee254b4673f0c925a3e80aca5a6f0e30fe483d3b2204d4ae0ee89a3da6",
+      "internal/wal/writer.go": "8eab4c29c67b04a0495e395773c1aa4fe841ec53b4756a7e6f331de61fac65e3",
+      "internal/wal/writer_test.go": "1d596b9a1daca22392456c6a50c3803050e25aa0ca1180a45442581b6e341cd8",
+      "scripts/ci.sh": "87cc159640861098a27a7084d15bea220ae9bcfa106311075753ffc5523af820",
+      "scripts/demo.sh": "7f2c48b8aa6ab65d287622d8a75ff1e4c8b31135e32187c2d18f03ada15173b3",
+      "scripts/go": "9c742c3ab68aea77b0dfff8904111eb17bfd43140c34e9e335878c595fe2d6cf",
+      "scripts/setup-go.sh": "6a4defcdf1763b65274ac8843521d79411b2fecc49cb9c24813c341c8c98a3d1",
+      "tools/benchreport/analyze.go": "935dbae1a717ef475e3b4fc6990ec5fbeb43f0670d745e93f3e4df570896a31a",
+      "tools/benchreport/analyze_test.go": "f4b52b40fe0104f9ff7c6a9b8db16deefd9c925d0c22cf79c10b7597b7193cb1",
+      "tools/benchreport/files.go": "79465b3e5097f6243ac9c130908df1f5172e55592b19d802ff67fa329bc11917",
+      "tools/benchreport/main.go": "b54b085351c43b8ddae5772cf30b1718a299b8010225cb2cabb3db30ec9deacc",
+      "tools/benchreport/observations.go": "7af70244f2c01c24ba418d74b4b03963a79aae3918782cc7aa56b2d17663520b",
+      "tools/benchreport/types.go": "02aa82acdb916077928d577eb747c02b331afbed4d05859f8cfc3d5d959818c3",
+      "tools/civerify/main.go": "2ed5486174fc21bc9bea8e9ea6854d6a287720e2e41bd7f259d81f9ad12ff044",
+      "tools/civerify/main_test.go": "fa532f2567b18ba576880153f4b92bac751b037c889b53013174bce2322558a9",
+      "tools/diagnostics/analysis.py": "a4e150ceec6378fbb1e07a880fa28986ecee6d33ccedb706ae6ebc6a2be12672",
+      "tools/diagnostics/archive.py": "b3096e14e3d858bd175a7c7ccda960ab6aea5ddb53c79b60db94b94b95690108",
+      "tools/diagnostics/assets/durable.go.tmpl": "7a3514fcab69b1988360c6c2902df86d488c5eba86ae213614b4bc48674086ee",
+      "tools/diagnostics/assets/exchange-main.go.tmpl": "7a3a43ac81587b3d095c6ec9f1c107f627b08c6f621d0b7fc46c084885e9808e",
+      "tools/diagnostics/assets/loadgen-main.go.tmpl": "674f3f1a05d26add7e9c4069d3e91d27717d1d1edfcf58432bfc0a9aafdd3af3",
+      "tools/diagnostics/assets/procio.c": "db8847b460830ad30f5ae94ea11d6e5d1f7e3385392c1f1434616b29c65d39a4",
+      "tools/diagnostics/assets/runner.go.tmpl": "f4e159566be99b7626733eb900fe9d5ef7d6261bfa437e5e521ea577f3cb53da",
+      "tools/diagnostics/assets/sources.json": "25338dd0066a2f5f849d12e75f7d5beb7cdae3d123365c3f935b945882e06b8c",
+      "tools/diagnostics/assets/store.go.tmpl": "424141c4bcafe1b88f5ff883adbd1562ace392782ee7a5c0d3985d8f464319d7",
+      "tools/diagnostics/baseline.py": "ade355eacac5434aa5af292803ea646c94585b778fba2b25ed55ef5c1d899a80",
+      "tools/diagnostics/build.py": "646179dc5fe0c47b6ed60b45a43589917e7d2458e044b78fecab94c86d73931f",
+      "tools/diagnostics/common.py": "db1013e0d925cede7e13c11dff31bf8aef8713542719fd9664d660f5bdd95bee",
+      "tools/diagnostics/comparison.py": "8c5fb3227adf0a9fbdc1966f7fb8786e8a0cccb3824570f583cfb4a21f28609c",
+      "tools/diagnostics/experiment.py": "1104223f5f6b0d0e5d6555c4af0670079aaa81d865e66af1319af09a3675c654",
+      "tools/diagnostics/metrics.py": "d90fb8dd3e992cfa7b618569aaa5be068ad7a1dbe5727e8dfce1513275e3471f",
+      "tools/diagnostics/recovery.py": "e8be06d7a15b97fa2eceeed4e93b46d30fc43d63668ae9d250e0704b6b81632f",
+      "tools/diagnostics/runner.py": "fcc55a0890bd6838d3f3633e84af5f9c4a7fea0f762097406c7f53321fabed3a",
+      "tools/diagnostics/samplers.py": "3202ad86a2ceb04e3e5a13cc692f712b756fac423e1b6478555d03ed7759b575",
+      "tools/diagnostics/smoke.py": "7df9588fb315c3ad7488459379a1eb064d8c92300a0a42a099373e611a64715a",
+      "tools/diagnostics/snapshot_windows.py": "ddc04ad78c5eec53a68df21ca1298626720476246bce6d376c968c84417a0dc0",
+      "tools/diagnostics/test_baseline.py": "be83d217a06c77dbabaaf27314a41a85e4fa6f4fd25bea0c0dca6ccac4b78827",
+      "tools/diagnostics/test_comparison.py": "f34e59e6d92fcad991e9b8dddcaa24eb0fb54b057c4d62cb8d79a1164e3c9608",
+      "tools/diagnostics/test_diagnostics.py": "90691f13c810d9057b164f8eb0f16b04f9649b9e92d82dd27deb2cb9de3635c9",
+      "tools/diagnostics/test_snapshot_windows.py": "1bbc264771b58767f8a2cbb5f219cb7041d5c8aa479140b1ccccfa3e3cb269f4",
+      "tools/diagnostics/trace_reader.py": "5afc1dbecb50d30602b2aee5f31a0ce5f3945e2c50a54794628e1644e81bda3d",
+      "tools/experimentcheck/main.go": "fb053c9b1bac0ca6ee9c119e24a545634ca1d6f01f0a51d0ad9da8939347e3ab",
+      "tools/storageprobe/main.go": "2dd75a9da14386dd95431ad357b9463ce88ec4ad89ec2627ac42fd485771b49c",
+      "tools/storageprobe/main_test.go": "401b7a537752538043c1ed840284961d5a3a35a02b2c53dca65a49617d389539",
+      "tools/storageprobe/platform.go": "702a5e4db519de4c1fa1d997ef1091d7aa8287a6314876d4eaeccfdd25deee34",
+      "tools/storageprobe/unsupported_test.go": "73ffc5b5a4f944dfecafa03bcda67b81e4796d3cbbdc1c82d5bf700ba5d4b9d7",
+      "tools/timerprobe/main.go": "f1122ac04ebfd40a2a79cb0c5a7e70936ff35fa418b215e3a55a0a5d803976a4",
+      "tools/timerprobe/main_test.go": "e8648cd3c1f52b88538cc89a83d81324e743913995c4a5fbfddfb869fdd8bfcc"
+    },
+    "order": [
+      [
+        "normal-1",
+        "normal",
+        20000
+      ],
+      [
+        "normal-2",
+        "normal",
+        20000
+      ],
+      [
+        "normal-3",
+        "normal",
+        20000
+      ]
+    ],
+    "runtimeEnvironment": {
+      "GOMAXPROCS": "11",
+      "GOGC": "100",
+      "GOMEMLIMIT": "off"
+    },
+    "quietGate": {
+      "medianBusyMax": 15,
+      "peakBusyMax": 30,
+      "minimumRecords": 10,
+      "enforced": true,
+      "maximumAttempts": 15
+    },
+    "cooldownSeconds": 30,
+    "trace": false,
+    "generatorDiagnosticsNanos": 0,
+    "metricsIntervalNanos": 500000000,
+    "snapshotIntervalNanos": 5000000000,
+    "minimumFreeBytes": 8589934592,
+    "maximumBundleBytes": 4294967296,
+    "maximumProcessRSSBytes": 2147483648,
+    "maximumOwnedRSSBytes": 3221225472,
+    "hostFullyIsolated": false,
+    "powerLossTested": false
+  },
+  "rates": [
+    {
+      "requestsPerSecond": 20000,
+      "bundle": "var/normal-capacity-20261107-20000",
+      "report": "var/normal-capacity-20261107-20000/qualification.json",
+      "reportSHA256": "71ad8ee31cdf372178ba1fd08b15a46841697abfe91f3616aac51f5339ec03e8",
+      "inventorySHA256": "8ea6ca25a024b8971a85042d1268aee39edf87db66c2c9c7168fb7fa92174d79",
+      "integrity": {
+        "filesVerified": 121,
+        "legacyInventory": false,
+        "completed": true,
+        "archives": {}
+      },
+      "collectionCompleted": true,
+      "failure": null,
+      "groups": [
+        {
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "scenario": "normal",
+          "requestsPerSecond": 20000,
+          "runs": 3,
+          "passed": 2,
+          "qualified": false,
+          "minNewOrdersPerSecond": 13005.25,
+          "maxNewOrdersPerSecond": 13005.7,
+          "worstRequestP99Nanos": 22109750,
+          "worstScheduledP99Nanos": 24980750
+        }
+      ],
+      "cases": [
+        {
+          "bundle": "var/normal-capacity-20261107-20000/normal-1",
+          "runId": "7bc3d0b3-a737-4e2f-9c00-4caf87412c3e",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": true,
+          "summaryRecomputed": true,
+          "pass": true,
+          "reasons": [],
+          "measurementValid": true,
+          "requestP99Nanos": 7675125,
+          "uniqueNewOrderScheduledP99Nanos": 8049458,
+          "newOrdersPerSecond": 13005.25,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 50083,
+                "p50Nanos": 3700000,
+                "p95Nanos": 6565084,
+                "p99Nanos": 7293375,
+                "maxNanos": 13000375
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 54250,
+                "p50Nanos": 3734750,
+                "p95Nanos": 6608583,
+                "p99Nanos": 7358500,
+                "maxNanos": 13029958
+              },
+              "metricSamples": 10,
+              "queueMean": 21.4,
+              "queueMax": 45
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 51583,
+                "p50Nanos": 3837625,
+                "p95Nanos": 6684833,
+                "p99Nanos": 7621083,
+                "maxNanos": 12811542
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 57208,
+                "p50Nanos": 3871083,
+                "p95Nanos": 6723667,
+                "p99Nanos": 7711875,
+                "maxNanos": 12837500
+              },
+              "metricSamples": 10,
+              "queueMean": 19.3,
+              "queueMax": 45
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 51875,
+                "p50Nanos": 3712542,
+                "p95Nanos": 6687875,
+                "p99Nanos": 7984667,
+                "maxNanos": 14434584
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 59125,
+                "p50Nanos": 3748667,
+                "p95Nanos": 6762333,
+                "p99Nanos": 8228667,
+                "maxNanos": 14475667
+              },
+              "metricSamples": 10,
+              "queueMean": 10.8,
+              "queueMax": 48
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 50459,
+                "p50Nanos": 3567000,
+                "p95Nanos": 6371375,
+                "p99Nanos": 7808291,
+                "maxNanos": 17286791
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 57542,
+                "p50Nanos": 3602375,
+                "p95Nanos": 6433042,
+                "p99Nanos": 7997042,
+                "maxNanos": 17315458
+              },
+              "metricSamples": 10,
+              "queueMean": 14.3,
+              "queueMax": 45
+            }
+          ],
+          "hostLifetime": {
+            "records": 32,
+            "cpuBusyMedian": 31.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 41.295,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:49:51.173540+00:00",
+            "freeBytes": 10813124608,
+            "bundleBytes": 636473358,
+            "owned": [
+              {
+                "pid": 66756,
+                "ppid": 66708,
+                "rssBytes": 6406144,
+                "name": "experiment"
+              },
+              {
+                "pid": 66769,
+                "ppid": 66756,
+                "rssBytes": 847462400,
+                "name": "exchange"
+              },
+              {
+                "pid": 66770,
+                "ppid": 66756,
+                "rssBytes": 791298048,
+                "name": "loadgen"
+              }
+            ]
+          }
+        },
+        {
+          "bundle": "var/normal-capacity-20261107-20000/normal-2",
+          "runId": "57506022-a38e-4557-9416-8f4f9fdbeaa1",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": true,
+          "summaryRecomputed": true,
+          "pass": true,
+          "reasons": [],
+          "measurementValid": true,
+          "requestP99Nanos": 9071833,
+          "uniqueNewOrderScheduledP99Nanos": 9795875,
+          "newOrdersPerSecond": 13005.65,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 51083,
+                "p50Nanos": 4716083,
+                "p95Nanos": 7353000,
+                "p99Nanos": 12397750,
+                "maxNanos": 46176083
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 57459,
+                "p50Nanos": 4754042,
+                "p95Nanos": 7447000,
+                "p99Nanos": 12862459,
+                "maxNanos": 47497917
+              },
+              "metricSamples": 10,
+              "queueMean": 21.1,
+              "queueMax": 47
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 52792,
+                "p50Nanos": 4779917,
+                "p95Nanos": 7374958,
+                "p99Nanos": 9128000,
+                "maxNanos": 15861167
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 58584,
+                "p50Nanos": 4818792,
+                "p95Nanos": 7446000,
+                "p99Nanos": 9524667,
+                "maxNanos": 16261250
+              },
+              "metricSamples": 10,
+              "queueMean": 62.8,
+              "queueMax": 123
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 51917,
+                "p50Nanos": 4673000,
+                "p95Nanos": 7201083,
+                "p99Nanos": 9045750,
+                "maxNanos": 14671500
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 57834,
+                "p50Nanos": 4715417,
+                "p95Nanos": 7286459,
+                "p99Nanos": 9506625,
+                "maxNanos": 17425459
+              },
+              "metricSamples": 10,
+              "queueMean": 20.3,
+              "queueMax": 51
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 51584,
+                "p50Nanos": 4542875,
+                "p95Nanos": 7084250,
+                "p99Nanos": 8164625,
+                "maxNanos": 13163083
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 56542,
+                "p50Nanos": 4580959,
+                "p95Nanos": 7146417,
+                "p99Nanos": 8366792,
+                "maxNanos": 13190875
+              },
+              "metricSamples": 10,
+              "queueMean": 16.4,
+              "queueMax": 50
+            }
+          ],
+          "hostLifetime": {
+            "records": 34,
+            "cpuBusyMedian": 33.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 56.905,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:51:22.870601+00:00",
+            "freeBytes": 10179448832,
+            "bundleBytes": 1249998351,
+            "owned": [
+              {
+                "pid": 66984,
+                "ppid": 66708,
+                "rssBytes": 6864896,
+                "name": "experiment"
+              }
+            ]
+          }
+        },
+        {
+          "bundle": "var/normal-capacity-20261107-20000/normal-3",
+          "runId": "92001128-6275-48fb-95fe-8191a163afd3",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": true,
+          "summaryRecomputed": true,
+          "pass": false,
+          "reasons": [
+            "GLOBAL_P99",
+            "WINDOW_1_P99",
+            "WINDOW_2_P99",
+            "WINDOW_3_P99"
+          ],
+          "measurementValid": true,
+          "requestP99Nanos": 22109750,
+          "uniqueNewOrderScheduledP99Nanos": 24980750,
+          "newOrdersPerSecond": 13005.7,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 58375,
+                "p50Nanos": 5843166,
+                "p95Nanos": 9575375,
+                "p99Nanos": 12158833,
+                "maxNanos": 29509375
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 62834,
+                "p50Nanos": 5897959,
+                "p95Nanos": 9847667,
+                "p99Nanos": 12595667,
+                "maxNanos": 31383584
+              },
+              "metricSamples": 10,
+              "queueMean": 29.3,
+              "queueMax": 111
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 60208,
+                "p50Nanos": 5964750,
+                "p95Nanos": 11961834,
+                "p99Nanos": 18329917,
+                "maxNanos": 54138625
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 66167,
+                "p50Nanos": 6061000,
+                "p95Nanos": 13718667,
+                "p99Nanos": 22830750,
+                "maxNanos": 54144750
+              },
+              "metricSamples": 10,
+              "queueMean": 30,
+              "queueMax": 70
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 60083,
+                "p50Nanos": 6318458,
+                "p95Nanos": 14970542,
+                "p99Nanos": 22736750,
+                "maxNanos": 121743416
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 63834,
+                "p50Nanos": 6483709,
+                "p95Nanos": 16398667,
+                "p99Nanos": 23754084,
+                "maxNanos": 121745125
+              },
+              "metricSamples": 10,
+              "queueMean": 16.3,
+              "queueMax": 49
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 100000,
+              "started": 100000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 100000,
+                "minNanos": 60917,
+                "p50Nanos": 6370833,
+                "p95Nanos": 15394292,
+                "p99Nanos": 29249958,
+                "maxNanos": 82586417
+              },
+              "scheduledAttemptLatency": {
+                "count": 100000,
+                "minNanos": 62500,
+                "p50Nanos": 6537042,
+                "p95Nanos": 17096209,
+                "p99Nanos": 32636542,
+                "maxNanos": 82589709
+              },
+              "metricSamples": 10,
+              "queueMean": 23.9,
+              "queueMax": 69
+            }
+          ],
+          "hostLifetime": {
+            "records": 40,
+            "cpuBusyMedian": 80.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 64.225,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:52:44.835507+00:00",
+            "freeBytes": 9572245504,
+            "bundleBytes": 1855401935,
+            "owned": [
+              {
+                "pid": 67190,
+                "ppid": 66708,
+                "rssBytes": 7012352,
+                "name": "experiment"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "requestsPerSecond": 10000,
+      "bundle": "var/normal-capacity-20261107-10000",
+      "report": "var/normal-capacity-20261107-10000-partial-qualification.json",
+      "reportSHA256": "a75350f33f6db43c8b1811436113ec0fbf17df2a9e4a8b0ec4686d02b5c49b8d",
+      "inventorySHA256": "2fb71e1dfe254c0fad92c81edd6260a280a7f4622cae582ae13af95adbd06670",
+      "integrity": {
+        "filesVerified": 146,
+        "legacyInventory": false,
+        "completed": false,
+        "archives": {}
+      },
+      "collectionCompleted": false,
+      "failure": {
+        "error": "ValueError('resource budget exceeded')",
+        "cleanupErrors": [],
+        "completedCases": [
+          {
+            "case": "normal-1",
+            "exit": 0,
+            "measurementValid": true
+          },
+          {
+            "case": "normal-2",
+            "exit": 0,
+            "measurementValid": true
+          }
+        ]
+      },
+      "groups": [
+        {
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "scenario": "normal",
+          "requestsPerSecond": 10000,
+          "runs": 3,
+          "passed": 2,
+          "qualified": false,
+          "minNewOrdersPerSecond": 6503.05,
+          "maxNewOrdersPerSecond": 6503.75,
+          "worstRequestP99Nanos": 16451084,
+          "worstScheduledP99Nanos": 19958083
+        }
+      ],
+      "cases": [
+        {
+          "bundle": "var/normal-capacity-20261107-10000/normal-1",
+          "runId": "1c61238d-a81f-45f9-bab0-3d9368f99920",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": true,
+          "summaryRecomputed": true,
+          "pass": true,
+          "reasons": [],
+          "measurementValid": true,
+          "requestP99Nanos": 7184500,
+          "uniqueNewOrderScheduledP99Nanos": 7261584,
+          "newOrdersPerSecond": 6503.7,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 51583,
+                "p50Nanos": 4217208,
+                "p95Nanos": 6757875,
+                "p99Nanos": 7175458,
+                "maxNanos": 14386333
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60500,
+                "p50Nanos": 4269167,
+                "p95Nanos": 6798625,
+                "p99Nanos": 7216625,
+                "maxNanos": 14423750
+              },
+              "metricSamples": 10,
+              "queueMean": 9.5,
+              "queueMax": 23
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 53208,
+                "p50Nanos": 4262042,
+                "p95Nanos": 6758417,
+                "p99Nanos": 7157583,
+                "maxNanos": 13677417
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60792,
+                "p50Nanos": 4310834,
+                "p95Nanos": 6799167,
+                "p99Nanos": 7199917,
+                "maxNanos": 13793000
+              },
+              "metricSamples": 10,
+              "queueMean": 6.5,
+              "queueMax": 22
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 51250,
+                "p50Nanos": 4286083,
+                "p95Nanos": 6811334,
+                "p99Nanos": 7248750,
+                "maxNanos": 14639208
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 58000,
+                "p50Nanos": 4332292,
+                "p95Nanos": 6857750,
+                "p99Nanos": 7310959,
+                "maxNanos": 14668542
+              },
+              "metricSamples": 10,
+              "queueMean": 8.3,
+              "queueMax": 23
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 51958,
+                "p50Nanos": 4221458,
+                "p95Nanos": 6768667,
+                "p99Nanos": 7161917,
+                "maxNanos": 14055792
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60334,
+                "p50Nanos": 4274209,
+                "p95Nanos": 6809375,
+                "p99Nanos": 7206375,
+                "maxNanos": 14093792
+              },
+              "metricSamples": 10,
+              "queueMean": 3.8,
+              "queueMax": 12
+            }
+          ],
+          "hostLifetime": {
+            "records": 30,
+            "cpuBusyMedian": 16.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 40.705,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:54:14.686694+00:00",
+            "freeBytes": 9237078016,
+            "bundleBytes": 323629871,
+            "owned": [
+              {
+                "pid": 67591,
+                "ppid": 67382,
+                "rssBytes": 9240576,
+                "name": "experiment"
+              },
+              {
+                "pid": 67599,
+                "ppid": 67591,
+                "rssBytes": 442023936,
+                "name": "exchange"
+              },
+              {
+                "pid": 67600,
+                "ppid": 67591,
+                "rssBytes": 421052416,
+                "name": "loadgen"
+              }
+            ]
+          }
+        },
+        {
+          "bundle": "var/normal-capacity-20261107-10000/normal-2",
+          "runId": "30a68af5-f60f-4344-97ef-63f5acabbbdf",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": true,
+          "summaryRecomputed": true,
+          "pass": true,
+          "reasons": [],
+          "measurementValid": true,
+          "requestP99Nanos": 7190667,
+          "uniqueNewOrderScheduledP99Nanos": 7273167,
+          "newOrdersPerSecond": 6503.75,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 50667,
+                "p50Nanos": 4194250,
+                "p95Nanos": 6761250,
+                "p99Nanos": 7207375,
+                "maxNanos": 14394958
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60542,
+                "p50Nanos": 4250958,
+                "p95Nanos": 6805000,
+                "p99Nanos": 7253792,
+                "maxNanos": 14433000
+              },
+              "metricSamples": 10,
+              "queueMean": 10.1,
+              "queueMax": 24
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 50709,
+                "p50Nanos": 4250083,
+                "p95Nanos": 6785875,
+                "p99Nanos": 7194542,
+                "maxNanos": 13254917
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 59875,
+                "p50Nanos": 4305750,
+                "p95Nanos": 6827542,
+                "p99Nanos": 7239833,
+                "maxNanos": 13291042
+              },
+              "metricSamples": 10,
+              "queueMean": 9.4,
+              "queueMax": 26
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 50792,
+                "p50Nanos": 4192875,
+                "p95Nanos": 6774333,
+                "p99Nanos": 7228917,
+                "maxNanos": 14217083
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60375,
+                "p50Nanos": 4248583,
+                "p95Nanos": 6813625,
+                "p99Nanos": 7271917,
+                "maxNanos": 14255375
+              },
+              "metricSamples": 10,
+              "queueMean": 9.8,
+              "queueMax": 21
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 50375,
+                "p50Nanos": 4181667,
+                "p95Nanos": 6741792,
+                "p99Nanos": 7141958,
+                "maxNanos": 14537667
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 61042,
+                "p50Nanos": 4239375,
+                "p95Nanos": 6782500,
+                "p99Nanos": 7189500,
+                "maxNanos": 14580042
+              },
+              "metricSamples": 10,
+              "queueMean": 6,
+              "queueMax": 25
+            }
+          ],
+          "hostLifetime": {
+            "records": 30,
+            "cpuBusyMedian": 17.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 40.575,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:55:26.252668+00:00",
+            "freeBytes": 8945250304,
+            "bundleBytes": 603700073,
+            "owned": [
+              {
+                "pid": 67717,
+                "ppid": 67382,
+                "rssBytes": 9060352,
+                "name": "experiment"
+              },
+              {
+                "pid": 67727,
+                "ppid": 67717,
+                "rssBytes": 430964736,
+                "name": "exchange"
+              },
+              {
+                "pid": 67728,
+                "ppid": 67717,
+                "rssBytes": 420134912,
+                "name": "loadgen"
+              }
+            ]
+          }
+        },
+        {
+          "bundle": "var/normal-capacity-20261107-10000/normal-3",
+          "runId": "3c0d208d-acb7-473d-aa7d-dccb99fe80e9",
+          "series": "563a1b865658dc56beda13009d3949027ad329e513321731ab42464db27d6881",
+          "serverBuild": {
+            "goVersion": "go1.27.3",
+            "goos": "darwin",
+            "goarch": "arm64",
+            "revision": "7b9e7207268f409723d7242d95f41c820975825d",
+            "revisionKnown": true,
+            "modified": false
+          },
+          "serverSHA256": "476f9e973b7c29fed0d29d64451f433fc76c5ad5afdd83ff5a7a4c49bc6e8feb",
+          "generatorSHA256": "79c9cc312aabd3ab6fb01822fbe9d7e35d1d4d769edd9432e9e9dde973809799",
+          "sealed": false,
+          "summaryRecomputed": true,
+          "pass": false,
+          "reasons": [
+            "UNSEALED_EXPERIMENT",
+            "WINDOW_2_P99"
+          ],
+          "measurementValid": true,
+          "requestP99Nanos": 16451084,
+          "uniqueNewOrderScheduledP99Nanos": 19958083,
+          "newOrdersPerSecond": 6503.05,
+          "generatorDropRate": 0,
+          "timeoutRate": 0,
+          "overloadRate": 0,
+          "windows": [
+            {
+              "startNanos": 5000000000,
+              "endNanos": 10000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 52042,
+                "p50Nanos": 4181917,
+                "p95Nanos": 6781209,
+                "p99Nanos": 7345916,
+                "maxNanos": 25545833
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 59458,
+                "p50Nanos": 4242333,
+                "p95Nanos": 6836000,
+                "p99Nanos": 7715458,
+                "maxNanos": 33701458
+              },
+              "metricSamples": 10,
+              "queueMean": 2.7,
+              "queueMax": 14
+            },
+            {
+              "startNanos": 10000000000,
+              "endNanos": 15000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 52833,
+                "p50Nanos": 4179333,
+                "p95Nanos": 6763334,
+                "p99Nanos": 7191292,
+                "maxNanos": 14397125
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 60833,
+                "p50Nanos": 4240041,
+                "p95Nanos": 6804375,
+                "p99Nanos": 7232416,
+                "maxNanos": 14435625
+              },
+              "metricSamples": 10,
+              "queueMean": 7.6,
+              "queueMax": 24
+            },
+            {
+              "startNanos": 15000000000,
+              "endNanos": 20000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 51375,
+                "p50Nanos": 4482375,
+                "p95Nanos": 9758792,
+                "p99Nanos": 30083375,
+                "maxNanos": 75569417
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 61625,
+                "p50Nanos": 4534083,
+                "p95Nanos": 10620958,
+                "p99Nanos": 37135375,
+                "maxNanos": 75826583
+              },
+              "metricSamples": 10,
+              "queueMean": 16.5,
+              "queueMax": 45
+            },
+            {
+              "startNanos": 20000000000,
+              "endNanos": 25000000000,
+              "scheduled": 50000,
+              "started": 50000,
+              "localFailures": 0,
+              "operationalFailures": 0,
+              "requestLatency": {
+                "count": 50000,
+                "minNanos": 54209,
+                "p50Nanos": 4446458,
+                "p95Nanos": 7418125,
+                "p99Nanos": 13234125,
+                "maxNanos": 29072834
+              },
+              "scheduledAttemptLatency": {
+                "count": 50000,
+                "minNanos": 62250,
+                "p50Nanos": 4502625,
+                "p95Nanos": 7717541,
+                "p99Nanos": 14371375,
+                "maxNanos": 31422208
+              },
+              "metricSamples": 10,
+              "queueMean": 8.6,
+              "queueMax": 25
+            }
+          ],
+          "hostLifetime": {
+            "records": 28,
+            "cpuBusyMedian": 16.0,
+            "displayedDiskCount": 1,
+            "diskAvailable": true,
+            "diskMBpsMedian": 42.215,
+            "diskScope": "sum of displayed devices; logical devices may overlap",
+            "scope": "whole child lifetime; coarse UTC rows, not request attribution"
+          },
+          "lastGuard": {
+            "utc": "2026-11-06T15:59:02.080382+00:00",
+            "freeBytes": 8544423936,
+            "bundleBytes": 954348293,
+            "owned": [
+              {
+                "pid": 69262,
+                "ppid": 67382,
+                "rssBytes": 5472256,
+                "name": "experiment"
+              },
+              {
+                "pid": 69272,
+                "ppid": 69262,
+                "rssBytes": 434716672,
+                "name": "exchange"
+              },
+              {
+                "pid": 69273,
+                "ppid": 69262,
+                "rssBytes": 430276608,
+                "name": "loadgen"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceStop": {
+    "freeBytes": 8544423936,
+    "minimumFreeBytes": 8589934592,
+    "bundleBytes": 954348293,
+    "maximumProcessRSSBytes": 434716672,
+    "ownedRSSBytes": 870465536,
+    "cleanupErrors": []
+  },
+  "resumePolicy": "Preserve both rate groups and the unsealed interrupted repeat. Never replace/resume normal-3 at 10000/s. Once space/host permit, measure the planned 5000/s lower-bound point as three fresh runs on the same frozen build. An infrastructure-interrupted point cannot establish a capacity upper bound; 20000/s remains the measured valid failed upper point.",
+  "powerLossTested": false,
+  "performanceImprovementClaimed": false
+}
