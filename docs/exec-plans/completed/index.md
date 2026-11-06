@@ -4,7 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
-| [재현 가능한 실험 도구](20261106-reproducible-diagnostics.md) | 2026-11-06 | run/analyze/verify·타이머/재집계 CLI·계측 overlay·명령/CI 연결 | portable 205개·native race 237개, Python 9개·네 suite smoke·과거 네 묶음 재분석 일치. 장시간 재실행·원격 CI·전원 장애는 미검증 |
+| [재현 가능한 실험 도구](20261106-reproducible-diagnostics.md) | 2026-11-06 | run/analyze/verify·타이머/재집계 CLI·계측 overlay·명령/CI 연결 | portable 205개·native race 237개, Python 10개·네 suite smoke·과거 네 묶음 재분석 일치. 장시간 재실행·원격 CI·전원 장애는 미검증 |
 | [타이머 trace 켬·끔 대조](20261106-timer-trace-control.md) | 2026-11-06 | 4조건 240,000개 검증, trace 끔에서도 50ms 한도 초과 확인 | 각 조건 1회·호스트 상태/UTC 변화 관찰, 인과 효과 미확정 |
 | [타이머 분리·저장 OS I/O 관찰](20261103-timer-os-io.md) | 2026-11-03 | worker 한도 초과 재현, C 호출·프로세스 I/O 누계 관찰 | 실제 거래 전체 복구 일치, 커널 내부 추적 미확보·계측 영향 미확정 |
 | [실행 trace·호스트 자원 진단](20261103-trace-host-diagnosis.md) | 2026-11-03 | 실행 대기·WAL sync 경계와 전체 복구 확인 | 끔/켬 각 600초, 50ms 미전송 미재현·호스트/시각 정렬 한계 |

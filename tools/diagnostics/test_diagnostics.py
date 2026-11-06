@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from analysis import timer
+from analysis import host_lifetime, timer
 from archive import archive, verify_archive
 from build import prepare_overlay
 from common import child, decode, digest, read, save, seal, verify
@@ -14,6 +14,27 @@ from trace_reader import parse
 
 
 class DiagnosticTests(unittest.TestCase):
+    def test_iostat_cpu_only_single_and_multiple_devices(self):
+        for disks in [0, 1, 2]:
+            with self.subTest(disks=disks), tempfile.TemporaryDirectory() as temp:
+                path = Path(temp)/'host.jsonl'
+                text = [' '.join(['disk'+str(i) for i in range(disks)]+['cpu']),
+                        ' '.join(['KB/t', 'tps', 'MB/s']*disks+['us', 'sy', 'id']),
+                        ' '.join(['1', '2', '99']*disks+['50', '20', '30']),
+                        ' '.join(['1', '2', '3']*disks+['10', '20', '70']),
+                        ' '.join(['1', '2', '5']*disks+['20', '20', '60'])]
+                path.write_text(''.join(json.dumps({'line': s})+'\n' for s in text))
+                result = host_lifetime(path)
+                self.assertEqual(result['records'], 2)
+                self.assertEqual(result['cpuBusyMedian'], 35)
+                self.assertEqual(result['displayedDiskCount'], disks)
+                self.assertEqual(result['diskAvailable'], bool(disks))
+                self.assertEqual(result['diskMBpsMedian'], 4*disks if disks else None)
+                with path.open('a') as target:
+                    target.write(json.dumps({'line': '1 2 3 4'})+'\n')
+                with self.assertRaisesRegex(ValueError, 'row/header mismatch'):
+                    host_lifetime(path)
+
     def test_seal_rejects_mutation_extra_file_and_path_escape(self):
         for mutation in ['bytes', 'extra', 'path']:
             with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temp:

@@ -132,6 +132,40 @@ def process_io(case):
             'selectedWalCalls': selected}
 
 
+def host_lifetime(path):
+    raw = lines(path)
+    columns, samples = None, []
+    for record in raw:
+        tokens = record['line'].split()
+        if tokens[-3:] == ['us', 'sy', 'id']:
+            prefix = tokens[:-3]
+            require(len(prefix) % 3 == 0 and prefix == ['KB/t', 'tps', 'MB/s']*(len(prefix)//3),
+                    'unsupported iostat disk header')
+            require(columns is None or columns == tokens, 'iostat columns changed during collection')
+            columns = tokens
+            continue
+        try:
+            values = list(map(float, tokens))
+        except ValueError:
+            continue
+        if not values:
+            continue
+        require(columns is not None and len(values) == len(columns), 'iostat row/header mismatch')
+        require(all(math.isfinite(v) and v >= 0 for v in values)
+                and all(v <= 100 for v in values[-3:]), 'invalid iostat counters')
+        disks = (len(columns)-3)//3
+        samples.append({'cpuBusyPercent': 100-values[-1],
+                        'diskMBps': sum(values[2:-3:3]) if disks else None})
+    samples = samples[1:]  # First numeric row is the since-boot average.
+    require(samples, f'no host interval samples; first rows: {[r["line"] for r in raw[:8]]}')
+    disks = (len(columns)-3)//3
+    return {'records': len(samples), 'cpuBusyMedian': statistics.median(x['cpuBusyPercent'] for x in samples),
+            'displayedDiskCount': disks, 'diskAvailable': bool(disks),
+            'diskMBpsMedian': statistics.median(x['diskMBps'] for x in samples) if disks else None,
+            'diskScope': 'sum of displayed devices; logical devices may overlap',
+            'scope': 'whole child lifetime; coarse UTC rows, not request attribution'}
+
+
 def trade(case, checker, scratch):
     generated = scratch/(case.name+'-raw.json')
     subprocess.run([str(checker), str(case/'loadgen'), str(generated)], check=True, capture_output=True)
@@ -205,20 +239,7 @@ def trade(case, checker, scratch):
         result['processIO'] = process_io(case)
     host = case.parent/(case.name+'-host.jsonl')
     if host.exists():
-        rows = []
-        for r in lines(host):
-            try:
-                v = list(map(float, r['line'].split()))
-            except ValueError:
-                continue
-            if len(v) == 6:
-                rows.append({'utc': r['utc'], 'cpuBusyPercent': 100-v[5], 'diskMBps': v[2]})
-        rows = rows[1:]  # iostat's first numeric row is since-boot average.
-        require(rows, 'no host interval samples')
-        result['hostLifetime'] = {'records': len(rows),
-                                 'cpuBusyMedian': statistics.median(x['cpuBusyPercent'] for x in rows),
-                                 'diskMBpsMedian': statistics.median(x['diskMBps'] for x in rows),
-                                 'scope': 'whole child lifetime; coarse UTC rows, not request attribution'}
+        result['hostLifetime'] = host_lifetime(host)
     return result
 
 

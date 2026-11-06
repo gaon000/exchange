@@ -34,6 +34,8 @@ def main():
         cli('verify', '--bundle', bundle, '--output', root/'verified.json')
         cli('analyze', '--bundle', bundle, '--output', root/'analysis.json')
         if options.mode == 'native':
+            print(json.dumps({'stage': 'host-observation', 'hostLifetime':
+                              read(root/'analysis.json')['cases']['on-1']['hostLifetime']}), flush=True)
             # The standalone raw checker accepts any directory name, not only
             # the suite's conventional "loadgen" child.
             renamed = root/'renamed-input'

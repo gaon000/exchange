@@ -55,3 +55,5 @@ tools/diagnostics의 run/analyze/verify, tools/timerprobe, tools/experimentcheck
 
 - 재집계 CLI가 진단 입력 경로의 이름을 `loadgen`으로 가정하던 제약을 수정했다. 지정한 경로를 그대로 사용하며 native smoke에서 입력 디렉터리를 `renamed-input`으로 복사한 후 독립 재집계 성공을 검사한다.
 - 후속 검토의 전체 portable/native CI 스크립트를 통과했다. portable Go 205개·native race 237개, 각 Python 9개와 실제 smoke를 확인했다. 근거는 `var/ci/portable.USmzGc`, `var/ci/native.aU628n`과 `var/repro-tools-release-{portable,native}.log`다. 장시간 실험·실제 전원 장애는 재실행하지 않았다.
+- 첫 원격 CI 실행 42184471552는 portable 통과, native Go 237개·Python 9개 통과 후 호스트 분석에서 실패했다. 6열 고정 파서를 iostat 헤더 기반으로 바꾸고 CPU만·단일·복수 디스크와 열 불일치 회귀 검사를 추가했다. 디스크 미표시는 0으로 채우지 않고 unavailable/null로 기록한다. Python 일반/`-O` 회귀 10개 통과. 최종 원격 CI는 수정 커밋에서 다시 확인한다.
+- 호스트 파서 보완 후 기존 trace 끔/켬과 I/O 거래의 호스트 record 수·CPU 중앙값·디스크 중앙값이 이전 분석과 일치했다. 로컬 재검증 근거는 `var/repro-tools-host-fix-{portable,native}.log`다.
