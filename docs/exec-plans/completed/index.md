@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [스냅샷 실패 구간과 정상 처리량](20261107-snapshot-window-capacity.md) | 2026-11-09 | master 반영/CI·snapshot 응답 tail/저장 분석·정상 관찰 채택점 2,000/s와 인접 3,000/s 미채택 확인 | 이전 중단/실패 포함 15개 판정·새 9개 봉인/무결성·source CI 통과. 병행 호스트 부하 관측·내재 최대/회귀 미판정·전원 장애 보류 |
 | [낮은 요청률 기준과 정수 JSON 비교](20261106-lower-rate-baselines.md) | 2026-11-06 | 정상 10,000/s 3/3 채택·snapshot 1,000/s 2/3 미채택, JSON 할당 감소 후보 유지 | 후보 정상 3/3·원본/조건/자동 비교·Python 27개·portable 206개·native race 238개 통과. 인과 지연/최대 처리량 향상 미주장·전원 장애 보류 |
 | [현재 기준 반복 측정](20261106-controlled-baseline.md) | 2026-11-06 | clean pin·환경 gate·6회 기준 재집계·실패 보존 | 정상 0/3·snapshot 2/3로 모두 미채택. Python 25개·portable 205개·native race 237개·실제 중단 확인. 전원 장애 보류 |
 | [실험 결과 비교 자동화](20261106-experiment-comparison.md) | 2026-11-06 | 원본 재검증·기존 P6 판정 재사용·JSON/Markdown·조건/무효/중복 보존 | Python 17개·portable 205개·native race 237개·실제 비교 smoke·보관 자료 검증. 실제 개선 채택 없음·전원 장애 보류 |
