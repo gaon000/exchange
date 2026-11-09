@@ -123,7 +123,9 @@ P6 snapshot 원본의 창별 요청과 서버 누적 계측을 대조하려면 �
 python3 tools/diagnostics/snapshot_windows.py --output var/snapshot-window-analysis var/lower-rate-reference/snapshot-1 var/lower-rate-resumed-3/snapshot-2 var/lower-rate-resumed-3/snapshot-3
 ```
 
-이 경로는 로컬 보존 자료 예시다. 각 5초 cohort의 마지막 응답이 창 끝을 넘으면 그 응답을 포함하는 다음 서버 관측까지 확장한다. 따라서 인접 창의 서버 관측이 겹치거나 다른 작업을 포함할 수 있다. 개별 요청의 인과 관계·물리 I/O 원인이나 성능 채택을 자동 판정하지 않는다. GC pause와 병렬 GC CPU, snapshot 호출과 상태 복사, 누적 최대와 구간 최대를 구분한다.
+이 경로는 로컬 보존 자료 예시다. 각 5초 cohort의 마지막 응답이 창 끝을 넘으면 그 응답 이후 수집을 시작한 다음 서버 관측까지 확장한다. 수집 도중 응답이 끝났다면 수집 종료 시각만으로는 모든 카운터의 반영을 보장하지 못하므로 다음 관측을 사용한다. 따라서 인접 창의 서버 관측이 겹치거나 다른 작업을 포함할 수 있다. 개별 요청의 인과 관계·물리 I/O 원인이나 성능 채택을 자동 판정하지 않는다. GC pause와 병렬 GC CPU, snapshot 호출과 상태 복사, 누적 최대와 구간 최대를 구분한다.
+
+2026-11-09 머지 검토에서 수집 중 끝난 응답의 카운터 누락 가능성을 보정했다. 수집 종료 시각뿐 아니라 마지막 응답 이후 수집 시작 시각을 요구한다. 경계 회귀 2개를 보완했고 보관 snapshot 3개를 재분석해 기존 관측/분포/판정이 동일함을 확인했다. 당시 원본과 보고서는 이전 source hash로 보존한다.
 
 ## 자동 검증
 

@@ -16,12 +16,19 @@ class SnapshotWindowTests(unittest.TestCase):
 
     def test_includes_next_observation_and_response_tail(self):
         times = [0, .5, 1, 1.5, 2, 2.5]
-        self.assertEqual(enclosing(times, .1, 1.9), (0, 4))
+        self.assertEqual(enclosing(times, times, .1, 1.9), (0, 4))
         # Scheduled window ends at 2s, but its final response ends at 2.1s.
-        self.assertEqual(enclosing(times, .1, 2.1), (0, 5))
-        self.assertEqual(enclosing(times, .5, 2), (1, 4))
+        self.assertEqual(enclosing(times, times, .1, 2.1), (0, 5))
+        self.assertEqual(enclosing(times, times, .5, 2), (1, 4))
+
+    def test_response_during_collection_requires_the_next_collection(self):
+        self.assertEqual(enclosing([.1, 1.1, 2.1], [0, 1, 2], .2, 1.05), (0, 2))
+
+    def test_rejects_final_collection_started_before_the_last_response(self):
+        with self.assertRaisesRegex(ValueError, 'enclose'):
+            enclosing([.1, 1.1], [0, 1], .2, 1.05)
 
     def test_rejects_unobserved_cohort_boundaries(self):
         for start, end in ((-1, 1), (0, 3), (2, 1)):
             with self.subTest(start=start, end=end), self.assertRaises(ValueError):
-                enclosing([0, 1, 2], start, end)
+                enclosing([0, 1, 2], [0, 1, 2], start, end)

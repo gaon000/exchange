@@ -10,10 +10,13 @@ from common import REPO, digest, lines, read, require, save, seal
 from metrics import at, distribution, histogram, interval, stamp
 
 
-def enclosing(times, start, end):
-    """Enclose a cohort through its last response, rather than floor both ends."""
+def enclosing(times, collection_starts, start, end):
+    """Use counters collected wholly before/after the response cohort."""
+    require(len(times) == len(collection_starts), 'metrics collection boundary mismatch')
     i = bisect.bisect_right(times, start) - 1
-    j = bisect.bisect_left(times, end)
+    # A collection ending after the response may have read a counter before
+    # that response. Its start must also follow the response to cover it.
+    j = bisect.bisect_left(collection_starts, end)
     require(0 <= i < j < len(times), 'metrics do not enclose the response cohort')
     return i, j
 
@@ -40,7 +43,11 @@ def align(case, decision):
     samples = [r for r in lines(case/'loadgen/samples.jsonl') if r['index'] in plan]
     metrics = lines(case/'server-metrics.jsonl')
     times = [stamp(r['finishedUTC']) for r in metrics]
-    require(all(a < b for a, b in zip(times, times[1:])), 'non-monotonic server UTC observations')
+    collection_starts = [stamp(r['startedUTC']) for r in metrics]
+    require(all(a < b for a, b in zip(times, times[1:]))
+            and all(a < b for a, b in zip(collection_starts, collection_starts[1:]))
+            and all(a <= b for a, b in zip(collection_starts, times)),
+            'non-monotonic server UTC observations')
     snapshots = lines(case/'snapshot-events.jsonl')
     host_path = case.parent/(case.name+'-host.jsonl')
     host = host_rows(host_path) if host_path.is_file() else []
@@ -55,7 +62,7 @@ def align(case, decision):
                 'request cohort disagrees with benchreport')
         response_end = max([hi]+[r['finishedNanos'] for r in started])
         start, end = epoch+lo/1e9, epoch+response_end/1e9
-        i, j = enclosing(times, start, end)
+        i, j = enclosing(times, collection_starts, start, end)
         a, b = metrics[i], metrics[j]
         observation = interval(metrics, times, times[i], times[j], True)
         observation['snapshotStages'] = {}
@@ -77,7 +84,7 @@ def align(case, decision):
     slow_intervals = []
     seen = set()
     for r in slowest:
-        i, j = enclosing(times, epoch+r['startedNanos']/1e9, epoch+r['finishedNanos']/1e9)
+        i, j = enclosing(times, collection_starts, epoch+r['startedNanos']/1e9, epoch+r['finishedNanos']/1e9)
         if (i, j) not in seen:
             seen.add((i, j))
             slow_intervals.append(interval(metrics, times, times[i], times[j], True))
@@ -118,6 +125,7 @@ def main():
         save(output/'report.json', {'version': 1, 'diagnosticOnly': True, 'cases': records,
              'notes': ['UTC alignment is approximate; endpoint drift is not an error bound.',
                        'Server intervals enclose the full response cohort and may contain unrelated work.',
+                       'The ending collection starts after the last response; collection finish alone is insufficient.',
                        'Histogram deltas measure completed calls; stage durations are not request-attributed.',
                        'Host UTC rows are coarse whole-host observations, not per-request attribution.',
                        'Generator GC is available only for its full lifetime, not per-window.',
