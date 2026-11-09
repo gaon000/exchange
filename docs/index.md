@@ -15,6 +15,8 @@
 
 ## 작업별 읽기
 
+[정상 세 조건 재측정](benchmarks/normal-capacity-recheck.md)은 신규 2,000/3,000/s 각 3/3·5,000/s 1/3 통과와 이전 실패를 포함한 누적 24개 판정을 구분한다.
+
 [스냅샷 실패 구간과 정상 처리량](benchmarks/snapshot-window-capacity.md)은 저장/GC/호스트 대조와 재개 후 정상 관찰 채택점 2,000/s·인접 3,000/s 미채택을 기록한다. 이전 실패/중단 포함 15개 판정과 병행 브라우저 부하를 보존하며 서버의 내재 최대 용량으로 확정하지 않는다.
 
 [낮은 요청률과 정수 JSON 비교](benchmarks/lower-rate-integer-comparison.md)는 정상 10,000/s 3/3 채택·snapshot 1,000/s 2/3 미채택과 JSON 할당 감소 후보의 정상 3회 비교를 기록한다. 전체 p99/CPU 차이는 관찰값이며 인과 효과·최대 처리량 향상으로 해석하지 않는다. [중단 시점 기록](benchmarks/lower-rate-progress.md)과 실패도 보존한다.
