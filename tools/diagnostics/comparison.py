@@ -43,7 +43,7 @@ def fingerprint(value):
     return hashlib.sha256(canonical(value).encode()).hexdigest()
 
 
-def spec_inputs(path):
+def spec_inputs(path, resolver=None):
     path = path.resolve()
     data = read(path)
     require(set(data) <= {'version', 'criteria', 'comparisons'} and data['version'] == 1,
@@ -61,14 +61,17 @@ def spec_inputs(path):
             for entry in group[side]:
                 require(isinstance(entry, dict) and set(entry) <= {'bundle', 'case'}
                         and isinstance(entry.get('bundle'), str) and entry['bundle'], 'invalid input selector')
-                entry['bundle'] = str((path.parent/entry['bundle']).resolve())
+                selected = path.parent/entry['bundle']
+                entry['bundle'] = str(resolver(selected) if resolver else selected.resolve())
                 if 'case' in entry:
                     require(isinstance(entry['case'], str) and len(Path(entry['case']).parts) == 1,
                             'case must name one immediate directory')
                     child(Path(entry['bundle']), entry['case'])
                 total += 1
     require(total <= 100, 'maximum total inputs is 100')
-    criteria = (path.parent/data['criteria']).resolve() if 'criteria' in data else REPO/'config/benchmarks/criteria-v1.json'
+    criteria = path.parent/data['criteria'] if 'criteria' in data else (
+        'config/benchmarks/criteria-v1.json' if resolver else REPO/'config/benchmarks/criteria-v1.json')
+    criteria = resolver(criteria) if resolver else Path(criteria).resolve()
     return data, criteria
 
 
@@ -386,8 +389,8 @@ def markdown(report):
     return '\n'.join(output)
 
 
-def compare(spec_path, output):
-    spec, criteria = spec_inputs(spec_path)
+def compare(spec_path, output, resolver=None):
+    spec, criteria = spec_inputs(spec_path, resolver)
     criteria_data = read(criteria)
     minimum = criteria_data['minimumRepeats']
     require(type(minimum) is int and 3 <= minimum <= 100 and criteria_data['version'] == 1

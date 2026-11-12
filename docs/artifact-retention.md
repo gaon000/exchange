@@ -35,7 +35,7 @@ python3 tools/diagnostics/artifacts.py --output var/artifact-reports/review-001
 
 삭제 후보도 자동 삭제 승인이 아니다. 오래됐거나 크다는 이유만으로 후보로 만들지 않는다. 정리 시점에는 다른 프로세스의 새 출력/참조와 정책 변경을 포함해 다시 조사해야 한다.
 
-- `protocol.json`, `artifact-manifest.json`, `build.json`, `producer-build.json`, `failed.json`이 있는 단위는 원본/고정 빌드로 보호한다. 내부 Genesis/WAL·raw samples, demo/run summary도 보호한다.
+- `protocol.json`, `artifact-manifest.json`, `build.json`, `producer-build.json`, `failed.json`, `package-index.json`, `restore-index.json`이 있는 단위는 원본/고정 빌드로 보호한다. 내부 Genesis/WAL·raw samples, demo/run summary도 보호한다.
 - 요청 파일·실행 데이터·archive와 receipt·기존 cleanup audit는 보호한다. 현재/이전 실행의 실패와 중단을 성공으로 덮어쓰거나 후보로 바꾸지 않는다.
 - CI는 mode별 최신 실행과 실패/미완료 실행을 보호한다. 실패 로그도 보존한다. 성공한 과거 CI라도 문서/다른 metadata가 인용하면 보호한다.
 - diagnostic `manifest.json`을 가진 단위는 봉인 원본으로 보호한다. `report.json`, `report.md`, `qualification.json`만 담은 파생 보고서 manifest는 멤버의 현재 크기/해시가 일치할 때만 일반 분류를 적용한다.
@@ -79,3 +79,5 @@ bash scripts/ci.sh native
 회귀 검사는 임시 Git 저장소에서 경로/brace/hash와 재개/순환 참조, 봉인 원본과 파생 보고서, 최신/실패 CI, symlink·읽기 실패·입력 변경·용량과 실제 명령 출력을 확인한다. 공용 CI의 Python discover에 포함되며 대용량 실제 var 스캔이나 새 부하 측정은 CI에서 수행하지 않는다.
 
 2026-11-12 실제 조사와 기존 파일/해시 보존, 로컬 CI 및 마지막 경로 검증 회귀 결과는 [완료 계획](exec-plans/completed/20261112-artifact-retention.md)에 기록했다.
+
+[패키징·복원 도구](evidence-packages.md)는 보존할 원본과 고정 빌드·이전 실행을 새 패키지로 복사하고 복원 자료를 재검증한다. 보관 미리보기는 이들 package/restore index를 보호 표시로 인식하며 자동 삭제를 수행하지 않는다.

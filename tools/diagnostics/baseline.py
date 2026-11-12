@@ -142,7 +142,7 @@ def power_and_thermal(root, label):
             require(int(line.rsplit('=', 1)[1].strip().rstrip(';')) == 100, 'OS reports CPU throttling')
 
 
-def resume_state(root, selected_order, hashes, runtime_env, seen=None):
+def resume_state(root, selected_order, hashes, runtime_env, seen=None, resolver=None):
     root = root.resolve()
     seen = set() if seen is None else seen
     require(root not in seen and len(seen) < 16, 'resume dependency cycle or excessive depth')
@@ -158,9 +158,9 @@ def resume_state(root, selected_order, hashes, runtime_env, seen=None):
     inherited, parent_results = {}, []
     if protocol.get('resumeFrom'):
         reference = protocol['resumeFrom']
-        parent = Path(reference['path']).resolve()
+        parent = resolver(reference['path']) if resolver else Path(reference['path']).resolve()
         require(digest(parent/'manifest.json') == reference['manifestSHA256'], 'resume parent manifest changed')
-        parent_results, inherited = resume_state(parent, selected_order, hashes, runtime_env, seen)
+        parent_results, inherited = resume_state(parent, selected_order, hashes, runtime_env, seen, resolver)
     results = failure['completedCases']
     names = [x[0] for x in selected_order]
     require([x['case'] for x in results] == names[:len(results)] and len(parent_results) <= len(results) < len(names)
@@ -179,14 +179,14 @@ def resume_state(root, selected_order, hashes, runtime_env, seen=None):
     return results, paths
 
 
-def verify_dependencies(root):
+def verify_dependencies(root, resolver=None):
     protocol = read(root/'protocol.json')
     reference = protocol.get('resumeFrom')
     if not reference:
         return {'parentCasesVerified': 0}
-    parent = Path(reference['path']).resolve()
+    parent = resolver(reference['path']) if resolver else Path(reference['path']).resolve()
     require(digest(parent/'manifest.json') == reference['manifestSHA256'], 'resume parent manifest changed')
-    results, _ = resume_state(parent, protocol['order'], protocol['binarySHA256'], protocol['runtimeEnvironment'])
+    results, _ = resume_state(parent, protocol['order'], protocol['binarySHA256'], protocol['runtimeEnvironment'], resolver=resolver)
     return {'parentCasesVerified': len(results), 'parentManifestSHA256': reference['manifestSHA256']}
 
 

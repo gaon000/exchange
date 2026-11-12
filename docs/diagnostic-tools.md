@@ -140,3 +140,7 @@ bash scripts/ci.sh native
 ```
 
 공용 CI 스크립트는 Go 검사 뒤 Python 회귀 검사와 새 묶음 smoke를 실행한다. portable은 타이머 네 조건, native는 trace·C/OS I/O·거래/복구·archive를 검사한다. 두 smoke 모두 기존 출력 재사용과 재해시한 의미 변조가 거절되는지도 확인한다. CI의 smoke 묶음은 임시 디렉터리이며 검사 후 정리한다. 수동 `run`은 완료·실패 원본을 보존한다. 전체 CI는 지원 플랫폼/권한에서 실행하며 실제 GitHub CI 통과 여부는 push 후 별도로 확인한다.
+
+## 실험 자료 패키징·복원
+
+[evidence.py 안내](evidence-packages.md)는 봉인 collection·재개 부모·고정 빌드와 비교 명세/기준을 모아 패키징하고, 원본을 유지한 채 새 폴더에서 무결성·원본 재집계와 JSON/Markdown 비교표를 재생성한다. 보관 바이너리는 실행하지 않으며 새 부하 측정은 시작하지 않는다.

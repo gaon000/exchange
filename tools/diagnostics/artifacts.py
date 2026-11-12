@@ -21,7 +21,8 @@ TEXT = {'.md', '.json', '.txt', '.log', '.py', '.sh', '.go', '.mod', '.stdout', 
 MAX_TEXT = 8 * 2**20
 MAX_TOTAL_TEXT = 256 * 2**20
 RAW_NAMES = {'genesis.bin', 'commands.wal', 'samples.jsonl', 'plan.jsonl'}
-MARKERS = {'protocol.json', 'artifact-manifest.json', 'build.json', 'producer-build.json', 'failed.json'}
+MARKERS = {'protocol.json', 'artifact-manifest.json', 'build.json', 'producer-build.json', 'failed.json',
+           'package-index.json', 'restore-index.json'}
 DERIVED = {'report.json', 'report.md', 'qualification.json'}
 BRACES = re.compile(r'\{([A-Za-z0-9_./-]+(?:,[A-Za-z0-9_./-]+)+)\}')
 HASH = re.compile(r'(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])')

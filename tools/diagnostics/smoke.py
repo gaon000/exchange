@@ -7,6 +7,7 @@ import shutil
 import sys
 import tempfile
 from common import REPO, digest, read, save, seal
+from evidence import create, restore, reproduce
 
 
 def cli(*args, success=True):
@@ -45,6 +46,19 @@ def main():
                 or 'SHARED_RUNS_BETWEEN_SIDES' not in comparison['judgement']['blockers']
                 or not (root/'comparison/report.md').is_file()):
             raise RuntimeError('retained-input comparison or duplicate-run rejection failed')
+        # Package only this smoke's owned fixtures. Hide originals temporarily:
+        # regeneration must use restored bytes, including archived native state.
+        create(REPO, [], [spec], root/'package')
+        restore(root/'package', root/'restored')
+        bundle.rename(root/'original-unavailable')
+        spec.rename(root/'spec-unavailable.json')
+        try:
+            reproduced = reproduce(root/'restored', root/'reproduced')
+            if reproduced['status'] != 'PASSED' or len(reproduced['comparisons']) != 1:
+                raise RuntimeError('isolated package reproduction failed')
+        finally:
+            (root/'original-unavailable').rename(bundle)
+            (root/'spec-unavailable.json').rename(spec)
         if options.mode == 'native':
             print(json.dumps({'stage': 'host-observation', 'hostLifetime':
                               read(root/'analysis.json')['cases']['on-1']['hostLifetime']}), flush=True)
@@ -91,7 +105,7 @@ def main():
         if (comparison['baseline'][0]['status'] != 'error' or comparison['candidate'][0]['status'] != 'error'
                 or comparison['judgement']['eligibleForReview'] or comparison['judgement']['improvementClaimed']):
             raise RuntimeError('comparison accepted semantically corrupted evidence')
-    print(f'diagnostic {options.mode} smoke passed: fresh run, verify, analyze, no-reuse, semantic tamper')
+    print(f'diagnostic {options.mode} smoke passed: fresh run, isolated package restore/reproduce, no-reuse, semantic tamper')
 
 
 if __name__ == '__main__':
