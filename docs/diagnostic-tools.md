@@ -71,6 +71,8 @@ python3 tools/diagnostics/experiment.py run --suite timer --preset ten-minute --
 
 출력 묶음은 계속 Git 제외 `var/`에 둔다. 도구·fixture·템플릿·명령만 저장소가 관리한다.
 
+보관 용량과 기존 자료의 정리 후보는 [실험 자료 미리보기](artifact-retention.md)로 확인한다. 원본/고정 빌드·참조를 보호하고 JSON/Markdown 목록만 생성하며 실제 삭제는 수행하지 않는다.
+
 | 파일 | 의미 |
 | --- | --- |
 | `protocol.json`, `environment.json` | 조건 순서·반복·기준 revision/dirty·source/binary hash·환경 |
