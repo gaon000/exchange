@@ -123,6 +123,7 @@ func (T) TestMethod() {}
 
 func TestCoverageRequiresModeSpecificIntegrationTests(t *testing.T) {
 	portable := expectations{
+		module + "cmd/trade":          {"TestSavedRequestBeforeSendAndExactRetry": true},
 		module + "internal/wal":       {"TestUnsupportedStorageDoesNotCreateFiles": true},
 		module + "internal/snapshot":  {"TestUnsupportedPublicationDoesNotCreateFiles": true},
 		module + "cmd/exchange":       {"TestInitUnsupportedDoesNotCreateRun": true},
@@ -155,6 +156,14 @@ func TestNativeCoverageRequiresExpandedDemo(t *testing.T) {
 		t.Fatal("expanded demo could be omitted", err)
 	}
 	native[module+"cmd/demo"]["TestNativeExpandedTradingRecovery"] = true
+	if err := requireCoverage(native, "native"); err == nil || !strings.Contains(err.Error(), "cmd/trade") {
+		t.Fatal("trading CLI could be omitted", err)
+	}
+	native[module+"cmd/trade"] = map[string]bool{"TestSavedRequestBeforeSendAndExactRetry": true}
+	if err := requireCoverage(native, "native"); err == nil || !strings.Contains(err.Error(), "TestNativeTradingCLIAndRestart") {
+		t.Fatal("native trading CLI could be omitted", err)
+	}
+	native[module+"cmd/trade"]["TestNativeTradingCLIAndRestart"] = true
 	if err := requireCoverage(native, "native"); err != nil {
 		t.Fatal(err)
 	}

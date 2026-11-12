@@ -148,6 +148,12 @@ func requireCoverage(expected expectations, mode string) error {
 	if mode == "native" && !expected[module+"cmd/demo"]["TestNativeExpandedTradingRecovery"] {
 		return fmt.Errorf("missing native coverage: cmd/demo/TestNativeExpandedTradingRecovery")
 	}
+	if !expected[module+"cmd/trade"]["TestSavedRequestBeforeSendAndExactRetry"] {
+		return fmt.Errorf("missing coverage: cmd/trade/TestSavedRequestBeforeSendAndExactRetry")
+	}
+	if mode == "native" && !expected[module+"cmd/trade"]["TestNativeTradingCLIAndRestart"] {
+		return fmt.Errorf("missing native coverage: cmd/trade/TestNativeTradingCLIAndRestart")
+	}
 	return nil
 }
 
