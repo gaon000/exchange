@@ -4,13 +4,9 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. 범위와 사용자 관찰 동작은 [제품 명세](docs/product-specs/exchange.md)가 소유한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·runtime·snapshot 생성/복구를 구현했다. P5의 HTTP handler·loopback 서버와 초기화/실행 CLI, 실제 거래·과부하·저장 오류·종료·재시작 테스트를 추가했다. P6 부하 실행·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준 처리량과 snapshot 조건의 목표 미달을 기록했다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)의 정렬 이동 후보는 반복 기준 미달로 미채택하고 P6 구현을 유지했다. [스냅샷 처리 한계](docs/benchmarks/p7-snapshot-capacity.md)는 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미검증·보류 상태다. [CI](.github/workflows/ci.yml)는 일반 로직과 macOS/APFS 검사를 분리하며, 실행 범위와 원격 확인 절차는 [개발 기준](docs/development.md#ci와-릴리스)을 따른다.
+2026-11-12 기준 단일 owner 엔진·WAL/snapshot·로컬 HTTP/서버 CLI, 부하/계측/판정 도구와 실제 소프트웨어 장애/복구 검증을 구현했다. 거래·복구 데모와 수동 거래 CLI, 실험 자료 보관 미리보기도 제공한다. 아래 모듈 표는 현재 구현을 설명한다.
 
-2026-10-30에는 [10분 부하 비교](docs/benchmarks/soak-10m-snapshot-comparison.md), [스냅샷 단계 계측](docs/benchmarks/snapshot-stage-breakdown.md), [복구 디코더 최적화](docs/benchmarks/snapshot-decoder-optimization.md)를 완료했다. decoder 후보는 동일 상태 5쌍에서 전체 복구 중앙값 32.5% 감소와 상태 bytes 일치를 확인해 채택했다. 생성 비용과 owner 사본 생성·동시 부하 지연은 별도 검증 대상으로 구분했다.
-
-2026-11-02에는 [스냅샷 생성 사전 계산](docs/benchmarks/snapshot-preflight-optimization.md)에서 중복 직렬화를 제거했다. 동일 상태 5쌍의 생성 중앙값은 29.7%, 해당 크기 검사 단계는 79.4% 감소했다. 2회차 후보의 지연 증가도 포함했으며 저장 bytes·재시작·양방향 버전 호환을 확인했다. owner 복사/정렬과 실제 writer·sync 계약은 유지했다. 고정 상태 비교만으로 동시 주문 p99·처리량의 개선을 주장하지 않는다.
-
-같은 날 [최적화 버전 10분 부하·복구 비교](docs/benchmarks/optimized-soak-10m-comparison.md)를 수행했다. 끔/켬 모두 전체 복구는 일치했고 켬의 CPU·평균 snapshot 생성·복구 시간은 줄었다. 전체 요청 p99는 두 조건 모두 이전보다 높았고 켬은 생성기 미전송 9건으로 measurementValid=false였다. 두 조건 모두 누락 0·5초 구간별 20ms 참조 기준을 함께 만족하지 못했다.
+구현 기준 코드·시점별 성능·검증과 한계는 [프로젝트 결과 보고서](docs/project-results.md), 반복 원본과 채택 판정은 각 [benchmark 문서](docs/index.md#작업별-읽기)에서 관리한다. 과거 snapshot 정렬 이동 후보는 미채택했고, 이후 고정 상태의 decode/중복 직렬화 최적화는 채택했다. 동시 주문의 지연·처리량 개선이나 현재 코드의 최대 성능을 확정한 것은 아니다. 실제 OS·전원 장애 검증은 미완료·보류이며 전체 v1 계획은 Blocked다.
 
 ## 현재 문서 지도
 
@@ -33,6 +29,7 @@
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [.github/workflows/ci.yml](.github/workflows/ci.yml), [scripts/ci.sh](scripts/ci.sh), [tools/civerify](tools/civerify/main.go) | 일반/실제 저장 CI, 로컬 공용 검사, 선택된 테스트와 실행 결과 대조. 거래 runtime에서 사용하지 않음 |
 | [tools/diagnostics](tools/diagnostics/experiment.py), [tools/timerprobe](tools/timerprobe/main.go), [tools/experimentcheck](tools/experimentcheck/main.go) | 새 실행·전체 복구·원본 재집계·trace/OS I/O·타이머 진단·[현재 기준 반복](docs/controlled-baseline.md)과 [기준·후보 비교](docs/experiment-comparison.md). [명령과 경계](docs/diagnostic-tools.md)를 따르며 runtime 의존 경로에 포함하지 않음 |
+| [tools/diagnostics/artifacts.py](tools/diagnostics/artifacts.py), [보존 정책](config/artifact-retention.json) | var 용량·경로/해시 참조와 원본/고정 빌드 보호·읽기 전용 정리 미리보기. 거래 runtime에서 사용하지 않음 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |
 | [tools/benchreport](tools/benchreport/main.go) | 완료/실패 실험 원본의 오프라인 재집계·고정 조건·독립 반복 판정. 서버/생성기를 실행하지 않음 |
 | [config/examples/local.json](config/examples/local.json) | 초기 잔고·단위 fixture. 도메인 검증과 WAL의 엄격한 Config decoder를 CLI init에 연결 |
@@ -45,7 +42,7 @@ Go 단일 프로세스에서 단일 거래쌍을 처리한다. 호가창·잔고
 
 ## 모듈과 의존 방향
 
-P4 모듈과 P5의 api·서버 CLI, P6의 bench·부하 CLI를 구현했다. 아래에서 나머지 예정 경로와 구분한다.
+현재 구현한 모듈의 책임과 허용 의존은 다음과 같다.
 
 | 경로·상태 | 책임 | 허용 의존 |
 | --- | --- | --- |

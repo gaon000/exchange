@@ -2,7 +2,7 @@
 
 상태: Accepted
 합의 반영일: 2026-10-29 (Asia/Seoul)
-구현 상태: P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime·snapshot 생성 및 재시작 복구 완료. P5 HTTP 계층·초기화/실행 CLI와 실제 거래·과부하·저장 오류·종료·재시작 검증을 추가했다. P6의 [기준 측정](../benchmarks/p6-baseline.md)을 완료했다. [P7 정렬 이동 비교](../benchmarks/p7-snapshot-sorting.md)는 반복 기준 미달로 후보를 미채택하고 P6 구현을 유지했다. [스냅샷 처리 한계](../benchmarks/p7-snapshot-capacity.md)는 같은 20ms 기준에서 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미완료다.
+구현 상태 확인일: 2026-11-12. 거래 API·init/serve·정수 엔진·WAL/snapshot·단일 owner와 소프트웨어 장애/복구 검증, 부하/판정/진단 도구·거래/복구 데모·수동 CLI·자료 보관 미리보기를 구현했다. [프로젝트 결과 보고서](../project-results.md)에 기준 코드·시점/빌드별 성능과 검증 한계를 종합한다. 실제 OS·전원 장애 검증은 미완료·보류이며 이를 필수로 포함하는 v1 전체 계획은 Blocked다. 아래 합의한 범위와 정책은 변경하지 않는다.
 
 ## 목적과 사용자
 

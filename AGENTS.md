@@ -1,6 +1,8 @@
 # 작업 안내: exchange
 
-학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍을 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 단계와 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다. P4까지 실행 중 snapshot 생성과 재시작 복구를 구현했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6 부하 생성·계측·실험 원본 재검증과 [반복 기준 측정](docs/benchmarks/p6-baseline.md)을 완료했다. 정상 조건의 기준과 스냅샷 조건의 목표 미달을 구분한다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)의 정렬 이동 후보는 반복 기준 미달로 미채택하고 P6 구현을 유지한다. [스냅샷 처리 한계](docs/benchmarks/p7-snapshot-capacity.md)는 3,000 requests/s를 세 번 채택했다. P7 처리량 개선 달성은 주장하지 않는다. 이후 [10분 비교](docs/benchmarks/soak-10m-snapshot-comparison.md)와 [단계 계측](docs/benchmarks/snapshot-stage-breakdown.md)을 수행했고, [복구 디코더 최적화](docs/benchmarks/snapshot-decoder-optimization.md)는 동일 상태 5쌍에서 전체 복구 중앙값 32.5% 감소와 상태 bytes 일치를 확인해 채택했다. 이후 [생성 중복 직렬화 최적화](docs/benchmarks/snapshot-preflight-optimization.md)는 동일 상태 5쌍에서 생성 중앙값 29.7% 감소와 파일·복구 일치를 확인했다. 느린 후보 표본 1개도 결과에 포함했다. [최적화 버전 10분 재측정](docs/benchmarks/optimized-soak-10m-comparison.md)에서는 두 조건 모두 전체 복구가 일치했으나 전체 p99가 이전보다 높았고 켬 조건은 생성기 미전송 9건으로 측정 무효였다. 동시 거래의 응답 지연·처리량 개선을 달성했다고 주장하지 않는다. 별도 장비가 필요한 실제 전원 장애 검증은 미완료·보류다.
+학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스·단일 거래쌍에서 상태는 owner 고루틴 하나가 변경한다. 합의한 범위는 [제품 명세](docs/product-specs/exchange.md), 처리·복구 계약은 [상세 설계](docs/design-docs/exchange-v1.md), 필수 단계와 미완료 검증은 [구현 계획](docs/exec-plans/active/20261029-1531-exchange-v1.md)에서 관리한다.
+
+2026-11-12 기준 거래/저장/복구·HTTP/CLI·부하/계측/판정과 진단 도구를 구현했다. [거래·복구 데모](docs/trading-demo.md), [수동 거래 CLI](docs/trading-cli.md), [자료 보관 미리보기](docs/artifact-retention.md)를 제공한다. 현재 구조·검증·시점별 성능과 근거는 [프로젝트 결과 보고서](docs/project-results.md)를 먼저 읽는다. 최신 보관 캠페인의 정상 조건 누적 채택점과 과거 다른 빌드/호스트의 수치를 혼합하지 않는다. 고정 상태의 생성/복구 최적화와 동시 주문 성능을 구분하며, 실제 OS·전원 장애 검증은 미완료·보류다. 해당 필수 증거가 없는 v1 전체 계획을 완료로 바꾸지 않는다.
 
 ## 먼저 읽을 문서
 
