@@ -32,6 +32,8 @@
 
 [재현 가능한 실험 도구](diagnostic-tools.md)는 로컬 var 전용 도구를 저장소 CLI로 정리한 실행·검증·분석 안내다. 짧은 smoke와 명시적 10분 preset, 전체 복구, 과거 묶음 재집계, trace/OS I/O·타이머 대조를 제공한다.
 
+[실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.
+
 [실험 자료 보관·정리 미리보기](artifact-retention.md)는 var의 용량·참조 그래프·원본/고정 빌드 보호와 삭제 후보의 JSON/Markdown 미리보기를 제공한다.
 
 실제 거래와 복구를 빠르게 확인하려면 [한 명령 거래 데모](trading-demo.md)를 실행한다. 주문·부분 체결·예약금/자기 거래·ID 충돌과 WAL/snapshot/SIGKILL 복구의 기대값·선택 모드·보존 파일을 안내한다.

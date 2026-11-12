@@ -57,6 +57,8 @@ class ArtifactTests(unittest.TestCase):
         self.put('var/parent/protocol.json', {'resumeFrom': {'path': 'var/grandparent'}})
         self.put('var/grandparent/note.txt', 'var/frozen/bin/exchange')
         self.put('var/frozen/build.json', {'revision': 'frozen'})
+        self.put('var/packed/package-index.json', {'version': 1})
+        self.put('var/restored/restore-index.json', {'version': 1})
         self.put('var/live/run/genesis.bin', 'fixture')
         self.put('var/interrupted/failed.json', {'error': 'cancelled'})
         self.put('var/archives/unique.tar.gz', 'archive bytes')
