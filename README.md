@@ -2,7 +2,9 @@
 
 학습·포트폴리오용 가상자산 현물 모의 거래소다. Go 단일 프로세스에서 단일 거래쌍의 지정가 주문·부분 체결·취소를 처리하고, p99 응답 시간 상한을 지키는 최대 지속 처리량을 측정한다.
 
-2026-10-29 기준 P4까지 도메인·엔진·Genesis/WAL·단일 소유자 runtime과 스냅샷 생성·재시작 복구를 구현했다. P5의 HTTP 계층과 초기화·실행 CLI를 연결해 실제 loopback에서 거래·중복·timeout·과부하·저장 오류·종료·재시작을 검증했다. 최종 결과물은 거래 API, 부하 생성기와 성능 보고서이며 실거래·실행 중 입출금·수수료·웹 화면은 첫 버전에서 제외한다.
+2026-11-12 기준 거래 API·정수 엔진·Genesis/WAL·단일 owner·snapshot을 구현하고, 실제 HTTP 거래·과부하/저장 오류·응답 유실·프로세스 종료/복구를 검증했다. 거래·복구 데모, 수동 거래 CLI, 부하/판정/진단 도구와 자료 보관 미리보기를 제공한다. **실제 OS·전원 장애 검증은 미완료·보류**이며 이를 필수로 포함하는 v1 전체 계획은 Blocked다. 실거래·실행 중 입출금·수수료·웹 화면·운영 배포는 첫 버전에서 제외한다.
+
+- [프로젝트 결과 보고서](docs/project-results.md): 구현 구조·거래 규칙·검증된 복구 범위·시점별 성능 결과와 한계.
 
 - [제품 명세](docs/product-specs/exchange.md): 거래 규칙과 성능 목표.
 - [상세 설계](docs/design-docs/exchange-v1.md): 주문 상태, 잔고 예약, 로그 재생과 중복 처리.
@@ -16,7 +18,9 @@
 - [실험 자료 보관·정리 미리보기](docs/artifact-retention.md): var 용량·참조 관계·원본/고정 빌드 보호와 삭제 후보 목록.
 - [개발 기준](docs/development.md): 도구·명령의 구성 상태와 개발 규칙.
 
-개발 환경은 `sh scripts/setup-go.sh`로 준비하고 `scripts/go test ./...`로 CLI·bench·api·도메인·엔진·WAL·runtime·snapshot·strictjson·storageprobe 테스트를 실행한다. HTTP 테스트에는 loopback 소켓 권한이 필요하다. 지원 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. [P1 벤치마크](docs/benchmarks/p1-memory-engine.md)는 메모리 엔진 단독 수치다. [HTTP 부하 생성기](docs/design-docs/benchmark-v1.md)는 준비 검증·원본 기록까지 구현했다. 실행은 [HTTP 부하 실행](docs/development.md#http-부하-실행)을 따른다. 서버 구간·CPU/메모리/GC 계측은 `--metrics-file`로 기록한다. 스냅샷 주기·프로파일 수집은 선택 옵션이다. [실험 실행기](docs/development.md#묶음-실험-실행)는 새 서버/생성기와 환경·바이너리·원본 묶음을 관리한다. [P6 기준 측정](docs/benchmarks/p6-baseline.md)에서 정상 조건의 3회 통과와 스냅샷 조건의 목표 미달을 기록했다. [P7 비교](docs/benchmarks/p7-snapshot-sorting.md)에서 정렬 이동 후보를 검증했으나 반복 기준 미달로 채택하지 않고 P6 구현을 유지했다. [스냅샷 처리 한계](docs/benchmarks/p7-snapshot-capacity.md)는 고정된 20ms 기준에서 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미검증·보류 상태다. [CI](.github/workflows/ci.yml)는 일반 로직과 macOS/APFS 검사를 분리하며, 실행 범위와 원격 확인 절차는 [개발 기준](docs/development.md#ci와-릴리스)을 따른다.
+개발 환경은 `sh scripts/setup-go.sh`로 준비한다. 지원 저장 환경은 macOS arm64·로컬 APFS·cgo이며 전체 명령은 [개발 기준](docs/development.md)을 따른다. Linux portable CI의 통과는 Linux 거래 저장소 지원을 뜻하지 않는다. [CI](.github/workflows/ci.yml)는 일반 로직과 macOS/APFS 검증을 분리한다.
+
+성능 수치는 빌드·조건·시점별로 구분한다. [2026-11-09 누적 24회 판정](docs/benchmarks/normal-capacity-recheck.md)에서는 정상 조건 2,000 requests/s만 채택됐다. 과거 더 높은 채택점과 후속 실패도 보존하며 현재 master의 최대 처리량·서비스 SLA로 해석하지 않는다. snapshot 고정 상태의 생성/복구 비용 감소와 동시 주문 성능의 구분은 [결과 보고서](docs/project-results.md#5-성능-결과와-해석)를 따른다.
 
 ## 한 명령 거래 데모
 

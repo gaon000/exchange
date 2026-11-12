@@ -7,6 +7,7 @@
 | [README](../README.md) | 프로젝트 소개와 시작 문서 연결 |
 | [AGENTS](../AGENTS.md) | AI와 사람을 위한 작업 진입점 |
 | [Architecture](../ARCHITECTURE.md) | 현재 모듈 책임, 의존 방향, 시스템 경계 |
+| [프로젝트 결과 보고서](project-results.md) | 기준 코드·현재 결과물·검증된 복구 범위·시점별 성능 근거와 미완료 한계 |
 | [Development](development.md) | 환경 준비, 코드 규칙, 실제 실행 명령 |
 | [Workflow](workflow.md) | 작업 시작, 계획 필요 여부, 검증과 완료 기준 |
 | [ExecPlans](exec-plans/index.md) | 작업별 진행 상황, 결정, 검증 결과 |
@@ -15,13 +16,15 @@
 
 ## 작업별 읽기
 
+전체 결과부터 읽으려면 [프로젝트 결과 보고서](project-results.md)를 따른다. 기준 코드는 2026-11-12 master 3a23e1b이며, 과거 측정의 producer와 구분한다. 실제 OS·전원 장애 검증은 미완료·보류다.
+
 [정상 세 조건 재측정](benchmarks/normal-capacity-recheck.md)은 신규 2,000/3,000/s 각 3/3·5,000/s 1/3 통과와 이전 실패를 포함한 누적 24개 판정을 구분한다.
 
 [스냅샷 실패 구간과 정상 처리량](benchmarks/snapshot-window-capacity.md)은 저장/GC/호스트 대조와 재개 후 정상 관찰 채택점 2,000/s·인접 3,000/s 미채택을 기록한다. 이전 실패/중단 포함 15개 판정과 병행 브라우저 부하를 보존하며 서버의 내재 최대 용량으로 확정하지 않는다.
 
 [낮은 요청률과 정수 JSON 비교](benchmarks/lower-rate-integer-comparison.md)는 정상 10,000/s 3/3 채택·snapshot 1,000/s 2/3 미채택과 JSON 할당 감소 후보의 정상 3회 비교를 기록한다. 전체 p99/CPU 차이는 관찰값이며 인과 효과·최대 처리량 향상으로 해석하지 않는다. [중단 시점 기록](benchmarks/lower-rate-progress.md)과 실패도 보존한다.
 
-[현재 기준 재측정 결과](benchmarks/controlled-baseline.md)는 유휴 gate 후 정상 29,000/s·snapshot 3,000/s 각 3회를 검증했다. 0/3·2/3 통과로 두 조건 모두 미채택했으며 실패·워밍업 누락·창별 지연을 보존한다.
+[2026-11-06 과거 채택점 재측정](benchmarks/controlled-baseline.md)은 유휴 gate 후 정상 29,000/s·snapshot 3,000/s 각 3회를 검증했다. 0/3·2/3 통과로 두 조건 모두 미채택했으며 실패·워밍업 누락·창별 지연을 보존한다.
 
 [현재 기준 반복 측정](controlled-baseline.md)은 clean 생산 바이너리·유휴 gate·전원·예산·고정 조건과 실패 보존을 설명한다.
 
@@ -55,9 +58,9 @@
 
 [타이머 trace 켬·끔 대조](benchmarks/timer-trace-control.md)는 같은 binary의 네 조건 각 10분에서 trace 비활성에서도 50ms 한도 초과가 발생함을 확인했다. 켬/끔의 인과 효과는 호스트 상태 차이로 미확정이며 monotonic·UTC 차이도 기록했다.
 
-v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 구체적인 입력·저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 읽는다. [단계별 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)은 P4까지 완료했고 P5 HTTP 계층·초기화/실행 CLI·HTTP 장애 통합 검증을 연결했다. P6의 [HTTP 부하 생성·집계·원본 기록](design-docs/benchmark-v1.md)을 구현했다. 서버 구간·프로세스 자원 계측을 추가했다. 스냅샷/프로파일 옵션과 새 프로세스 실행·환경/바이너리/원본 묶음을 연결했다. 반복 기준 측정을 완료했고 P7 정렬 이동 후보의 비교를 마쳤다. 후보는 미채택했으며 [스냅샷 처리 한계](benchmarks/p7-snapshot-capacity.md)는 추가 5회 탐색으로 3,000 requests/s를 세 번 채택했다. 실제 전원 장애 검증은 미완료다. [P1 벤치마크](benchmarks/p1-memory-engine.md)는 엔진 단독 측정이다. [P6 기준과 결과](benchmarks/p6-baseline.md)는 전체 경로 초기 탐색·고정 조건·14개 실행의 재검증과 정상 조건의 반복 baseline을 기록한다. [P7 정렬 이동 비교](benchmarks/p7-snapshot-sorting.md)는 25회 실행과 미채택 판정·기준 구현 복원을 기록한다. 작은 수정은 관련 기준과 실제 경로를 확인한다. 완료 계획은 과거 판단을 이해하는 자료이며 현재 구현과 다시 대조한다.
+v1의 범위와 거래 규칙은 [제품 명세](product-specs/exchange.md), 주문 상태·잔고·로그·중복 계약은 [상세 설계](design-docs/exchange-v1.md), 입력과 저장 형식은 [API](design-docs/api-v1.md)와 [Storage](design-docs/storage-v1.md)를 따른다. [측정 계약](design-docs/benchmark-v1.md)과 [P6 고정 조건](benchmarks/p6-baseline.md)은 판정 기준을 소유한다. [P1 엔진 단독 측정](benchmarks/p1-memory-engine.md), 과거 P6/P7와 이후 캠페인의 수치를 전체 경로의 현재 성능으로 혼합하지 않는다. 현재 결과는 [종합 보고서](project-results.md), 단계별 증거와 필수 미완료는 [v1 구현 계획](exec-plans/active/20261029-1531-exchange-v1.md)에서 확인한다. 완료 계획은 당시 판단의 이력이며 현재 코드와 다시 대조한다.
 
-[실제 OS·전원 장애 시험 절차](power-loss-validation.md)는 별도 시험 장비·외부 관찰자·재시도 전 조회·미확정 명령의 판정과 보존 자료를 정한다. 현재는 예제의 정상 재시작만 검증했으며 실제 전원 장애 시험은 미완료다.
+[실제 OS·전원 장애 시험 절차](power-loss-validation.md)는 별도 시험 장비·외부 관찰자·재시도 전 조회·미확정 명령의 판정과 보존 자료를 정한다. 소프트웨어의 정상 재시작·snapshot·SIGKILL 후 복구는 검증했지만 실제 OS·전원 장애 시험은 별도 장비가 없어 미완료·보류다.
 
 ## 선택 문서
 
