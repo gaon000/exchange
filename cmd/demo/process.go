@@ -17,9 +17,11 @@ import (
 )
 
 type child struct {
-	cmd  *exec.Cmd
-	done chan struct{}
-	err  error
+	cmd     *exec.Cmd
+	done    chan struct{}
+	err     error
+	exitErr error
+	logErr  error
 }
 
 // Only this directly created child is signaled. Logs are files, not unbounded pipes.
@@ -39,10 +41,33 @@ func startChild(argv []string, stdout, stderr string) (*child, error) {
 	}
 	p := &child{cmd: cmd, done: make(chan struct{})}
 	go func() {
-		p.err = errors.Join(cmd.Wait(), out.Sync(), out.Close(), errout.Sync(), errout.Close())
+		p.exitErr = cmd.Wait()
+		p.logErr = errors.Join(out.Sync(), out.Close(), errout.Sync(), errout.Close())
+		p.err = errors.Join(p.exitErr, p.logErr)
 		close(p.done)
 	}()
 	return p, nil
+}
+
+// kill joins only this owned child and accepts only the intended SIGKILL exit.
+// Log flush failures remain errors even when the signal exit was expected.
+func (p *child) kill() error {
+	select {
+	case <-p.done:
+		return errors.Join(errors.New("child exited before intentional kill"), p.err)
+	default:
+	}
+	if err := p.cmd.Process.Kill(); err != nil {
+		return err
+	}
+	<-p.done
+	var exit *exec.ExitError
+	if errors.As(p.exitErr, &exit) {
+		if status, ok := exit.Sys().(syscall.WaitStatus); ok && status.Signaled() && status.Signal() == syscall.SIGKILL {
+			return p.logErr
+		}
+	}
+	return errors.Join(errors.New("child did not terminate by SIGKILL"), p.err)
 }
 
 func (p *child) stop(timeout time.Duration) error {
@@ -79,6 +104,7 @@ func (p *child) wait(ctx context.Context) error {
 type serverReport struct {
 	Event, RunID, ConfigHash, DataDir, Listen string
 	Recovery                                  struct {
+		SnapshotFile                  string
 		SnapshotSeq, ReplayedCommands d.Int
 	}
 }

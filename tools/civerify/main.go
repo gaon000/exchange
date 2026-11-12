@@ -145,6 +145,9 @@ func requireCoverage(expected expectations, mode string) error {
 			return fmt.Errorf("missing %s coverage: %s/%s", mode, pkg, test)
 		}
 	}
+	if mode == "native" && !expected[module+"cmd/demo"]["TestNativeExpandedTradingRecovery"] {
+		return fmt.Errorf("missing native coverage: cmd/demo/TestNativeExpandedTradingRecovery")
+	}
 	return nil
 }
 

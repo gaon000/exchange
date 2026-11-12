@@ -1,5 +1,5 @@
 #!/bin/sh
-# One-command, isolated trading and normal-restart demonstration.
+# One-command, isolated trading rules and WAL/snapshot/process recovery.
 set -eu
 project_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$project_dir"

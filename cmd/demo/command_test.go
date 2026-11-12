@@ -17,6 +17,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/gaon000/exchange/internal/api"
 	d "github.com/gaon000/exchange/internal/domain"
 )
 
@@ -45,7 +46,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestOptionsAndPrecancelledRun(t *testing.T) {
-	for _, args := range [][]string{{"extra"}, {"--timeout", "0"}, {"--timeout", "11m"}, {"--exchange", ""}, {"--bad"}} {
+	for _, args := range [][]string{{"extra"}, {"--timeout", "0"}, {"--timeout", "11m"}, {"--exchange", ""}, {"--bad"}, {"--scenario", "invalid"}} {
 		if _, err := parse(args, io.Discard); err == nil {
 			t.Fatal(args)
 		}
@@ -61,6 +62,83 @@ func TestOptionsAndPrecancelledRun(t *testing.T) {
 	}
 	if _, err := os.Stat(output); !errors.Is(err, os.ErrNotExist) {
 		t.Fatal("cancelled run created output", err)
+	}
+}
+
+func TestExpectedHTTPConflictAndWrongStatus(t *testing.T) {
+	for _, status := range []int{http.StatusConflict, http.StatusOK, http.StatusServiceUnavailable} {
+		t.Run(fmt.Sprint(status), func(t *testing.T) {
+			server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				w.WriteHeader(status)
+				fmt.Fprint(w, `{"error":{"code":"IDEMPOTENCY_CONFLICT","outcome":"NOT_ADMITTED"}}`)
+			}))
+			defer server.Close()
+			c := newHTTPClient(server.URL, "test", io.Discard)
+			want := api.ErrorResponse{}
+			want.Error.Code, want.Error.Outcome = "IDEMPOTENCY_CONFLICT", "NOT_ADMITTED"
+			_, err := expectStatus(context.Background(), c, "alice", "POST", "/v1/orders", buy, http.StatusConflict, want)
+			if (status == http.StatusConflict) != (err == nil) {
+				t.Fatal(err)
+			}
+		})
+	}
+}
+
+func TestIntentionalKillJoinsOnlyOwnedChild(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "ready.json")
+	p, err := startChild([]string{os.Args[0], "demo-test-child", "wait"}, path, filepath.Join(dir, "stderr"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = p.stop(time.Second) })
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if _, err := awaitReady(ctx, p, path); err != nil {
+		t.Fatal(err)
+	}
+	if err := p.kill(); err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case <-p.done:
+	default:
+		t.Fatal("kill did not join")
+	}
+	if err := p.kill(); err == nil {
+		t.Fatal("exited child accepted as a new kill")
+	}
+}
+
+func TestSnapshotWaitRejectsWrongIdentityAndPartialEvents(t *testing.T) {
+	for _, mode := range []string{"complete", "partial", "wrong-run", "wrong-seq", "unknown", "pre-cancelled"} {
+		t.Run(mode, func(t *testing.T) {
+			dir := t.TempDir()
+			path := filepath.Join(dir, "events.jsonl")
+			data := `{"runId":"test","snapshotSeq":"6","outcome":"COMPLETED","finishedUTC":"2026-11-12T00:00:00Z"}`
+			switch mode {
+			case "partial":
+				data = data[:len(data)/2]
+			case "wrong-run":
+				data = strings.Replace(data, "test", "other", 1)
+			case "wrong-seq":
+				data = strings.Replace(data, `"6"`, `"7"`, 1)
+			case "unknown":
+				data = strings.Replace(data, "COMPLETED", "UNKNOWN", 1)
+			}
+			if err := os.WriteFile(path, []byte(data), 0600); err != nil {
+				t.Fatal(err)
+			}
+			ctx, cancel := context.WithTimeout(context.Background(), 40*time.Millisecond)
+			defer cancel()
+			if mode == "pre-cancelled" {
+				cancel()
+			}
+			err := awaitSnapshot(ctx, &child{done: make(chan struct{})}, path, "test", 6)
+			if (mode == "complete") != (err == nil) {
+				t.Fatal(err)
+			}
+		})
 	}
 }
 
