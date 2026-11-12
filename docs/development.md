@@ -46,7 +46,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | toolchain 확인 | `scripts/go version`; `scripts/go env GOVERSION GOOS GOARCH CGO_ENABLED CC` |
 | Go 의존성 | go.mod만 존재, 외부 require/go.sum 없음. 추가 production dependency는 승인 전 설치하지 않음 |
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
-| 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·새 실험·HTTP 거래·정상 재시작·복구, [안내](trading-demo.md)) |
+| 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·HTTP 거래 규칙·WAL/snapshot/SIGKILL 복구, [안내](trading-demo.md)) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
 | 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe·benchreport, 출력은 Git 제외) |
@@ -84,7 +84,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 
 ## 거래 데모
 
-[scripts/demo.sh](../scripts/demo.sh)는 `bin/demo-exchange`와 `bin/demo`를 빌드해 [거래 데모](trading-demo.md)를 실행한다. Alice/Bob의 세 고유 명령과 독립 계산한 정수 결과, 재시작 전후 최초 응답·상태·중복 재시도를 검사한다. 실행마다 새 출력 폴더와 run을 사용하고 서버는 데모가 직접 생성한 자식 프로세스다. 종료·오류·중단 정리와 실제 파일/HTTP 경로는 `scripts/go test -race ./cmd/demo ./tools/civerify -timeout=120s`로 검사하며 전체 CI에도 포함한다. 정상 WAL 재시작 증거와 실제 전원 장애 검증을 구분한다.
+[scripts/demo.sh](../scripts/demo.sh)는 `bin/demo-exchange`와 `bin/demo`를 빌드해 [거래·복구 데모](trading-demo.md)를 실행한다. 기본 all은 8개 고유 명령의 독립 정수 기대값, 자기 거래 차단·예약금 반환·ID 충돌과 정상 WAL/snapshot/소유 서버 SIGKILL 복구를 검사한다. `--scenario normal`은 기존 3명령 데모, snapshot/crash는 각 복구 경로 선택이다. 매 재기동 직후 POST보다 먼저 GET으로 상태/최초 결과를 확인한다. 종료/중단 정리와 실제 경로는 `scripts/go test -race ./cmd/demo ./tools/civerify -timeout=120s` 및 전체 CI에 연결한다. 프로세스 종료 검증과 실제 전원 장애 검증은 구분하며 후자는 보류다.
 
 ## CLI 초기화·실행·종료
 

@@ -40,7 +40,7 @@ func TestNativeTradingDemoAndCleanup(t *testing.T) {
 			if mode != "success" {
 				output = &interruptWriter{mode: mode, cancel: cancel}
 			}
-			args := []string{"--exchange", binary, "--output", dir}
+			args := []string{"--exchange", binary, "--output", dir, "--scenario", "normal"}
 			err := run(ctx, args, output, io.Discard)
 			if (mode == "success") != (err == nil) {
 				t.Fatal(stdout.String(), err)

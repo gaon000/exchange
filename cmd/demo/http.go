@@ -39,6 +39,10 @@ func newHTTPClient(base, runID string, trace io.Writer) *httpClient {
 }
 
 func (c *httpClient) request(ctx context.Context, account, method, path string, body any) ([]byte, error) {
+	return c.requestStatus(ctx, account, method, path, body, http.StatusOK)
+}
+
+func (c *httpClient) requestStatus(ctx context.Context, account, method, path string, body any, status int) ([]byte, error) {
 	var payload []byte
 	var err error
 	if body != nil {
@@ -68,7 +72,7 @@ func (c *httpClient) request(ctx context.Context, account, method, path string, 
 			requestErr = errors.Join(requestErr, errors.New("response exceeded 1 MiB"))
 		}
 		record.Response = string(raw)
-		if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode != status {
 			requestErr = errors.Join(requestErr, fmt.Errorf("HTTP %d", resp.StatusCode))
 		}
 	}
@@ -82,7 +86,11 @@ func (c *httpClient) request(ctx context.Context, account, method, path string, 
 }
 
 func expect[T any](ctx context.Context, c *httpClient, account, method, path string, body any, want T) ([]byte, error) {
-	raw, err := c.request(ctx, account, method, path, body)
+	return expectStatus(ctx, c, account, method, path, body, http.StatusOK, want)
+}
+
+func expectStatus[T any](ctx context.Context, c *httpClient, account, method, path string, body any, status int, want T) ([]byte, error) {
+	raw, err := c.requestStatus(ctx, account, method, path, body, status)
 	if err != nil {
 		return raw, err
 	}

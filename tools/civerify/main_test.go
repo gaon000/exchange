@@ -140,3 +140,22 @@ func TestCoverageRequiresModeSpecificIntegrationTests(t *testing.T) {
 		t.Fatal("missing fail-closed coverage accepted")
 	}
 }
+
+func TestNativeCoverageRequiresExpandedDemo(t *testing.T) {
+	native := expectations{}
+	for pkg, name := range map[string]string{
+		"internal/wal": "TestNativeStore", "internal/snapshot": "TestNativeProcessKillAtPublicationBoundaries",
+		"internal/runtime": "TestNativeHTTPProcessBoundaryRecovery", "internal/api": "TestNativeHTTPTradingSnapshotsAndRestart",
+		"cmd/exchange": "TestNativeCLIProcessKillRecoversAcknowledgedResult", "cmd/loadgen": "TestNativeCLIProducesReplayableHTTPArtifacts",
+		"cmd/experiment": "TestNativeExperimentBundleAndFailureCleanup", "cmd/demo": "TestNativeTradingDemoAndCleanup", "tools/storageprobe": "TestProbePreservesParent",
+	} {
+		native[module+pkg] = map[string]bool{name: true}
+	}
+	if err := requireCoverage(native, "native"); err == nil || !strings.Contains(err.Error(), "ExpandedTradingRecovery") {
+		t.Fatal("expanded demo could be omitted", err)
+	}
+	native[module+"cmd/demo"]["TestNativeExpandedTradingRecovery"] = true
+	if err := requireCoverage(native, "native"); err != nil {
+		t.Fatal(err)
+	}
+}

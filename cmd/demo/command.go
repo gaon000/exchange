@@ -21,6 +21,7 @@ import (
 
 type options struct {
 	Exchange, Output string
+	Scenario         string
 	Timeout          time.Duration
 }
 
@@ -30,6 +31,7 @@ func parse(args []string, stderr io.Writer) (options, error) {
 	f.SetOutput(stderr)
 	f.StringVar(&o.Exchange, "exchange", "bin/exchange", "exchange binary to copy and run")
 	f.StringVar(&o.Output, "output", "", "new output directory under an existing parent (default: unique var/demos directory)")
+	f.StringVar(&o.Scenario, "scenario", "all", "all, normal (original WAL demo), snapshot, or crash")
 	f.DurationVar(&o.Timeout, "timeout", 2*time.Minute, "whole demo deadline, greater than zero and at most 10m")
 	if err := f.Parse(args); err != nil {
 		return o, err
@@ -37,21 +39,41 @@ func parse(args []string, stderr io.Writer) (options, error) {
 	if f.NArg() != 0 || o.Exchange == "" || o.Timeout <= 0 || o.Timeout > 10*time.Minute {
 		return o, errors.New("invalid arguments; use demo -h")
 	}
+	if o.Scenario != "all" && o.Scenario != "normal" && o.Scenario != "snapshot" && o.Scenario != "crash" {
+		return o, errors.New("invalid scenario; use all, normal, snapshot, or crash")
+	}
 	return o, nil
 }
 
 type summary struct {
-	Status          string   `json:"status"`
-	RunID           string   `json:"runId"`
-	Output          string   `json:"output"`
-	ServerSHA256    string   `json:"serverSHA256"`
-	Checks          []string `json:"checks"`
-	LastStage       string   `json:"lastStage"`
-	Error           string   `json:"error,omitempty"`
-	PowerLossTested bool     `json:"powerLossTested"`
+	Scenario          string          `json:"scenario"`
+	Status            string          `json:"status"`
+	RunID             string          `json:"runId"`
+	Output            string          `json:"output"`
+	ServerSHA256      string          `json:"serverSHA256"`
+	Checks            []string        `json:"checks"`
+	LastStage         string          `json:"lastStage"`
+	Error             string          `json:"error,omitempty"`
+	PowerLossTested   bool            `json:"powerLossTested"`
+	ProcessKillTested bool            `json:"processKillTested"`
+	Recoveries        []recoveryCheck `json:"recoveries,omitempty"`
 }
 
 func run(ctx context.Context, args []string, stdout, stderr io.Writer) (retErr error) {
+	o, err := parse(args, stderr)
+	if errors.Is(err, flag.ErrHelp) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	if o.Scenario == "normal" {
+		return runNormal(ctx, args, stdout, stderr)
+	}
+	return runExtended(ctx, o, stdout)
+}
+
+func runNormal(ctx context.Context, args []string, stdout, stderr io.Writer) (retErr error) {
 	o, err := parse(args, stderr)
 	if errors.Is(err, flag.ErrHelp) {
 		return nil
@@ -72,7 +94,7 @@ func run(ctx context.Context, args []string, stdout, stderr io.Writer) (retErr e
 	if err != nil {
 		return err
 	}
-	s := summary{Status: "FAILED", Output: dir, Checks: []string{}, LastStage: "prepare"}
+	s := summary{Scenario: "normal", Status: "FAILED", Output: dir, Checks: []string{}, LastStage: "prepare"}
 	var active *child
 	var trace *os.File
 	ctx, cancel := context.WithTimeout(ctx, o.Timeout)
