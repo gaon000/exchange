@@ -48,6 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·HTTP 거래 규칙·WAL/snapshot/SIGKILL 복구, [안내](trading-demo.md)) |
 | 수동 거래 CLI | `scripts/go build -mod=readonly -o bin/trade ./cmd/trade`; `bin/trade -h` ([주문·조회·같은 ID 재시도](trading-cli.md)) |
+| 실험 자료 보관·정리 미리보기 | `python3 tools/diagnostics/artifacts.py`; `--output var/artifact-reports/새이름`으로 JSON/Markdown 생성 ([보호·판정 범위](artifact-retention.md)) |
 | 정적 분석 | `scripts/go vet ./...` |
 | 포맷 검사 | `.tools/go1.27.3/bin/gofmt -l cmd internal tools`; 출력이 비어 있어야 함 |
 | 타입 검사·빌드 | `scripts/go build -o ./bin/ ./...` (exchange·loadgen·experiment·bench·api·domain·engine·strictjson·durable·wal·snapshot·runtime·probe·benchreport, 출력은 Git 제외) |

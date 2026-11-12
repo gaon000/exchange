@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "keep": [],
+  "temporary": [
+    "var/ci/*",
+    "var/artifact-reports/*",
+    "var/.DS_Store"
+  ]
+}
