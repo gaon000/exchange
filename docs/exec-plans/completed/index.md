@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [수동 거래와 같은 ID 재시도 CLI](20261112-trading-cli.md) | 2026-11-12 | 계정/가격/수량 주문·취소·조회와 요청 파일 기반 같은 ID 결과 확인/재시도 | portable 215개·native race 249개·각 Python 32개·진단 smoke·실제 CLI/서버 재시작 통과. 전원 장애 보류 |
 | [거래·복구 데모 확장](20261112-expanded-trading-demo.md) | 2026-11-12 | 거래 규칙·예약금 반환·ID 충돌과 WAL/snapshot/소유 서버 SIGKILL 복구를 한 명령으로 검증 | portable 210개·native race 243개·각 Python 32개·진단 smoke 통과. 이전 공간 부족 실패 보존·실제 전원 장애 보류 |
 | [정상 세 조건 재측정](20261109-normal-capacity-recheck.md) | 2026-11-09 | 신규 2,000/3,000/s 각각 3/3·5,000/s 1/3, 누적 24회 보존 | 세 root inventory·raw 재집계·이전 실패/무효 포함. 누적 qualified는 2,000/s만·내재 최대/전원 장애 미검증 |
 | [스냅샷 실패 구간과 정상 처리량](20261107-snapshot-window-capacity.md) | 2026-11-09 | master 반영/CI·snapshot 응답 tail/저장 분석·정상 관찰 채택점 2,000/s와 인접 3,000/s 미채택 확인 | 이전 중단/실패 포함 15개 판정·새 9개 봉인/무결성·source CI 통과. 병행 호스트 부하 관측·내재 최대/회귀 미판정·전원 장애 보류 |
