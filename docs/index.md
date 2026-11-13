@@ -32,6 +32,8 @@
 
 [재현 가능한 실험 도구](diagnostic-tools.md)는 로컬 var 전용 도구를 저장소 CLI로 정리한 실행·검증·분석 안내다. 짧은 smoke와 명시적 10분 preset, 전체 복구, 과거 묶음 재집계, trace/OS I/O·타이머 대조를 제공한다.
 
+[고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
+
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.
 
 [실험 자료 보관·정리 미리보기](artifact-retention.md)는 var의 용량·참조 그래프·원본/고정 빌드 보호와 삭제 후보의 JSON/Markdown 미리보기를 제공한다.
