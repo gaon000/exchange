@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "bundle": "var/post-optimization-profile-full-20261113",
+  "verification": {
+    "filesVerified": 642,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "manifestSHA256": "99a73a569fb8411bf066c534c69d151113f15d8e42415c22d44fdb913a0184cf",
+  "reportSHA256": "42c62228f17524e04f1c36a15631d12b6765b48e0b6700843000c3efbe49bfad",
+  "build": {
+    "revision": "dc7f10fe242f268f16233ee67eb4f4de698b4f06",
+    "workingTreeModified": true,
+    "go": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOOS": "darwin",
+      "GOVERSION": "go1.27.3"
+    },
+    "sourceArchiveSHA256": "eaecc4eebef7897911441c638728d2d58e7ac0c8c008dd528161fc2394870b75",
+    "binarySHA256": "93f69286d9ec977ac336a1b670412f6278563afe4a438655bedee7134b631af1",
+    "productionSourceIdentical": true,
+    "platform": "macOS-15.8-arm64-arm-64bit-Mach-O",
+    "hardware": {
+      "machdep.cpu.brand_string": "Apple M3 Pro",
+      "hw.memsize": "19327352832",
+      "hw.logicalcpu": "11"
+    }
+  },
+  "sourceArchiveVerifiedFiles": 270,
+  "sourceAndArchiveMatchCurrent": true,
+  "productionMatchesInputCandidate": true,
+  "input": {
+    "bundle": "var/recovery-rss-full-20261113",
+    "verification": {
+      "filesVerified": 128,
+      "legacyInventory": false,
+      "completed": true
+    },
+    "manifestSHA256": "bd0ec589840b3361d1da3265062ceb0952bd263219bacdb9cd257ae5bed027b4"
+  },
+  "smoke": {
+    "bundle": "var/post-optimization-profile-smoke-retry-20261113",
+    "verification": {
+      "filesVerified": 156,
+      "legacyInventory": false,
+      "completed": true
+    }
+  },
+  "reanalysis": {
+    "bundle": "var/post-optimization-profile-reanalysis-20261113",
+    "JSONAndMarkdownBytesIdentical": true,
+    "manifestSHA256": "c14741a05d368224229ed5bd92229f3a8da7ad481b82321480cdd2e2f1c69bb3"
+  },
+  "details": {
+    "bundle": "var/post-optimization-profile-details-20261113",
+    "verification": {
+      "filesVerified": 8,
+      "legacyInventory": false,
+      "completed": true
+    }
+  },
+  "hotspots": [
+    {
+      "kind": "active",
+      "denominator": "snapshotRead alloc_space, five workers",
+      "parseArrayFlat": {
+        "MiBPerOperation": 9.139617156982421,
+        "percent": 39.06616712192851
+      },
+      "parseValuesTemporaryFlat": {
+        "MiBPerOperation": 3.2787906646728517,
+        "percent": 14.014786600341518
+      },
+      "intMarshalFlat": {
+        "MiBPerOperation": 4.688358306884766,
+        "percent": 20.03980976427614
+      },
+      "intUnmarshalFlat": {
+        "MiBPerOperation": 3.237895202636719,
+        "percent": 13.83998398804484
+      },
+      "bytesCloneFlat": {
+        "MiBPerOperation": 0.0,
+        "percent": 0.0
+      }
+    },
+    {
+      "kind": "history",
+      "denominator": "snapshotRead alloc_space, five workers",
+      "parseArrayFlat": {
+        "MiBPerOperation": 7.588919830322266,
+        "percent": 38.760097971549996
+      },
+      "parseValuesTemporaryFlat": {
+        "MiBPerOperation": 2.5405364990234376,
+        "percent": 12.975686369619408
+      },
+      "intMarshalFlat": {
+        "MiBPerOperation": 3.825700378417969,
+        "percent": 19.53960837546223
+      },
+      "intUnmarshalFlat": {
+        "MiBPerOperation": 2.450299072265625,
+        "percent": 12.514802399300164
+      },
+      "bytesCloneFlat": {
+        "MiBPerOperation": 0.06250762939453125,
+        "percent": 0.3192551632474532
+      }
+    }
+  ],
+  "bytes": 583816977,
+  "diskFreeBytes": 21366759424,
+  "preservedFailure": "var/post-optimization-profile-smoke-20261113",
+  "preservedMacOSMetadata": "var/post-optimization-preflight-retained-20261113",
+  "RSSDiagnosticCommit": "dc7f10fe242f268f16233ee67eb4f4de698b4f06",
+  "powerLossTested": false,
+  "performanceImprovementClaimed": false,
+  "localCI": {
+    "portable": {
+      "evidence": "var/ci/portable.trboN3",
+      "tests": 240,
+      "packages": 23,
+      "pythonTests": 100,
+      "exit": 0,
+      "diagnosticSmoke": "passed"
+    },
+    "native": {
+      "evidence": "var/ci/native.zirjWm",
+      "tests": 279,
+      "packages": 23,
+      "explicitChildHelperSkips": 1,
+      "pythonTests": 100,
+      "exit": 0,
+      "diagnosticSmoke": "passed"
+    }
+  },
+  "publication": {
+    "RSSCommit": "dc7f10fe242f268f16233ee67eb4f4de698b4f06",
+    "followupBranch": "codex/post-optimization-profiling",
+    "followupChangesCommitted": false,
+    "mergedOrPushed": false,
+    "remoteCI": "not run",
+    "statusAsOf": "implementation completion; subsequent commit/push and remote CI tracked separately"
+  }
+}

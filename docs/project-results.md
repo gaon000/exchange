@@ -142,6 +142,10 @@ snapshot은 전체 WAL·최초 결과 이력을 없애는 보존 정책이 아�
 
 2026-11-13 [복구 뒤 RSS 진단](benchmarks/recovery-rss.md)은 같은 두 decoder·같은 확장 probe에서 active/history 각 버전5회·20개 새 worker를 관측했다. history 초기 후보 RSS 증가가4/5쌍에서 보였지만 idle15초에는1/5쌍이었고 live heap은 거의 같았다. HeapReleased/reusable/compressed와 footprint 변화로 RSS 단독 해석의 한계를 확인했다. 강제 반환은 진단에서만 적용했다. 최초 두 CI smoke·새 폴더 재집계는 공간 부족으로 미완료·보류했으나, 사용자 공간 확보 뒤 두 전체 로컬 CI와 새 폴더 재집계를 완료했다. 첫 실패와 재개 근거는 함께 보존한다.
 
+2026-11-13 [최적화 후 CPU·할당 갱신](benchmarks/post-optimization-profiling.md)은 최신 코드·같은 두 최종 상태에서 CPU각20회/할당각5회·총50 worker의 전체 복구 bytes를 확인했다. 읽기 추정 할당은 active23.395/history19.579MiB/호출이며 배열 자체 약39%·정수 Marshal 약20%·Unmarshal 약13%·item 임시 객체 약13~14%가 남았다. 정수 디코딩의 임시 문자열을 다음 후보로 추천하고 추가 생산 최적화는 구현하지 않았다. 프로파일 비중을 개선율/HTTP p99로 해석하지 않는다. native279/portable240·Python100·smoke/새 폴더 재집계가 통과했고 전원 장애는 미완료·보류다.
+
+2026-11-13 [정수 JSON 디코딩 임시 할당 최적화](benchmarks/integer-json-decoding.md)는 quoted ASCII digits 경로를 추가하고 escape/공백·오류 분류/receiver 보존·WAL/snapshot 정규형 계약을 유지했다. 차등 검증과30초·약320만 fuzz를 통과하고 동일 두 상태·세 tail 각 버전5회·60 worker에서 전체 bytes·최초480응답/재시도120건을 검증했다. Open TotalAlloc 중앙값2.90~4.22%·고정 상태 복구 시간7.37~9.01% 감소로 채택했다. history live heap은7.83~21.67KiB 증가했고 RSS는 중앙값6조건 감소/개별9쌍 증가라 일괄 메모리 개선은 주장하지 않는다. portable241/native race280·Python103·smoke/재집계 통과, 전원 장애는 미완료·보류다.
+
 ## 6. 현재 검증·재현과 자료 보존
 
 2026-11-12 기준 master 3a23e1b의 [GitHub CI run 43170613569](https://github.com/gaon000/exchange/actions/runs/43170613569)는 `Go (portable)`·`Go (native)` 모두 success다. Go portable 215개·native race 249개, 각 Python 44개와 진단 smoke를 통과했다. native의 명시된 child-helper skip 1개는 일반 시험 누락과 구분한다. 이는 **해당 코드의 검증**이며 이 문서 변경의 새 원격 CI 결과나 성능 측정은 아니다.

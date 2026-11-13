@@ -54,6 +54,31 @@ func (n Int) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON rejects numbers, null, fractions, signs, and overflow.
 func (n *Int) UnmarshalJSON(data []byte) error {
+	// The common canonical form needs no JSON string allocation. Validate every
+	// byte before ParseInt: malformed JSON after an overflowing prefix must still
+	// return ErrInteger, as the fallback decoder does, rather than ErrOverflow.
+	if len(data) >= 3 && len(data) <= 21 && data[0] == '"' && data[len(data)-1] == '"' {
+		digits := data[1 : len(data)-1]
+		plain := true
+		for _, c := range digits {
+			if c < '0' || c > '9' {
+				plain = false
+				break
+			}
+		}
+		if plain {
+			// ParseInt does not retain its argument; the temporary conversion
+			// borrows these bytes without allocating a decoded string.
+			v, err := ParseInt(string(digits))
+			if err != nil {
+				return err
+			}
+			*n = v
+			return nil
+		}
+	}
+	// Preserve public JSON compatibility for whitespace, escaped digits and all
+	// invalid inputs, including the legacy error classification and receiver.
 	var s string
 	if err := json.Unmarshal(data, &s); err != nil {
 		return ErrInteger

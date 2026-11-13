@@ -4,6 +4,8 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [정수 JSON 디코딩](20261113-integer-json-decoding.md) | 2026-11-13 | 일반 숫자 string 임시 할당 제거·이전 입력/오류/복구 계약 | 60 worker/327파일·273source·480최초응답/120재시도. 할당2.90~4.22%·고정 복구 시간7.37~9.01% 감소. portable241/native280/Python103·fuzz320만·전원 장애 보류 |
+| [최적화 후 프로파일 갱신](20261113-post-optimization-profiling.md) | 2026-11-13 | 최신 같은 두 상태·CPU40/alloc10·입력 producer 검증 | 50 worker/642파일·270source·재집계 일치·native279/portable240/Python100. 정수 decode/임시 DTO 후보·생산 변경 없음·전원 장애 보류 |
 | [복구 뒤 RSS 진단](20261113-recovery-rss.md) | 2026-11-13 | 두 decoder·같은 probe·20회/260표본의 idle/GC/반환·Go/Mach 메모리 대조 | 초기 증가4/5쌍→15초1/5쌍·heap 유사·압축/반환 계수 변화. native279/portable240·Python99·smoke/재집계 통과. 첫 공간 실패 보존·전원 장애 보류 |
 | [스냅샷 정규형 비교 버퍼](20261113-snapshot-canonical-buffer.md) | 2026-11-13 | 최신 할당 profile 10회·표준 Encoder borrowed bytes 대조·동일 상태 60회 비교 | 할당 6.07~9.37% 감소·GC 뒤 heap 유사·시간/RSS 혼합. native race 277/portable 238·Python 94·재집계 일치·전원 장애 보류 |
 | [스냅샷 배열 할당](20261113-snapshot-array-allocation.md) | 2026-11-13 | 실제 항목 기반 배증·기존 메모리/복구 경계·60회 heap/현재·최대 RSS 비교 | 할당 1.96~7.37% 감소·GC 뒤 heap 유사·RSS 혼합(최대 중앙값 +4.406MiB). 236 portable/275 native race·Python 88·재집계 일치·전원 장애 보류 |

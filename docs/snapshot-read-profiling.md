@@ -1,6 +1,6 @@
 # 최신 스냅샷 읽기 경로 프로파일링
 
-최근 [이후 명령 복구 실험](snapshot-tail-recovery.md)의 같은 active/history 각 1만 명령 최종 snapshot/WAL을 사용한다. 최신 checkout의 공개 `runtime.Open`에서 CPU와 allocation을 별도 프로세스로 수집하고, pprof 호출 경로 focus와 기존 세부 stage로 읽기 비용을 나눈다. tail=0이며 생산 코드/기존 Go profile probe를 바꾸지 않는다. [실제 분석](benchmarks/snapshot-read-profiling.md)을 함께 읽는다.
+봉인된 [이후 명령 복구](snapshot-tail-recovery.md)·[정규형 비교 버퍼](snapshot-canonical-buffer.md)·[RSS 진단](recovery-rss.md) 자료의 같은 active/history 각 1만 명령 최종 snapshot/WAL을 사용한다. 입력 종류에 맞는 전체 검증을 수행하고 tail 자료의 build 또는 비교/진단 자료의 candidate build를 생산 코드 기준으로 선택한다. 최신 checkout의 공개 `runtime.Open`에서 CPU와 allocation을 별도 프로세스로 수집하고, pprof 호출 경로 focus와 기존 세부 stage로 읽기 비용을 나눈다. tail=0이며 생산 코드/기존 Go profile probe를 바꾸지 않는다. [최적화 후 최신 분석](benchmarks/post-optimization-profiling.md)과 [최적화 전 분석](benchmarks/snapshot-read-profiling.md)을 구분해서 읽는다.
 
 ## 명령
 
@@ -8,16 +8,18 @@
 
 ```sh
 # 두 상태 각각 CPU 20회·allocation 5회, 총 50개 새 worker
-python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/snapshot-tail-full-20261113 --output var/snapshot-read-profile-new
+python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/recovery-rss-full-20261113 --output var/post-optimization-profile-new
 
 # 작은 실제 기능 확인: 24명령 자료, 각 한 번·총 4개 worker
-python3 tools/diagnostics/snapshot_read_profile.py run --smoke --bundle var/snapshot-tail-review-smoke-20261113 --output var/snapshot-read-profile-smoke-new
+python3 tools/diagnostics/snapshot_read_profile.py run --smoke --bundle var/recovery-rss-smoke-20261113 --output var/post-optimization-profile-smoke-new
 
 # 봉인 검증 뒤 기존 profile로 새 JSON/Markdown·함수표 생성
-python3 tools/diagnostics/snapshot_read_profile.py analyze --bundle var/snapshot-read-profile-new --output var/snapshot-read-profile-analysis-new
+python3 tools/diagnostics/snapshot_read_profile.py analyze --bundle var/post-optimization-profile-new --output var/post-optimization-profile-analysis-new
 ```
 
-새 clone에는 `var`가 없다. 먼저 `snapshot_tail.py run` 또는 `run --smoke`로 자료를 만들거나 보관한 해당 원본이 필요하다. run은 입력 전체 봉인·기존 30회(작은 자료 6회) 복구 검증을 다시 읽고, 현재 생산 source가 입력 측정과 같은지 확인한다. 추적 변경뿐 아니라 새 미추적/ignore 생산 파일도 거절한다. 도구 변경은 허용하고 source archive/바이너리 SHA·revision·dirty·환경을 따로 기록한다.
+새 clone에는 `var`가 없다. 먼저 `snapshot_tail.py run` 또는 `run --smoke`로 자료를 만들거나 보관한 해당 원본이 필요하다. run은 입력 전체 봉인과 종류별 기존 복구 검증(tail 30/작은 자료 6회, 정규형 비교 60/12회, RSS 진단 20/4회)을 다시 읽고, 현재 생산 source가 입력 측정과 같은지 확인한다. 추적 변경뿐 아니라 새 미추적/ignore 생산 파일도 거절한다. 도구 변경은 허용하고 입력 종류/producer binary SHA와 source archive/새 바이너리 SHA·revision·dirty·환경을 따로 기록한다. RSS 입력을 사용해도 CPU/할당 worker는 기존 `profile` 명령만 실행한다. RSS 진단용 시간별 관측·추가 GC·강제 OS 반환은 profile 경로에 연결하지 않는다.
+
+정수 JSON fast path를 추가한 후속 checkout은 위 RSS/canonical 입력의 생산 source와 다르므로 run이 거절한다. 위 명령은 입력 producer와 같은 생산 코드에서만 유효하며, 새 코드를 계측하려면 해당 producer 검증/fixture를 먼저 준비해야 한다. 기존 profile의 analyze는 생산 checkout에 의존하지 않는다.
 
 analyze는 입력 원본 경로에 접근하거나 보관된 probe 바이너리를 실행하지 않는다. 묶음 안에 보존한 두 fixture/개별 profile/바이너리와 현재 Go `tool pprof`를 사용한다. 같은 toolchain을 사용해야 하며 raw profile에서 CPU 10ms period도 확인한다.
 

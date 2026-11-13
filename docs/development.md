@@ -52,7 +52,8 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 스냅샷 정규형 비교 버퍼 | `python3 tools/diagnostics/canonical_buffer.py prepare --bundle var/snapshot-array-resident-full-20261113 --output var/canonical-buffer-new` 후 후보 동결·`compare` ([최신 profile·재집계](snapshot-canonical-buffer.md)) |
 | 스냅샷 배열 할당 비교 | `python3 tools/diagnostics/snapshot_array_compare.py freeze --label baseline --output var/array-baseline-new` 후 후보 동결·`run` ([명령·heap/현재 RSS·재집계](snapshot-array-allocation.md)) |
 | 디코더 읽기 버퍼 대조 | `python3 tools/diagnostics/read_buffer.py freeze --output var/read-buffer-builds-new` 후 `run` ([네 크기·IO 계수·재집계](decoder-read-buffer.md)) |
-| 최신 스냅샷 읽기 프로파일링 | `python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/snapshot-tail-full-20261113 --output var/snapshot-read-profile-new` ([계측·재집계](snapshot-read-profiling.md)) |
+| 정수 JSON 디코딩 비교 | `python3 tools/diagnostics/integer_json_compare.py run --bundle var/canonical-buffer-full-20261113 --baseline var/integer-json-baseline-new --candidate var/integer-json-candidate-new --output var/integer-json-new` ([동결·차등/퍼즈·재집계](integer-json-decoding.md)) |
+| 최신 스냅샷 읽기 프로파일링 | `python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/recovery-rss-full-20261113 --output var/post-optimization-profile-new` ([계측·재집계](snapshot-read-profiling.md)) |
 | 스냅샷 이후 명령 복구·비용 | `python3 tools/diagnostics/snapshot_tail.py run --output var/snapshot-tail-new` ([조건·검증·재집계](snapshot-tail-recovery.md)) |
 | 상태 크기별 비용 측정 | `python3 tools/diagnostics/state_scale.py run --output var/state-scale-new` ([조건·계측·재집계](state-size-costs.md)) |
 | 고정 seed 거래·복구 검사 | `sh scripts/random-recovery.sh` ([seed·명세 replay·검증 범위](random-recovery.md)) |

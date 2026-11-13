@@ -42,7 +42,7 @@
 
 [스냅샷 이후 명령 복구·비용](snapshot-tail-recovery.md)은 같은 1만 명령 상태의 이후 명령 0·1천·5천개를 각 5회 측정하고 후속 체결·취소·최초 응답을 확인한다. [실제 결과](benchmarks/snapshot-tail-recovery.md)를 함께 따른다.
 
-[최신 스냅샷 읽기 프로파일링](snapshot-read-profiling.md)은 이후 명령 복구 실험의 같은 두 최종 상태에서 최신 코드의 CPU/할당을 별도 수집하고 읽기·디코딩·복원·재확인 경로를 분리한다. [분석과 다음 후보](benchmarks/snapshot-read-profiling.md)를 함께 따른다.
+[최신 스냅샷 읽기 프로파일링](snapshot-read-profiling.md)은 이후 명령 복구 실험의 같은 두 최종 상태에서 최신 코드의 CPU/할당을 별도 수집하고 읽기·디코딩·복원·재확인 경로를 분리한다. [최적화 전 분석](benchmarks/snapshot-read-profiling.md)과 [배열·정규형 버퍼 최적화 후 최신 분석](benchmarks/post-optimization-profiling.md)을 구분한다. 최신50 worker에서는 읽기의 정수 JSON·배열/임시 객체와 전체 Open의 WAL 검증 비용을 확인했다.
 
 [디코더 읽기 버퍼 대조](decoder-read-buffer.md)는 디코더만 32/64/128/256KiB로 바꾼 네 빌드에서 같은 두 상태·세 tail을 각 5회 비교하고 별도 ReaderAt/Pread 진입 계수를 확인한다. [실제 결과](benchmarks/decoder-read-buffer.md)를 함께 따른다.
 
@@ -53,6 +53,8 @@
 [복구 뒤 RSS 진단](recovery-rss.md)은 같은 두 생산 decoder·확장 probe로 유휴/추가 GC/OS 반환 단계의 Go 메모리와 Mach resident/footprint/reusable을 나누고 전체 상태를 검증한다. [분석](benchmarks/recovery-rss.md)은 이전 비계측 결과와 새 진단 관측을 구분한다.
 
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
+
+[정수 JSON 디코딩 최적화](integer-json-decoding.md)는 일반 숫자 입력의 임시 문자열 decode를 줄이고 공개 JSON·정규형/복구 계약을 차등 검증한다. [비교 결과](benchmarks/integer-json-decoding.md)는 동일 두 상태·세 tail 각 버전5회·총60 worker의 할당/시간·heap/RSS와 최초 응답/후속 거래를 확인한다.
 
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.
 

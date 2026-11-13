@@ -127,17 +127,35 @@ def markdown(report):
     return '\n'.join(lines)
 
 
+def input_build(bundle, smoke):
+    """Verify the sealed input producer; never relabel an older decoder as current."""
+    p=read(bundle/'protocol.json')
+    require(p['smoke']==smoke,'source smoke/full mismatch')
+    kind=p.get('experiment','snapshot-tail')
+    if kind=='snapshot-tail':
+        analyze_tail(bundle);path=bundle/'build.json'
+    elif kind=='canonical-buffer':
+        from canonical_buffer import analyze as analyze_canonical
+        analyze_canonical(bundle);path=bundle/'builds/candidate/build.json'
+    elif kind=='recovery-rss':
+        from recovery_rss import analyze as analyze_rss
+        analyze_rss(bundle);path=bundle/'builds/candidate/build.json'
+    else:
+        raise ValueError('unsupported profile input experiment')
+    return kind,read(path)
+
+
 def run(bundle, output, smoke=False):
     require(platform.system()=='Darwin' and platform.machine()=='arm64','requires macOS arm64/APFS/cgo')
-    bundle=bundle.resolve();original=verify(bundle);analyze_tail(bundle)
+    bundle=bundle.resolve();original=verify(bundle);source_kind,source_build=input_build(bundle,smoke)
     n=24 if smoke else 10000
     require(read(bundle/'protocol.json')['smoke']==smoke,'source smoke/full mismatch')
     output=prepare_output(output,[bundle]);env=environment();env['PPROF_TMPDIR']=str(output)
     protocol={'version':1,'commands':n,'smoke':smoke,'order':schedule(smoke),'allocationSampleRate':65536,'createdUTC':datetime.now(timezone.utc).isoformat(),
-              'sourceBundle':str(bundle),'sourceBundleManifestSHA256':digest(bundle/'manifest.json'),'environment':{k:env[k] for k in ('GOMAXPROCS','GOGC','GOMEMLIMIT')},'cache':'warm copies/hashes; no flush','powerLossTested':False}
+              'sourceBundle':str(bundle),'sourceKind':source_kind,'sourceBuildBinarySHA256':source_build['binarySHA256'],'sourceBundleManifestSHA256':digest(bundle/'manifest.json'),'environment':{k:env[k] for k in ('GOMAXPROCS','GOGC','GOMEMLIMIT')},'cache':'warm copies/hashes; no flush','powerLossTested':False}
     save(output/'protocol.json',protocol)
     try:
-        require_production_head();sources=source_hashes();old=read(bundle/'build.json')['sourceSHA256']
+        require_production_head();sources=source_hashes();old=source_build['sourceSHA256']
         production=lambda values:{k:v for k,v in values.items() if k.startswith(('internal/','cmd/')) or k in ('go.mod','.go-version')}
         require(production(sources)==production(old),'production differs from fixed final state')
         with tarfile.open(output/'source.tar.gz','x:gz') as archive:
