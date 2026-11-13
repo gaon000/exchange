@@ -66,7 +66,7 @@ def schedule(smoke=False):
     return rows
 
 
-def build_pair(root):
+def build_pair(root, allowed_changes=('internal/wal/codec.go',)):
     builds = {}
     for side in ('baseline','candidate'):
         path = root/'builds'/side
@@ -78,17 +78,17 @@ def build_pair(root):
     require(a['go'] == b['go'], 'toolchains differ')
     production = lambda src: {n:sha for n,sha in src.items() if (n.startswith(('internal/','cmd/')) and n.endswith('.go') and not n.endswith('_test.go')) or n in ('go.mod','.go-version')}
     old,new = production(a['sourceSHA256']),production(b['sourceSHA256'])
-    require(set(old) == set(new) and [n for n in old if old[n] != new[n]] == ['internal/wal/codec.go'], 'unexpected production changes in comparison')
+    require(set(old) == set(new) and sorted(n for n in old if old[n] != new[n]) == sorted(allowed_changes), 'unexpected production changes in comparison')
     probe = lambda src: {n:sha for n,sha in src.items() if n.startswith('tools/statescale/')}
     require(probe(a['sourceSHA256']) == probe(b['sourceSHA256']), 'measurement probe changed')
     return builds
 
 
-def analyze(root):
+def analyze(root, allowed_changes=('internal/wal/codec.go',)):
     protocol = read(root/'protocol.json')
     require(protocol['version'] == 1 and protocol['order'] == schedule(protocol['smoke']), 'comparison schedule changed')
     expected = protocol['order']
-    builds = build_pair(root)
+    builds = build_pair(root, allowed_changes)
     require(sorted(p.name for p in (root/'runs').iterdir()) == [f'{i:03d}' for i in range(len(expected))], 'missing/extra worker')
     groups, paired = {}, {}
     for i,row in enumerate(expected):
@@ -144,7 +144,8 @@ def markdown(report):
     return '\n'.join(text)
 
 
-def run(bundle, baseline, candidate, output, smoke=False):
+def run(bundle, baseline, candidate, output, smoke=False,
+        allowed_changes=('internal/wal/codec.go',), render=markdown):
     bundle,baseline,candidate = (p.resolve() for p in (bundle,baseline,candidate))
     verify(bundle);analyze_scale(bundle)
     require(read(bundle/'protocol.json')['smoke'] == smoke, 'source fixture scope mismatch')
@@ -163,7 +164,7 @@ def run(bundle, baseline, candidate, output, smoke=False):
         for side,source in [('baseline',baseline),('candidate',candidate)]:
             budget(output,sum(p.stat().st_size for p in source.rglob('*') if p.is_file()))
             shutil.copytree(source,output/'builds'/side)
-        builds = build_pair(output)
+        builds = build_pair(output, allowed_changes)
         (output/'fixtures').mkdir();(output/'runs').mkdir()
         fixtures={}
         for kind in ('active','history'):
@@ -191,7 +192,7 @@ def run(bundle, baseline, candidate, output, smoke=False):
             invoke(binary,args,case/'probe',env)
             require(digest(binary)==builds[row['version']]['binarySHA256'] and source_hashes()==initial_sources,'binary/current source changed during comparison')
             print(json.dumps({'completed':i+1,'total':len(protocol['order']),**row}),flush=True)
-        report=analyze(output);save(output/'report.json',report);(output/'report.md').write_text(markdown(report))
+        report=analyze(output, allowed_changes);save(output/'report.json',report);(output/'report.md').write_text(render(report))
         verify(bundle);require(digest(bundle/'manifest.json')==protocol['sourceBundleManifestSHA256'],'source evidence changed')
         seal(output,True)
         return report
