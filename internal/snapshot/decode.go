@@ -16,9 +16,11 @@ import (
 // beyond maxValueBytes. json.Decoder.Decode on the whole document/price level
 // would silently buffer the entire array before enforcing any limit.
 type decoder struct {
-	r        *bufio.Reader
-	err      error
-	valueBuf [maxValueBytes]byte
+	r          *bufio.Reader
+	err        error
+	valueBuf   [maxValueBytes]byte
+	json       *json.Encoder
+	comparison canonicalComparison
 }
 
 func (p *decoder) expect(s string) {
@@ -116,10 +118,60 @@ func parseValue[T snapshotValue](p *decoder, dst *T) {
 		p.err = corrupt("invalid JSON value: " + err.Error())
 		return
 	}
-	canonical, err := json.Marshal(dst)
-	if err != nil || !bytes.Equal(b, canonical) {
+	if !p.matchesCanonical(dst, b) {
 		p.err = corrupt("noncanonical JSON value")
 	}
+}
+
+// canonicalComparison consumes the Encoder's borrowed bytes during Write. It
+// compares exactly one compact value plus the Encoder's framing newline, without
+// copying the encoded value or retaining the input buffer after the comparison.
+// A mismatch is recorded rather than returned as an I/O error: Encoder latches
+// writer errors, which must not leak into a later comparison on the same decoder.
+type canonicalComparison struct {
+	want     []byte
+	offset   int
+	mismatch bool
+}
+
+func (c *canonicalComparison) Write(b []byte) (int, error) {
+	n := len(b)
+	if c.mismatch {
+		return n, nil
+	}
+	if n > len(c.want)+1-c.offset {
+		c.mismatch = true
+		return n, nil
+	}
+	if c.offset < len(c.want) {
+		k := min(n, len(c.want)-c.offset)
+		if !bytes.Equal(b[:k], c.want[c.offset:c.offset+k]) {
+			c.mismatch = true
+		}
+		c.offset += k
+		b = b[k:]
+	}
+	if len(b) > 0 {
+		if len(b) != 1 || c.offset != len(c.want) || b[0] != '\n' {
+			c.mismatch = true
+		}
+		c.offset += len(b)
+	}
+	return n, nil
+}
+
+func (p *decoder) matchesCanonical(value any, raw []byte) bool {
+	if len(raw) > maxValueBytes {
+		return false
+	}
+	if p.json == nil {
+		p.json = json.NewEncoder(&p.comparison)
+	}
+	p.comparison = canonicalComparison{want: raw}
+	err := p.json.Encode(value)
+	matched := err == nil && !p.comparison.mismatch && p.comparison.offset == len(raw)+1
+	p.comparison.want = nil
+	return matched
 }
 
 func parseArray[T any](p *decoder, limit d.Int, item func() T) []T {
