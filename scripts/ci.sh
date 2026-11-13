@@ -23,6 +23,9 @@ mkdir -p var/ci
 report=$(mktemp -d "var/ci/$mode.XXXXXX")
 mkdir "$report/tmp"
 export TMPDIR="$project_dir/$report/tmp"
+# Only the recoverycheck tests read this variable. Keep their owned fixtures
+# outside testing.T.TempDir so failures remain replayable in CI artifacts.
+export EXCHANGE_SCENARIO_EVIDENCE_PARENT="$project_dir/$report"
 finish() {
   status=$?
   printf 'mode=%s exit=%s\nPower-loss validation: deferred, not tested.\n' "$mode" "$status" >> "$report/summary.txt"

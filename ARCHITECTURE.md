@@ -29,6 +29,7 @@
 | [scripts/setup-go.sh](scripts/setup-go.sh), [scripts/go](scripts/go) | 검증된 로컬 toolchain 설치와 실행·캐시 격리 |
 | [.github/workflows/ci.yml](.github/workflows/ci.yml), [scripts/ci.sh](scripts/ci.sh), [tools/civerify](tools/civerify/main.go) | 일반/실제 저장 CI, 로컬 공용 검사, 선택된 테스트와 실행 결과 대조. 거래 runtime에서 사용하지 않음 |
 | [tools/diagnostics](tools/diagnostics/experiment.py), [tools/timerprobe](tools/timerprobe/main.go), [tools/experimentcheck](tools/experimentcheck/main.go) | 새 실행·전체 복구·원본 재집계·trace/OS I/O·타이머 진단·[현재 기준 반복](docs/controlled-baseline.md)과 [기준·후보 비교](docs/experiment-comparison.md). [명령과 경계](docs/diagnostic-tools.md)를 따르며 runtime 의존 경로에 포함하지 않음 |
+| [tools/recoverycheck](tools/recoverycheck/main.go), [실행 안내](docs/random-recovery.md) | 고정 seed의 실제 HTTP/APFS 거래·snapshot/정상 재시작과 순차/전체 WAL 재생 비교, 실패 명세 재현. 서버 runtime의 의존 경로 밖 개발 도구 |
 | [tools/diagnostics/evidence.py](tools/diagnostics/evidence.py) | 봉인 자료·resume 부모·고정 빌드 패키징, 원본을 참조하지 않는 새 영역 복원·재검증/비교 생성. 현재 검사기만 실행하며 거래 runtime에서 사용하지 않음 |
 | [tools/diagnostics/artifacts.py](tools/diagnostics/artifacts.py), [보존 정책](config/artifact-retention.json) | var 용량·경로/해시 참조와 원본/고정 빌드 보호·읽기 전용 정리 미리보기. 거래 runtime에서 사용하지 않음 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |

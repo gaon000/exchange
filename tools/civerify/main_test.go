@@ -123,12 +123,13 @@ func (T) TestMethod() {}
 
 func TestCoverageRequiresModeSpecificIntegrationTests(t *testing.T) {
 	portable := expectations{
-		module + "cmd/trade":          {"TestSavedRequestBeforeSendAndExactRetry": true},
-		module + "internal/wal":       {"TestUnsupportedStorageDoesNotCreateFiles": true},
-		module + "internal/snapshot":  {"TestUnsupportedPublicationDoesNotCreateFiles": true},
-		module + "cmd/exchange":       {"TestInitUnsupportedDoesNotCreateRun": true},
-		module + "cmd/demo":           {"TestUnsupportedDemoLeavesNoOutput": true},
-		module + "tools/storageprobe": {"TestUnsupportedPlatformFailsClosed": true},
+		module + "cmd/trade":           {"TestSavedRequestBeforeSendAndExactRetry": true},
+		module + "internal/wal":        {"TestUnsupportedStorageDoesNotCreateFiles": true},
+		module + "internal/snapshot":   {"TestUnsupportedPublicationDoesNotCreateFiles": true},
+		module + "cmd/exchange":        {"TestInitUnsupportedDoesNotCreateRun": true},
+		module + "cmd/demo":            {"TestUnsupportedDemoLeavesNoOutput": true},
+		module + "tools/storageprobe":  {"TestUnsupportedPlatformFailsClosed": true},
+		module + "tools/recoverycheck": {"TestUnsupportedScenarioLeavesNoOutput": true},
 	}
 	if err := requireCoverage(portable, "portable"); err != nil {
 		t.Fatal(err)
@@ -164,6 +165,10 @@ func TestNativeCoverageRequiresExpandedDemo(t *testing.T) {
 		t.Fatal("native trading CLI could be omitted", err)
 	}
 	native[module+"cmd/trade"]["TestNativeTradingCLIAndRestart"] = true
+	if err := requireCoverage(native, "native"); err == nil || !strings.Contains(err.Error(), "TestNativeSeededRecoveryScenarios") {
+		t.Fatal("seeded recovery scenarios could be omitted", err)
+	}
+	native[module+"tools/recoverycheck"] = map[string]bool{"TestNativeSeededRecoveryScenarios": true}
 	if err := requireCoverage(native, "native"); err != nil {
 		t.Fatal(err)
 	}

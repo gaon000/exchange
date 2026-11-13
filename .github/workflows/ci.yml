@@ -59,6 +59,7 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ci-${{ matrix.mode }}-${{ github.run_attempt }}
+          include-hidden-files: true
           path: |
             var/ci/*/environment.json
             var/ci/*/platform.txt
@@ -67,5 +68,6 @@ jobs:
             var/ci/*/tests.jsonl
             var/ci/*/tests.stderr
             var/ci/*/summary.txt
+            var/ci/*/random-recovery-*/
           if-no-files-found: warn
           retention-days: 7
