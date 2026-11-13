@@ -42,6 +42,8 @@
 
 [스냅샷 이후 명령 복구·비용](snapshot-tail-recovery.md)은 같은 1만 명령 상태의 이후 명령 0·1천·5천개를 각 5회 측정하고 후속 체결·취소·최초 응답을 확인한다. [실제 결과](benchmarks/snapshot-tail-recovery.md)를 함께 따른다.
 
+[최신 스냅샷 읽기 프로파일링](snapshot-read-profiling.md)은 이후 명령 복구 실험의 같은 두 최종 상태에서 최신 코드의 CPU/할당을 별도 수집하고 읽기·디코딩·복원·재확인 경로를 분리한다. [분석과 다음 후보](benchmarks/snapshot-read-profiling.md)를 함께 따른다.
+
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.
