@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "bundle": "var/snapshot-read-profile-full-20261113",
+  "verification": {
+    "filesVerified": 642,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "manifestSHA256": "1f21615263aff440b04d0510325cc8107f861fff0c81ece8d94fc834d21253cb",
+  "reportSHA256": "f5c62042584a3df0bc3688f5f27660708a14bd3800e0670b138744b4c99b0ba6",
+  "sourceArchiveVerifiedFiles": 247,
+  "sourceMatchesCurrent": true,
+  "reportsRegeneratedByteIdentically": true,
+  "workersVerified": 50,
+  "sourceBundle": "var/snapshot-tail-full-20261113",
+  "sourceBundleVerification": {
+    "filesVerified": 314,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "bundleBytes": 583807111,
+  "freeBytesAfter": 10672893952,
+  "facts": {
+    "active": {
+      "readCPU_msPerOperation": 147.5,
+      "readAlloc_MiBPerOperation": 42.65192089080811,
+      "syscallFlatReadCPU_percent": 68.8135593220339,
+      "syscallFlat_msPerOperation": 101.5,
+      "marshalCumulativeReadAlloc_percent": 36.94606488611564,
+      "marshalCumulative_MiBPerOperation": 15.758206367492676,
+      "cloneFlatReadAlloc_percent": 24.693185709796637,
+      "cloneFlat_MiBPerOperation": 10.532118034362792,
+      "arraysFlatReadAlloc_percent": 40.86255802802145,
+      "arraysFlat_MiBPerOperation": 17.428665924072266
+    },
+    "history": {
+      "readCPU_msPerOperation": 126.5,
+      "readAlloc_MiBPerOperation": 33.26820049285889,
+      "syscallFlatReadCPU_percent": 66.40316205533597,
+      "syscallFlat_msPerOperation": 84.0,
+      "marshalCumulativeReadAlloc_percent": 37.88012720909019,
+      "marshalCumulative_MiBPerOperation": 12.602036666870116,
+      "cloneFlatReadAlloc_percent": 26.266997053907147,
+      "cloneFlat_MiBPerOperation": 8.738557243347168,
+      "arraysFlatReadAlloc_percent": 37.99781589601992,
+      "arraysFlat_MiBPerOperation": 12.641189575195312
+    }
+  },
+  "powerLossTested": false,
+  "build": {
+    "revision": "27b4621d36e70ac5aebc3fcd2c46573fbb50312b",
+    "workingTreeModified": true,
+    "go": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOOS": "darwin",
+      "GOVERSION": "go1.27.3"
+    },
+    "sourceArchiveSHA256": "c59c9394e72fc0a645576c576ca45161f656556da56730bffe126446c1c59d79",
+    "binarySHA256": "13a0c13a4fa407c80f34415656d269a917624da18d4e1180d870bd5ab7259b71",
+    "productionSourceIdentical": true,
+    "platform": "macOS-15.8-arm64-arm-64bit-Mach-O",
+    "hardware": {
+      "machdep.cpu.brand_string": "Apple M3 Pro",
+      "hw.memsize": "19327352832",
+      "hw.logicalcpu": "11"
+    }
+  },
+  "fixtures": {
+    "active": {
+      "Version": 1,
+      "Kind": "active",
+      "Commands": 10000,
+      "RunID": "df335152-9fa0-4ce7-a8db-f800e7cad65c",
+      "Counts": {
+        "Orders": 9995,
+        "Active": 9992,
+        "Filled": 1,
+        "Cancelled": 2,
+        "Trades": 1,
+        "Results": 10000
+      },
+      "Cuts": [
+        5000,
+        9000,
+        10000
+      ],
+      "Files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "df4edc13771d22e156b32a806a6c7ec870ddc0cf2c6c5c5ad04d1dbbfb7778bd",
+        "genesis.bin": "9b32f29b18fd21cd0af882796d0e447d9837c78063a9e8cda80277748d665a60",
+        "snapshot-00000000000000005000.bin": "dad08dda5472bdab1965c61c116c3c78ea8d86b1606035366eed4e0bc087e78c",
+        "snapshot-00000000000000009000.bin": "344a4f63a181f6b9c23d6125d093a55c754805231c62b024390802bffc3a557a",
+        "snapshot-00000000000000010000.bin": "1c7b04e696fa65ab3bf2f746fe4f23eeab514e614cb214d7cb46196616e84491"
+      }
+    },
+    "history": {
+      "Version": 1,
+      "Kind": "history",
+      "Commands": 10000,
+      "RunID": "fc7a356e-be98-42cc-b98a-c424f8272702",
+      "Counts": {
+        "Orders": 4999,
+        "Active": 0,
+        "Filled": 2499,
+        "Cancelled": 2500,
+        "Trades": 2499,
+        "Results": 10000
+      },
+      "Cuts": [
+        5000,
+        9000,
+        10000
+      ],
+      "Files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "c2516dad65a0c8b2d321097e57cde5d01a3f05eb2a1cb22b6575fa46069b0830",
+        "genesis.bin": "032064adaf9037b14e51e075c0685c2ea01de495ffbab219525492c0be83c262",
+        "snapshot-00000000000000005000.bin": "aa99545a534dd727ea8addad6920469a01336b95b2084ea670bb1ea508eee989",
+        "snapshot-00000000000000009000.bin": "479502ee146760c8e36d58eb81f63ff3db8b2eccd6374f7382149098c5fd8347",
+        "snapshot-00000000000000010000.bin": "a99a32627358e288a18197428b75a7faf2d7a2a65752b489d9142f4c75615337"
+      }
+    }
+  },
+  "additionalCallers": "var/snapshot-read-profile-callers-20261113",
+  "additionalCallersManifestSHA256": "165d5917faa97060c51b3680b2659ea2cb0d6ad133cbe9acbb15eedcb6a39363",
+  "preMergeReview": {
+    "proof": "var/snapshot-read-profile-review-proof-20261113.json",
+    "pythonTests": 77,
+    "pythonLog": "var/snapshot-read-profile-review-python-20261113.log",
+    "reanalysisBundle": "var/snapshot-read-profile-review-reanalysis-20261113",
+    "reportsRegeneratedByteIdentically": true,
+    "measurementSourceUnchanged": true,
+    "productionAndGoProbeUnchanged": true
+  }
+}
