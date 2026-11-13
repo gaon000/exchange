@@ -130,7 +130,7 @@ func TestCoverageRequiresModeSpecificIntegrationTests(t *testing.T) {
 		module + "cmd/demo":            {"TestUnsupportedDemoLeavesNoOutput": true},
 		module + "tools/storageprobe":  {"TestUnsupportedPlatformFailsClosed": true},
 		module + "tools/recoverycheck": {"TestUnsupportedScenarioLeavesNoOutput": true},
-		module + "tools/statescale":    {"TestUnsupportedScaleLeavesNoOutput": true, "TestUnsupportedTailLeavesNoOutput": true},
+		module + "tools/statescale":    {"TestUnsupportedScaleLeavesNoOutput": true, "TestUnsupportedTailLeavesNoOutput": true, "TestReadIOPhaseHistograms": true},
 	}
 	if err := requireCoverage(portable, "portable"); err != nil {
 		t.Fatal(err)
@@ -178,6 +178,10 @@ func TestNativeCoverageRequiresExpandedDemo(t *testing.T) {
 		t.Fatal("snapshot tail cases could be omitted", err)
 	}
 	native[module+"tools/statescale"]["TestNativeTailRecoveryCases"] = true
+	if err := requireCoverage(native, "native"); err == nil || !strings.Contains(err.Error(), "TestNativeBufferReadDiagnostic") {
+		t.Fatal("buffer diagnostic could be omitted", err)
+	}
+	native[module+"tools/statescale"]["TestNativeBufferReadDiagnostic"] = true
 	if err := requireCoverage(native, "native"); err != nil {
 		t.Fatal(err)
 	}

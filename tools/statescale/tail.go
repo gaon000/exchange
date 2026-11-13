@@ -213,11 +213,15 @@ func tailCommand(args []string) error {
 	n := fs.Int("count", 0, "24 (smoke) or 10000")
 	tail := fs.Int("tail", -1, "commands after selected snapshot")
 	receipt := fs.String("receipt", "", "fixture receipt")
+	ioOutput := fs.String("io-output", "", "buffer experiment diagnostic JSON, outside Open timing")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
 	if fs.NArg() != 0 || *dir == "" || *output == "" || (*n != 24 && *n != 10000) || (*kind != "active" && *kind != "history") {
 		return errors.New("invalid tail arguments")
+	}
+	if args[0] == "buffer-measure" && *ioOutput == "" {
+		return errors.New("missing buffer IO output")
 	}
 	if err := durable.CheckFilesystem(filepath.Dir(*dir)); err != nil {
 		return err
@@ -255,6 +259,15 @@ func tailCommand(args []string) error {
 	o, err := measureTail(*dir, f, *tail)
 	if err != nil {
 		return err
+	}
+	if args[0] == "buffer-measure" {
+		stats, e := inspectReadIO(*dir, f, *tail)
+		if e != nil {
+			return e
+		}
+		if e = save(*ioOutput, stats); e != nil {
+			return e
+		}
 	}
 	return save(*output, o)
 }

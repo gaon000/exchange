@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "bundle": "var/read-buffer-full-20261113",
+  "verification": {
+    "filesVerified": 757,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "manifestSHA256": "353d5cc2eee64c7dfc6a4a6ec5f0eb70ac6c0480884de8fbae9fecb885aaa7b0",
+  "reportSHA256": "1c7dc9aa7d79964fbfb1bf4980b8c4f08e4615b89768449ff1849ab2bf33e172",
+  "sourceArchiveVerifiedFiles": 255,
+  "sourceMatchesCurrent": true,
+  "reportsRegeneratedByteIdentically": true,
+  "workersVerified": 120,
+  "firstResponsesVerified": 960,
+  "retriesVerified": 240,
+  "successfulScratchCopiesRetired": 120,
+  "bundleBytes": 72664117,
+  "freeBytesAfter": 9344606208,
+  "sourceBundleVerification": {
+    "filesVerified": 314,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "productionDefaultKiB": 32,
+  "powerLossTested": false,
+  "build": {
+    "version": 1,
+    "revision": "104896eee3fd73216cd64d3214c755b9cbc2e0ea",
+    "workingTreeModified": true,
+    "sourceRoot": "/Users/gaonhuh/personal/exchange",
+    "buildRoot": "/Users/gaonhuh/personal/exchange/var/read-buffer-builds-verified-20261113",
+    "sourceArchiveSHA256": "bb2f60ff9f2d9685f36dbfea72d8f6782c2cc87ed24a3eece470c476208545bb",
+    "go": {
+      "CGO_ENABLED": "1",
+      "GOARCH": "arm64",
+      "GOEXPERIMENT": "",
+      "GOOS": "darwin",
+      "GOVERSION": "go1.27.3"
+    },
+    "buffers": {
+      "32": {
+        "binarySHA256": "590e02a01658610535a88405134e050ca8d1942f04298ad5279bde45b2278445",
+        "decoderSHA256": "ff946fd3ccaa81cbe9ee54e193759b8c2f8e3ca2590b720b2a007c4fc08585b9",
+        "overlaySHA256": "5a4d71971830ad9696178295c110fe4eedcf655f4eb0439e292e3f97e98a7b79",
+        "testDecoderSHA256": "e2a8d849329857fb34e90211dc7124f04ed2138d74c40eb550e86511c77f08ff"
+      },
+      "64": {
+        "binarySHA256": "ab4c64824d06eb3a4bb617790269955b8b12d8866181c9d67977a9aff30cc82f",
+        "decoderSHA256": "8ce816b5aa98dd337cfb6ed123f1bc523bfa210cf83c94a54df814a16b1baacc",
+        "overlaySHA256": "736d82e2c0449f2966efb5985b518d40ecab93e44192c38d0e36bf11e34ffc01",
+        "testDecoderSHA256": "5f24ff019793fc552a1f33b986c93a3a1f159f888a6382ca2b0d31b93ae567fb"
+      },
+      "128": {
+        "binarySHA256": "b86e3daceb84e1ff8b1bba4f5534e05b503aa79150e7a5e925ffe72bb8d33903",
+        "decoderSHA256": "11d0f77bab6300557315b8153cdf9dfe9d30994cea27ee8653578a826fb73525",
+        "overlaySHA256": "046fc17be44409ab60e4da817312311afaa30ae8bf47323a9a427d2ba2d01e80",
+        "testDecoderSHA256": "c4ef92265795c4ea3b3458508662a9c21a438edfd4652cbf326f0fd35d86aea0"
+      },
+      "256": {
+        "binarySHA256": "2acf2a80caec58f972f4390b33132076a157049af008d04833908f57b8a02605",
+        "decoderSHA256": "0fbc847bd3836d1c180317dbe72c22011511f0e399ed37854c342a87cde76a94",
+        "overlaySHA256": "14b8374d13576969b9fe723fa24c4b8b312279f4d8dae56df0a3776dad8d2b31",
+        "testDecoderSHA256": "18187e8b146d0b1df93f163fa27bc8baf42c78bf565e84f1db142845f564b3f6"
+      }
+    },
+    "onlyOverlaySource": "internal/snapshot/decode.go",
+    "testOverlaySource": "internal/snapshot/codec_test.go",
+    "hardware": {
+      "machdep.cpu.brand_string": "Apple M3 Pro",
+      "hw.memsize": "19327352832",
+      "hw.logicalcpu": "11"
+    }
+  },
+  "sourceBundle": "var/snapshot-tail-full-20261113",
+  "sourceBundleManifestSHA256": "06185f8222d626899baac0d9d113f2b7f7ff8ac9e8f6a9188cf5fc4f064f497d",
+  "fixtures": {
+    "active": {
+      "Version": 1,
+      "Kind": "active",
+      "Commands": 10000,
+      "RunID": "df335152-9fa0-4ce7-a8db-f800e7cad65c",
+      "Counts": {
+        "Orders": 9995,
+        "Active": 9992,
+        "Filled": 1,
+        "Cancelled": 2,
+        "Trades": 1,
+        "Results": 10000
+      },
+      "Cuts": [
+        5000,
+        9000,
+        10000
+      ],
+      "Files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "df4edc13771d22e156b32a806a6c7ec870ddc0cf2c6c5c5ad04d1dbbfb7778bd",
+        "genesis.bin": "9b32f29b18fd21cd0af882796d0e447d9837c78063a9e8cda80277748d665a60",
+        "snapshot-00000000000000005000.bin": "dad08dda5472bdab1965c61c116c3c78ea8d86b1606035366eed4e0bc087e78c",
+        "snapshot-00000000000000009000.bin": "344a4f63a181f6b9c23d6125d093a55c754805231c62b024390802bffc3a557a",
+        "snapshot-00000000000000010000.bin": "1c7b04e696fa65ab3bf2f746fe4f23eeab514e614cb214d7cb46196616e84491"
+      }
+    },
+    "history": {
+      "Version": 1,
+      "Kind": "history",
+      "Commands": 10000,
+      "RunID": "fc7a356e-be98-42cc-b98a-c424f8272702",
+      "Counts": {
+        "Orders": 4999,
+        "Active": 0,
+        "Filled": 2499,
+        "Cancelled": 2500,
+        "Trades": 2499,
+        "Results": 10000
+      },
+      "Cuts": [
+        5000,
+        9000,
+        10000
+      ],
+      "Files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "c2516dad65a0c8b2d321097e57cde5d01a3f05eb2a1cb22b6575fa46069b0830",
+        "genesis.bin": "032064adaf9037b14e51e075c0685c2ea01de495ffbab219525492c0be83c262",
+        "snapshot-00000000000000005000.bin": "aa99545a534dd727ea8addad6920469a01336b95b2084ea670bb1ea508eee989",
+        "snapshot-00000000000000009000.bin": "479502ee146760c8e36d58eb81f63ff3db8b2eccd6374f7382149098c5fd8347",
+        "snapshot-00000000000000010000.bin": "a99a32627358e288a18197428b75a7faf2d7a2a65752b489d9142f4c75615337"
+      }
+    }
+  },
+  "reconstructionBundle": "var/read-buffer-reconstruction-20261113",
+  "reconstructionManifestSHA256": "7a63ae068a8d5e36cb61b2bf0b0fe2ed4de26f887667249b940c2e17b60e0eb7",
+  "reconstructionWorkersVerified": 8,
+  "largerBufferAdopted": false,
+  "preMergeReview": {
+    "proof": "var/read-buffer-review-proof-20261113.json",
+    "pythonTests": 83,
+    "pythonLog": "var/read-buffer-review-python-20261113.log",
+    "goRaceLog": "var/read-buffer-review-go-20261113.log",
+    "reanalysisBundle": "var/read-buffer-review-reanalysis-20261113",
+    "reportsRegeneratedByteIdentically": true,
+    "measurementSourceUnchanged": true
+  }
+}
