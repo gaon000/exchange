@@ -36,6 +36,8 @@
 
 [스냅샷 CPU·할당 프로파일링](snapshot-profiling.md)은 같은 fixture의 공개 생성/복구 경로를 별도 새 프로세스에서 계측한다. [실제 분석](benchmarks/snapshot-profiling.md)은 190 worker의 함수별 CPU·할당 근거와 후속 후보를 정리한다.
 
+[WAL 전용 디코더 최적화](benchmarks/wal-decoder-optimization.md)는 동일 1만 명령 두 상태·두 복구 경로의 전후 각 5회에서 전체 bytes·복구 계약을 유지한 시간/할당 변화를 비교한다. [동결·재집계 명령](wal-decoder-comparison.md)을 함께 따른다.
+
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.

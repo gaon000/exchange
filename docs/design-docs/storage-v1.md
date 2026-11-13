@@ -39,6 +39,8 @@ run-1/
 - Command payload 필드: commandSeq, kind, accountId, payload. kind는 PLACE_ORDER 또는 CANCEL_ORDER이고 payload의 필드 순서는 API의 각 필수 본문 표 순서다. 헤더의 runId와 commandSeq까지 포함한 입력으로 최초 결과를 결정한다.
 - 응답에 시각을 넣지 않으므로 v1 WAL에 wall clock은 없다. tradeId는 runId/commandSeq/matchIndex로 결정한다. 해시·JSON 파서 버전 변경은 golden bytes 테스트로 검증한다.
 
+WAL command record는 [전용 디코더](../../internal/wal/codec.go)에서 UTF-8 검사·바깥 고정 DTO와 Place/Cancel 각각의 typed JSON 복원·기존 의미 검증 뒤, 기존 encoder의 canonical bytes와 원본 전체를 대조한다. 닫힌 필수 scalar DTO에 한해 범용 strictjson의 반복 token/shape map 검사를 대체한다. 누락/중복/미지/case-folded 필드, 순서·공백·null·비정규 정수/escape는 여전히 거절하며 bytes 대조를 생략하지 않는다. [schema/구형 decoder 차등 검증](../../internal/wal/decoder_compat_test.go)으로 가정을 고정한다. 사용자 Config/Genesis·HTTP의 범용 입력 검증이나 framing·크기·연속성·복구/sync 계약은 변경하지 않는다.
+
 ## 3. Genesis·WAL 헤더·snapshot envelope
 
 아래 정수 바이트 필드는 모두 little-endian이다. 길이 계산은 overflow 검사 후 수행하며 선언 길이만 보고 무제한 메모리를 할당하지 않는다.
@@ -107,7 +109,7 @@ snapshot payload 필드 순서는 runId, configHash, rulesVersion, responseVersi
 - book은 bids, asks를 갖는다. 각 level은 priceTicks, orders이고 orders의 참조는 accountId, clientOrderId다.
 - trades 항목은 tradeId, commandSeq, matchIndex, maker, taker, takerSide, priceTicks, quantityLots다. maker/taker는 같은 주문 참조 형식이다.
 - results 항목은 command, response다. command는 accountId, kind와 해당 종류의 place 또는 cancel 하나만 포함한다. runId는 envelope에서 공급하며 response에도 보존한다. 거절과 취소 no-op도 보존한다.
-- 모든 배열은 빈 경우에도 `[]`다. 정수는 API와 같은 십진 문자열이며 JSON 필드명·필수 필드·중복 키 검사는 strictjson을 사용한다.
+- 모든 배열은 빈 경우에도 `[]`다. 정수는 API와 같은 십진 문자열이며, 위 canonical decoder의 JSON 필드명·필수 필드·중복 키 거절 계약을 유지한다.
 
 [engine.Capture/Restore](../../internal/engine/checkpoint.go)는 사본과 복원된 상태 사이의 가변 참조를 공유하지 않는다. Restore는 과거 명령을 다시 매칭하지 않고 인덱스와 FIFO를 직접 구성한다. 순번·주문·체결·최초 결과 관계, 예약액·총공급량·Genesis와 체결에서 계산한 계정별 보유량을 검증하고 모순된 후보를 거절한다. 특히 취소 이후 체결, 최초 응답 변경, 누락된 활성 주문을 허용하지 않는다. 파일 복구 계층은 여기에 더해 저장된 command 입력/순번을 보존된 WAL과 대조해야 한다. 이 상태 검증만으로 파일 게시·재시작 복구가 완료된 것은 아니다.
 
