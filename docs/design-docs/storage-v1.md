@@ -59,9 +59,11 @@ Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 byt
 
 크기 사전 검사는 [leaf 길이 계산](../../internal/snapshot/size.go)으로 수행한다. 고정 DTO의 필드 이름·순서와 포인터 `omitempty`를 시작 시 읽기 전용 계산 계획으로 만들고, 값은 JSON bytes 없이 센다. 문자열 escape·정수의 십진수 문자열·nullable Reason을 반영하며, 파일 접근 전의 shape·16 KiB·2 GiB 검사는 유지한다. 미지원 schema/custom codec, 잘못된 UTF-8 또는 음수 도메인 정수는 기존 `json.Marshal`로 돌아가 bytes 처리·오류 종류와 우선순위를 보존한다. 실제 canonical writer와 header/checksum·sync·exclusive rename 순서는 변경하지 않는다. 이 사전 검사는 Write/Publish/Confirm이 공유한다.
 
+실제 leaf writer는 payload별 표준 `json.Encoder`를 재사용해 항목별 `json.Marshal`의 반환 bytes 사본을 줄인다. Encoder의 마지막 framing 개행 하나만 제거한 뒤 16KiB를 검사하고 기존 envelope buffer/hash로 전달한다. 기본 JSON escaping/정수/nullable/custom codec 및 오류 동작은 표준 라이브러리에 맡긴다. [독립 Marshal 차등 회귀](../../internal/snapshot/leaf_test.go)와 전체 golden/고정 상태 파일 bytes로 기존 형식을 검증하며, header/checksum·게시/sync/복구 순서는 유지한다.
+
 snapshot 값 해석은 [닫힌 scalar/leaf 타입 집합](../../internal/snapshot/decode.go)에 한해 UTF-8 검사 → typed JSON 복원 → canonical 재직렬화 bytes의 완전 일치 검사를 사용한다. 구조를 여러 번 파싱하던 일반 strictjson 경로를 snapshot 안에서만 대체한다. 필드 누락·중복·미지 필드·대소문자 변경·필드 순서·비정규 escape/공백은 canonical bytes와 달라 거절된다. 정수와 Reason은 기존 custom decoder가 검증한다. null 허용은 포인터와 Reason뿐이며 다른 scalar/struct의 null은 typed decode 실패 또는 재직렬화 불일치로 거절한다. 배열은 기존 streaming parser가 처리한다.
 
-이 동등성은 leaf DTO에 map/slice/interface/RawMessage와 새로운 custom codec이 없다는 전제에 의존한다. generic 타입 집합과 [스키마·차등 검증](../../internal/snapshot/decode_test.go)이 이를 고정하며 DTO가 달라지면 전제를 다시 검토해야 한다. 일반 HTTP/WAL strictjson 검증은 바꾸지 않는다. decoder마다 고정 16KiB 값 버퍼를 재사용하며 반환된 문자열·객체는 버퍼와 분리된다. 기존 16KiB 값 제한·깊이 64 제한, 전체 SHA-256·배열 수, Restore의 의미 검사, WAL 대조·fallback·strict sync와 오류 분류를 유지한다.
+이 동등성은 leaf DTO에 map/slice/interface/RawMessage와 새로운 custom codec이 없다는 전제에 의존한다. generic 타입 집합과 [스키마·차등 검증](../../internal/snapshot/decode_test.go)이 이를 고정하며 DTO가 달라지면 전제를 다시 검토해야 한다. HTTP·사용자 Config/Genesis의 범용 입력 검증과 위 WAL 전용 검증 계약에는 영향을 주지 않는다. decoder마다 고정 16KiB 값 버퍼를 재사용하며 반환된 문자열·객체는 버퍼와 분리된다. 기존 16KiB 값 제한·깊이 64 제한, 전체 SHA-256·배열 수, Restore의 의미 검사, WAL 대조·fallback·strict sync와 오류 분류를 유지한다.
 
 
 ErrCorrupt는 손상·비정규형 후보로 fallback 대상이다. 유효 checksum을 가진 지원 불가 format/rules/response 버전, 다른 runId/configHash 또는 WAL 끝보다 큰 snapshotSeq는 ErrIdentity로 복구를 중단한다. 실제 I/O 오류는 ErrCorrupt로 낮추지 않는다. 코덱은 업무 상태의 타당성을 보증하지 않으며 runtime의 복구 계층이 Restore와 WAL 대조를 수행한다.

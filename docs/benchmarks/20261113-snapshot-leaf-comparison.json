@@ -1,0 +1,720 @@
+{
+  "version": 1,
+  "workersVerified": 40,
+  "repeats": 5,
+  "smoke": false,
+  "binarySHA256": {
+    "baseline": "4a30c3f465563420b75adaf92b3ac282b45a710be8e4ddbfd47500b2c1d96e09",
+    "candidate": "c4b8b1d69a5681468692e275097f8bc63e67ec4ae8b6c31f593efd43ef5498bc"
+  },
+  "sourceBundleManifestSHA256": "f65d7a11c09389b0ab65243b0a4f26a0dad883c9c726a6f2c56e9758e78c533d",
+  "runtimeEnvironment": {
+    "GOMAXPROCS": "11",
+    "GOGC": "100",
+    "GOMEMLIMIT": "2GiB"
+  },
+  "rows": [
+    {
+      "kind": "active",
+      "mode": "wal",
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 77.539791,
+            "min": 76.285667,
+            "max": 103.9905
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.372207641601562,
+            "min": 10.358566284179688,
+            "max": 10.373626708984375
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.114692687988281,
+            "min": 10.100563049316406,
+            "max": 10.121078491210938
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 52.84246063232422,
+            "min": 52.83140563964844,
+            "max": 52.85032653808594
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 26.734375,
+            "min": 25.703125,
+            "max": 27.734375
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 42.709791,
+            "min": 41.210791,
+            "max": 52.678833
+          },
+          "snapshotMs": {
+            "count": 5,
+            "median": 68.564209,
+            "min": 66.577917,
+            "max": 74.782292
+          },
+          "snapshotAllocMiB": {
+            "count": 5,
+            "median": 30.375640869140625,
+            "min": 30.375335693359375,
+            "max": 30.377731323242188
+          },
+          "beforeValidationPeakRSSMiB": {
+            "count": 5,
+            "median": 40.78125,
+            "min": 40.078125,
+            "max": 41.359375
+          },
+          "copyMs": {
+            "count": 5,
+            "median": 1.544958,
+            "min": 1.293292,
+            "max": 2.285083
+          },
+          "sortMs": {
+            "count": 5,
+            "median": 4.46375,
+            "min": 4.400042,
+            "max": 4.560916
+          },
+          "encodeWriteMs": {
+            "count": 5,
+            "median": 45.302666,
+            "min": 37.943959,
+            "max": 45.752
+          },
+          "fileSyncMs": {
+            "count": 5,
+            "median": 4.493875,
+            "min": 3.03825,
+            "max": 14.001125
+          },
+          "directorySyncMs": {
+            "count": 5,
+            "median": 3.110042,
+            "min": 2.791417,
+            "max": 11.157375
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 77.421208,
+            "min": 75.249209,
+            "max": 81.817125
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.358505249023438,
+            "min": 10.358047485351562,
+            "max": 10.377899169921875
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.10595703125,
+            "min": 10.105453491210938,
+            "max": 10.1253662109375
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 52.84222412109375,
+            "min": 52.84021759033203,
+            "max": 52.86061096191406
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 26.90625,
+            "min": 26.625,
+            "max": 27.84375
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 42.190917,
+            "min": 40.143375,
+            "max": 44.736834
+          },
+          "snapshotMs": {
+            "count": 5,
+            "median": 65.175542,
+            "min": 58.862334,
+            "max": 76.920583
+          },
+          "snapshotAllocMiB": {
+            "count": 5,
+            "median": 20.46147918701172,
+            "min": 20.461021423339844,
+            "max": 20.463119506835938
+          },
+          "beforeValidationPeakRSSMiB": {
+            "count": 5,
+            "median": 38.1875,
+            "min": 37.90625,
+            "max": 39.328125
+          },
+          "copyMs": {
+            "count": 5,
+            "median": 1.325958,
+            "min": 1.248958,
+            "max": 1.34475
+          },
+          "sortMs": {
+            "count": 5,
+            "median": 4.395334,
+            "min": 4.346167,
+            "max": 4.460917
+          },
+          "encodeWriteMs": {
+            "count": 5,
+            "median": 43.642625,
+            "min": 37.729458,
+            "max": 54.696292
+          },
+          "fileSyncMs": {
+            "count": 5,
+            "median": 4.105584,
+            "min": 3.8585,
+            "max": 6.952916
+          },
+          "directorySyncMs": {
+            "count": 5,
+            "median": 1.710667,
+            "min": 1.500542,
+            "max": 2.887375
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": -0.15293180245997684,
+        "openAllocMiB": -0.0004475780038259991,
+        "replayMs": -1.2148830229583796
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "openMsChangePercent": -25.031533649708393
+        },
+        {
+          "repeat": 2,
+          "openMsChangePercent": -2.401732103969001
+        },
+        {
+          "repeat": 3,
+          "openMsChangePercent": 5.516308394486136
+        },
+        {
+          "repeat": 4,
+          "openMsChangePercent": 0.33557942149211595
+        },
+        {
+          "repeat": 5,
+          "openMsChangePercent": -2.838270503035123
+        }
+      ]
+    },
+    {
+      "kind": "history",
+      "mode": "wal",
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 68.448291,
+            "min": 67.210708,
+            "max": 78.505709
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.208885192871094,
+            "min": 9.202430725097656,
+            "max": 9.226646423339844
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 8.955635070800781,
+            "min": 8.949882507324219,
+            "max": 8.968673706054688
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 47.76185607910156,
+            "min": 47.74103546142578,
+            "max": 47.795387268066406
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 24.578125,
+            "min": 24.328125,
+            "max": 25.484375
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 37.004916,
+            "min": 36.3175,
+            "max": 39.623417
+          },
+          "snapshotMs": {
+            "count": 5,
+            "median": 56.1455,
+            "min": 49.562083,
+            "max": 58.794875
+          },
+          "snapshotAllocMiB": {
+            "count": 5,
+            "median": 24.93224334716797,
+            "min": 24.929397583007812,
+            "max": 24.936073303222656
+          },
+          "beforeValidationPeakRSSMiB": {
+            "count": 5,
+            "median": 36.125,
+            "min": 34.6875,
+            "max": 37.65625
+          },
+          "copyMs": {
+            "count": 5,
+            "median": 1.156042,
+            "min": 1.077584,
+            "max": 1.264459
+          },
+          "sortMs": {
+            "count": 5,
+            "median": 3.36675,
+            "min": 3.31825,
+            "max": 3.38925
+          },
+          "encodeWriteMs": {
+            "count": 5,
+            "median": 38.864208,
+            "min": 29.794875,
+            "max": 40.463291
+          },
+          "fileSyncMs": {
+            "count": 5,
+            "median": 3.416333,
+            "min": 2.576292,
+            "max": 6.321333
+          },
+          "directorySyncMs": {
+            "count": 5,
+            "median": 2.839917,
+            "min": 1.599333,
+            "max": 3.68575
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 69.2435,
+            "min": 67.466958,
+            "max": 74.436084
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.202247619628906,
+            "min": 9.185081481933594,
+            "max": 9.203681945800781
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 8.944900512695312,
+            "min": 8.932533264160156,
+            "max": 8.949577331542969
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 47.74681854248047,
+            "min": 47.735572814941406,
+            "max": 47.759971618652344
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 24.203125,
+            "min": 23.921875,
+            "max": 26.125
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 36.636958,
+            "min": 36.367417,
+            "max": 37.615291
+          },
+          "snapshotMs": {
+            "count": 5,
+            "median": 55.4515,
+            "min": 50.263625,
+            "max": 56.815208
+          },
+          "snapshotAllocMiB": {
+            "count": 5,
+            "median": 16.384384155273438,
+            "min": 16.383865356445312,
+            "max": 16.38525390625
+          },
+          "beforeValidationPeakRSSMiB": {
+            "count": 5,
+            "median": 32.265625,
+            "min": 32.15625,
+            "max": 32.9375
+          },
+          "copyMs": {
+            "count": 5,
+            "median": 1.119375,
+            "min": 1.040083,
+            "max": 1.267583
+          },
+          "sortMs": {
+            "count": 5,
+            "median": 3.39575,
+            "min": 3.326834,
+            "max": 3.456333
+          },
+          "encodeWriteMs": {
+            "count": 5,
+            "median": 35.185166,
+            "min": 31.290792,
+            "max": 36.46075
+          },
+          "fileSyncMs": {
+            "count": 5,
+            "median": 4.916458,
+            "min": 3.19675,
+            "max": 5.570167
+          },
+          "directorySyncMs": {
+            "count": 5,
+            "median": 3.195209,
+            "min": 1.424083,
+            "max": 3.8905
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": 1.161766040294565,
+        "openAllocMiB": -0.0314844058744046,
+        "replayMs": -0.9943489670399486
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "openMsChangePercent": 10.750334604420475
+        },
+        {
+          "repeat": 2,
+          "openMsChangePercent": -5.534096314900538
+        },
+        {
+          "repeat": 3,
+          "openMsChangePercent": -11.79813432421838
+        },
+        {
+          "repeat": 4,
+          "openMsChangePercent": 3.049018418882077
+        },
+        {
+          "repeat": 5,
+          "openMsChangePercent": 1.674366607573563
+        }
+      ]
+    },
+    {
+      "kind": "active",
+      "mode": "snapshot",
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 297.362958,
+            "min": 293.746292,
+            "max": 320.355875
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.895851135253906,
+            "min": 10.89056396484375,
+            "max": 10.896110534667969
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.636390686035156,
+            "min": 10.631011962890625,
+            "max": 10.637489318847656
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 124.1604232788086,
+            "min": 124.1453857421875,
+            "max": 124.17351531982422
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 47.0625,
+            "min": 46.09375,
+            "max": 48.03125
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 35.779042,
+            "min": 35.10175,
+            "max": 37.626542
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 172.693042,
+            "min": 170.252833,
+            "max": 189.147666
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 12.626708,
+            "min": 10.53525,
+            "max": 13.53875
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 44.709125,
+            "min": 43.840708,
+            "max": 45.644041
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 293.552,
+            "min": 291.959125,
+            "max": 296.148834
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.896064758300781,
+            "min": 10.895622253417969,
+            "max": 10.896797180175781
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.641693115234375,
+            "min": 10.637016296386719,
+            "max": 10.6424560546875
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 114.24803924560547,
+            "min": 114.212646484375,
+            "max": 114.26911163330078
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 45.5625,
+            "min": 45.390625,
+            "max": 46.8125
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 35.089,
+            "min": 34.392542,
+            "max": 35.385166
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 172.532792,
+            "min": 171.079333,
+            "max": 173.329709
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 11.224084,
+            "min": 10.703834,
+            "max": 12.156583
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 42.988958,
+            "min": 41.369166,
+            "max": 43.394375
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": -1.281584641756206,
+        "openAllocMiB": -7.983529510804221,
+        "replayMs": -1.928620671285719
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "openMsChangePercent": -8.366906022872222
+        },
+        {
+          "repeat": 2,
+          "openMsChangePercent": -0.6421599116538168
+        },
+        {
+          "repeat": 3,
+          "openMsChangePercent": -0.7794343369425305
+        },
+        {
+          "repeat": 4,
+          "openMsChangePercent": -1.1114363666667182
+        },
+        {
+          "repeat": 5,
+          "openMsChangePercent": -0.6084049564785698
+        }
+      ]
+    },
+    {
+      "kind": "history",
+      "mode": "snapshot",
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 259.3615,
+            "min": 255.081667,
+            "max": 263.870458
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.60693359375,
+            "min": 9.602394104003906,
+            "max": 9.608306884765625
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.352684020996094,
+            "min": 9.342689514160156,
+            "max": 9.354072570800781
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 105.83203125,
+            "min": 105.8228530883789,
+            "max": 105.84901428222656
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 40.953125,
+            "min": 40.53125,
+            "max": 44.921875
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 31.189625,
+            "min": 30.83475,
+            "max": 31.733541
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 147.940708,
+            "min": 147.481333,
+            "max": 154.32225
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 11.368167,
+            "min": 10.78425,
+            "max": 12.635542
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 38.364167,
+            "min": 35.471458,
+            "max": 38.631167
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 258.018542,
+            "min": 255.017209,
+            "max": 259.769917
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.606353759765625,
+            "min": 9.601478576660156,
+            "max": 9.608818054199219
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.347244262695312,
+            "min": 9.3468017578125,
+            "max": 9.353897094726562
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 97.28262329101562,
+            "min": 97.26470184326172,
+            "max": 97.3221435546875
+          },
+          "openPeakRSSMiB": {
+            "count": 5,
+            "median": 40.640625,
+            "min": 39.8125,
+            "max": 44.0625
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 31.316167,
+            "min": 30.648042,
+            "max": 31.561459
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 149.559375,
+            "min": 147.39675,
+            "max": 153.828958
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 11.193708,
+            "min": 10.770667,
+            "max": 11.982833
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 36.86525,
+            "min": 36.694792,
+            "max": 37.142041
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": -0.5177938899952217,
+        "openAllocMiB": -8.078280136935746,
+        "replayMs": 0.40571824765447406
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "openMsChangePercent": -2.217723061669885
+        },
+        {
+          "repeat": 2,
+          "openMsChangePercent": 0.15747017194149837
+        },
+        {
+          "repeat": 3,
+          "openMsChangePercent": -0.52257239626049
+        },
+        {
+          "repeat": 4,
+          "openMsChangePercent": -0.02506028374051894
+        },
+        {
+          "repeat": 5,
+          "openMsChangePercent": -0.025269554162044017
+        }
+      ]
+    }
+  ],
+  "powerLossTested": false,
+  "scope": "warm-cache fixed-state non-profiled public Open/Snapshot; no HTTP throughput or power-loss claim"
+}

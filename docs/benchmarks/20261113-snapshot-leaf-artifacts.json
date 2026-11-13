@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "bundle": "var/snapshot-leaf-full-20261113",
+  "manifestSHA256": "dec30d98d92533e9128b9887cac128ae4bd004e2956d3b9dec02d334fe333cce",
+  "reportSHA256": "7523584b1ae2d569fb371e646d399d16175b79df8bc1cd6557cb55b5612ce257",
+  "verification": {
+    "filesVerified": 383,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "sourceBundle": "var/state-scale-full-20261113",
+  "sourceBundleManifestSHA256": "f65d7a11c09389b0ab65243b0a4f26a0dad883c9c726a6f2c56e9758e78c533d",
+  "builds": {
+    "baseline": {
+      "revision": "dc8635fb3f5901efa263edc00b8b1a00ff4bb859",
+      "workingTreeModified": true,
+      "binarySHA256": "4a30c3f465563420b75adaf92b3ac282b45a710be8e4ddbfd47500b2c1d96e09",
+      "sourceArchiveSHA256": "b1e6650c3244e314bdf41be4995133c2805f3b5edbe470491f54d6a563aaeace",
+      "sourceFiles": 237
+    },
+    "candidate": {
+      "revision": "dc8635fb3f5901efa263edc00b8b1a00ff4bb859",
+      "workingTreeModified": true,
+      "binarySHA256": "c4b8b1d69a5681468692e275097f8bc63e67ec4ae8b6c31f593efd43ef5498bc",
+      "sourceArchiveSHA256": "35a450273d23b75feeda4a98fcea55579926807e38e82daacf7ce22aff6b8eba",
+      "sourceFiles": 239
+    }
+  },
+  "fixtures": {
+    "active": {
+      "version": 1,
+      "kind": "active",
+      "commands": 10000,
+      "runId": "769f0f00-ead7-468a-8827-e9394d1a74e1",
+      "counts": {
+        "Orders": 10000,
+        "Active": 10000,
+        "Filled": 0,
+        "Cancelled": 0,
+        "Trades": 0,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "a3dd62c738851c1f06d9ea121aa1397657b41584f5ce599a3e83cb2413198c45",
+        "genesis.bin": "dcfc92916ba5e9531e725f3f0c552d0659d115aa9858e5369b10eb7667bf7494",
+        "snapshot-00000000000000010000.bin": "22accf3af2ab295a32832db68637a0f2d995f086d0443a5d43312cf458443bc9"
+      }
+    },
+    "history": {
+      "version": 1,
+      "kind": "history",
+      "commands": 10000,
+      "runId": "53df2216-11b2-495a-9985-46da2cd2c194",
+      "counts": {
+        "Orders": 5000,
+        "Active": 0,
+        "Filled": 2500,
+        "Cancelled": 2500,
+        "Trades": 2500,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "6541511818616ebf280ae8f3ac5ed4c67edabeff9ad4595290cba9ef8db899d4",
+        "genesis.bin": "bb7f0f20f232695d5807c60061eef047979dfae107f97de0cc883ff614113c98",
+        "snapshot-00000000000000010000.bin": "3e8c74cb0384673930e66117f9e9b0a30a6201bc08c0ba138a4841283b5096c7"
+      }
+    }
+  },
+  "onlyProductionDifference": "internal/snapshot/codec.go",
+  "measurementProbeIdentical": true,
+  "snapshotPairs": [
+    {
+      "kind": "active",
+      "repeat": 1,
+      "baselineMs": 68.564209,
+      "candidateMs": 58.862334,
+      "changePercent": -14.150057503033409
+    },
+    {
+      "kind": "history",
+      "repeat": 1,
+      "baselineMs": 49.562083,
+      "candidateMs": 51.369208,
+      "changePercent": 3.6461845237618418
+    },
+    {
+      "kind": "history",
+      "repeat": 2,
+      "baselineMs": 53.73775,
+      "candidateMs": 50.263625,
+      "changePercent": -6.464961781987522
+    },
+    {
+      "kind": "active",
+      "repeat": 2,
+      "baselineMs": 67.715375,
+      "candidateMs": 61.593458,
+      "changePercent": -9.040660263640266
+    },
+    {
+      "kind": "active",
+      "repeat": 3,
+      "baselineMs": 68.699333,
+      "candidateMs": 65.175542,
+      "changePercent": -5.129294341183788
+    },
+    {
+      "kind": "history",
+      "repeat": 3,
+      "baselineMs": 57.965583,
+      "candidateMs": 56.051458,
+      "changePercent": -3.302175016509379
+    },
+    {
+      "kind": "history",
+      "repeat": 4,
+      "baselineMs": 56.1455,
+      "candidateMs": 56.815208,
+      "changePercent": 1.1928079721438056
+    },
+    {
+      "kind": "active",
+      "repeat": 4,
+      "baselineMs": 66.577917,
+      "candidateMs": 76.920583,
+      "changePercent": 15.534679464363531
+    },
+    {
+      "kind": "active",
+      "repeat": 5,
+      "baselineMs": 74.782292,
+      "candidateMs": 69.938334,
+      "changePercent": -6.47741312876583
+    },
+    {
+      "kind": "history",
+      "repeat": 5,
+      "baselineMs": 58.794875,
+      "candidateMs": 55.4515,
+      "changePercent": -5.686507539985408
+    }
+  ],
+  "reportsRegeneratedByteIdentically": true,
+  "powerLossTested": false
+}

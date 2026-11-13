@@ -161,6 +161,7 @@ type encoder struct {
 	w    io.Writer
 	size *counter // non-nil only during preflight; no JSON bytes are emitted
 	err  error
+	json *json.Encoder // per-payload reuse; writer borrows its buffer during Write
 }
 
 func (e *encoder) text(s string) {
@@ -187,14 +188,29 @@ func (e *encoder) value(v any) {
 		}
 		return
 	}
-	b, err := json.Marshal(v)
-	if err != nil {
-		e.err = err
-	} else if len(b) > maxValueBytes {
-		e.err = ErrInvalid
-	} else {
-		_, e.err = e.w.Write(b)
+	if e.json == nil {
+		e.json = json.NewEncoder(leafWriter{e.w})
 	}
+	e.err = e.json.Encode(v)
+}
+
+// leafWriter consumes one complete Encoder value, stripping only its framing
+// newline. Default JSON escaping, Marshal errors and canonical bytes remain in
+// the standard library; the envelope writer/hash/sync path is unchanged.
+type leafWriter struct{ w io.Writer }
+
+func (w leafWriter) Write(p []byte) (int, error) {
+	if len(p) == 0 || p[len(p)-1] != '\n' || len(p)-1 > maxValueBytes {
+		return 0, ErrInvalid
+	}
+	n, err := w.w.Write(p[:len(p)-1])
+	if err == nil && n != len(p)-1 {
+		err = io.ErrShortWrite
+	}
+	if err != nil {
+		return n, err
+	}
+	return len(p), nil
 }
 func emitArray[T any](e *encoder, values []T) {
 	e.text("[")
