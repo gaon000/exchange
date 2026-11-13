@@ -175,6 +175,13 @@ func requireCoverage(expected expectations, mode string) error {
 	if !expected[module+"tools/statescale"][tailTest] {
 		return fmt.Errorf("missing %s coverage: tools/statescale/%s", mode, tailTest)
 	}
+	readTest := "TestReadIOPhaseHistograms"
+	if mode == "native" {
+		readTest = "TestNativeBufferReadDiagnostic"
+	}
+	if !expected[module+"tools/statescale"][readTest] {
+		return fmt.Errorf("missing %s coverage: tools/statescale/%s", mode, readTest)
+	}
 	return nil
 }
 

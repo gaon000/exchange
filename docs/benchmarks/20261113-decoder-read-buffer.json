@@ -1,0 +1,2517 @@
+{
+  "version": 1,
+  "workersVerified": 120,
+  "commands": 10000,
+  "smoke": false,
+  "rows": [
+    {
+      "kind": "active",
+      "tail": 0,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 311.285083,
+          "min": 304.331208,
+          "max": 356.077458
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 114.23458099365234,
+          "min": 114.20732879638672,
+          "max": 114.28118133544922
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.908103942871094,
+          "min": 10.900604248046875,
+          "max": 10.912506103515625
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.613723754882812,
+          "min": 10.600631713867188,
+          "max": 10.617958068847656
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 47.0,
+          "min": 45.5625,
+          "max": 49.296875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 184.174583,
+          "min": 175.260334,
+          "max": 198.117458
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.85075,
+          "min": 12.091709,
+          "max": 22.780041
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 38.450208,
+          "min": 35.685667,
+          "max": 52.128084
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 46.823625,
+          "min": 42.332709,
+          "max": 55.213833
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 594,
+          "min": 594,
+          "max": 594
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 594,
+          "min": 594,
+          "max": 594
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 0,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 303.591417,
+          "min": 297.78725,
+          "max": 328.150459
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 114.25457763671875,
+          "min": 114.22651672363281,
+          "max": 114.29542541503906
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.912368774414062,
+          "min": 10.901641845703125,
+          "max": 10.913681030273438
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.617515563964844,
+          "min": 10.601303100585938,
+          "max": 10.619300842285156
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 47.90625,
+          "min": 45.625,
+          "max": 48.0
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 177.9395,
+          "min": 174.599875,
+          "max": 187.010584
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.388334,
+          "min": 11.334292,
+          "max": 14.368083
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.657292,
+          "min": 34.358209,
+          "max": 42.016542
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 45.89325,
+          "min": 43.717708,
+          "max": 46.755875
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 446,
+          "min": 446,
+          "max": 446
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 446,
+          "min": 446,
+          "max": 446
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -2.1502750385034575,
+        -14.860144558771804,
+        5.41798400278628,
+        -7.497611460682096,
+        -2.277742329925758
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 0,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 319.855625,
+          "min": 313.531292,
+          "max": 338.305041
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 114.32678985595703,
+          "min": 114.29729461669922,
+          "max": 114.35520935058594
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.911865234375,
+          "min": 10.908103942871094,
+          "max": 10.913536071777344
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.613227844238281,
+          "min": 10.61163330078125,
+          "max": 10.617027282714844
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 46.5625,
+          "min": 46.25,
+          "max": 47.640625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 185.199583,
+          "min": 179.135166,
+          "max": 194.516083
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.91325,
+          "min": 11.546375,
+          "max": 14.936375
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 39.864375,
+          "min": 39.536625,
+          "max": 42.164625
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 47.017959,
+          "min": 43.684917,
+          "max": 59.066458
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 74,
+          "min": 74,
+          "max": 74
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 372,
+          "min": 372,
+          "max": 372
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 372,
+          "min": 372,
+          "max": 372
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        5.101158406337336,
+        -11.792717302537014,
+        8.68013261014504,
+        -0.08650633474760472,
+        0.921778379707261
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 0,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 324.224833,
+          "min": 305.51325,
+          "max": 474.950125
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 114.4267349243164,
+          "min": 114.41967010498047,
+          "max": 114.450927734375
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.907112121582031,
+          "min": 10.906166076660156,
+          "max": 10.9326171875
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.61236572265625,
+          "min": 10.611587524414062,
+          "max": 10.6322021484375
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 47.046875,
+          "min": 46.984375,
+          "max": 47.953125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 187.284,
+          "min": 177.116792,
+          "max": 261.048333
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 14.84925,
+          "min": 11.7655,
+          "max": 17.26425
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 41.485125,
+          "min": 37.728167,
+          "max": 42.5895
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 46.996292,
+          "min": 42.438333,
+          "max": 50.205583
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 37,
+          "min": 37,
+          "max": 37
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 335,
+          "min": 335,
+          "max": 335
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 335,
+          "min": 335,
+          "max": 335
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        56.06356249865772,
+        -14.2003395227563,
+        2.057559565101297,
+        0.44155830558714193,
+        4.363894692921422
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 309.093625,
+          "min": 273.968834,
+          "max": 341.449417
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 106.2339096069336,
+          "min": 106.20159912109375,
+          "max": 106.2396469116211
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.860580444335938,
+          "min": 10.859001159667969,
+          "max": 10.86126708984375
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.565818786621094,
+          "min": 10.558692932128906,
+          "max": 10.566871643066406
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 42.890625,
+          "min": 42.4375,
+          "max": 42.984375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 168.986375,
+          "min": 157.406583,
+          "max": 192.5535
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.752875,
+          "min": 10.142208,
+          "max": 15.482542
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 39.881792,
+          "min": 35.643583,
+          "max": 49.697833
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 42.6045,
+          "min": 38.889708,
+          "max": 51.508958
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 266,
+          "min": 266,
+          "max": 266
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 266,
+          "min": 266,
+          "max": 266
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 534,
+          "min": 534,
+          "max": 534
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 534,
+          "min": 534,
+          "max": 534
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 288.646542,
+          "min": 277.370542,
+          "max": 298.905166
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 106.24964141845703,
+          "min": 106.22894287109375,
+          "max": 106.26920318603516
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.859321594238281,
+          "min": 10.849006652832031,
+          "max": 10.861038208007812
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.559608459472656,
+          "min": 10.554473876953125,
+          "max": 10.565895080566406
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 43.953125,
+          "min": 42.546875,
+          "max": 45.15625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 162.359625,
+          "min": 155.5265,
+          "max": 170.624
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.734,
+          "min": 9.837542,
+          "max": 11.974792
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.159875,
+          "min": 35.987791,
+          "max": 40.500875
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 40.800083,
+          "min": 40.142375,
+          "max": 42.813334
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 266,
+          "min": 266,
+          "max": 266
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 133,
+          "min": 133,
+          "max": 133
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 401,
+          "min": 401,
+          "max": 401
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 401,
+          "min": 401,
+          "max": 401
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -15.304389873947278,
+        1.9899738396911504,
+        -14.918498921553969,
+        -3.2962371837982674,
+        1.241640499882557
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 283.967042,
+          "min": 280.47925,
+          "max": 294.392292
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 106.29108428955078,
+          "min": 106.28690338134766,
+          "max": 106.31529998779297
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.859306335449219,
+          "min": 10.858833312988281,
+          "max": 10.8607177734375
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.564453125,
+          "min": 10.559135437011719,
+          "max": 10.566032409667969
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 43.09375,
+          "min": 42.53125,
+          "max": 44.546875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 158.80075,
+          "min": 155.664791,
+          "max": 164.810792
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.245209,
+          "min": 9.721042,
+          "max": 13.269875
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.612542,
+          "min": 36.913209,
+          "max": 39.990875
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 42.721125,
+          "min": 38.217333,
+          "max": 43.98775
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 266,
+          "min": 266,
+          "max": 266
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 67,
+          "min": 67,
+          "max": 67
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 335,
+          "min": 335,
+          "max": 335
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 335,
+          "min": 335,
+          "max": 335
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -15.23933660721406,
+        -0.03492187020370796,
+        -11.637081542751782,
+        -9.25751056819758,
+        3.649396120728099
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 306.433625,
+          "min": 280.92475,
+          "max": 323.461417
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 106.43302917480469,
+          "min": 106.38877868652344,
+          "max": 106.43679809570312
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.855644226074219,
+          "min": 10.853271484375,
+          "max": 10.860641479492188
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.559883117675781,
+          "min": 10.555488586425781,
+          "max": 10.566246032714844
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 43.0625,
+          "min": 41.953125,
+          "max": 45.203125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 168.919167,
+          "min": 159.039167,
+          "max": 182.329041
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.561583,
+          "min": 9.832792,
+          "max": 13.735209
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 39.139,
+          "min": 36.112875,
+          "max": 41.089334
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 41.940959,
+          "min": 39.6135,
+          "max": 47.548666
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 266,
+          "min": 266,
+          "max": 266
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 34,
+          "min": 34,
+          "max": 34
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 302,
+          "min": 302,
+          "max": 302
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 302,
+          "min": 302,
+          "max": 302
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -7.981148200349686,
+        5.247152156889401,
+        -15.679413315370216,
+        -0.8605806735742183,
+        18.06504129590154
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 197.453792,
+          "min": 187.222958,
+          "max": 206.395625
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 82.44501495361328,
+          "min": 82.39495849609375,
+          "max": 82.46607208251953
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.658615112304688,
+          "min": 10.6512451171875,
+          "max": 10.68084716796875
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.363761901855469,
+          "min": 10.356407165527344,
+          "max": 10.386558532714844
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 36.15625,
+          "min": 34.625,
+          "max": 36.953125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 88.118542,
+          "min": 86.606709,
+          "max": 96.736834
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.69925,
+          "min": 5.085958,
+          "max": 5.9705
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 40.695958,
+          "min": 37.901208,
+          "max": 41.7325
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 25.101833,
+          "min": 24.287916,
+          "max": 27.138917
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 298,
+          "min": 298,
+          "max": 298
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 298,
+          "min": 298,
+          "max": 298
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 201.876792,
+          "min": 191.906917,
+          "max": 218.227125
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 82.47969818115234,
+          "min": 82.47144317626953,
+          "max": 82.49583435058594
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.656776428222656,
+          "min": 10.651565551757812,
+          "max": 10.675079345703125
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.361785888671875,
+          "min": 10.356788635253906,
+          "max": 10.379768371582031
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 36.109375,
+          "min": 35.453125,
+          "max": 36.890625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 94.067166,
+          "min": 89.80375,
+          "max": 102.031959
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 6.325083,
+          "min": 5.614791,
+          "max": 6.703584
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 39.328833,
+          "min": 37.8945,
+          "max": 41.557792
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 25.223375,
+          "min": 22.612166,
+          "max": 29.241209
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 74,
+          "min": 74,
+          "max": 74
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 224,
+          "min": 224,
+          "max": 224
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 224,
+          "min": 224,
+          "max": 224
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        7.8269428901983185,
+        -7.019871666368893,
+        -0.990569479668435,
+        6.30240379266882,
+        10.971949818761907
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 201.278625,
+          "min": 191.898625,
+          "max": 232.308708
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 82.53862762451172,
+          "min": 82.52983856201172,
+          "max": 82.56001281738281
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.656349182128906,
+          "min": 10.652206420898438,
+          "max": 10.664863586425781
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.361343383789062,
+          "min": 10.357521057128906,
+          "max": 10.365013122558594
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 36.234375,
+          "min": 33.828125,
+          "max": 36.625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 93.017417,
+          "min": 87.547,
+          "max": 111.897375
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 6.305458,
+          "min": 5.408041,
+          "max": 8.150625
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 42.641667,
+          "min": 37.593375,
+          "max": 48.611416
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 26.307917,
+          "min": 24.354791,
+          "max": 28.408208
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 37,
+          "min": 37,
+          "max": 37
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 187,
+          "min": 187,
+          "max": 187
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 187,
+          "min": 187,
+          "max": 187
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        7.507448418799156,
+        -7.023889193387689,
+        1.8401981360783415,
+        4.993199819359528,
+        18.132657829027487
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 202.560792,
+          "min": 187.201209,
+          "max": 216.90025
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 82.65640258789062,
+          "min": 82.64203643798828,
+          "max": 82.68270874023438
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.653099060058594,
+          "min": 10.651565551757812,
+          "max": 10.665122985839844
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.358871459960938,
+          "min": 10.351699829101562,
+          "max": 10.370437622070312
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 35.296875,
+          "min": 33.421875,
+          "max": 37.421875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 95.909958,
+          "min": 87.534334,
+          "max": 99.029959
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.9685,
+          "min": 5.469042,
+          "max": 6.778125
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 40.950209,
+          "min": 38.563459,
+          "max": 47.325459
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 23.58475,
+          "min": 22.998,
+          "max": 29.907792
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 148,
+          "min": 148,
+          "max": 148
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 19,
+          "min": 19,
+          "max": 19
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 169,
+          "min": 169,
+          "max": 169
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 169,
+          "min": 169,
+          "max": 169
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -0.011616630904853764,
+        -3.418636901823857,
+        6.409537579303626,
+        8.298123709957505,
+        3.0053713307759855
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 261.562292,
+          "min": 254.729292,
+          "max": 320.521458
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 97.28164672851562,
+          "min": 97.27011108398438,
+          "max": 97.30512237548828
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.622406005859375,
+          "min": 9.618148803710938,
+          "max": 9.623985290527344
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.324180603027344,
+          "min": 9.31817626953125,
+          "max": 9.328933715820312
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 40.40625,
+          "min": 39.859375,
+          "max": 44.40625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 151.779666,
+          "min": 146.257458,
+          "max": 201.29775
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.704875,
+          "min": 10.714875,
+          "max": 13.342291
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 31.784375,
+          "min": 30.340042,
+          "max": 38.673708
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 38.0995,
+          "min": 37.7085,
+          "max": 42.087333
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 261,
+          "min": 261,
+          "max": 261
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 261,
+          "min": 261,
+          "max": 261
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 524,
+          "min": 524,
+          "max": 524
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 524,
+          "min": 524,
+          "max": 524
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 279.376125,
+          "min": 276.1145,
+          "max": 321.4185
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 97.3069839477539,
+          "min": 97.3009033203125,
+          "max": 97.32791900634766
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.621978759765625,
+          "min": 9.611953735351562,
+          "max": 9.62335205078125
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.322006225585938,
+          "min": 9.311614990234375,
+          "max": 9.327964782714844
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 42.8125,
+          "min": 41.296875,
+          "max": 43.296875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 156.694208,
+          "min": 153.335375,
+          "max": 187.181709
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 13.994375,
+          "min": 12.640375,
+          "max": 14.97775
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 34.914917,
+          "min": 33.635542,
+          "max": 38.240125
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 41.822084,
+          "min": 40.513667,
+          "max": 45.702167
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 261,
+          "min": 261,
+          "max": 261
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 394,
+          "min": 394,
+          "max": 394
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 394,
+          "min": 394,
+          "max": 394
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        26.180423726062884,
+        6.384536881180103,
+        15.40623347199952,
+        -1.2504576180423332,
+        -12.836997952255658
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 264.40575,
+          "min": 259.320583,
+          "max": 276.481
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 97.3767318725586,
+          "min": 97.34993743896484,
+          "max": 97.412353515625
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.622344970703125,
+          "min": 9.621353149414062,
+          "max": 9.623649597167969
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.326698303222656,
+          "min": 9.3221435546875,
+          "max": 9.32916259765625
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 40.59375,
+          "min": 39.5,
+          "max": 43.34375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 151.988167,
+          "min": 147.641125,
+          "max": 159.139041
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.301167,
+          "min": 10.874208,
+          "max": 13.207
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 32.600083,
+          "min": 30.605667,
+          "max": 34.814208
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 38.01175,
+          "min": 37.662875,
+          "max": 40.048125
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 261,
+          "min": 261,
+          "max": 261
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 66,
+          "min": 66,
+          "max": 66
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 329,
+          "min": 329,
+          "max": 329
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 329,
+          "min": 329,
+          "max": 329
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        8.539146726792612,
+        1.087105476197614,
+        -0.29413928105349596,
+        -2.56202694175216,
+        -19.09415843228818
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 269.639792,
+          "min": 263.255584,
+          "max": 464.922833
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 97.49561309814453,
+          "min": 97.46995544433594,
+          "max": 97.52505493164062
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.621231079101562,
+          "min": 9.616127014160156,
+          "max": 9.624038696289062
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.322860717773438,
+          "min": 9.313941955566406,
+          "max": 9.328941345214844
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 43.140625,
+          "min": 40.796875,
+          "max": 45.75
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 155.855875,
+          "min": 150.004208,
+          "max": 317.207791
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.030167,
+          "min": 11.054666,
+          "max": 33.15275
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 33.594292,
+          "min": 30.84825,
+          "max": 41.405834
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 38.75875,
+          "min": 36.791417,
+          "max": 43.23075
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 261,
+          "min": 261,
+          "max": 261
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        3.3471973062289218,
+        3.08817449879204,
+        1.4885246403545382,
+        6.4663222947991095,
+        45.052014895052686
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 271.200875,
+          "min": 231.359,
+          "max": 292.855375
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 91.3013916015625,
+          "min": 91.28325653076172,
+          "max": 91.32389831542969
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.640876770019531,
+          "min": 9.630393981933594,
+          "max": 9.647895812988281
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.346527099609375,
+          "min": 9.330268859863281,
+          "max": 9.352798461914062
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 38.375,
+          "min": 37.125,
+          "max": 39.09375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 145.655708,
+          "min": 130.900625,
+          "max": 158.916958
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 14.751417,
+          "min": 9.78175,
+          "max": 21.597834
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 38.717416,
+          "min": 30.927708,
+          "max": 45.599958
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 39.031125,
+          "min": 32.559167,
+          "max": 45.788917
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 235,
+          "min": 235,
+          "max": 235
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 235,
+          "min": 235,
+          "max": 235
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 472,
+          "min": 472,
+          "max": 472
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 472,
+          "min": 472,
+          "max": 472
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 250.401916,
+          "min": 237.886666,
+          "max": 417.172666
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 91.31551361083984,
+          "min": 91.31207275390625,
+          "max": 91.3578109741211
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.644935607910156,
+          "min": 9.624427795410156,
+          "max": 9.646331787109375
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.346511840820312,
+          "min": 9.329483032226562,
+          "max": 9.350700378417969
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 38.140625,
+          "min": 37.6875,
+          "max": 38.609375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 139.6545,
+          "min": 132.453167,
+          "max": 241.657959
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.317208,
+          "min": 10.284833,
+          "max": 15.89825
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 33.25925,
+          "min": 31.400583,
+          "max": 41.878292
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 34.301042,
+          "min": 33.401083,
+          "max": 47.805875
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 235,
+          "min": 235,
+          "max": 235
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 118,
+          "min": 118,
+          "max": 118
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 355,
+          "min": 355,
+          "max": 355
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 355,
+          "min": 355,
+          "max": 355
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        3.0964682592853343,
+        -13.57683040715486,
+        -0.0721778221045577,
+        -12.283960735746158,
+        42.450062936355536
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 253.640167,
+          "min": 246.400916,
+          "max": 319.059958
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 91.39717102050781,
+          "min": 91.35945129394531,
+          "max": 91.40553283691406
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.644050598144531,
+          "min": 9.640571594238281,
+          "max": 9.645957946777344
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.349105834960938,
+          "min": 9.340553283691406,
+          "max": 9.35162353515625
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 38.3125,
+          "min": 37.3125,
+          "max": 39.015625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 141.071042,
+          "min": 133.360792,
+          "max": 173.904666
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.317708,
+          "min": 10.371875,
+          "max": 23.038708
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 32.988792,
+          "min": 32.712583,
+          "max": 48.018583
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 34.59775,
+          "min": 34.435666,
+          "max": 46.46925
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 235,
+          "min": 235,
+          "max": 235
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 59,
+          "min": 59,
+          "max": 59
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 296,
+          "min": 296,
+          "max": 296
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        6.501547810977737,
+        -12.459187539928562,
+        -2.9872177528765476,
+        -4.103569356109194,
+        8.947960405370736
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 249.48025,
+          "min": 238.0075,
+          "max": 441.444083
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 91.52752685546875,
+          "min": 91.51351165771484,
+          "max": 91.53271484375
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.644187927246094,
+          "min": 9.642890930175781,
+          "max": 9.645751953125
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.349502563476562,
+          "min": 9.343711853027344,
+          "max": 9.350944519042969
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 38.703125,
+          "min": 38.25,
+          "max": 39.15625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 139.791084,
+          "min": 131.956917,
+          "max": 259.262792
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 10.892375,
+          "min": 10.144,
+          "max": 53.961542
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 32.94875,
+          "min": 31.769708,
+          "max": 50.838333
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 35.555583,
+          "min": 34.431834,
+          "max": 42.878208
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 235,
+          "min": 235,
+          "max": 235
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 30,
+          "min": 30,
+          "max": 30
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 267,
+          "min": 267,
+          "max": 267
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 267,
+          "min": 267,
+          "max": 267
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        2.87367251760251,
+        -1.6688997428288221,
+        -2.4236157454599616,
+        -9.296245817790961,
+        50.7379138935046
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "bufferKiB": 32,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 177.558583,
+          "min": 170.181083,
+          "max": 188.637958
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 71.89680480957031,
+          "min": 71.87813568115234,
+          "max": 71.91944122314453
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.503738403320312,
+          "min": 9.499679565429688,
+          "max": 9.511665344238281
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.204582214355469,
+          "min": 9.199722290039062,
+          "max": 9.216720581054688
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 32.953125,
+          "min": 31.4375,
+          "max": 34.328125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 80.223792,
+          "min": 75.466083,
+          "max": 83.97375
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.926542,
+          "min": 5.458625,
+          "max": 7.335792
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.435209,
+          "min": 35.264833,
+          "max": 38.291209
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 21.897,
+          "min": 20.985583,
+          "max": 24.746917
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 264,
+          "min": 264,
+          "max": 264
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 264,
+          "min": 264,
+          "max": 264
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "bufferKiB": 64,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 173.026333,
+          "min": 164.885542,
+          "max": 178.042584
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 71.93831634521484,
+          "min": 71.92927551269531,
+          "max": 71.96858215332031
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.502113342285156,
+          "min": 9.496139526367188,
+          "max": 9.517707824707031
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.207305908203125,
+          "min": 9.201393127441406,
+          "max": 9.22296142578125
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 32.9375,
+          "min": 30.5625,
+          "max": 33.71875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 76.465708,
+          "min": 74.590084,
+          "max": 82.726333
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.711333,
+          "min": 5.43375,
+          "max": 6.717291
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.020209,
+          "min": 34.712708,
+          "max": 37.989667
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 21.748292,
+          "min": 19.795791,
+          "max": 22.757875
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 66,
+          "min": 66,
+          "max": 66
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 199,
+          "min": 199,
+          "max": 199
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 199,
+          "min": 199,
+          "max": 199
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -5.113805171558516,
+        -3.111709542946095,
+        -8.275972219758653,
+        1.352923484469315,
+        -1.709630353968028
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "bufferKiB": 128,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 176.6485,
+          "min": 163.408666,
+          "max": 187.655917
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 71.99149322509766,
+          "min": 71.95619201660156,
+          "max": 72.0202407836914
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.501655578613281,
+          "min": 9.492469787597656,
+          "max": 9.530380249023438
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.202247619628906,
+          "min": 9.1981201171875,
+          "max": 9.235740661621094
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 32.9375,
+          "min": 32.25,
+          "max": 34.328125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 78.488375,
+          "min": 73.337959,
+          "max": 82.611375
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 6.014,
+          "min": 5.160208,
+          "max": 7.9665
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 35.765792,
+          "min": 32.759583,
+          "max": 39.745542
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 22.548041,
+          "min": 20.577,
+          "max": 28.742958
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 33,
+          "min": 33,
+          "max": 33
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 166,
+          "min": 166,
+          "max": 166
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 166,
+          "min": 166,
+          "max": 166
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        -2.4070928748062825,
+        -3.9795357278340937,
+        -0.5205956480932694,
+        0.5593240780322528,
+        1.7632962185945011
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "bufferKiB": 256,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 175.711834,
+          "min": 160.786167,
+          "max": 194.043375
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 72.11962127685547,
+          "min": 72.09381866455078,
+          "max": 72.1364517211914
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.49774169921875,
+          "min": 9.4970703125,
+          "max": 9.517776489257812
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.203086853027344,
+          "min": 9.202003479003906,
+          "max": 9.223274230957031
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 32.296875,
+          "min": 31.828125,
+          "max": 33.609375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 80.476792,
+          "min": 72.682375,
+          "max": 93.154
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.902208,
+          "min": 5.096375,
+          "max": 7.264625
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 35.568458,
+          "min": 33.084958,
+          "max": 41.025292
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 23.000333,
+          "min": 20.829458,
+          "max": 23.740209
+        },
+        "checksumCalls": {
+          "count": 5,
+          "median": 131,
+          "min": 131,
+          "max": 131
+        },
+        "decodeCalls": {
+          "count": 5,
+          "median": 17,
+          "min": 17,
+          "max": 17
+        },
+        "readAtCalls": {
+          "count": 5,
+          "median": 150,
+          "min": 150,
+          "max": 150
+        },
+        "preadCalls": {
+          "count": 5,
+          "median": 150,
+          "min": 150,
+          "max": 150
+        },
+        "preadInterrupted": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "preadShortReads": {
+          "count": 5,
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "pairedOpenChangesPercent": [
+        9.284142575073373,
+        -5.520540728959866,
+        -6.852345167985751,
+        -3.6517695705163167,
+        1.8195864023568653
+      ]
+    }
+  ],
+  "sourceBundleManifestSHA256": "06185f8222d626899baac0d9d113f2b7f7ff8ac9e8f6a9188cf5fc4f064f497d",
+  "buildRevision": "104896eee3fd73216cd64d3214c755b9cbc2e0ea",
+  "binarySHA256": {
+    "32": "590e02a01658610535a88405134e050ca8d1942f04298ad5279bde45b2278445",
+    "64": "ab4c64824d06eb3a4bb617790269955b8b12d8866181c9d67977a9aff30cc82f",
+    "128": "b86e3daceb84e1ff8b1bba4f5534e05b503aa79150e7a5e925ffe72bb8d33903",
+    "256": "2acf2a80caec58f972f4390b33132076a157049af008d04833908f57b8a02605"
+  },
+  "firstResponsesVerified": 960,
+  "retriesVerified": 240,
+  "scope": "timed public Open without IO observers; same prefix snapshot reread outside timing via File.ReadAt and direct syscall.Pread; warm cache; successful owned scratch copies retired with receipts",
+  "productionDefaultKiB": 32,
+  "powerLossTested": false
+}

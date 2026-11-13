@@ -71,7 +71,7 @@ func main() {
 }
 
 func command(args []string) error {
-	if len(args) > 0 && (args[0] == "tail-prepare" || args[0] == "tail-measure") {
+	if len(args) > 0 && (args[0] == "tail-prepare" || args[0] == "tail-measure" || args[0] == "buffer-measure") {
 		return tailCommand(args)
 	}
 	if len(args) > 0 && args[0] == "profile" {
