@@ -138,6 +138,8 @@ snapshot은 전체 WAL·최초 결과 이력을 없애는 보존 정책이 아�
 
 2026-11-13 [스냅샷 배열 증가·복사 할당 최적화](benchmarks/snapshot-array-allocation.md)는 동일 1만 명령·두 상태·세 tail을 버전별 5회 비교했다. 총 할당 중앙값은 1.96~7.37% 감소하고 GC 뒤 heap 차이는 2.2KiB 이내였으나 현재 RSS는 조건별 혼합(최대 중앙값 +4.406MiB)이었다. 기존 2GiB 측정 budget·검증/복구 계약을 유지해 할당 감소 목적으로 채택하며, 복구 시간/동시 거래 처리량·메모리 일괄 개선을 주장하지 않는다. 로컬 검증과 후속 발행/원격 CI는 구분한다.
 
+2026-11-13 [정규형 비교 버퍼 재사용](benchmarks/snapshot-canonical-buffer.md)은 배열 최적화 이후 최신 allocation profile에서 읽기 중 Marshal 누적 약 44%/반환 사본 약 30%를 확인한 뒤 같은 두 상태·세 tail 각 버전 5회를 비교했다. 표준 Encoder의 borrowed bytes를 원문과 비교해 Open 총 할당 중앙값이 6.07~9.37% 감소했다. GC 뒤 heap 차이는 1.33KiB 이내이며 현재 RSS는 5조건 감소/1조건 증가했다. 시간 변화는 혼합이므로 할당 감소 목적으로 채택하고 HTTP p99·최대 처리량 개선으로 확대하지 않는다.
+
 ## 6. 현재 검증·재현과 자료 보존
 
 2026-11-12 기준 master 3a23e1b의 [GitHub CI run 43170613569](https://github.com/gaon000/exchange/actions/runs/43170613569)는 `Go (portable)`·`Go (native)` 모두 success다. Go portable 215개·native race 249개, 각 Python 44개와 진단 smoke를 통과했다. native의 명시된 child-helper skip 1개는 일반 시험 누락과 구분한다. 이는 **해당 코드의 검증**이며 이 문서 변경의 새 원격 CI 결과나 성능 측정은 아니다.
