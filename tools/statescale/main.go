@@ -71,6 +71,9 @@ func main() {
 }
 
 func command(args []string) error {
+	if len(args) > 0 && args[0] == "profile" {
+		return profileCommand(args[1:])
+	}
 	if len(args) == 0 {
 		return errors.New("expected prepare or measure")
 	}

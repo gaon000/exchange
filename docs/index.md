@@ -34,6 +34,8 @@
 
 [상태 크기별 실제 결과](benchmarks/state-size-costs.md)는 6조건 각 5회의 메모리/snapshot/복구 비용·완전한 bytes 일치와 한계를 기록한다. [측정 도구](state-size-costs.md)는 활성 주문형/체결·취소 이력형의 메모리·snapshot 단계·두 복구 경로를 동일 fixture/새 프로세스에서 반복 측정한다.
 
+[스냅샷 CPU·할당 프로파일링](snapshot-profiling.md)은 같은 fixture의 공개 생성/복구 경로를 별도 새 프로세스에서 계측한다. [실제 분석](benchmarks/snapshot-profiling.md)은 190 worker의 함수별 CPU·할당 근거와 후속 후보를 정리한다.
+
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.
