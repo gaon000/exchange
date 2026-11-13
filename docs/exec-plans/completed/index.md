@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [WAL 디코더 최적화](20261113-wal-decoder-optimization.md) | 2026-11-13 | typed/canonical 전용 검증·동일 상태 20쌍의 복구/할당 감소 | 40 worker/383 파일·구형 decoder 차등 corpus/fuzz·portable 226/native race 264/Python 66. 생성/HTTP 성능 개선·전원 장애는 미검증 |
 | [snapshot CPU·할당 분석](20261113-snapshot-profiling.md) | 2026-11-13 | 동일 1만 명령 두 상태의 세 경로 프로파일·병목/후속 후보 | 190 worker/2,126 파일·source 233개/production 155개 일치·재집계 bytes 일치·portable 224/native race 262/Python 62(검토 후). CPU/추정 할당이며 비계측 latency/전원 장애 미검증 |
 | [상태 크기별 비용 측정](20261113-state-size-costs.md) | 2026-11-13 | 6조건 각 5회의 메모리/snapshot/두 복구 경로·완전한 bytes와 JSON/Markdown 재집계 | 60 worker/588 파일 검증, source 229개 동결/일치, portable 224개·native race 261개·Python 58개. warm-cache·HTTP p99/전원 장애 미검증 |
 | [고정 seed 거래·복구 통합 검증](20261112-random-recovery.md) | 2026-11-12 | HTTP/실제 저장·중간 snapshot/재시작·순차/전체 WAL 대조와 실패 명세 replay | 세 seed 각 64 actions·24회 복구/전체 재생, portable 221개·native race 258개·Python 53개 통과. 순차/정상 재시작 범위·전원 장애 보류 |

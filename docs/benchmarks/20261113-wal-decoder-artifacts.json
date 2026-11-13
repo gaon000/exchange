@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "bundle": "var/wal-decoder-full-20261113",
+  "manifestSHA256": "45b4937e1c6b0a8aaf5b01ac04ebe0ebefff8ea3118a90e054ac459a45bc19e0",
+  "reportSHA256": "1bbecc0ba2ef6f072f24d830857a428288e9f87842ac701a4ee4ddfa2c640f67",
+  "verification": {
+    "filesVerified": 383,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "inputBundle": "var/state-scale-full-20261113",
+  "inputManifestSHA256": "f65d7a11c09389b0ab65243b0a4f26a0dad883c9c726a6f2c56e9758e78c533d",
+  "builds": {
+    "baseline": {
+      "revision": "ec420e0b9961cf724c9145ef3bb4f61762d8e99d",
+      "workingTreeModified": true,
+      "binarySHA256": "accf5941c52d8e57475760ec89286630449477478b301ef58f1fc5f169c39d04",
+      "sourceArchiveSHA256": "54396b63e85e1a82ddb634799d4ce66f5f529f9353231170b2320cc600ce22af",
+      "sourceFiles": 234
+    },
+    "candidate": {
+      "revision": "ec420e0b9961cf724c9145ef3bb4f61762d8e99d",
+      "workingTreeModified": true,
+      "binarySHA256": "c0091b723a12a3d77f5d840c02faff85c3c1acbde5aa06deacc8982412a5289c",
+      "sourceArchiveSHA256": "d827fe008ced192f42d5e2f2a036532bea71b1bcec1544a894256b0363ac7702",
+      "sourceFiles": 236
+    }
+  },
+  "fixtures": {
+    "active": {
+      "version": 1,
+      "kind": "active",
+      "commands": 10000,
+      "runId": "769f0f00-ead7-468a-8827-e9394d1a74e1",
+      "counts": {
+        "Orders": 10000,
+        "Active": 10000,
+        "Filled": 0,
+        "Cancelled": 0,
+        "Trades": 0,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "a3dd62c738851c1f06d9ea121aa1397657b41584f5ce599a3e83cb2413198c45",
+        "genesis.bin": "dcfc92916ba5e9531e725f3f0c552d0659d115aa9858e5369b10eb7667bf7494",
+        "snapshot-00000000000000010000.bin": "22accf3af2ab295a32832db68637a0f2d995f086d0443a5d43312cf458443bc9"
+      }
+    },
+    "history": {
+      "version": 1,
+      "kind": "history",
+      "commands": 10000,
+      "runId": "53df2216-11b2-495a-9985-46da2cd2c194",
+      "counts": {
+        "Orders": 5000,
+        "Active": 0,
+        "Filled": 2500,
+        "Cancelled": 2500,
+        "Trades": 2500,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "6541511818616ebf280ae8f3ac5ed4c67edabeff9ad4595290cba9ef8db899d4",
+        "genesis.bin": "bb7f0f20f232695d5807c60061eef047979dfae107f97de0cc883ff614113c98",
+        "snapshot-00000000000000010000.bin": "3e8c74cb0384673930e66117f9e9b0a30a6201bc08c0ba138a4841283b5096c7"
+      }
+    }
+  },
+  "workersVerified": 40,
+  "onlyProductionDifference": "internal/wal/codec.go",
+  "measurementProbeIdentical": true,
+  "reportsRegeneratedByteIdentically": true,
+  "powerLossTested": false
+}

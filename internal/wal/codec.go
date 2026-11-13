@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"unicode/utf8"
 
 	d "github.com/gaon000/exchange/internal/domain"
 	"github.com/gaon000/exchange/internal/strictjson"
@@ -119,17 +120,26 @@ func encodeRecord(r Record) ([]byte, error) {
 }
 
 func decodeRecord(data []byte, runID string) (Record, error) {
+	// WAL accepts only encodeRecord's canonical bytes, unlike user JSON. The
+	// closed commandWire/Place/Cancel DTOs are decoded once each; the final
+	// full-record comparison also rejects duplicate/unknown/missing/case-folded
+	// keys, nulls, alternate escapes, ordering and whitespace. Keep that compare
+	// and encodeRecord's semantic validation together (schema guarded in tests).
+	// Avoid strictjson's token walk, shape maps and repeated typed decodes here.
+	if !utf8.Valid(data) {
+		return Record{}, fmt.Errorf("%w: command UTF-8", ErrCorrupt)
+	}
 	var w commandWire
-	if err := strictjson.Decode(data, &w); err != nil {
+	if err := json.Unmarshal(data, &w); err != nil {
 		return Record{}, fmt.Errorf("%w: command: %v", ErrCorrupt, err)
 	}
 	c := d.Command{RunID: runID, AccountID: w.AccountID, Kind: w.Kind}
 	var err error
 	switch w.Kind {
 	case d.PlaceOrder:
-		err = strictjson.Decode(w.Payload, &c.Place)
+		err = json.Unmarshal(w.Payload, &c.Place)
 	case d.CancelOrder:
-		err = strictjson.Decode(w.Payload, &c.Cancel)
+		err = json.Unmarshal(w.Payload, &c.Cancel)
 	default:
 		err = ErrInvalid
 	}
