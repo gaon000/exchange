@@ -1,0 +1,4867 @@
+{
+  "version": 1,
+  "workersVerified": 190,
+  "commands": 10000,
+  "sourceBundleManifestSHA256": "f65d7a11c09389b0ab65243b0a4f26a0dad883c9c726a6f2c56e9758e78c533d",
+  "binarySHA256": "b908d7211bbefe2eff4150b2e3814f7036616a30b4acac07d9044ebb96d6d35d",
+  "allocationSampleRate": 65536,
+  "scope": "CPU samples and estimated allocation deltas; profiling runs are not baseline wall-time or throughput measurements",
+  "powerLossTested": false,
+  "performanceImprovementClaimed": false,
+  "bundle": "var/snapshot-profile-full-20261113",
+  "bundleManifestSHA256": "dedc60fb8300205b754cb06a1fc91ba88b1df40c57e4573d975d606cc35bbda5",
+  "reportSHA256": "37b7a27b9affbe34b3c3dca45a64f72d4bec3778bce7967ae3abf44178f049bb",
+  "sourceArchiveSHA256": "5f79ed612e7fdb7a0797d832f6a9fb4c6b7e43b2e32d0285b1ea615131c4dd18",
+  "sourceFiles": 233,
+  "productionSourceFiles": 155,
+  "productionSourceIdentical": true,
+  "verification": {
+    "filesVerified": 2126,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "rows": [
+    {
+      "kind": "active",
+      "phase": "wal-open",
+      "profiler": "cpu",
+      "repeats": 20,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 456,
+      "apiTotalAllocBytes": [
+        130382184,
+        130362200,
+        130353320,
+        130371096,
+        130365888,
+        130372448,
+        130332336,
+        130383000,
+        130386464,
+        130330128,
+        130368304,
+        130349792,
+        130318872,
+        130368744,
+        130291672,
+        130338136,
+        130336136,
+        130357496,
+        130311904,
+        130306488
+      ],
+      "artifacts": "active-wal-open-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 4560000000.0,
+          "perOperation": 228000000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 840000000.0,
+              "flatPercent": 18.42,
+              "cumulative": 840000000.0,
+              "cumulativePercent": 18.42
+            },
+            {
+              "function": "runtime.madvise",
+              "flat": 820000000.0,
+              "flatPercent": 17.98,
+              "cumulative": 820000000.0,
+              "cumulativePercent": 17.98
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 440000000.0,
+              "flatPercent": 9.65,
+              "cumulative": 440000000.0,
+              "cumulativePercent": 9.65
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 270000000.0,
+              "flatPercent": 5.92,
+              "cumulative": 270000000.0,
+              "cumulativePercent": 5.92
+            },
+            {
+              "function": "runtime.kevent",
+              "flat": 250000000.0,
+              "flatPercent": 5.48,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 5.48
+            },
+            {
+              "function": "runtime.pthread_cond_signal",
+              "flat": 180000000.0,
+              "flatPercent": 3.95,
+              "cumulative": 180000000.0,
+              "cumulativePercent": 3.95
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 170000000.0,
+              "flatPercent": 3.73,
+              "cumulative": 170000000.0,
+              "cumulativePercent": 3.73
+            },
+            {
+              "function": "runtime.usleep",
+              "flat": 150000000.0,
+              "flatPercent": 3.29,
+              "cumulative": 150000000.0,
+              "cumulativePercent": 3.29
+            },
+            {
+              "function": "runtime.tryDeferToSpanScan",
+              "flat": 100000000.0,
+              "flatPercent": 2.19,
+              "cumulative": 120000000.0,
+              "cumulativePercent": 2.63
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 80000000.0,
+              "flatPercent": 1.75,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 1.75
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 54.17
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.66,
+              "cumulative": 2400000000.0,
+              "cumulativePercent": 52.63
+            },
+            {
+              "function": "runtime.systemstack",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1690000000.0,
+              "cumulativePercent": 37.06
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1400000000.0,
+              "cumulativePercent": 30.7
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.replayInto",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1400000000.0,
+              "cumulativePercent": 30.7
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 840000000.0,
+              "flatPercent": 18.42,
+              "cumulative": 840000000.0,
+              "cumulativePercent": 18.42
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.66,
+              "cumulative": 2400000000.0,
+              "cumulativePercent": 52.63
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 110000000.0,
+              "cumulativePercent": 2.41
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 0.22
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 990000000.0,
+              "cumulativePercent": 21.71
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1170000000.0,
+              "cumulativePercent": 25.66
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 2470000000.0,
+          "perOperation": 123500000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 840000000.0,
+              "flatPercent": 34.01,
+              "cumulative": 840000000.0,
+              "cumulativePercent": 34.01
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 440000000.0,
+              "flatPercent": 17.81,
+              "cumulative": 440000000.0,
+              "cumulativePercent": 17.81
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 160000000.0,
+              "flatPercent": 6.48,
+              "cumulative": 160000000.0,
+              "cumulativePercent": 6.48
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 80000000.0,
+              "flatPercent": 3.24,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 3.24
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeWhitespace (inline)",
+              "flat": 40000000.0,
+              "flatPercent": 1.62,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 1.62
+            },
+            {
+              "function": "internal/runtime/maps.(*Map).getWithoutKeySmallFastStr",
+              "flat": 40000000.0,
+              "flatPercent": 1.62,
+              "cumulative": 50000000.0,
+              "cumulativePercent": 2.02
+            },
+            {
+              "function": "runtime.(*mspan).init",
+              "flat": 40000000.0,
+              "flatPercent": 1.62,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 1.62
+            },
+            {
+              "function": "runtime.mapaccess2",
+              "flat": 40000000.0,
+              "flatPercent": 1.62,
+              "cumulative": 50000000.0,
+              "cumulativePercent": 2.02
+            },
+            {
+              "function": "runtime.newBucket",
+              "flat": 40000000.0,
+              "flatPercent": 1.62,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 1.62
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).ReadToken",
+              "flat": 30000000.0,
+              "flatPercent": 1.21,
+              "cumulative": 110000000.0,
+              "cumulativePercent": 4.45
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2470000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 1.21,
+              "cumulative": 2400000000.0,
+              "cumulativePercent": 97.17
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1400000000.0,
+              "cumulativePercent": 56.68
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.replayInto",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1400000000.0,
+              "cumulativePercent": 56.68
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1400000000.0,
+              "cumulativePercent": 56.68
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 840000000.0,
+              "flatPercent": 34.01,
+              "cumulative": 840000000.0,
+              "cumulativePercent": 34.01
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 1.21,
+              "cumulative": 2400000000.0,
+              "cumulativePercent": 97.17
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 110000000.0,
+              "cumulativePercent": 4.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 0.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 990000000.0,
+              "cumulativePercent": 40.08
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1170000000.0,
+              "cumulativePercent": 47.37
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "wal-open",
+      "profiler": "cpu",
+      "repeats": 20,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 395,
+      "apiTotalAllocBytes": [
+        118194232,
+        118182096,
+        118168616,
+        118179624,
+        118197936,
+        118178864,
+        118194992,
+        118142896,
+        118156064,
+        118169464,
+        118139632,
+        118190912,
+        118222688,
+        118156576,
+        118149080,
+        118232584,
+        118158832,
+        118175704,
+        118155616,
+        118183328
+      ],
+      "artifacts": "history-wal-open-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 3950000000.0,
+          "perOperation": 197500000.0,
+          "topFlat": [
+            {
+              "function": "runtime.madvise",
+              "flat": 790000000.0,
+              "flatPercent": 20.0,
+              "cumulative": 790000000.0,
+              "cumulativePercent": 20.0
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 490000000.0,
+              "flatPercent": 12.41,
+              "cumulative": 490000000.0,
+              "cumulativePercent": 12.41
+            },
+            {
+              "function": "runtime.pthread_cond_signal",
+              "flat": 280000000.0,
+              "flatPercent": 7.09,
+              "cumulative": 280000000.0,
+              "cumulativePercent": 7.09
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 250000000.0,
+              "flatPercent": 6.33,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 6.33
+            },
+            {
+              "function": "runtime.kevent",
+              "flat": 220000000.0,
+              "flatPercent": 5.57,
+              "cumulative": 220000000.0,
+              "cumulativePercent": 5.57
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 210000000.0,
+              "flatPercent": 5.32,
+              "cumulative": 210000000.0,
+              "cumulativePercent": 5.32
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 130000000.0,
+              "flatPercent": 3.29,
+              "cumulative": 130000000.0,
+              "cumulativePercent": 3.29
+            },
+            {
+              "function": "runtime.pthread_kill",
+              "flat": 110000000.0,
+              "flatPercent": 2.78,
+              "cumulative": 110000000.0,
+              "cumulativePercent": 2.78
+            },
+            {
+              "function": "runtime.usleep",
+              "flat": 100000000.0,
+              "flatPercent": 2.53,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 2.53
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 90000000.0,
+              "flatPercent": 2.28,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 2.53
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 47.85
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.76,
+              "cumulative": 1840000000.0,
+              "cumulativePercent": 46.58
+            },
+            {
+              "function": "runtime.systemstack",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1740000000.0,
+              "cumulativePercent": 44.05
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1100000000.0,
+              "cumulativePercent": 27.85
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1080000000.0,
+              "cumulativePercent": 27.34
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 490000000.0,
+              "flatPercent": 12.41,
+              "cumulative": 490000000.0,
+              "cumulativePercent": 12.41
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.76,
+              "cumulative": 1840000000.0,
+              "cumulativePercent": 46.58
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 10000000.0,
+              "flatPercent": 0.25,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 0.51
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 10000000.0,
+              "flatPercent": 0.25,
+              "cumulative": 990000000.0,
+              "cumulativePercent": 25.06
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90000000.0,
+              "cumulativePercent": 2.28
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 860000000.0,
+              "cumulativePercent": 21.77
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 1890000000.0,
+          "perOperation": 94500000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 490000000.0,
+              "flatPercent": 25.93,
+              "cumulative": 490000000.0,
+              "cumulativePercent": 25.93
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 250000000.0,
+              "flatPercent": 13.23,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 13.23
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 130000000.0,
+              "flatPercent": 6.88,
+              "cumulative": 130000000.0,
+              "cumulativePercent": 6.88
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 90000000.0,
+              "flatPercent": 4.76,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 5.29
+            },
+            {
+              "function": "runtime.mapaccess2",
+              "flat": 60000000.0,
+              "flatPercent": 3.17,
+              "cumulative": 90000000.0,
+              "cumulativePercent": 4.76
+            },
+            {
+              "function": "internal/runtime/maps.memHashAES",
+              "flat": 40000000.0,
+              "flatPercent": 2.12,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 2.12
+            },
+            {
+              "function": "runtime.mallocgcSmallScanNoHeaderSC2",
+              "flat": 40000000.0,
+              "flatPercent": 2.12,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 4.23
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeWhitespace (inline)",
+              "flat": 30000000.0,
+              "flatPercent": 1.59,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.59
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).reset",
+              "flat": 30000000.0,
+              "flatPercent": 1.59,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.59
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 1.59,
+              "cumulative": 1840000000.0,
+              "cumulativePercent": 97.35
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1890000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 1.59,
+              "cumulative": 1840000000.0,
+              "cumulativePercent": 97.35
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1100000000.0,
+              "cumulativePercent": 58.2
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1080000000.0,
+              "cumulativePercent": 57.14
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.replayInto",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1080000000.0,
+              "cumulativePercent": 57.14
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 490000000.0,
+              "flatPercent": 25.93,
+              "cumulative": 490000000.0,
+              "cumulativePercent": 25.93
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 1.59,
+              "cumulative": 1840000000.0,
+              "cumulativePercent": 97.35
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 10000000.0,
+              "flatPercent": 0.53,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 1.06
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 10000000.0,
+              "flatPercent": 0.53,
+              "cumulative": 990000000.0,
+              "cumulativePercent": 52.38
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90000000.0,
+              "cumulativePercent": 4.76
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 860000000.0,
+              "cumulativePercent": 45.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "phase": "snapshot-open",
+      "profiler": "cpu",
+      "repeats": 20,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 942,
+      "apiTotalAllocBytes": [
+        205070320,
+        205049168,
+        205097576,
+        205090624,
+        205100928,
+        205110952,
+        205087000,
+        205081072,
+        205069432,
+        205045184,
+        205038128,
+        205080560,
+        205074288,
+        205088968,
+        205046912,
+        205065864,
+        205062240,
+        205046360,
+        205036736,
+        205019208
+      ],
+      "artifacts": "active-snapshot-open-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 9420000000.0,
+          "perOperation": 471000000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 35.77,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 35.77
+            },
+            {
+              "function": "runtime.madvise",
+              "flat": 1140000000.0,
+              "flatPercent": 12.1,
+              "cumulative": 1140000000.0,
+              "cumulativePercent": 12.1
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 440000000.0,
+              "flatPercent": 4.67,
+              "cumulative": 440000000.0,
+              "cumulativePercent": 4.67
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 310000000.0,
+              "flatPercent": 3.29,
+              "cumulative": 310000000.0,
+              "cumulativePercent": 3.29
+            },
+            {
+              "function": "runtime.kevent",
+              "flat": 270000000.0,
+              "flatPercent": 2.87,
+              "cumulative": 270000000.0,
+              "cumulativePercent": 2.87
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 250000000.0,
+              "flatPercent": 2.65,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 2.65
+            },
+            {
+              "function": "runtime.pthread_cond_signal",
+              "flat": 250000000.0,
+              "flatPercent": 2.65,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 2.65
+            },
+            {
+              "function": "runtime.tryDeferToSpanScan",
+              "flat": 220000000.0,
+              "flatPercent": 2.34,
+              "cumulative": 270000000.0,
+              "cumulativePercent": 2.87
+            },
+            {
+              "function": "runtime.scanObject",
+              "flat": 200000000.0,
+              "flatPercent": 2.12,
+              "cumulative": 410000000.0,
+              "cumulativePercent": 4.35
+            },
+            {
+              "function": "runtime.usleep",
+              "flat": 190000000.0,
+              "flatPercent": 2.02,
+              "cumulative": 190000000.0,
+              "cumulativePercent": 2.02
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 66.03
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5160000000.0,
+              "cumulativePercent": 54.78
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5160000000.0,
+              "cumulativePercent": 54.78
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 35.77,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 35.77
+            },
+            {
+              "function": "syscall.syscalln",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 35.77
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 35.77,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 35.77
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.32,
+              "cumulative": 2230000000.0,
+              "cumulativePercent": 23.67
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 430000000.0,
+              "cumulativePercent": 4.56
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 0.64
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 610000000.0,
+              "cumulativePercent": 6.48
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1120000000.0,
+              "cumulativePercent": 11.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1360000000.0,
+              "cumulativePercent": 14.44
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 6220000000.0,
+          "perOperation": 311000000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 54.18,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 54.18
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 440000000.0,
+              "flatPercent": 7.07,
+              "cumulative": 440000000.0,
+              "cumulativePercent": 7.07
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 250000000.0,
+              "flatPercent": 4.02,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 4.02
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 150000000.0,
+              "flatPercent": 2.41,
+              "cumulative": 150000000.0,
+              "cumulativePercent": 2.41
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 120000000.0,
+              "flatPercent": 1.93,
+              "cumulative": 1900000000.0,
+              "cumulativePercent": 30.55
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 90000000.0,
+              "flatPercent": 1.45,
+              "cumulative": 890000000.0,
+              "cumulativePercent": 14.31
+            },
+            {
+              "function": "runtime.(*gcBits).bytep (inline)",
+              "flat": 90000000.0,
+              "flatPercent": 1.45,
+              "cumulative": 90000000.0,
+              "cumulativePercent": 1.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseValue[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 70000000.0,
+              "flatPercent": 1.13,
+              "cumulative": 1750000000.0,
+              "cumulativePercent": 28.14
+            },
+            {
+              "function": "runtime.(*spanInlineMarkBits).init",
+              "flat": 70000000.0,
+              "flatPercent": 1.13,
+              "cumulative": 70000000.0,
+              "cumulativePercent": 1.13
+            },
+            {
+              "function": "runtime.(*spanSet).push",
+              "flat": 60000000.0,
+              "flatPercent": 0.96,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 1.29
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 6220000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5160000000.0,
+              "cumulativePercent": 82.96
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5160000000.0,
+              "cumulativePercent": 82.96
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 54.18,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 54.18
+            },
+            {
+              "function": "syscall.syscalln",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 54.18
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 3370000000.0,
+              "flatPercent": 54.18,
+              "cumulative": 3370000000.0,
+              "cumulativePercent": 54.18
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 30000000.0,
+              "flatPercent": 0.48,
+              "cumulative": 2230000000.0,
+              "cumulativePercent": 35.85
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 430000000.0,
+              "cumulativePercent": 6.91
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 0.96
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 610000000.0,
+              "cumulativePercent": 9.81
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1120000000.0,
+              "cumulativePercent": 18.01
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1360000000.0,
+              "cumulativePercent": 21.86
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "snapshot-open",
+      "profiler": "cpu",
+      "repeats": 20,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 809,
+      "apiTotalAllocBytes": [
+        179014928,
+        179062040,
+        179046160,
+        179034584,
+        179017640,
+        179057648,
+        179010920,
+        179027448,
+        179048664,
+        179019640,
+        179003968,
+        179033384,
+        178993280,
+        179005608,
+        179043744,
+        179058608,
+        179002728,
+        178999152,
+        179015704,
+        179074528
+      ],
+      "artifacts": "history-snapshot-open-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 8090000000.0,
+          "perOperation": 404500000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 33.87,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 33.87
+            },
+            {
+              "function": "runtime.madvise",
+              "flat": 1030000000.0,
+              "flatPercent": 12.73,
+              "cumulative": 1030000000.0,
+              "cumulativePercent": 12.73
+            },
+            {
+              "function": "runtime.pthread_cond_signal",
+              "flat": 460000000.0,
+              "flatPercent": 5.69,
+              "cumulative": 460000000.0,
+              "cumulativePercent": 5.69
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 390000000.0,
+              "flatPercent": 4.82,
+              "cumulative": 390000000.0,
+              "cumulativePercent": 4.82
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 370000000.0,
+              "flatPercent": 4.57,
+              "cumulative": 370000000.0,
+              "cumulativePercent": 4.57
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 340000000.0,
+              "flatPercent": 4.2,
+              "cumulative": 340000000.0,
+              "cumulativePercent": 4.2
+            },
+            {
+              "function": "runtime.kevent",
+              "flat": 250000000.0,
+              "flatPercent": 3.09,
+              "cumulative": 250000000.0,
+              "cumulativePercent": 3.09
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 150000000.0,
+              "flatPercent": 1.85,
+              "cumulative": 1830000000.0,
+              "cumulativePercent": 22.62
+            },
+            {
+              "function": "runtime.usleep",
+              "flat": 140000000.0,
+              "flatPercent": 1.73,
+              "cumulative": 140000000.0,
+              "cumulativePercent": 1.73
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 120000000.0,
+              "flatPercent": 1.48,
+              "cumulative": 470000000.0,
+              "cumulativePercent": 5.81
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 66.63
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 4560000000.0,
+              "cumulativePercent": 56.37
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 4560000000.0,
+              "cumulativePercent": 56.37
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 33.87,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 33.87
+            },
+            {
+              "function": "syscall.syscalln",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 33.87
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 33.87,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 33.87
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 10000000.0,
+              "flatPercent": 0.12,
+              "cumulative": 1930000000.0,
+              "cumulativePercent": 23.86
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 350000000.0,
+              "cumulativePercent": 4.33
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 0.37
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 530000000.0,
+              "cumulativePercent": 6.55
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 12.36
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1190000000.0,
+              "cumulativePercent": 14.71
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 5390000000.0,
+          "perOperation": 269500000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 50.83,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 50.83
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 390000000.0,
+              "flatPercent": 7.24,
+              "cumulative": 390000000.0,
+              "cumulativePercent": 7.24
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).Load (inline)",
+              "flat": 370000000.0,
+              "flatPercent": 6.86,
+              "cumulative": 370000000.0,
+              "cumulativePercent": 6.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 150000000.0,
+              "flatPercent": 2.78,
+              "cumulative": 1830000000.0,
+              "cumulativePercent": 33.95
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 120000000.0,
+              "flatPercent": 2.23,
+              "cumulative": 470000000.0,
+              "cumulativePercent": 8.72
+            },
+            {
+              "function": "runtime.(*spanInlineMarkBits).init",
+              "flat": 80000000.0,
+              "flatPercent": 1.48,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 1.48
+            },
+            {
+              "function": "bufio.(*Reader).Peek",
+              "flat": 60000000.0,
+              "flatPercent": 1.11,
+              "cumulative": 1600000000.0,
+              "cumulativePercent": 29.68
+            },
+            {
+              "function": "encoding/json/v2.makeStructArshaler.func2",
+              "flat": 60000000.0,
+              "flatPercent": 1.11,
+              "cumulative": 190000000.0,
+              "cumulativePercent": 3.53
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseValue[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 60000000.0,
+              "flatPercent": 1.11,
+              "cumulative": 1610000000.0,
+              "cumulativePercent": 29.87
+            },
+            {
+              "function": "internal/runtime/atomic.(*UnsafePointer).StoreNoWB (inline)",
+              "flat": 60000000.0,
+              "flatPercent": 1.11,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 1.11
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 5390000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 4560000000.0,
+              "cumulativePercent": 84.6
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 4560000000.0,
+              "cumulativePercent": 84.6
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 50.83,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 50.83
+            },
+            {
+              "function": "syscall.syscalln",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 50.83
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 2740000000.0,
+              "flatPercent": 50.83,
+              "cumulative": 2740000000.0,
+              "cumulativePercent": 50.83
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 10000000.0,
+              "flatPercent": 0.19,
+              "cumulative": 1930000000.0,
+              "cumulativePercent": 35.81
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 350000000.0,
+              "cumulativePercent": 6.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 0.56
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 530000000.0,
+              "cumulativePercent": 9.83
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 18.55
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1190000000.0,
+              "cumulativePercent": 22.08
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "phase": "create",
+      "profiler": "cpu",
+      "repeats": 40,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 241,
+      "apiTotalAllocBytes": [
+        31851856,
+        31851776,
+        31852560,
+        31853968,
+        31852048,
+        31859512,
+        31852016,
+        31851920,
+        31854832,
+        31854528,
+        31856608,
+        31854640,
+        31850944,
+        31854816,
+        31852416,
+        31854208,
+        31854320,
+        31851904,
+        31852304,
+        31852224,
+        31853856,
+        31852400,
+        31851744,
+        31852032,
+        31852368,
+        31854080,
+        31852624,
+        31854384,
+        31851696,
+        31852224,
+        31851312,
+        31853712,
+        31854144,
+        31854336,
+        31851744,
+        31852576,
+        31854096,
+        31857816,
+        31852624,
+        31854352
+      ],
+      "artifacts": "active-create-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 2410000000.0,
+          "perOperation": 60250000.0,
+          "topFlat": [
+            {
+              "function": "runtime.madvise",
+              "flat": 800000000.0,
+              "flatPercent": 33.2,
+              "cumulative": 800000000.0,
+              "cumulativePercent": 33.2
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 720000000.0,
+              "flatPercent": 29.88,
+              "cumulative": 720000000.0,
+              "cumulativePercent": 29.88
+            },
+            {
+              "function": "runtime.scanObject",
+              "flat": 170000000.0,
+              "flatPercent": 7.05,
+              "cumulative": 210000000.0,
+              "cumulativePercent": 8.71
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 120000000.0,
+              "flatPercent": 4.98,
+              "cumulative": 120000000.0,
+              "cumulativePercent": 4.98
+            },
+            {
+              "function": "runtime.scanObjectsSmall",
+              "flat": 80000000.0,
+              "flatPercent": 3.32,
+              "cumulative": 140000000.0,
+              "cumulativePercent": 5.81
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.stringSize",
+              "flat": 60000000.0,
+              "flatPercent": 2.49,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 2.49
+            },
+            {
+              "function": "runtime.tryDeferToSpanScan",
+              "flat": 60000000.0,
+              "flatPercent": 2.49,
+              "cumulative": 70000000.0,
+              "cumulativePercent": 2.9
+            },
+            {
+              "function": "reflect.Value.Field",
+              "flat": 30000000.0,
+              "flatPercent": 1.24,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.24
+            },
+            {
+              "function": "runtime.(*mspan).moveInlineMarks",
+              "flat": 30000000.0,
+              "flatPercent": 1.24,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.24
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 30000000.0,
+              "flatPercent": 1.24,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.24
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "runtime.systemstack",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1240000000.0,
+              "cumulativePercent": 51.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 41.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 41.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 41.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 41.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 41.49
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 880000000.0,
+              "cumulativePercent": 36.51
+            },
+            {
+              "function": "runtime.(*mheap).alloc.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 820000000.0,
+              "cumulativePercent": 34.02
+            },
+            {
+              "function": "runtime.(*mheap).allocSpan",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 820000000.0,
+              "cumulativePercent": 34.02
+            },
+            {
+              "function": "runtime.madvise",
+              "flat": 800000000.0,
+              "flatPercent": 33.2,
+              "cumulative": 800000000.0,
+              "cumulativePercent": 33.2
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 720000000.0,
+              "flatPercent": 29.88,
+              "cumulative": 720000000.0,
+              "cumulativePercent": 29.88
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 4.15
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 0.83
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 30.71
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 1000000000.0,
+          "perOperation": 25000000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 720000000.0,
+              "flatPercent": 72.0,
+              "cumulative": 720000000.0,
+              "cumulativePercent": 72.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.stringSize",
+              "flat": 60000000.0,
+              "flatPercent": 6.0,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 6.0
+            },
+            {
+              "function": "reflect.Value.Field",
+              "flat": 30000000.0,
+              "flatPercent": 3.0,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 3.0
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 30000000.0,
+              "flatPercent": 3.0,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 3.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.(*sizePlan).size",
+              "flat": 20000000.0,
+              "flatPercent": 2.0,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 10.0
+            },
+            {
+              "function": "runtime.mallocgcSmallScanNoHeader",
+              "flat": 20000000.0,
+              "flatPercent": 2.0,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 8.0
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.ConsumeSimpleString (inline)",
+              "flat": 10000000.0,
+              "flatPercent": 1.0,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 1.0
+            },
+            {
+              "function": "encoding/json/v2.makeStructArshaler.func2",
+              "flat": 10000000.0,
+              "flatPercent": 1.0,
+              "cumulative": 70000000.0,
+              "cumulativePercent": 7.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 10000000.0,
+              "flatPercent": 1.0,
+              "cumulative": 140000000.0,
+              "cumulativePercent": 14.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 10000000.0,
+              "flatPercent": 1.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 74.0
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1000000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 880000000.0,
+              "cumulativePercent": 88.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.(*encoder).value",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 800000000.0,
+              "cumulativePercent": 80.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 10000000.0,
+              "flatPercent": 1.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 74.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 74.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 74.0
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 720000000.0,
+              "flatPercent": 72.0,
+              "cumulative": 720000000.0,
+              "cumulativePercent": 72.0
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 10.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 2.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 740000000.0,
+              "cumulativePercent": 74.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "create",
+      "profiler": "cpu",
+      "repeats": 40,
+      "cpuSamplePeriodNanos": 10000000,
+      "cpuSamples": 205,
+      "apiTotalAllocBytes": [
+        26144624,
+        26144160,
+        26141968,
+        26144224,
+        26144640,
+        26144208,
+        26143952,
+        26144144,
+        26141504,
+        26143952,
+        26144240,
+        26143792,
+        26145664,
+        26143984,
+        26143872,
+        26142048,
+        26142304,
+        26141632,
+        26142272,
+        26142352,
+        26141792,
+        26143920,
+        26143536,
+        26143664,
+        26142096,
+        26144384,
+        26144448,
+        26142336,
+        26144816,
+        26142432,
+        26144544,
+        26144528,
+        26144096,
+        26142080,
+        26143936,
+        26142000,
+        26144448,
+        26143536,
+        26144448,
+        26141792
+      ],
+      "artifacts": "history-create-cpu",
+      "profiles": {
+        "cpu-all": {
+          "total": 2050000000.0,
+          "perOperation": 51250000.0,
+          "topFlat": [
+            {
+              "function": "runtime.madvise",
+              "flat": 630000000.0,
+              "flatPercent": 30.73,
+              "cumulative": 630000000.0,
+              "cumulativePercent": 30.73
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 620000000.0,
+              "flatPercent": 30.24,
+              "cumulative": 620000000.0,
+              "cumulativePercent": 30.24
+            },
+            {
+              "function": "runtime.tryDeferToSpanScan",
+              "flat": 150000000.0,
+              "flatPercent": 7.32,
+              "cumulative": 170000000.0,
+              "cumulativePercent": 8.29
+            },
+            {
+              "function": "runtime.scanObject",
+              "flat": 90000000.0,
+              "flatPercent": 4.39,
+              "cumulative": 260000000.0,
+              "cumulativePercent": 12.68
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.stringSize",
+              "flat": 80000000.0,
+              "flatPercent": 3.9,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 3.9
+            },
+            {
+              "function": "runtime.pthread_cond_signal",
+              "flat": 80000000.0,
+              "flatPercent": 3.9,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 3.9
+            },
+            {
+              "function": "runtime.pthread_cond_wait",
+              "flat": 60000000.0,
+              "flatPercent": 2.93,
+              "cumulative": 60000000.0,
+              "cumulativePercent": 2.93
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 40000000.0,
+              "flatPercent": 1.95,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 1.95
+            },
+            {
+              "function": "runtime.scanObjectsSmall",
+              "flat": 40000000.0,
+              "flatPercent": 1.95,
+              "cumulative": 70000000.0,
+              "cumulativePercent": 3.41
+            },
+            {
+              "function": "reflect.Value.String (partial-inline)",
+              "flat": 30000000.0,
+              "flatPercent": 1.46,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 1.46
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "runtime.systemstack",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1060000000.0,
+              "cumulativePercent": 51.71
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 44.39
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 44.39
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 44.39
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 44.39
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 44.39
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 820000000.0,
+              "cumulativePercent": 40.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.(*encoder).value",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 770000000.0,
+              "cumulativePercent": 37.56
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 690000000.0,
+              "cumulativePercent": 33.66
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 680000000.0,
+              "cumulativePercent": 33.17
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 620000000.0,
+              "flatPercent": 30.24,
+              "cumulative": 620000000.0,
+              "cumulativePercent": 30.24
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 4.88
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 0.98
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 690000000.0,
+              "cumulativePercent": 33.66
+            }
+          ]
+        },
+        "cpu-internal": {
+          "total": 910000000.0,
+          "perOperation": 22750000.0,
+          "topFlat": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 620000000.0,
+              "flatPercent": 68.13,
+              "cumulative": 620000000.0,
+              "cumulativePercent": 68.13
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.stringSize",
+              "flat": 80000000.0,
+              "flatPercent": 8.79,
+              "cumulative": 80000000.0,
+              "cumulativePercent": 8.79
+            },
+            {
+              "function": "runtime.memclrNoHeapPointers",
+              "flat": 40000000.0,
+              "flatPercent": 4.4,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 4.4
+            },
+            {
+              "function": "reflect.Value.String (partial-inline)",
+              "flat": 30000000.0,
+              "flatPercent": 3.3,
+              "cumulative": 30000000.0,
+              "cumulativePercent": 3.3
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.(*sizePlan).size",
+              "flat": 20000000.0,
+              "flatPercent": 2.2,
+              "cumulative": 130000000.0,
+              "cumulativePercent": 14.29
+            },
+            {
+              "function": "encoding/json/internal/jsonwire.AppendQuote",
+              "flat": 10000000.0,
+              "flatPercent": 1.1,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 1.1
+            },
+            {
+              "function": "encoding/json/jsontext.(*encoderState).WriteValue",
+              "flat": 10000000.0,
+              "flatPercent": 1.1,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 1.1
+            },
+            {
+              "function": "encoding/json/v2.makeStringArshaler.func1",
+              "flat": 10000000.0,
+              "flatPercent": 1.1,
+              "cumulative": 40000000.0,
+              "cumulativePercent": 4.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 10000000.0,
+              "flatPercent": 1.1,
+              "cumulative": 590000000.0,
+              "cumulativePercent": 64.84
+            },
+            {
+              "function": "internal/runtime/atomic.(*Uint32).Load (inline)",
+              "flat": 10000000.0,
+              "flatPercent": 1.1,
+              "cumulative": 10000000.0,
+              "cumulativePercent": 1.1
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 910000000.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 820000000.0,
+              "cumulativePercent": 90.11
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.(*encoder).value",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 770000000.0,
+              "cumulativePercent": 84.62
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 690000000.0,
+              "cumulativePercent": 75.82
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 680000000.0,
+              "cumulativePercent": 74.73
+            },
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 620000000.0,
+              "flatPercent": 68.13,
+              "cumulative": 620000000.0,
+              "cumulativePercent": 68.13
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "syscall.rawsyscalln",
+              "flat": 620000000.0,
+              "flatPercent": 68.13,
+              "cumulative": 620000000.0,
+              "cumulativePercent": 68.13
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 100000000.0,
+              "cumulativePercent": 10.99
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 20000000.0,
+              "cumulativePercent": 2.2
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 690000000.0,
+              "cumulativePercent": 75.82
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "phase": "wal-open",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        130343008,
+        130344008,
+        130291728,
+        130381264,
+        130325608
+      ],
+      "artifacts": "active-wal-open-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 655585922.0,
+          "perOperation": 131117184.4,
+          "topFlat": [
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 72283363.0,
+              "flatPercent": 11.03,
+              "cumulative": 72283363.0,
+              "cumulativePercent": 11.03
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 65301944.0,
+              "flatPercent": 9.96,
+              "cumulative": 65301944.0,
+              "cumulativePercent": 9.96
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 54663696.0,
+              "flatPercent": 8.34,
+              "cumulative": 124095448.0,
+              "cumulativePercent": 18.93
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.75,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 97.29
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 38633640.0,
+              "flatPercent": 5.89,
+              "cumulative": 38633640.0,
+              "cumulativePercent": 5.89
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).fetch",
+              "flat": 37582848.0,
+              "flatPercent": 5.73,
+              "cumulative": 44727536.0,
+              "cumulativePercent": 6.82
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).Apply",
+              "flat": 36915187.0,
+              "flatPercent": 5.63,
+              "cumulative": 63433813.0,
+              "cumulativePercent": 9.68
+            },
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 35373059.0,
+              "flatPercent": 5.4,
+              "cumulative": 35373059.0,
+              "cumulativePercent": 5.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.14,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 74.43
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.(*validator).accept (inline)",
+              "flat": 25767207.0,
+              "flatPercent": 3.93,
+              "cumulative": 25767207.0,
+              "cumulativePercent": 3.93
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 654192967.0,
+              "cumulativePercent": 99.79
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 654192967.0,
+              "cumulativePercent": 99.79
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 654192967.0,
+              "cumulativePercent": 99.79
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 654192967.0,
+              "cumulativePercent": 99.79
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 654192967.0,
+              "cumulativePercent": 99.79
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 99.04
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.75,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 97.29
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.14,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 74.43
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 389634549.0,
+              "cumulativePercent": 59.43
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 485090.0,
+              "flatPercent": 0.074,
+              "cumulative": 364102429.0,
+              "cumulativePercent": 55.54
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.75,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 97.29
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.14,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 74.43
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 7013636.0,
+              "flatPercent": 1.07,
+              "cumulative": 7013636.0,
+              "cumulativePercent": 1.07
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 58194913.0,
+              "cumulativePercent": 8.88
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 389634549.0,
+              "cumulativePercent": 59.43
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 649298947.0,
+          "perOperation": 129859789.4,
+          "topFlat": [
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 72283363.0,
+              "flatPercent": 11.13,
+              "cumulative": 72283363.0,
+              "cumulativePercent": 11.13
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 65301944.0,
+              "flatPercent": 10.06,
+              "cumulative": 65301944.0,
+              "cumulativePercent": 10.06
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 54663696.0,
+              "flatPercent": 8.42,
+              "cumulative": 124095448.0,
+              "cumulativePercent": 19.11
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.82,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 98.23
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 38633640.0,
+              "flatPercent": 5.95,
+              "cumulative": 38633640.0,
+              "cumulativePercent": 5.95
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).fetch",
+              "flat": 37582848.0,
+              "flatPercent": 5.79,
+              "cumulative": 44727536.0,
+              "cumulativePercent": 6.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).Apply",
+              "flat": 36915187.0,
+              "flatPercent": 5.69,
+              "cumulative": 63433813.0,
+              "cumulativePercent": 9.77
+            },
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 35373059.0,
+              "flatPercent": 5.45,
+              "cumulative": 35373059.0,
+              "cumulativePercent": 5.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.18,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 75.15
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.(*validator).accept (inline)",
+              "flat": 25767207.0,
+              "flatPercent": 3.97,
+              "cumulative": 25767207.0,
+              "cumulativePercent": 3.97
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 649298947.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.82,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 98.23
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.18,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 75.15
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 389634549.0,
+              "cumulativePercent": 60.01
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 485090.0,
+              "flatPercent": 0.075,
+              "cumulative": 364102429.0,
+              "cumulativePercent": 56.08
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 44260699.0,
+              "flatPercent": 6.82,
+              "cumulative": 637807768.0,
+              "cumulativePercent": 98.23
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 27161623.0,
+              "flatPercent": 4.18,
+              "cumulative": 487975333.0,
+              "cumulativePercent": 75.15
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 7013636.0,
+              "flatPercent": 1.08,
+              "cumulative": 7013636.0,
+              "cumulativePercent": 1.08
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 58194913.0,
+              "cumulativePercent": 8.96
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 389634549.0,
+              "cumulativePercent": 60.01
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "wal-open",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        118184280,
+        118169272,
+        118269528,
+        118193896,
+        118195600
+      ],
+      "artifacts": "history-wal-open-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 591927325.0,
+          "perOperation": 118385465.0,
+          "topFlat": [
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 69194888.0,
+              "flatPercent": 11.69,
+              "cumulative": 69194888.0,
+              "cumulativePercent": 11.69
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 63068270.0,
+              "flatPercent": 10.65,
+              "cumulative": 63068270.0,
+              "cumulativePercent": 10.65
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 41554896.0,
+              "flatPercent": 7.02,
+              "cumulative": 108626100.0,
+              "cumulativePercent": 18.35
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.75,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 97.7
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 32070112.0,
+              "flatPercent": 5.42,
+              "cumulative": 32070112.0,
+              "cumulativePercent": 5.42
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).Apply",
+              "flat": 31595262.0,
+              "flatPercent": 5.34,
+              "cumulative": 57293696.0,
+              "cumulativePercent": 9.68
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).fetch",
+              "flat": 30103872.0,
+              "flatPercent": 5.09,
+              "cumulative": 37117472.0,
+              "cumulativePercent": 6.27
+            },
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 28216093.0,
+              "flatPercent": 4.77,
+              "cumulative": 28216093.0,
+              "cumulativePercent": 4.77
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.(*validator).accept (inline)",
+              "flat": 26071304.0,
+              "flatPercent": 4.4,
+              "cumulative": 26071304.0,
+              "cumulativePercent": 4.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.27,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 74.48
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 590468073.0,
+              "cumulativePercent": 99.75
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 590468073.0,
+              "cumulativePercent": 99.75
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 590468073.0,
+              "cumulativePercent": 99.75
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 590468073.0,
+              "cumulativePercent": 99.75
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 590468073.0,
+              "cumulativePercent": 99.75
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 99.03
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.75,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 97.7
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.27,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 74.48
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 355659326.0,
+              "cumulativePercent": 60.08
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 414704.0,
+              "flatPercent": 0.07,
+              "cumulative": 323197973.0,
+              "cumulativePercent": 54.6
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.75,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 97.7
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.27,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 74.48
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 5309388.0,
+              "flatPercent": 0.9,
+              "cumulative": 5309388.0,
+              "cumulativePercent": 0.9
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 47692433.0,
+              "cumulativePercent": 8.06
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 355659326.0,
+              "cumulativePercent": 60.08
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 586209539.0,
+          "perOperation": 117241907.8,
+          "topFlat": [
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 69194888.0,
+              "flatPercent": 11.8,
+              "cumulative": 69194888.0,
+              "cumulativePercent": 11.8
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 63068270.0,
+              "flatPercent": 10.76,
+              "cumulative": 63068270.0,
+              "cumulativePercent": 10.76
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 41554896.0,
+              "flatPercent": 7.09,
+              "cumulative": 108626100.0,
+              "cumulativePercent": 18.53
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.81,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 98.66
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 32070112.0,
+              "flatPercent": 5.47,
+              "cumulative": 32070112.0,
+              "cumulativePercent": 5.47
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).Apply",
+              "flat": 31595262.0,
+              "flatPercent": 5.39,
+              "cumulative": 57293696.0,
+              "cumulativePercent": 9.77
+            },
+            {
+              "function": "encoding/json/jsontext.(*decoderState).fetch",
+              "flat": 30103872.0,
+              "flatPercent": 5.14,
+              "cumulative": 37117472.0,
+              "cumulativePercent": 6.33
+            },
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 28216093.0,
+              "flatPercent": 4.81,
+              "cumulative": 28216093.0,
+              "cumulativePercent": 4.81
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.(*validator).accept (inline)",
+              "flat": 26071304.0,
+              "flatPercent": 4.45,
+              "cumulative": 26071304.0,
+              "cumulativePercent": 4.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.31,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 75.21
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 586209539.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.81,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 98.66
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.31,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 75.21
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 355659326.0,
+              "cumulativePercent": 60.67
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 414704.0,
+              "flatPercent": 0.071,
+              "cumulative": 323197973.0,
+              "cumulativePercent": 55.13
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 39937664.0,
+              "flatPercent": 6.81,
+              "cumulative": 578341181.0,
+              "cumulativePercent": 98.66
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 25258695.0,
+              "flatPercent": 4.31,
+              "cumulative": 440869940.0,
+              "cumulativePercent": 75.21
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 5309388.0,
+              "flatPercent": 0.91,
+              "cumulative": 5309388.0,
+              "cumulativePercent": 0.91
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 47692433.0,
+              "cumulativePercent": 8.14
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 355659326.0,
+              "cumulativePercent": 60.67
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "phase": "snapshot-open",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        205071120,
+        205056584,
+        205028312,
+        205090416,
+        205075320
+      ],
+      "artifacts": "active-snapshot-open-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 1028859813.0,
+          "perOperation": 205771962.6,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 137976135.0,
+              "flatPercent": 13.41,
+              "cumulative": 137976135.0,
+              "cumulativePercent": 13.41
+            },
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 67354950.0,
+              "flatPercent": 6.55,
+              "cumulative": 67354950.0,
+              "cumulativePercent": 6.55
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 60440429.0,
+              "flatPercent": 5.87,
+              "cumulative": 60440429.0,
+              "cumulativePercent": 5.87
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 56695560.0,
+              "flatPercent": 5.51,
+              "cumulative": 130585464.0,
+              "cumulativePercent": 12.69
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 54175205.0,
+              "flatPercent": 5.27,
+              "cumulative": 54175205.0,
+              "cumulativePercent": 5.27
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 52503948.0,
+              "flatPercent": 5.1,
+              "cumulative": 52503948.0,
+              "cumulativePercent": 5.1
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.RestoreWithTimings",
+              "flat": 46610929.0,
+              "flatPercent": 4.53,
+              "cumulative": 81531687.0,
+              "cumulativePercent": 7.92
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 42779339.0,
+              "flatPercent": 4.16,
+              "cumulative": 81690353.0,
+              "cumulativePercent": 7.94
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 42607729.0,
+              "flatPercent": 4.14,
+              "cumulative": 124473176.0,
+              "cumulativePercent": 12.1
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.02,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 56.78
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1027597566.0,
+              "cumulativePercent": 99.88
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1027597566.0,
+              "cumulativePercent": 99.88
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1027597566.0,
+              "cumulativePercent": 99.88
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1027597566.0,
+              "cumulativePercent": 99.88
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1027597566.0,
+              "cumulativePercent": 99.88
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 99.43
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 376668.0,
+              "flatPercent": 0.037,
+              "cumulative": 736590905.0,
+              "cumulativePercent": 71.59
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 736214237.0,
+              "cumulativePercent": 71.56
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.02,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 56.78
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 23291318.0,
+              "flatPercent": 2.26,
+              "cumulative": 490703807.0,
+              "cumulativePercent": 47.69
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 52503948.0,
+              "flatPercent": 5.1,
+              "cumulative": 52503948.0,
+              "cumulativePercent": 5.1
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.02,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 56.78
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 23291318.0,
+              "flatPercent": 2.26,
+              "cumulative": 490703807.0,
+              "cumulativePercent": 47.69
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 226034338.0,
+              "cumulativePercent": 21.97
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 110970063.0,
+              "cumulativePercent": 10.79
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 395580157.0,
+              "cumulativePercent": 38.45
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 1023048509.0,
+          "perOperation": 204609701.8,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 137976135.0,
+              "flatPercent": 13.49,
+              "cumulative": 137976135.0,
+              "cumulativePercent": 13.49
+            },
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 67354950.0,
+              "flatPercent": 6.58,
+              "cumulative": 67354950.0,
+              "cumulativePercent": 6.58
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 60440429.0,
+              "flatPercent": 5.91,
+              "cumulative": 60440429.0,
+              "cumulativePercent": 5.91
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 56695560.0,
+              "flatPercent": 5.54,
+              "cumulative": 130585464.0,
+              "cumulativePercent": 12.76
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 54175205.0,
+              "flatPercent": 5.3,
+              "cumulative": 54175205.0,
+              "cumulativePercent": 5.3
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 52503948.0,
+              "flatPercent": 5.13,
+              "cumulative": 52503948.0,
+              "cumulativePercent": 5.13
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.RestoreWithTimings",
+              "flat": 46610929.0,
+              "flatPercent": 4.56,
+              "cumulative": 81531687.0,
+              "cumulativePercent": 7.97
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 42779339.0,
+              "flatPercent": 4.18,
+              "cumulative": 81690353.0,
+              "cumulativePercent": 7.98
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 42607729.0,
+              "flatPercent": 4.16,
+              "cumulative": 124473176.0,
+              "cumulativePercent": 12.17
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.05,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 57.1
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 1022982961.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 376668.0,
+              "flatPercent": 0.037,
+              "cumulative": 736590905.0,
+              "cumulativePercent": 72.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 736214237.0,
+              "cumulativePercent": 71.96
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.05,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 57.1
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 23291318.0,
+              "flatPercent": 2.28,
+              "cumulative": 490703807.0,
+              "cumulativePercent": 47.96
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 52503948.0,
+              "flatPercent": 5.13,
+              "cumulative": 52503948.0,
+              "cumulativePercent": 5.13
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 41391558.0,
+              "flatPercent": 4.05,
+              "cumulative": 584196326.0,
+              "cumulativePercent": 57.1
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 23291318.0,
+              "flatPercent": 2.28,
+              "cumulative": 490703807.0,
+              "cumulativePercent": 47.96
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 226034338.0,
+              "cumulativePercent": 22.09
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 110970063.0,
+              "cumulativePercent": 10.85
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 395580157.0,
+              "cumulativePercent": 38.67
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "snapshot-open",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        178982552,
+        178964832,
+        179016960,
+        179052592,
+        179007096
+      ],
+      "artifacts": "history-snapshot-open-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 904988583.0,
+          "perOperation": 180997716.6,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 119778275.0,
+              "flatPercent": 13.24,
+              "cumulative": 119778275.0,
+              "cumulativePercent": 13.24
+            },
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 72611920.0,
+              "flatPercent": 8.02,
+              "cumulative": 72611920.0,
+              "cumulativePercent": 8.02
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 63265359.0,
+              "flatPercent": 6.99,
+              "cumulative": 63265359.0,
+              "cumulativePercent": 6.99
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 45580312.0,
+              "flatPercent": 5.04,
+              "cumulative": 45580312.0,
+              "cumulativePercent": 5.04
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 42648497.0,
+              "flatPercent": 4.71,
+              "cumulative": 118548377.0,
+              "cumulativePercent": 13.1
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 42603600.0,
+              "flatPercent": 4.71,
+              "cumulative": 110527292.0,
+              "cumulativePercent": 12.21
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 42475104.0,
+              "flatPercent": 4.69,
+              "cumulative": 42475104.0,
+              "cumulativePercent": 4.69
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.RestoreWithTimings",
+              "flat": 39636617.0,
+              "flatPercent": 4.38,
+              "cumulative": 79603395.0,
+              "cumulativePercent": 8.8
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.23,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.53
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 30298884.0,
+              "flatPercent": 3.35,
+              "cumulative": 30298884.0,
+              "cumulativePercent": 3.35
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 903597751.0,
+              "cumulativePercent": 99.85
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 903597751.0,
+              "cumulativePercent": 99.85
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 903597751.0,
+              "cumulativePercent": 99.85
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 903597751.0,
+              "cumulativePercent": 99.85
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 903597751.0,
+              "cumulativePercent": 99.85
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 99.37
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 311028.0,
+              "flatPercent": 0.034,
+              "cumulative": 638091836.0,
+              "cumulativePercent": 70.51
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 637579246.0,
+              "cumulativePercent": 70.45
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.23,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.53
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 21257026.0,
+              "flatPercent": 2.35,
+              "cumulative": 440861881.0,
+              "cumulativePercent": 48.71
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 42475104.0,
+              "flatPercent": 4.69,
+              "cumulative": 42475104.0,
+              "cumulativePercent": 4.69
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.23,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.53
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 21257026.0,
+              "flatPercent": 2.35,
+              "cumulative": 440861881.0,
+              "cumulativePercent": 48.71
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 191905563.0,
+              "cumulativePercent": 21.21
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 93039211.0,
+              "cumulativePercent": 10.28
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 360506923.0,
+              "cumulativePercent": 39.84
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 899314213.0,
+          "perOperation": 179862842.6,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 119778275.0,
+              "flatPercent": 13.32,
+              "cumulative": 119778275.0,
+              "cumulativePercent": 13.32
+            },
+            {
+              "function": "reflect.mapassign_faststr0",
+              "flat": 72611920.0,
+              "flatPercent": 8.07,
+              "cumulative": 72611920.0,
+              "cumulativePercent": 8.07
+            },
+            {
+              "function": "encoding/json/jsontext.NewDecoder (inline)",
+              "flat": 63265359.0,
+              "flatPercent": 7.03,
+              "cumulative": 63265359.0,
+              "cumulativePercent": 7.03
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 45580312.0,
+              "flatPercent": 5.07,
+              "cumulative": 45580312.0,
+              "cumulativePercent": 5.07
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.parseArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 42648497.0,
+              "flatPercent": 4.74,
+              "cumulative": 118548377.0,
+              "cumulativePercent": 13.18
+            },
+            {
+              "function": "encoding/json.(*Decoder).Token",
+              "flat": 42603600.0,
+              "flatPercent": 4.74,
+              "cumulative": 110527292.0,
+              "cumulativePercent": 12.29
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 42475104.0,
+              "flatPercent": 4.72,
+              "cumulative": 42475104.0,
+              "cumulativePercent": 4.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.RestoreWithTimings",
+              "flat": 39636617.0,
+              "flatPercent": 4.41,
+              "cumulative": 79603395.0,
+              "cumulativePercent": 8.85
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.26,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.9
+            },
+            {
+              "function": "encoding/json/jsontext.(*Value).UnmarshalJSON",
+              "flat": 30298884.0,
+              "flatPercent": 3.37,
+              "cumulative": 30298884.0,
+              "cumulativePercent": 3.37
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.Open",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.command",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profileCommand",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "main.profilePhase",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "runtime.main",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 899248653.0,
+              "cumulativePercent": 100.0
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.startWithTimings",
+              "flat": 311028.0,
+              "flatPercent": 0.035,
+              "cumulative": 638091836.0,
+              "cumulativePercent": 70.95
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.recoverStateWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 637579246.0,
+              "cumulativePercent": 70.9
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.26,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.9
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 21257026.0,
+              "flatPercent": 2.36,
+              "cumulative": 440861881.0,
+              "cumulativePercent": 49.02
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 42475104.0,
+              "flatPercent": 4.72,
+              "cumulative": 42475104.0,
+              "cumulativePercent": 4.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.scan",
+              "flat": 38286933.0,
+              "flatPercent": 4.26,
+              "cumulative": 529692076.0,
+              "cumulativePercent": 58.9
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/wal.decodeRecord",
+              "flat": 21257026.0,
+              "flatPercent": 2.36,
+              "cumulative": 440861881.0,
+              "cumulativePercent": 49.02
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 191905563.0,
+              "cumulativePercent": 21.34
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 93039211.0,
+              "cumulativePercent": 10.35
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/strictjson.Decode",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 360506923.0,
+              "cumulativePercent": 40.09
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "phase": "create",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        31850592,
+        31850912,
+        31850544,
+        31851408,
+        31852784
+      ],
+      "artifacts": "active-create-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 158840020.0,
+          "perOperation": 31768004.0,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 49826275.0,
+              "flatPercent": 31.37,
+              "cumulative": 49826275.0,
+              "cumulativePercent": 31.37
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 23662828.0,
+              "flatPercent": 14.9,
+              "cumulative": 23662828.0,
+              "cumulativePercent": 14.9
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 20778368.0,
+              "flatPercent": 13.08,
+              "cumulative": 29864099.0,
+              "cumulativePercent": 18.8
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 16139872.0,
+              "flatPercent": 10.16,
+              "cumulative": 16139872.0,
+              "cumulativePercent": 10.16
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 15354144.0,
+              "flatPercent": 9.67,
+              "cumulative": 72306485.0,
+              "cumulativePercent": 45.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 15288528.0,
+              "flatPercent": 9.63,
+              "cumulative": 44556166.0,
+              "cumulativePercent": 28.05
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Result.Clone (inline)",
+              "flat": 7479312.0,
+              "flatPercent": 4.71,
+              "cumulative": 7479312.0,
+              "cumulativePercent": 4.71
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; ClientOrderID string \"json:\\\"clientOrderId\\\"\" }]",
+              "flat": 2884288.0,
+              "flatPercent": 1.82,
+              "cumulative": 6686680.0,
+              "cumulativePercent": 4.21
+            },
+            {
+              "function": "compress/flate.(*fastGen).addBlock",
+              "flat": 1649510.0,
+              "flatPercent": 1.04,
+              "cumulative": 1649510.0,
+              "cumulativePercent": 1.04
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.captureBook",
+              "flat": 1606419.0,
+              "flatPercent": 1.01,
+              "cumulative": 1606419.0,
+              "cumulativePercent": 1.01
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 77.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 77.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 77.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 77.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 77.86
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123614879.0,
+              "cumulativePercent": 77.82
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 67.21
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 67.21
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 56.72
+            },
+            {
+              "function": "encoding/json/v2.Marshal",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 56.72
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 23662828.0,
+              "flatPercent": 14.9,
+              "cumulative": 23662828.0,
+              "cumulativePercent": 14.9
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 20778368.0,
+              "flatPercent": 13.08,
+              "cumulative": 29864099.0,
+              "cumulativePercent": 18.8
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 56.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 67.21
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 153610314.0,
+          "perOperation": 30722062.8,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 49826275.0,
+              "flatPercent": 32.44,
+              "cumulative": 49826275.0,
+              "cumulativePercent": 32.44
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 23662828.0,
+              "flatPercent": 15.4,
+              "cumulative": 23662828.0,
+              "cumulativePercent": 15.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 20778368.0,
+              "flatPercent": 13.53,
+              "cumulative": 29864099.0,
+              "cumulativePercent": 19.44
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 16139872.0,
+              "flatPercent": 10.51,
+              "cumulative": 16139872.0,
+              "cumulativePercent": 10.51
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 15354144.0,
+              "flatPercent": 10.0,
+              "cumulative": 72306485.0,
+              "cumulativePercent": 47.07
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 15288528.0,
+              "flatPercent": 9.95,
+              "cumulative": 44556166.0,
+              "cumulativePercent": 29.01
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Result.Clone (inline)",
+              "flat": 7479312.0,
+              "flatPercent": 4.87,
+              "cumulative": 7479312.0,
+              "cumulativePercent": 4.87
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; ClientOrderID string \"json:\\\"clientOrderId\\\"\" }]",
+              "flat": 2884288.0,
+              "flatPercent": 1.88,
+              "cumulative": 6686680.0,
+              "cumulativePercent": 4.35
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.captureBook",
+              "flat": 1606419.0,
+              "flatPercent": 1.05,
+              "cumulative": 1606419.0,
+              "cumulativePercent": 1.05
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Reason.MarshalJSON",
+              "flat": 393264.0,
+              "flatPercent": 0.26,
+              "cumulative": 393264.0,
+              "cumulativePercent": 0.26
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 80.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 80.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 80.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 80.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123680623.0,
+              "cumulativePercent": 80.52
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 123614879.0,
+              "cumulativePercent": 80.47
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 69.5
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 69.5
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 58.65
+            },
+            {
+              "function": "encoding/json/v2.Marshal",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 58.65
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 23662828.0,
+              "flatPercent": 15.4,
+              "cumulative": 23662828.0,
+              "cumulativePercent": 15.4
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 20778368.0,
+              "flatPercent": 13.53,
+              "cumulative": 29864099.0,
+              "cumulativePercent": 19.44
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90087919.0,
+              "cumulativePercent": 58.65
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 106752911.0,
+              "cumulativePercent": 69.5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "phase": "create",
+      "profiler": "alloc",
+      "repeats": 5,
+      "cpuSamplePeriodNanos": null,
+      "cpuSamples": null,
+      "apiTotalAllocBytes": [
+        26142960,
+        26140640,
+        26140672,
+        26147368,
+        26140608
+      ],
+      "artifacts": "history-create-alloc",
+      "profiles": {
+        "alloc_space-all": {
+          "total": 132126109.0,
+          "perOperation": 26425221.8,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 43377215.0,
+              "flatPercent": 32.83,
+              "cumulative": 43377215.0,
+              "cumulativePercent": 32.83
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 18550084.0,
+              "flatPercent": 14.04,
+              "cumulative": 18550084.0,
+              "cumulativePercent": 14.04
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 16314869.0,
+              "flatPercent": 12.35,
+              "cumulative": 24253389.0,
+              "cumulativePercent": 18.36
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 15157296.0,
+              "flatPercent": 11.47,
+              "cumulative": 67761888.0,
+              "cumulativePercent": 51.29
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 14565945.0,
+              "flatPercent": 11.02,
+              "cumulative": 14565945.0,
+              "cumulativePercent": 11.02
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Result.Clone (inline)",
+              "flat": 7872960.0,
+              "flatPercent": 5.96,
+              "cumulative": 7872960.0,
+              "cumulativePercent": 5.96
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 7348992.0,
+              "flatPercent": 5.56,
+              "cumulative": 24083036.0,
+              "cumulativePercent": 18.23
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.0e42a15903c40b4ca6291c8da8d785377df8ccc1c95022d13064fb398ba6ad32]",
+              "flat": 3017600.0,
+              "flatPercent": 2.28,
+              "cumulative": 10762721.0,
+              "cumulativePercent": 8.15
+            },
+            {
+              "function": "compress/flate.(*fastGen).addBlock",
+              "flat": 1649510.0,
+              "flatPercent": 1.25,
+              "cumulative": 1649510.0,
+              "cumulativePercent": 1.25
+            },
+            {
+              "function": "compress/flate.NewWriter (inline)",
+              "flat": 1373885.0,
+              "flatPercent": 1.04,
+              "cumulative": 2475673.0,
+              "cumulativePercent": 1.87
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 77.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 77.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 77.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 77.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 77.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102607645.0,
+              "cumulativePercent": 77.66
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90027468.0,
+              "cumulativePercent": 68.14
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 89944189.0,
+              "cumulativePercent": 68.07
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 58.34
+            },
+            {
+              "function": "encoding/json/v2.Marshal",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 58.34
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 18550084.0,
+              "flatPercent": 14.04,
+              "cumulative": 18550084.0,
+              "cumulativePercent": 14.04
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 16314869.0,
+              "flatPercent": 12.35,
+              "cumulative": 24253389.0,
+              "cumulativePercent": 18.36
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 58.34
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90027468.0,
+              "cumulativePercent": 68.14
+            }
+          ]
+        },
+        "alloc_space-internal": {
+          "total": 126944313.0,
+          "perOperation": 25388862.6,
+          "topFlat": [
+            {
+              "function": "bytes.Clone (inline)",
+              "flat": 43377215.0,
+              "flatPercent": 34.17,
+              "cumulative": 43377215.0,
+              "cumulativePercent": 34.17
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 18550084.0,
+              "flatPercent": 14.61,
+              "cumulative": 18550084.0,
+              "cumulativePercent": 14.61
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 16314869.0,
+              "flatPercent": 12.85,
+              "cumulative": 24253389.0,
+              "cumulativePercent": 19.11
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { Command github.com/gaon000/exchange/internal/domain.CheckpointCommand \"json:\\\"command\\\"\"; Response github.com/gaon000/exchange/internal/domain.Result \"json:\\\"response\\\"\" }]",
+              "flat": 15157296.0,
+              "flatPercent": 11.94,
+              "cumulative": 67761888.0,
+              "cumulativePercent": 53.38
+            },
+            {
+              "function": "reflect.unsafe_New",
+              "flat": 14565945.0,
+              "flatPercent": 11.47,
+              "cumulative": 14565945.0,
+              "cumulativePercent": 11.47
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Result.Clone (inline)",
+              "flat": 7872960.0,
+              "flatPercent": 6.2,
+              "cumulative": 7872960.0,
+              "cumulativePercent": 6.2
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.struct { AccountID string \"json:\\\"accountId\\\"\"; Order github.com/gaon000/exchange/internal/domain.Order \"json:\\\"order\\\"\" }]",
+              "flat": 7348992.0,
+              "flatPercent": 5.79,
+              "cumulative": 24083036.0,
+              "cumulativePercent": 18.97
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.emitArray[go.shape.0e42a15903c40b4ca6291c8da8d785377df8ccc1c95022d13064fb398ba6ad32]",
+              "flat": 3017600.0,
+              "flatPercent": 2.38,
+              "cumulative": 10762721.0,
+              "cumulativePercent": 8.48
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Reason.MarshalJSON",
+              "flat": 327720.0,
+              "flatPercent": 0.26,
+              "cumulative": 917616.0,
+              "cumulativePercent": 0.72
+            },
+            {
+              "function": "encoding/json/v2.makeStructArshaler (inline)",
+              "flat": 131136.0,
+              "flatPercent": 0.1,
+              "cumulative": 131136.0,
+              "cumulativePercent": 0.1
+            }
+          ],
+          "topCumulative": [
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.(*Runtime).run.func1",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 80.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.measuredCheckpoints.Publish",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 80.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/runtime.writeSnapshot",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 80.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.PublishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 80.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.publishWithTimings",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102690924.0,
+              "cumulativePercent": 80.89
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.encodePayload",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 102607645.0,
+              "cumulativePercent": 80.83
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90027468.0,
+              "cumulativePercent": 70.92
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.payload (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 89944189.0,
+              "cumulativePercent": 70.85
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 60.72
+            },
+            {
+              "function": "encoding/json/v2.Marshal",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 60.72
+            }
+          ],
+          "selectedCallPaths": [
+            {
+              "function": "github.com/gaon000/exchange/internal/domain.Int.MarshalJSON",
+              "flat": 18550084.0,
+              "flatPercent": 14.61,
+              "cumulative": 18550084.0,
+              "cumulativePercent": 14.61
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/engine.(*Engine).CaptureWithTimings",
+              "flat": 16314869.0,
+              "flatPercent": 12.85,
+              "cumulative": 24253389.0,
+              "cumulativePercent": 19.11
+            },
+            {
+              "function": "encoding/json.Marshal (inline)",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 77083757.0,
+              "cumulativePercent": 60.72
+            },
+            {
+              "function": "github.com/gaon000/exchange/internal/snapshot.writeEnvelope",
+              "flat": 0.0,
+              "flatPercent": 0.0,
+              "cumulative": 90027468.0,
+              "cumulativePercent": 70.92
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
