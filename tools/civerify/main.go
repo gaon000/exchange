@@ -161,6 +161,13 @@ func requireCoverage(expected expectations, mode string) error {
 	if !expected[module+"tools/recoverycheck"][scenarioTest] {
 		return fmt.Errorf("missing %s coverage: tools/recoverycheck/%s", mode, scenarioTest)
 	}
+	scaleTest := "TestUnsupportedScaleLeavesNoOutput"
+	if mode == "native" {
+		scaleTest = "TestNativeStateScaleRoundTrip"
+	}
+	if !expected[module+"tools/statescale"][scaleTest] {
+		return fmt.Errorf("missing %s coverage: tools/statescale/%s", mode, scaleTest)
+	}
 	return nil
 }
 

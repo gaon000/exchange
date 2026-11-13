@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "bundle": "var/state-scale-full-20261113",
+  "rawReportSHA256": "c4a5a45a11554d0bc1d7d5f1d7af868a6e7f2616f129880d6cca3ec3a184d706",
+  "bundleManifestSHA256": "f65d7a11c09389b0ab65243b0a4f26a0dad883c9c726a6f2c56e9758e78c533d",
+  "binarySHA256": "82b2127acc4dee1bdb2d7baa027521c8a2bfa740fec7825ebbb52b2195dfac9b",
+  "sourceArchiveSHA256": "118b7851f41db1e82713fe587cd76fcacb3912bad209f4959ce0c2797ba44a9e",
+  "sourceRevision": "7c89546ab6a6302c3553e92cb460b7c45bec9999",
+  "workingTreeModified": true,
+  "sourceFiles": 229,
+  "workersVerified": 60,
+  "fixtures": [
+    {
+      "path": "fixtures/active-1000.json",
+      "version": 1,
+      "kind": "active",
+      "commands": 1000,
+      "runId": "1c897aaf-8db3-4434-80df-f6e39da3a09b",
+      "counts": {
+        "Orders": 1000,
+        "Active": 1000,
+        "Filled": 0,
+        "Cancelled": 0,
+        "Trades": 0,
+        "Results": 1000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "d6b0236864b90e31675445bea8851a8a0ce18f2dfdc9e93557269cb44c8dff1b",
+        "genesis.bin": "4eabf77d486ab1f4785500044a833cf7947761cd2dd3a8ad405a1b14ee7497cb",
+        "snapshot-00000000000000001000.bin": "ee4f07b3d15ddc02e38e5e286047f5c127c7b21b9e2e78624701823b87e19b4e"
+      }
+    },
+    {
+      "path": "fixtures/history-1000.json",
+      "version": 1,
+      "kind": "history",
+      "commands": 1000,
+      "runId": "f0e4273e-63d4-4b80-a4bc-c4e3666e54b8",
+      "counts": {
+        "Orders": 500,
+        "Active": 0,
+        "Filled": 250,
+        "Cancelled": 250,
+        "Trades": 250,
+        "Results": 1000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "5f03e9faafcaac860bdeb41be07d0e5b69b13fa913e9cb887d0b1c3e289f78f1",
+        "genesis.bin": "e051a79663dde61f6f0079a1c7e0965ed600618fcd2560dd2c7c426711bd2abd",
+        "snapshot-00000000000000001000.bin": "4a7c1cc6b77596b14a89dc0fd1fd1342be1096f3b3809950854623c98ee937b7"
+      }
+    },
+    {
+      "path": "fixtures/active-5000.json",
+      "version": 1,
+      "kind": "active",
+      "commands": 5000,
+      "runId": "39d44723-96f0-4c8d-a7f9-5f11459bec73",
+      "counts": {
+        "Orders": 5000,
+        "Active": 5000,
+        "Filled": 0,
+        "Cancelled": 0,
+        "Trades": 0,
+        "Results": 5000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "74f5f2a517870da926fc2179c5e9d6462b7f63ea46bf16d418bfaa175ade97bb",
+        "genesis.bin": "0063ec6c4f67f9625cfb5f5537cef5f36ea3f1859e5e903cefb8f61965043971",
+        "snapshot-00000000000000005000.bin": "a402c75764e7b22eb7e9d5faad39c53d370ec6074dbb03ff326e946995b6849f"
+      }
+    },
+    {
+      "path": "fixtures/history-5000.json",
+      "version": 1,
+      "kind": "history",
+      "commands": 5000,
+      "runId": "c9b1ec41-aff2-4c49-920f-f61ebbbfd27c",
+      "counts": {
+        "Orders": 2500,
+        "Active": 0,
+        "Filled": 1250,
+        "Cancelled": 1250,
+        "Trades": 1250,
+        "Results": 5000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "6a4a9586bd3343c2e763ffdd65edca7354eae8fb2e7e4575368c87022fd5e459",
+        "genesis.bin": "e31d855c1d279f3806663744340f9fe2e4aaed2d095dc47dc448b3dbdadc4dad",
+        "snapshot-00000000000000005000.bin": "ecdb2bf0cf6998bcdbc0131c20f39d27de8c0df3dda28769a87d9d1909f3f12a"
+      }
+    },
+    {
+      "path": "fixtures/active-10000.json",
+      "version": 1,
+      "kind": "active",
+      "commands": 10000,
+      "runId": "769f0f00-ead7-468a-8827-e9394d1a74e1",
+      "counts": {
+        "Orders": 10000,
+        "Active": 10000,
+        "Filled": 0,
+        "Cancelled": 0,
+        "Trades": 0,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "a3dd62c738851c1f06d9ea121aa1397657b41584f5ce599a3e83cb2413198c45",
+        "genesis.bin": "dcfc92916ba5e9531e725f3f0c552d0659d115aa9858e5369b10eb7667bf7494",
+        "snapshot-00000000000000010000.bin": "22accf3af2ab295a32832db68637a0f2d995f086d0443a5d43312cf458443bc9"
+      }
+    },
+    {
+      "path": "fixtures/history-10000.json",
+      "version": 1,
+      "kind": "history",
+      "commands": 10000,
+      "runId": "53df2216-11b2-495a-9985-46da2cd2c194",
+      "counts": {
+        "Orders": 5000,
+        "Active": 0,
+        "Filled": 2500,
+        "Cancelled": 2500,
+        "Trades": 2500,
+        "Results": 10000
+      },
+      "files": {
+        ".lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "commands.wal": "6541511818616ebf280ae8f3ac5ed4c67edabeff9ad4595290cba9ef8db899d4",
+        "genesis.bin": "bb7f0f20f232695d5807c60061eef047979dfae107f97de0cc883ff614113c98",
+        "snapshot-00000000000000010000.bin": "3e8c74cb0384673930e66117f9e9b0a30a6201bc08c0ba138a4841283b5096c7"
+      }
+    }
+  ],
+  "sameReportRegenerated": true,
+  "verification": {
+    "filesVerified": 588,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "powerLossTested": false
+}
