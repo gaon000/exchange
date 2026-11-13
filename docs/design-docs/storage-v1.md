@@ -55,7 +55,7 @@ WAL command record는 [전용 디코더](../../internal/wal/codec.go)에서 UTF-
 
 Genesis payload 최대 4 MiB, WAL metadata 최대 4 KiB, snapshot payload 최대 2 GiB다. Genesis/snapshot 파일은 정확히 envelope 하나이며 남는 바이트도 오류다. WAL은 envelope 하나 뒤에 아래의 완전한 그룹들이 연결된다. P4의 [snapshot.Write/Read](../../internal/snapshot/codec.go)는 streaming으로 쓰고 검사하며 선언 길이만큼 선할당하지 않는다. 상한을 넘으면 출력 전에 ErrTooLarge를 반환한다. 이 파일 상한은 전체 상태 사본의 가용 메모리를 보장하지 않는다.
 
-Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
+Write는 payload를 먼저 세고, 32 KiB 버퍼와 SHA-256을 거쳐 같은 bytes를 기록한다. Read는 전체 envelope 길이·SHA-256을 검증한 뒤 [항목별 decoder](../../internal/snapshot/decode.go)를 사용한다. 계정·주문·체결·결과 한 항목은 최대 16 KiB이며, 배열과 가격별 FIFO는 항목 단위로 읽는다. 배열 수는 실제 읽은 항목과 계정 수 10,000/검증된 WAL 순번으로 제한한다. 상태를 담은 DTO 외에 거대한 JSON payload 사본을 만들지 않는다. 배열 backing storage는 다음 항목 검증 성공 뒤에만 배증하고 기존 개수 제한으로 마지막 증가를 자른다. 빈 배열은 선할당하지 않으며 용량은 실제 성공 항목 수의 2배 이내다. 증가 중 기존/새 storage의 합은 3배 이내(allocator 정렬·GC 미회수 공간 제외)이며 선언된 limit만으로 예약하지 않는다. 총 할당 감소와 peak RSS/GC 뒤 heap은 별개로 검증한다. 실제 decode bytes도 다시 hash하여 두 번의 읽기 사이 변경을 거절한다.
 
 크기 사전 검사는 [leaf 길이 계산](../../internal/snapshot/size.go)으로 수행한다. 고정 DTO의 필드 이름·순서와 포인터 `omitempty`를 시작 시 읽기 전용 계산 계획으로 만들고, 값은 JSON bytes 없이 센다. 문자열 escape·정수의 십진수 문자열·nullable Reason을 반영하며, 파일 접근 전의 shape·16 KiB·2 GiB 검사는 유지한다. 미지원 schema/custom codec, 잘못된 UTF-8 또는 음수 도메인 정수는 기존 `json.Marshal`로 돌아가 bytes 처리·오류 종류와 우선순위를 보존한다. 실제 canonical writer와 header/checksum·sync·exclusive rename 순서는 변경하지 않는다. 이 사전 검사는 Write/Publish/Confirm이 공유한다.
 

@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [스냅샷 배열 할당](20261113-snapshot-array-allocation.md) | 2026-11-13 | 실제 항목 기반 배증·기존 메모리/복구 경계·60회 heap/현재·최대 RSS 비교 | 할당 1.96~7.37% 감소·GC 뒤 heap 유사·RSS 혼합(최대 중앙값 +4.406MiB). 236 portable/275 native race·Python 88·재집계 일치·전원 장애 보류 |
 | [디코더 읽기 버퍼 대조](20261113-snapshot-read-buffer.md) | 2026-11-13 | 네 버퍼·두 상태·세 tail 각 5회와 별도 ReaderAt/Pread 계수·32 유지 | 120회 전체 상태/960응답·757 파일/255 source·재집계·8사본 재구성·234 portable/273 native race/Python 83. 시간 혼합·큰 버퍼 미채택·전원 장애 보류 |
 | [최신 snapshot 읽기 프로파일링](20261113-snapshot-read-profiling.md) | 2026-11-13 | 같은 두 최종 상태의 CPU/할당 분리·pread/배열/Marshal 병목과 후속 후보 | 50 worker/642 파일·247 source·재집계 bytes 일치·portable 232/native race 270/Python 77. profile 근거이며 생산 최적화/전원 장애 미검증 |
 | [snapshot 이후 명령 복구·비용](20261113-snapshot-tail-recovery.md) | 2026-11-13 | 총 1만 명령·tail 0/1천/5천·두 상태 각 5회와 후속 거래/최초 응답 | 30 worker 전체 bytes·최초 응답 240/재시도 60·245 source/314 파일·재집계 일치·portable 232/native race 270/Python 73(검토 후). warm-cache·전원 장애 보류 |

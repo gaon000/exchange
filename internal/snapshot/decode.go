@@ -135,6 +135,19 @@ func parseArray[T any](p *decoder, limit d.Int, item func() T) []T {
 			if p.err != nil {
 				break
 			}
+			if len(values) == cap(values) {
+				// Grow only after another item has passed validation. Never reserve
+				// from the untrusted declared limit alone. Doubling avoids repeated
+				// large DTO copies while keeping capacity below twice the number of
+				// accepted items; clamp the final growth to the existing count limit.
+				extra := max(1, cap(values))
+				if remaining := limit - d.Int(len(values)); d.Int(extra) > remaining {
+					extra = int(remaining)
+				}
+				grown := make([]T, len(values), len(values)+extra)
+				copy(grown, values)
+				values = grown
+			}
 			values = append(values, v)
 			if p.peek() == ']' {
 				break
