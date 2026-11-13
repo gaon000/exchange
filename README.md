@@ -15,6 +15,7 @@
 - [전체 구조](ARCHITECTURE.md): 구현한 모듈과 예정 모듈의 책임.
 - [실험 결과 비교 보고서](docs/experiment-comparison.md): 기준·후보 원본 검증과 JSON·Markdown 비교표.
 - [재현 가능한 실험 도구](docs/diagnostic-tools.md): 새 실행·전체 복구·원본 검증·trace/OS I/O·타이머 진단.
+- [상태 크기별 비용 측정](docs/state-size-costs.md): 메모리·snapshot·복구 단계와 완전한 상태 bytes 비교.
 - [고정 seed 거래·복구 검사](docs/random-recovery.md): HTTP 거래·snapshot·재시작 조합과 실패 명세 재현.
 - [실험 자료 패키징·복원](docs/evidence-packages.md): 이전 실행·고정 빌드 수집, 새 폴더 복원과 검증·비교표 재생성.
 - [실험 자료 보관·정리 미리보기](docs/artifact-retention.md): var 용량·참조 관계·원본/고정 빌드 보호와 삭제 후보 목록.

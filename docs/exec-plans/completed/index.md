@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [상태 크기별 비용 측정](20261113-state-size-costs.md) | 2026-11-13 | 6조건 각 5회의 메모리/snapshot/두 복구 경로·완전한 bytes와 JSON/Markdown 재집계 | 60 worker/588 파일 검증, source 229개 동결/일치, portable 224개·native race 261개·Python 58개. warm-cache·HTTP p99/전원 장애 미검증 |
 | [고정 seed 거래·복구 통합 검증](20261112-random-recovery.md) | 2026-11-12 | HTTP/실제 저장·중간 snapshot/재시작·순차/전체 WAL 대조와 실패 명세 replay | 세 seed 각 64 actions·24회 복구/전체 재생, portable 221개·native race 258개·Python 53개 통과. 순차/정상 재시작 범위·전원 장애 보류 |
 | [실험 자료 패키징·복원](20261112-evidence-package.md) | 2026-11-12 | 이전 실행·고정 빌드 수집·복원본 전용 검증/재집계와 비교표 재생성 | Python 53개·portable 215개·native race 249개·원본 비가용 smoke·115 entry 실제 사본 복원/비교 일치. dirty 원본 엄격 거절·동일 디스크·전원 장애 보류 |
 | [프로젝트 결과 보고서와 문서 현행화](20261112-project-results.md) | 2026-11-12 | 구현/거래/복구·시점별 성능과 한계 종합, 주요 진입 문서 갱신 | tracked 수치/조건·기준 코드 원격 CI·링크/앵커·이전 로그 보존 확인. 문서만 변경·v1 Blocked 및 실제 전원 장애 미완료·보류 유지 |

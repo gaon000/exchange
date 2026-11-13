@@ -8,6 +8,7 @@ import sys
 import tempfile
 from common import REPO, digest, read, save, seal
 from evidence import create, restore, reproduce
+from state_scale import run as state_scale
 
 
 def cli(*args, success=True):
@@ -30,6 +31,7 @@ def main():
         bundle = root/'bundle'
         args = ['run', '--suite', suite, '--output', bundle]
         if options.mode == 'native':
+            state_scale(root/'state-scale-smoke', smoke=True)
             args += ['--archive', '--prune-archived']
         cli(*args)
         cli('verify', '--bundle', bundle, '--output', root/'verified.json')
