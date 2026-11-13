@@ -1,0 +1,1196 @@
+{
+  "version": 1,
+  "workersVerified": 60,
+  "repeats": 5,
+  "commands": 10000,
+  "smoke": false,
+  "rows": [
+    {
+      "kind": "active",
+      "tail": 0,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 284.081708,
+            "min": 278.704708,
+            "max": 294.3085
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 114.23161315917969,
+            "min": 114.21356964111328,
+            "max": 114.23716735839844
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.913734436035156,
+            "min": 10.911949157714844,
+            "max": 10.914375305175781
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.618934631347656,
+            "min": 10.611846923828125,
+            "max": 10.619758605957031
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 45.75,
+            "min": 44.5625,
+            "max": 46.921875
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 166.524416,
+            "min": 165.232083,
+            "max": 170.184083
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 11.331709,
+            "min": 9.984208,
+            "max": 11.947042
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 34.02525,
+            "min": 33.398709,
+            "max": 34.157542
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 42.768083,
+            "min": 37.133916,
+            "max": 43.863292
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 45.78125,
+            "min": 44.5625,
+            "max": 47.046875
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 281.986333,
+            "min": 278.505375,
+            "max": 298.543084
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 105.81843566894531,
+            "min": 105.81647491455078,
+            "max": 105.8762435913086
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.912437438964844,
+            "min": 10.911537170410156,
+            "max": 10.913291931152344
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.617210388183594,
+            "min": 10.612625122070312,
+            "max": 10.618339538574219
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 45.078125,
+            "min": 44.46875,
+            "max": 48.5625
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 164.383792,
+            "min": 163.274625,
+            "max": 168.219458
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 10.815,
+            "min": 9.771958,
+            "max": 10.921958
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 33.624,
+            "min": 32.989917,
+            "max": 35.053
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 41.64125,
+            "min": 40.878333,
+            "max": 42.878959
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 45.09375,
+            "min": 44.46875,
+            "max": 48.578125
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": -0.7375958891376433,
+        "openAllocMiB": -7.365016791376977,
+        "heapAfterGC_MiB": -0.011884081273139113,
+        "heapDeltaMiB": -0.016237440232214073,
+        "peakRSSMiB": -1.4685792349726778,
+        "loadMs": -1.2854715551141815,
+        "restoreMs": -4.559850592704073,
+        "replayMs": -1.1792712764784885,
+        "confirmMs": -2.634752181901623,
+        "rssAfterGC_MiB": -1.5017064846416406
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": 1.4388249065181657,
+            "openAllocMiB": -7.363222532098657,
+            "heapAfterGC_MiB": -0.010346300463559555,
+            "rssAfterGC_MiB": -2.866894197952219,
+            "peakRSSMiB": -2.8005464480874265
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": -1.4592129933819864,
+            "openAllocMiB": -7.358739792059755,
+            "heapAfterGC_MiB": -0.024745398509262717,
+            "rssAfterGC_MiB": 1.0869565217391353,
+            "peakRSSMiB": 0.9467040673211802
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": -1.2202191827211384,
+            "openAllocMiB": -7.365744789503681,
+            "heapAfterGC_MiB": -0.02013303180390391,
+            "rssAfterGC_MiB": 3.254732646961145,
+            "peakRSSMiB": 3.4965034965035002
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": -0.8634983988479727,
+            "openAllocMiB": -7.29976838654337,
+            "heapAfterGC_MiB": -0.007270027702999116,
+            "rssAfterGC_MiB": 5.401709401709409,
+            "peakRSSMiB": 5.338809034907599
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": 1.177455889980883,
+            "openAllocMiB": -7.371237083837401,
+            "heapAfterGC_MiB": 0.011326683218548794,
+            "rssAfterGC_MiB": -3.735823882588396,
+            "peakRSSMiB": -3.57620320855615
+          }
+        }
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 266.457834,
+            "min": 259.017709,
+            "max": 291.328125
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 106.21744537353516,
+            "min": 106.20327758789062,
+            "max": 106.22452545166016
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.859207153320312,
+            "min": 10.856101989746094,
+            "max": 10.861053466796875
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.560821533203125,
+            "min": 10.555999755859375,
+            "max": 10.565948486328125
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 42.140625,
+            "min": 41.171875,
+            "max": 43.46875
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 151.980833,
+            "min": 148.454166,
+            "max": 174.53275
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 9.781958,
+            "min": 9.189625,
+            "max": 11.362125
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 35.225792,
+            "min": 33.656167,
+            "max": 35.422459
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 38.183042,
+            "min": 36.238667,
+            "max": 39.816083
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 42.203125,
+            "min": 41.28125,
+            "max": 43.46875
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 266.965083,
+            "min": 263.60025,
+            "max": 272.550542
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 101.35089874267578,
+            "min": 101.3248519897461,
+            "max": 101.35565948486328
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.859085083007812,
+            "min": 10.856941223144531,
+            "max": 10.864799499511719
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.56414794921875,
+            "min": 10.561851501464844,
+            "max": 10.570152282714844
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 43.28125,
+            "min": 42.0625,
+            "max": 45.640625
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 151.133875,
+            "min": 150.031917,
+            "max": 154.252
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 10.091084,
+            "min": 9.138291,
+            "max": 10.425125
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 34.698959,
+            "min": 34.086875,
+            "max": 35.917334
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 38.456334,
+            "min": 37.908583,
+            "max": 40.604542
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 43.34375,
+            "min": 42.234375,
+            "max": 45.640625
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": 0.19036745603808747,
+        "openAllocMiB": -4.581682993547043,
+        "heapAfterGC_MiB": -0.0011241180942311857,
+        "heapDeltaMiB": 0.03149770124575291,
+        "peakRSSMiB": 2.706711160548747,
+        "loadMs": -0.5572794827358285,
+        "restoreMs": 3.1601648667884286,
+        "replayMs": -1.4955888003880702,
+        "confirmMs": 0.7157418206752642,
+        "rssAfterGC_MiB": 2.7027027027026973
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": -1.0724338470753936,
+            "openAllocMiB": -4.607849538293507,
+            "heapAfterGC_MiB": 0.03449050984138946,
+            "rssAfterGC_MiB": 2.7027027027026973,
+            "peakRSSMiB": 2.5546094039244682
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": 3.22272018860299,
+            "openAllocMiB": -4.571908596309083,
+            "heapAfterGC_MiB": -0.034000105372222755,
+            "rssAfterGC_MiB": -0.25830258302582676,
+            "peakRSSMiB": -0.18539117538005634
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": 0.4441069405634046,
+            "openAllocMiB": -4.580806691043682,
+            "heapAfterGC_MiB": 0.027478493335242327,
+            "rssAfterGC_MiB": 10.560181680545044,
+            "peakRSSMiB": 10.853889943074012
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": -8.362749734513276,
+            "openAllocMiB": -4.570067432571023,
+            "heapAfterGC_MiB": -0.0011241180942311857,
+            "rssAfterGC_MiB": 2.4096385542168752,
+            "peakRSSMiB": 2.45005653976631
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": 1.0288201530518348,
+            "openAllocMiB": -4.583561043078099,
+            "heapAfterGC_MiB": 0.0011241939178230353,
+            "rssAfterGC_MiB": 0.5032350826743359,
+            "peakRSSMiB": 0.4672897196261738
+          }
+        }
+      ]
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 180.676,
+            "min": 176.639875,
+            "max": 182.274166
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 82.42339324951172,
+            "min": 82.40540313720703,
+            "max": 82.4693603515625
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.658393859863281,
+            "min": 10.656539916992188,
+            "max": 10.675361633300781
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.363914489746094,
+            "min": 10.356437683105469,
+            "max": 10.380882263183594
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 36.09375,
+            "min": 34.59375,
+            "max": 36.890625
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 83.529417,
+            "min": 82.862209,
+            "max": 84.600458
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 5.061458,
+            "min": 4.730625,
+            "max": 5.742667
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 36.102,
+            "min": 35.253833,
+            "max": 36.637292
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 24.360709,
+            "min": 23.011708,
+            "max": 26.229875
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 36.265625,
+            "min": 34.59375,
+            "max": 36.890625
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 182.160084,
+            "min": 174.920167,
+            "max": 191.139209
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 79.44093322753906,
+            "min": 79.4239273071289,
+            "max": 79.47916412353516
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 10.65667724609375,
+            "min": 10.656158447265625,
+            "max": 10.663436889648438
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 10.358795166015625,
+            "min": 10.356407165527344,
+            "max": 10.363487243652344
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 34.59375,
+            "min": 33.78125,
+            "max": 36.703125
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 84.821916,
+            "min": 81.585333,
+            "max": 87.302333
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 5.147083,
+            "min": 4.855625,
+            "max": 5.939541
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 36.833417,
+            "min": 35.503041,
+            "max": 37.904666
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 23.780958,
+            "min": 22.23675,
+            "max": 27.40425
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 34.640625,
+            "min": 33.78125,
+            "max": 36.71875
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": 0.8214062742146311,
+        "openAllocMiB": -3.6184630411225216,
+        "heapAfterGC_MiB": -0.016105745313044206,
+        "heapDeltaMiB": -0.04939565774624288,
+        "peakRSSMiB": -4.155844155844157,
+        "loadMs": 1.5473578607642091,
+        "restoreMs": 1.6917062237797875,
+        "replayMs": 2.025973630269795,
+        "confirmMs": -2.3798609473968946,
+        "rssAfterGC_MiB": -4.480827229642392
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": -2.1612876457186903,
+            "openAllocMiB": -3.6753392225154613,
+            "heapAfterGC_MiB": 0.04731510067521594,
+            "rssAfterGC_MiB": -1.6260162601625994,
+            "peakRSSMiB": -1.7615176151761558
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": 0.16876676122012935,
+            "openAllocMiB": -3.6180586667525882,
+            "heapAfterGC_MiB": -0.0038658520695955545,
+            "rssAfterGC_MiB": -6.09911054637865,
+            "peakRSSMiB": -6.226175349428209
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": 0.8214062742146311,
+            "openAllocMiB": -3.6093892106925707,
+            "heapAfterGC_MiB": -0.17788571146780674,
+            "rssAfterGC_MiB": -1.1202068074105953,
+            "peakRSSMiB": -0.649350649350644
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": 0.8885203183428558,
+            "openAllocMiB": -3.6092496320864087,
+            "heapAfterGC_MiB": -0.1585145089373463,
+            "rssAfterGC_MiB": -7.369323050556986,
+            "peakRSSMiB": -6.970740103270224
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": 8.208415002558178,
+            "openAllocMiB": -3.6184630411225216,
+            "heapAfterGC_MiB": 0.00042956126045101684,
+            "rssAfterGC_MiB": 2.4858264282599185,
+            "peakRSSMiB": 2.4422154382904404
+          }
+        }
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 248.292208,
+            "min": 245.938625,
+            "max": 252.31825
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 97.28096771240234,
+            "min": 97.25431823730469,
+            "max": 97.30204010009766
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.623504638671875,
+            "min": 9.621482849121094,
+            "max": 9.6243896484375
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.326637268066406,
+            "min": 9.3223876953125,
+            "max": 9.32952880859375
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 40.484375,
+            "min": 40.125,
+            "max": 43.546875
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 143.320166,
+            "min": 142.0195,
+            "max": 145.46075
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 10.549166,
+            "min": 9.527375,
+            "max": 11.10625
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 29.636708,
+            "min": 29.245584,
+            "max": 29.9615
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 36.673875,
+            "min": 35.4255,
+            "max": 38.526834
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 40.484375,
+            "min": 40.125,
+            "max": 43.546875
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 244.346375,
+            "min": 238.8705,
+            "max": 254.531625
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 92.1944351196289,
+            "min": 92.16438293457031,
+            "max": 92.20259857177734
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.622062683105469,
+            "min": 9.621315002441406,
+            "max": 9.624992370605469
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.327369689941406,
+            "min": 9.321258544921875,
+            "max": 9.330406188964844
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 41.609375,
+            "min": 40.34375,
+            "max": 42.359375
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 140.003125,
+            "min": 139.458416,
+            "max": 141.792916
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 10.55375,
+            "min": 9.37675,
+            "max": 12.201583
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 29.571083,
+            "min": 29.033583,
+            "max": 30.249208
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 35.901375,
+            "min": 33.091333,
+            "max": 45.313
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 41.609375,
+            "min": 40.34375,
+            "max": 42.359375
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": -1.5891892185356027,
+        "openAllocMiB": -5.228702707616007,
+        "heapAfterGC_MiB": -0.01498368443250131,
+        "heapDeltaMiB": 0.007853011261715892,
+        "peakRSSMiB": 2.77884986491701,
+        "loadMs": -2.314427266292718,
+        "restoreMs": 0.043453672072280014,
+        "replayMs": -0.22143147612749825,
+        "confirmMs": -2.1064040819248064,
+        "rssAfterGC_MiB": 2.77884986491701
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": -0.2574756594858507,
+            "openAllocMiB": -5.233634243689533,
+            "heapAfterGC_MiB": -0.016093586983068064,
+            "rssAfterGC_MiB": 4.631416441528358,
+            "peakRSSMiB": 4.631416441528358
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": -2.873938569023071,
+            "openAllocMiB": -5.224036337767068,
+            "heapAfterGC_MiB": -0.02227570505380916,
+            "rssAfterGC_MiB": -1.3374092472296484,
+            "peakRSSMiB": -1.2619502868068788
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": -1.29660775867112,
+            "openAllocMiB": -5.259831535572202,
+            "heapAfterGC_MiB": -0.031946399807214476,
+            "rssAfterGC_MiB": 2.1747572815534078,
+            "peakRSSMiB": 2.0582524271844704
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": -2.7605657794557703,
+            "openAllocMiB": -5.240837214794636,
+            "heapAfterGC_MiB": 0.03647588983328731,
+            "rssAfterGC_MiB": 5.023364485981308,
+            "peakRSSMiB": 4.984423676012462
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": 0.8772155799273262,
+            "openAllocMiB": -5.210177122175875,
+            "heapAfterGC_MiB": 0.010942194290564089,
+            "rssAfterGC_MiB": -4.449228561176888,
+            "peakRSSMiB": -4.449228561176888
+          }
+        }
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 231.427667,
+            "min": 228.893666,
+            "max": 235.975292
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 91.31273651123047,
+            "min": 91.29252624511719,
+            "max": 91.32377624511719
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.646446228027344,
+            "min": 9.644393920898438,
+            "max": 9.649589538574219
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.350143432617188,
+            "min": 9.344169616699219,
+            "max": 9.352363586425781
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 38.375,
+            "min": 37.609375,
+            "max": 39.21875
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 128.760833,
+            "min": 126.516708,
+            "max": 131.376375
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 9.446292,
+            "min": 9.328084,
+            "max": 10.6835
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 29.918834,
+            "min": 29.161375,
+            "max": 30.856542
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 33.544167,
+            "min": 32.127833,
+            "max": 37.907042
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 38.375,
+            "min": 37.625,
+            "max": 39.234375
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 232.403709,
+            "min": 223.044042,
+            "max": 241.675583
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 88.90685272216797,
+            "min": 88.88333892822266,
+            "max": 88.92350769042969
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.644302368164062,
+            "min": 9.643753051757812,
+            "max": 9.645637512207031
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.344627380371094,
+            "min": 9.343833923339844,
+            "max": 9.349563598632812
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 42.75,
+            "min": 38.484375,
+            "max": 44.203125
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 128.462792,
+            "min": 125.674083,
+            "max": 135.149416
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 9.808084,
+            "min": 9.06,
+            "max": 10.5995
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 30.882625,
+            "min": 29.086625,
+            "max": 31.066583
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 33.04375,
+            "min": 32.129041,
+            "max": 37.416125
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 42.78125,
+            "min": 38.53125,
+            "max": 44.21875
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": 0.4217481914122079,
+        "openAllocMiB": -2.6347735058477872,
+        "heapAfterGC_MiB": -0.02222434887008129,
+        "heapDeltaMiB": -0.05899430619268342,
+        "peakRSSMiB": 11.40065146579805,
+        "loadMs": -0.23146867961003625,
+        "restoreMs": 3.82998958744869,
+        "replayMs": 3.2213521422659763,
+        "confirmMs": -1.4918152536028018,
+        "rssAfterGC_MiB": 11.48208469055374
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": -5.158049944352372,
+            "openAllocMiB": -2.638975407938593,
+            "heapAfterGC_MiB": -0.008383562207214812,
+            "rssAfterGC_MiB": 2.208588957055224,
+            "peakRSSMiB": 2.29320229320229
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": 4.428129157089922,
+            "openAllocMiB": -2.6165340259044045,
+            "heapAfterGC_MiB": -0.016847120684704286,
+            "rssAfterGC_MiB": 13.704318936877069,
+            "peakRSSMiB": 13.668466971333615
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": -0.5002318412777651,
+            "openAllocMiB": -2.614139869518628,
+            "heapAfterGC_MiB": -0.0023732111920637955,
+            "rssAfterGC_MiB": 12.704101951413783,
+            "peakRSSMiB": 12.70916334661354
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": 0.5360023031563799,
+            "openAllocMiB": -2.646954805135948,
+            "heapAfterGC_MiB": -0.06048430135887628,
+            "rssAfterGC_MiB": -1.5961691939345601,
+            "peakRSSMiB": -1.715881883479653
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": 1.0662014019467536,
+            "openAllocMiB": -2.646543564363879,
+            "heapAfterGC_MiB": -0.023331132034432045,
+            "rssAfterGC_MiB": 14.047231270358296,
+            "peakRSSMiB": 14.006514657980462
+          }
+        }
+      ]
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "versions": {
+        "baseline": {
+          "openMs": {
+            "count": 5,
+            "median": 157.871291,
+            "min": 149.549292,
+            "max": 161.162625
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 71.89311218261719,
+            "min": 71.88233947753906,
+            "max": 71.89873504638672
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.503623962402344,
+            "min": 9.502792358398438,
+            "max": 9.524192810058594
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.208717346191406,
+            "min": 9.203704833984375,
+            "max": 9.229454040527344
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 32.421875,
+            "min": 31.078125,
+            "max": 34.140625
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 71.622208,
+            "min": 69.738541,
+            "max": 72.658459
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 5.243708,
+            "min": 4.850375,
+            "max": 5.70325
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 32.057625,
+            "min": 31.26825,
+            "max": 34.620083
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 20.499333,
+            "min": 17.530083,
+            "max": 21.957959
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 32.453125,
+            "min": 31.109375,
+            "max": 34.203125
+          }
+        },
+        "candidate": {
+          "openMs": {
+            "count": 5,
+            "median": 158.739584,
+            "min": 156.257083,
+            "max": 162.914291
+          },
+          "openAllocMiB": {
+            "count": 5,
+            "median": 70.48359680175781,
+            "min": 70.4562759399414,
+            "max": 70.51005554199219
+          },
+          "heapAfterGC_MiB": {
+            "count": 5,
+            "median": 9.503341674804688,
+            "min": 9.490859985351562,
+            "max": 9.506980895996094
+          },
+          "heapDeltaMiB": {
+            "count": 5,
+            "median": 9.208206176757812,
+            "min": 9.196578979492188,
+            "max": 9.212532043457031
+          },
+          "peakRSSMiB": {
+            "count": 5,
+            "median": 32.734375,
+            "min": 32.3125,
+            "max": 34.234375
+          },
+          "loadMs": {
+            "count": 5,
+            "median": 72.117375,
+            "min": 70.500875,
+            "max": 74.929958
+          },
+          "restoreMs": {
+            "count": 5,
+            "median": 5.181792,
+            "min": 4.722709,
+            "max": 5.344875
+          },
+          "replayMs": {
+            "count": 5,
+            "median": 32.318041,
+            "min": 31.183042,
+            "max": 33.348291
+          },
+          "confirmMs": {
+            "count": 5,
+            "median": 21.45425,
+            "min": 20.633375,
+            "max": 22.192792
+          },
+          "rssAfterGC_MiB": {
+            "count": 5,
+            "median": 32.75,
+            "min": 32.34375,
+            "max": 34.40625
+          }
+        }
+      },
+      "medianChangePercent": {
+        "openMs": 0.5500005697679278,
+        "openAllocMiB": -1.9605708225275298,
+        "heapAfterGC_MiB": -0.0029703153110127722,
+        "heapDeltaMiB": -0.005550929780739899,
+        "peakRSSMiB": 0.9638554216867545,
+        "loadMs": 0.6913595850046805,
+        "restoreMs": -1.1807675026908493,
+        "replayMs": 0.8123371584763284,
+        "confirmMs": 4.6582832719483935,
+        "rssAfterGC_MiB": 0.9147809340394719
+      },
+      "pairs": [
+        {
+          "repeat": 1,
+          "changesPercent": {
+            "openMs": 5.212718091637636,
+            "openAllocMiB": -1.996971247009982,
+            "heapAfterGC_MiB": -0.13430641933306342,
+            "rssAfterGC_MiB": 5.273731793068803,
+            "peakRSSMiB": 5.329311211664156
+          }
+        },
+        {
+          "repeat": 2,
+          "changesPercent": {
+            "openMs": 1.0868934407093356,
+            "openAllocMiB": -1.926911335692838,
+            "heapAfterGC_MiB": 0.005780578860736796,
+            "rssAfterGC_MiB": -4.93375970762906,
+            "peakRSSMiB": -4.8054919908466776
+          }
+        },
+        {
+          "repeat": 3,
+          "changesPercent": {
+            "openMs": 1.1015901192973354,
+            "openAllocMiB": -1.9797894000471605,
+            "heapAfterGC_MiB": 0.0012844544881707165,
+            "rssAfterGC_MiB": 0.38797284190106307,
+            "peakRSSMiB": 0.29097963142579175
+          }
+        },
+        {
+          "repeat": 4,
+          "changesPercent": {
+            "openMs": 0.5500005697679278,
+            "openAllocMiB": -1.931438019735121,
+            "heapAfterGC_MiB": 0.035483283118864506,
+            "rssAfterGC_MiB": 6.018295618680791,
+            "peakRSSMiB": 5.590361445783132
+          }
+        },
+        {
+          "repeat": 5,
+          "changesPercent": {
+            "openMs": -0.5131170294722431,
+            "openAllocMiB": -1.9636191223463717,
+            "heapAfterGC_MiB": -0.22629780791522114,
+            "rssAfterGC_MiB": 1.3120899718837897,
+            "peakRSSMiB": 1.885902876001877
+          }
+        }
+      ]
+    }
+  ],
+  "firstResponsesVerified": 480,
+  "retriesVerified": 120,
+  "sourceBundleManifestSHA256": "06185f8222d626899baac0d9d113f2b7f7ff8ac9e8f6a9188cf5fc4f064f497d",
+  "binarySHA256": {
+    "baseline": "59051e9cc2884d99ac918cc5b7931b45222b1769c01de95d089646f366af69d6",
+    "candidate": "94e1e103c99da03307712158c22f980740ae6fca77b1637734dda071cd1ab05f"
+  },
+  "environment": {
+    "GOMAXPROCS": "11",
+    "GOGC": "100",
+    "GOMEMLIMIT": "2GiB"
+  },
+  "productionChanges": [
+    "internal/snapshot/decode.go"
+  ],
+  "platform": "macOS-15.8-arm64-arm-64bit-Mach-O",
+  "hardware": {
+    "machdep.cpu.brand_string": "Apple M3 Pro",
+    "hw.memsize": "19327352832",
+    "hw.logicalcpu": "11"
+  },
+  "scope": "fresh worker public Open without observers; warm cache; successful owned scratch retired with receipts; post-GC live engine heap/current Mach resident_size and worker-start-through-Open peak RSS",
+  "powerLossTested": false
+}

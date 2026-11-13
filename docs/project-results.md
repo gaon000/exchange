@@ -136,6 +136,8 @@ snapshot은 전체 WAL·최초 결과 이력을 없애는 보존 정책이 아�
 
 [타이머/trace/OS I/O 진단](benchmarks/timer-os-io-diagnosis.md)과 [trace 켬·끔 대조](benchmarks/timer-trace-control.md)는 대기·runnable·저장 호출/OS 관측을 분리했다. 호스트와 계측 영향이 남아 있으며 간헐 지연의 단일 원인이나 최적화의 인과 효과는 확정하지 않았다. 높은 수치 하나를 선택하거나 오래된 실패를 새 통과로 대체하지 않는 것이 보고 원칙이다.
 
+2026-11-13 [스냅샷 배열 증가·복사 할당 최적화](benchmarks/snapshot-array-allocation.md)는 동일 1만 명령·두 상태·세 tail을 버전별 5회 비교했다. 총 할당 중앙값은 1.96~7.37% 감소하고 GC 뒤 heap 차이는 2.2KiB 이내였으나 현재 RSS는 조건별 혼합(최대 중앙값 +4.406MiB)이었다. 기존 2GiB 측정 budget·검증/복구 계약을 유지해 할당 감소 목적으로 채택하며, 복구 시간/동시 거래 처리량·메모리 일괄 개선을 주장하지 않는다. 로컬 검증과 후속 발행/원격 CI는 구분한다.
+
 ## 6. 현재 검증·재현과 자료 보존
 
 2026-11-12 기준 master 3a23e1b의 [GitHub CI run 43170613569](https://github.com/gaon000/exchange/actions/runs/43170613569)는 `Go (portable)`·`Go (native)` 모두 success다. Go portable 215개·native race 249개, 각 Python 44개와 진단 smoke를 통과했다. native의 명시된 child-helper skip 1개는 일반 시험 누락과 구분한다. 이는 **해당 코드의 검증**이며 이 문서 변경의 새 원격 CI 결과나 성능 측정은 아니다.

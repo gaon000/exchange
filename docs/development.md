@@ -48,6 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·HTTP 거래 규칙·WAL/snapshot/SIGKILL 복구, [안내](trading-demo.md)) |
 | 수동 거래 CLI | `scripts/go build -mod=readonly -o bin/trade ./cmd/trade`; `bin/trade -h` ([주문·조회·같은 ID 재시도](trading-cli.md)) |
+| 스냅샷 배열 할당 비교 | `python3 tools/diagnostics/snapshot_array_compare.py freeze --label baseline --output var/array-baseline-new` 후 후보 동결·`run` ([명령·heap/현재 RSS·재집계](snapshot-array-allocation.md)) |
 | 디코더 읽기 버퍼 대조 | `python3 tools/diagnostics/read_buffer.py freeze --output var/read-buffer-builds-new` 후 `run` ([네 크기·IO 계수·재집계](decoder-read-buffer.md)) |
 | 최신 스냅샷 읽기 프로파일링 | `python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/snapshot-tail-full-20261113 --output var/snapshot-read-profile-new` ([계측·재집계](snapshot-read-profiling.md)) |
 | 스냅샷 이후 명령 복구·비용 | `python3 tools/diagnostics/snapshot_tail.py run --output var/snapshot-tail-new` ([조건·검증·재집계](snapshot-tail-recovery.md)) |

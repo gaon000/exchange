@@ -46,6 +46,7 @@ type tailObservation struct {
 	Verified                                bool
 	GoVersion                               string
 	GOMAXPROCS                              int
+	RSSAfterGCBytes                         int64 `json:",omitempty"`
 }
 
 func tailCuts(n int) []int {
@@ -214,6 +215,7 @@ func tailCommand(args []string) error {
 	tail := fs.Int("tail", -1, "commands after selected snapshot")
 	receipt := fs.String("receipt", "", "fixture receipt")
 	ioOutput := fs.String("io-output", "", "buffer experiment diagnostic JSON, outside Open timing")
+	resident := fs.Bool("resident", false, "current RSS after GC, outside Open timing (macOS/cgo)")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
@@ -222,6 +224,9 @@ func tailCommand(args []string) error {
 	}
 	if args[0] == "buffer-measure" && *ioOutput == "" {
 		return errors.New("missing buffer IO output")
+	}
+	if *resident && args[0] != "tail-measure" {
+		return errors.New("resident RSS requires tail-measure")
 	}
 	if err := durable.CheckFilesystem(filepath.Dir(*dir)); err != nil {
 		return err
@@ -256,7 +261,7 @@ func tailCommand(args []string) error {
 	if info, e2 := os.Lstat(filepath.Join(*dir, ".tail-owned")); e2 != nil || !info.Mode().IsRegular() {
 		return errors.New("tail requires coordinator-owned copy")
 	}
-	o, err := measureTail(*dir, f, *tail)
+	o, err := measureTailResident(*dir, f, *tail, *resident)
 	if err != nil {
 		return err
 	}
@@ -273,6 +278,10 @@ func tailCommand(args []string) error {
 }
 
 func measureTail(dir string, f tailFixture, tail int) (_ tailObservation, err error) {
+	return measureTailResident(dir, f, tail, false)
+}
+
+func measureTailResident(dir string, f tailFixture, tail int, collectRSS bool) (_ tailObservation, err error) {
 	cut := f.Commands - tail
 	name, _ := snapshot.Filename(d.Int(cut))
 	files, err := snapshot.List(dir)
@@ -308,6 +317,15 @@ func measureTail(dir string, f tailFixture, tail int) (_ tailObservation, err er
 	}
 	runtime.GC()
 	o.Open.AfterGC = mem()
+	if collectRSS {
+		o.RSSAfterGCBytes, err = residentRSS()
+		if err != nil {
+			return o, err
+		}
+		if o.RSSAfterGCBytes > 2<<30 {
+			return o, errors.New("post-GC resident RSS exceeded 2GiB budget")
+		}
+	}
 	runtime.KeepAlive(r)
 	o.Recovery = r.Recovery()
 	if o.Recovery.SnapshotSeq != d.Int(cut) || o.Recovery.ReplayedCommands != d.Int(tail) || o.Recovery.SnapshotFile != name || len(o.Recovery.Skipped) != 0 || o.Open.PeakRSSBytes > 2<<30 {

@@ -45,9 +45,12 @@ func TestNativeTailRecoveryCases(t *testing.T) {
 			if err = os.WriteFile(filepath.Join(copy, ".tail-owned"), nil, 0600); err != nil {
 				t.Fatal(err)
 			}
-			o, e := measureTail(copy, f, 24-cut)
+			o, e := measureTailResident(copy, f, 24-cut, true)
 			if e != nil || !o.Verified || o.FirstResponsesVerified != 8 || o.RetriesVerified != 2 || !o.OrdersBalancesTradeVerified {
 				t.Fatal(kind, cut, e)
+			}
+			if o.RSSAfterGCBytes <= 0 || o.RSSAfterGCBytes > 2<<30 {
+				t.Fatal("missing/budget-exceeding post-GC resident RSS")
 			}
 			if _, e = measureTail(copy, f, 24-cut); e == nil && cut != 24 {
 				t.Fatal("unexpected later snapshot accepted as original cut")
