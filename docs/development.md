@@ -48,6 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·HTTP 거래 규칙·WAL/snapshot/SIGKILL 복구, [안내](trading-demo.md)) |
 | 수동 거래 CLI | `scripts/go build -mod=readonly -o bin/trade ./cmd/trade`; `bin/trade -h` ([주문·조회·같은 ID 재시도](trading-cli.md)) |
+| 복구 뒤 RSS 진단 | `python3 tools/diagnostics/recovery_rss.py run --bundle var/canonical-buffer-full-20261113 --output var/recovery-rss-new` ([유휴/GC/반환·재집계](recovery-rss.md)) |
 | 스냅샷 정규형 비교 버퍼 | `python3 tools/diagnostics/canonical_buffer.py prepare --bundle var/snapshot-array-resident-full-20261113 --output var/canonical-buffer-new` 후 후보 동결·`compare` ([최신 profile·재집계](snapshot-canonical-buffer.md)) |
 | 스냅샷 배열 할당 비교 | `python3 tools/diagnostics/snapshot_array_compare.py freeze --label baseline --output var/array-baseline-new` 후 후보 동결·`run` ([명령·heap/현재 RSS·재집계](snapshot-array-allocation.md)) |
 | 디코더 읽기 버퍼 대조 | `python3 tools/diagnostics/read_buffer.py freeze --output var/read-buffer-builds-new` 후 `run` ([네 크기·IO 계수·재집계](decoder-read-buffer.md)) |

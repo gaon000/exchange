@@ -50,6 +50,8 @@
 
 [스냅샷 정규형 비교 버퍼 재사용](snapshot-canonical-buffer.md)은 최신 할당 profile을 먼저 확인하고 표준 Encoder의 borrowed bytes를 원문과 대조한다. [실제 비교](benchmarks/snapshot-canonical-buffer.md)는 같은 두 상태·세 tail 각 버전 5회의 시간·할당·GC 뒤 heap/현재 RSS와 기존 계약 일치를 기록한다.
 
+[복구 뒤 RSS 진단](recovery-rss.md)은 같은 두 생산 decoder·확장 probe로 유휴/추가 GC/OS 반환 단계의 Go 메모리와 Mach resident/footprint/reusable을 나누고 전체 상태를 검증한다. [분석](benchmarks/recovery-rss.md)은 이전 비계측 결과와 새 진단 관측을 구분한다.
+
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 
 [실험 자료 패키징·복원](evidence-packages.md)은 이전 실행·고정 빌드·비교 기준을 함께 묶고, 새 폴더의 복원 자료만으로 검증·분석·JSON/Markdown 비교표를 재생성한다.

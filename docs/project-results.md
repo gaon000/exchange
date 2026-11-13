@@ -140,6 +140,8 @@ snapshot은 전체 WAL·최초 결과 이력을 없애는 보존 정책이 아�
 
 2026-11-13 [정규형 비교 버퍼 재사용](benchmarks/snapshot-canonical-buffer.md)은 배열 최적화 이후 최신 allocation profile에서 읽기 중 Marshal 누적 약 44%/반환 사본 약 30%를 확인한 뒤 같은 두 상태·세 tail 각 버전 5회를 비교했다. 표준 Encoder의 borrowed bytes를 원문과 비교해 Open 총 할당 중앙값이 6.07~9.37% 감소했다. GC 뒤 heap 차이는 1.33KiB 이내이며 현재 RSS는 5조건 감소/1조건 증가했다. 시간 변화는 혼합이므로 할당 감소 목적으로 채택하고 HTTP p99·최대 처리량 개선으로 확대하지 않는다.
 
+2026-11-13 [복구 뒤 RSS 진단](benchmarks/recovery-rss.md)은 같은 두 decoder·같은 확장 probe에서 active/history 각 버전5회·20개 새 worker를 관측했다. history 초기 후보 RSS 증가가4/5쌍에서 보였지만 idle15초에는1/5쌍이었고 live heap은 거의 같았다. HeapReleased/reusable/compressed와 footprint 변화로 RSS 단독 해석의 한계를 확인했다. 강제 반환은 진단에서만 적용했다. 최초 두 CI smoke·새 폴더 재집계는 공간 부족으로 미완료·보류했으나, 사용자 공간 확보 뒤 두 전체 로컬 CI와 새 폴더 재집계를 완료했다. 첫 실패와 재개 근거는 함께 보존한다.
+
 ## 6. 현재 검증·재현과 자료 보존
 
 2026-11-12 기준 master 3a23e1b의 [GitHub CI run 43170613569](https://github.com/gaon000/exchange/actions/runs/43170613569)는 `Go (portable)`·`Go (native)` 모두 success다. Go portable 215개·native race 249개, 각 Python 44개와 진단 smoke를 통과했다. native의 명시된 child-helper skip 1개는 일반 시험 누락과 구분한다. 이는 **해당 코드의 검증**이며 이 문서 변경의 새 원격 CI 결과나 성능 측정은 아니다.

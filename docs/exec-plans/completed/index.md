@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [복구 뒤 RSS 진단](20261113-recovery-rss.md) | 2026-11-13 | 두 decoder·같은 probe·20회/260표본의 idle/GC/반환·Go/Mach 메모리 대조 | 초기 증가4/5쌍→15초1/5쌍·heap 유사·압축/반환 계수 변화. native279/portable240·Python99·smoke/재집계 통과. 첫 공간 실패 보존·전원 장애 보류 |
 | [스냅샷 정규형 비교 버퍼](20261113-snapshot-canonical-buffer.md) | 2026-11-13 | 최신 할당 profile 10회·표준 Encoder borrowed bytes 대조·동일 상태 60회 비교 | 할당 6.07~9.37% 감소·GC 뒤 heap 유사·시간/RSS 혼합. native race 277/portable 238·Python 94·재집계 일치·전원 장애 보류 |
 | [스냅샷 배열 할당](20261113-snapshot-array-allocation.md) | 2026-11-13 | 실제 항목 기반 배증·기존 메모리/복구 경계·60회 heap/현재·최대 RSS 비교 | 할당 1.96~7.37% 감소·GC 뒤 heap 유사·RSS 혼합(최대 중앙값 +4.406MiB). 236 portable/275 native race·Python 88·재집계 일치·전원 장애 보류 |
 | [디코더 읽기 버퍼 대조](20261113-snapshot-read-buffer.md) | 2026-11-13 | 네 버퍼·두 상태·세 tail 각 5회와 별도 ReaderAt/Pread 계수·32 유지 | 120회 전체 상태/960응답·757 파일/255 source·재집계·8사본 재구성·234 portable/273 native race/Python 83. 시간 혼합·큰 버퍼 미채택·전원 장애 보류 |
