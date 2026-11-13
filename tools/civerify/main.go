@@ -168,6 +168,13 @@ func requireCoverage(expected expectations, mode string) error {
 	if !expected[module+"tools/statescale"][scaleTest] {
 		return fmt.Errorf("missing %s coverage: tools/statescale/%s", mode, scaleTest)
 	}
+	tailTest := "TestUnsupportedTailLeavesNoOutput"
+	if mode == "native" {
+		tailTest = "TestNativeTailRecoveryCases"
+	}
+	if !expected[module+"tools/statescale"][tailTest] {
+		return fmt.Errorf("missing %s coverage: tools/statescale/%s", mode, tailTest)
+	}
 	return nil
 }
 

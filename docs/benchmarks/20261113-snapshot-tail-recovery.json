@@ -1,0 +1,451 @@
+{
+  "version": 1,
+  "workersVerified": 30,
+  "repeats": 5,
+  "smoke": false,
+  "commands": 10000,
+  "tails": [
+    0,
+    1000,
+    5000
+  ],
+  "binarySHA256": "2f6c96e682ebc86f53c487acc82fb6c22a6a77604b40c0c9ded627ac6a89aec2",
+  "sourceArchiveSHA256": "41a1a1c92060c5f4a4881d4cff12301656ef0e0ba2d42625e2a0be0f33d1f3a9",
+  "runtimeEnvironment": {
+    "GOMAXPROCS": "11",
+    "GOGC": "100",
+    "GOMEMLIMIT": "2GiB"
+  },
+  "rows": [
+    {
+      "kind": "active",
+      "commands": 10000,
+      "tail": 0,
+      "snapshotSeq": 10000,
+      "counts": {
+        "Orders": 9995,
+        "Active": 9992,
+        "Filled": 1,
+        "Cancelled": 2,
+        "Trades": 1,
+        "Results": 10000
+      },
+      "snapshotBytes": 9683297,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 297.962875,
+          "min": 295.7015,
+          "max": 339.626167
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 114.21680450439453,
+          "min": 114.18795776367188,
+          "max": 114.24687194824219
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.913017272949219,
+          "min": 10.912727355957031,
+          "max": 10.914054870605469
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.618476867675781,
+          "min": 10.612869262695312,
+          "max": 10.619071960449219
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 46.078125,
+          "min": 45.5625,
+          "max": 47.140625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 174.060917,
+          "min": 171.075708,
+          "max": 185.937708
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.583,
+          "min": 11.411542,
+          "max": 14.841167
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 36.118292,
+          "min": 34.548458,
+          "max": 41.82275
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 47.130875,
+          "min": 43.235458,
+          "max": 62.676917
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "commands": 10000,
+      "tail": 1000,
+      "snapshotSeq": 9000,
+      "counts": {
+        "Orders": 9995,
+        "Active": 9992,
+        "Filled": 1,
+        "Cancelled": 2,
+        "Trades": 1,
+        "Results": 10000
+      },
+      "snapshotBytes": 8716234,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 281.545792,
+          "min": 275.381125,
+          "max": 311.250542
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 106.21106719970703,
+          "min": 106.18699645996094,
+          "max": 106.21843719482422
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.859466552734375,
+          "min": 10.85833740234375,
+          "max": 10.860694885253906
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.564788818359375,
+          "min": 10.558952331542969,
+          "max": 10.566276550292969
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 43.625,
+          "min": 42.0625,
+          "max": 44.265625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 158.077125,
+          "min": 156.370875,
+          "max": 176.067625
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.654583,
+          "min": 12.248166,
+          "max": 14.563833
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 37.51475,
+          "min": 35.432833,
+          "max": 41.0825
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 40.0175,
+          "min": 38.488917,
+          "max": 45.542417
+        }
+      }
+    },
+    {
+      "kind": "active",
+      "commands": 10000,
+      "tail": 5000,
+      "snapshotSeq": 5000,
+      "counts": {
+        "Orders": 9995,
+        "Active": 9992,
+        "Filled": 1,
+        "Cancelled": 2,
+        "Trades": 1,
+        "Results": 10000
+      },
+      "snapshotBytes": 4840234,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 194.91125,
+          "min": 189.551167,
+          "max": 205.62575
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 82.45372772216797,
+          "min": 82.41154479980469,
+          "max": 82.46337127685547
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 10.656417846679688,
+          "min": 10.650901794433594,
+          "max": 10.6568603515625
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 10.356986999511719,
+          "min": 10.356407165527344,
+          "max": 10.362014770507812
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 36.375,
+          "min": 35.609375,
+          "max": 36.765625
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 89.445625,
+          "min": 87.703041,
+          "max": 95.586209
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 5.755791,
+          "min": 5.160083,
+          "max": 6.604958
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 38.944541,
+          "min": 37.649167,
+          "max": 41.801083
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 25.232667,
+          "min": 24.529583,
+          "max": 26.549209
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "commands": 10000,
+      "tail": 0,
+      "snapshotSeq": 10000,
+      "counts": {
+        "Orders": 4999,
+        "Active": 0,
+        "Filled": 2499,
+        "Cancelled": 2500,
+        "Trades": 2499,
+        "Results": 10000
+      },
+      "snapshotBytes": 8529692,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 263.13975,
+          "min": 259.084208,
+          "max": 412.185917
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 97.28538513183594,
+          "min": 97.26304626464844,
+          "max": 97.30458068847656
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.621849060058594,
+          "min": 9.617477416992188,
+          "max": 9.624198913574219
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.327369689941406,
+          "min": 9.3212890625,
+          "max": 9.329994201660156
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 41.09375,
+          "min": 39.375,
+          "max": 45.125
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 152.202875,
+          "min": 148.500708,
+          "max": 160.523167
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 12.247583,
+          "min": 11.414084,
+          "max": 12.860417
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 33.839125,
+          "min": 31.480041,
+          "max": 109.475042
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 37.862209,
+          "min": 36.086334,
+          "max": 102.70775
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "commands": 10000,
+      "tail": 1000,
+      "snapshotSeq": 9000,
+      "counts": {
+        "Orders": 4999,
+        "Active": 0,
+        "Filled": 2499,
+        "Cancelled": 2500,
+        "Trades": 2499,
+        "Results": 10000
+      },
+      "snapshotBytes": 7677992,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 256.810667,
+          "min": 234.527792,
+          "max": 304.396042
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 91.31329345703125,
+          "min": 91.29266357421875,
+          "max": 91.33316802978516
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.644256591796875,
+          "min": 9.639808654785156,
+          "max": 9.646553039550781
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.349899291992188,
+          "min": 9.345756530761719,
+          "max": 9.352180480957031
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 38.03125,
+          "min": 37.6875,
+          "max": 38.984375
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 136.486542,
+          "min": 132.508291,
+          "max": 187.080708
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 11.00075,
+          "min": 9.586667,
+          "max": 14.481417
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 32.845833,
+          "min": 30.948708,
+          "max": 36.143041
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 36.074083,
+          "min": 32.141,
+          "max": 38.244375
+        }
+      }
+    },
+    {
+      "kind": "history",
+      "commands": 10000,
+      "tail": 5000,
+      "snapshotSeq": 5000,
+      "counts": {
+        "Orders": 4999,
+        "Active": 0,
+        "Filled": 2499,
+        "Cancelled": 2500,
+        "Trades": 2499,
+        "Results": 10000
+      },
+      "snapshotBytes": 4263992,
+      "metrics": {
+        "openMs": {
+          "count": 5,
+          "median": 178.166459,
+          "min": 162.139375,
+          "max": 179.587708
+        },
+        "openAllocMiB": {
+          "count": 5,
+          "median": 71.90687561035156,
+          "min": 71.88093566894531,
+          "max": 71.91303253173828
+        },
+        "heapAfterGC_MiB": {
+          "count": 5,
+          "median": 9.501754760742188,
+          "min": 9.496772766113281,
+          "max": 9.503959655761719
+        },
+        "heapDeltaMiB": {
+          "count": 5,
+          "median": 9.207550048828125,
+          "min": 9.197402954101562,
+          "max": 9.209449768066406
+        },
+        "peakRSSMiB": {
+          "count": 5,
+          "median": 32.9375,
+          "min": 31.890625,
+          "max": 34.1875
+        },
+        "loadMs": {
+          "count": 5,
+          "median": 78.760542,
+          "min": 73.840709,
+          "max": 87.487
+        },
+        "restoreMs": {
+          "count": 5,
+          "median": 6.157792,
+          "min": 5.713542,
+          "max": 7.668125
+        },
+        "replayMs": {
+          "count": 5,
+          "median": 34.044042,
+          "min": 33.192208,
+          "max": 38.451416
+        },
+        "confirmMs": {
+          "count": 5,
+          "median": 20.892834,
+          "min": 20.687334,
+          "max": 22.320708
+        }
+      }
+    }
+  ],
+  "firstResponsesVerified": 240,
+  "retriesVerified": 60,
+  "powerLossTested": false,
+  "scope": "fixed final state/WAL; warm-cache public Open; post-snapshot matching/cancel/original response verified outside timing"
+}

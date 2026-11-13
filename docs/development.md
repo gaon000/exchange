@@ -48,6 +48,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 로컬 실행 | `bin/exchange init --config config/examples/local.json --data-dir var/runs/demo`; `bin/exchange serve --data-dir var/runs/demo` (먼저 빌드·parent 준비) |
 | 한 명령 거래 데모 | `sh scripts/demo.sh` (도구 준비·빌드·HTTP 거래 규칙·WAL/snapshot/SIGKILL 복구, [안내](trading-demo.md)) |
 | 수동 거래 CLI | `scripts/go build -mod=readonly -o bin/trade ./cmd/trade`; `bin/trade -h` ([주문·조회·같은 ID 재시도](trading-cli.md)) |
+| 스냅샷 이후 명령 복구·비용 | `python3 tools/diagnostics/snapshot_tail.py run --output var/snapshot-tail-new` ([조건·검증·재집계](snapshot-tail-recovery.md)) |
 | 상태 크기별 비용 측정 | `python3 tools/diagnostics/state_scale.py run --output var/state-scale-new` ([조건·계측·재집계](state-size-costs.md)) |
 | 고정 seed 거래·복구 검사 | `sh scripts/random-recovery.sh` ([seed·명세 replay·검증 범위](random-recovery.md)) |
 | 실험 자료 패키징·복원 | `python3 tools/diagnostics/evidence.py`의 `create`, `restore`, `reproduce` ([의존 수집·명령·검증 범위](evidence-packages.md)) |
