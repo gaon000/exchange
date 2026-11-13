@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [snapshot 이후 명령 복구·비용](20261113-snapshot-tail-recovery.md) | 2026-11-13 | 총 1만 명령·tail 0/1천/5천·두 상태 각 5회와 후속 거래/최초 응답 | 30 worker 전체 bytes·최초 응답 240/재시도 60·245 source/314 파일·재집계 일치·portable 232/native race 270/Python 73(검토 후). warm-cache·전원 장애 보류 |
 | [snapshot 항목 직렬화](20261113-snapshot-leaf-serialization.md) | 2026-11-13 | 표준 Encoder 재사용·생성 할당 32.64%/34.28% 감소 | 동일 상태 20쌍/40 worker·전체 bytes/재생성 일치·portable 229/native race 267/Python 68. 느린 3쌍 보존·속도/전원 장애 보장 없음 |
 | [WAL 디코더 최적화](20261113-wal-decoder-optimization.md) | 2026-11-13 | typed/canonical 전용 검증·동일 상태 20쌍의 복구/할당 감소 | 40 worker/383 파일·구형 decoder 차등 corpus/fuzz·portable 226/native race 264/Python 66. 생성/HTTP 성능 개선·전원 장애는 미검증 |
 | [snapshot CPU·할당 분석](20261113-snapshot-profiling.md) | 2026-11-13 | 동일 1만 명령 두 상태의 세 경로 프로파일·병목/후속 후보 | 190 worker/2,126 파일·source 233개/production 155개 일치·재집계 bytes 일치·portable 224/native race 262/Python 62(검토 후). CPU/추정 할당이며 비계측 latency/전원 장애 미검증 |
