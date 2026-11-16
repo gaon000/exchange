@@ -1,0 +1,578 @@
+{
+  "version": 1,
+  "dateKST": "2026-11-16",
+  "revision": "e258b8fbaf2412f1fe793626e8264d4c6bb002db",
+  "rows": [
+    {
+      "date": "2026-10-30",
+      "mode": "off",
+      "bundle": "var/soak-comparison-20261030.92490s",
+      "case": "normal",
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "measurementStartUTC": "2026-10-30T07:29:47.124484Z",
+      "measurementEndUTC": "2026-10-30T07:39:47.124484Z",
+      "scheduled": 60000,
+      "started": 59986,
+      "localFailures": {
+        "GENERATOR_LATE": 14
+      },
+      "responses": {
+        "BUSINESS": 59986
+      },
+      "unknownLogicalCommands": 0,
+      "requestP99Ms": 9.206875,
+      "scheduledP99Ms": 10.965125,
+      "newOrderScheduledP99Ms": 11.4595,
+      "requestMaxMs": 142.728875,
+      "newOrdersPerSecond": 65.08333333333333,
+      "windowsOver20ms": 12,
+      "minuteP99Ms": [
+        6.349792,
+        6.750625,
+        6.130917,
+        14.085875,
+        10.195417,
+        7.124333,
+        6.782625,
+        7.36225,
+        19.926834,
+        12.382208
+      ],
+      "resourceMeasurementApprox": {
+        "available": true,
+        "osAvailable": true,
+        "cpuMs": 41003.478,
+        "gcCpuMs": 1856.9637129999999,
+        "gcCycles": 66,
+        "gcPauseLargestUpperMs": 0.65536,
+        "peakRssMiB": 106.375,
+        "liveHeapMiB": 48.87145233154297,
+        "observedStartUTC": "2026-10-30T07:29:47.106001Z",
+        "observedEndUTC": "2026-10-30T07:39:47.107426Z",
+        "observedSeconds": 600.0014250278473,
+        "startBoundaryLagMs": 18.48316192626953,
+        "endBoundaryLagMs": 17.058134078979492
+      },
+      "snapshotEventsOverlappingMeasurement": 0,
+      "snapshotOutcomes": {},
+      "snapshotMeanMs": null,
+      "snapshotMedianMs": null,
+      "snapshotP99Ms": null,
+      "snapshotMaxMs": null,
+      "snapshotStagesApprox": {},
+      "snapshotFiles": 0,
+      "snapshotFileBytes": 0,
+      "walBytes": 13638492,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45270,
+        "results": 51373,
+        "trades": 12114
+      },
+      "snapshotSeq": "0",
+      "replayedCommands": "51373",
+      "restartReadyMs": 1223.247958,
+      "retryCount": 12,
+      "stateSHA256": "b5acf01007ec99681952103de4e12370dfdb97b6773cb1dfe9907882ab72b8e0",
+      "walSHA256": "9ec4389b58a9396a897a75b072ab15318029efc295a89b78e61edca05a97170e",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    },
+    {
+      "date": "2026-10-30",
+      "mode": "on",
+      "bundle": "var/soak-comparison-20261030.92490s",
+      "case": "snapshot",
+      "measurementValid": true,
+      "invalidReasons": [],
+      "measurementStartUTC": "2026-10-30T07:41:53.284705Z",
+      "measurementEndUTC": "2026-10-30T07:51:53.284705Z",
+      "scheduled": 60000,
+      "started": 60000,
+      "localFailures": {},
+      "responses": {
+        "BUSINESS": 60000
+      },
+      "unknownLogicalCommands": 0,
+      "requestP99Ms": 17.555542,
+      "scheduledP99Ms": 18.694417,
+      "newOrderScheduledP99Ms": 19.377125,
+      "requestMaxMs": 160.188166,
+      "newOrdersPerSecond": 65.1,
+      "windowsOver20ms": 26,
+      "minuteP99Ms": [
+        6.443875,
+        6.543,
+        11.619459,
+        18.455875,
+        15.973,
+        9.195459,
+        15.467959,
+        20.282917,
+        27.567583,
+        38.309333
+      ],
+      "resourceMeasurementApprox": {
+        "available": false,
+        "reason": "nonmonotonic observation UTC; no sorted or fabricated counter interval",
+        "regressions": [
+          {
+            "row": 1017,
+            "previousUTC": "2026-10-30T07:50:15.786678Z",
+            "currentUTC": "2026-10-30T07:50:14.241234Z"
+          }
+        ]
+      },
+      "snapshotEventsOverlappingMeasurement": 120,
+      "snapshotOutcomes": {
+        "COMPLETED": 120
+      },
+      "snapshotMeanMs": 401.13036666666665,
+      "snapshotMedianMs": 363.1445,
+      "snapshotP99Ms": 1210.9319999999998,
+      "snapshotMaxMs": 1711.848,
+      "snapshotStagesApprox": {},
+      "snapshotFiles": 122,
+      "snapshotFileBytes": 3238560698,
+      "walBytes": 13626452,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45280,
+        "results": 51385,
+        "trades": 12117
+      },
+      "snapshotSeq": "51385",
+      "replayedCommands": "0",
+      "restartReadyMs": 4713.062125,
+      "retryCount": 12,
+      "stateSHA256": "e3236bec634e8ce0ee7d4f4bc653a9f80c56f09146f6981e37e793f28e5d958a",
+      "walSHA256": "ca5b905e7fcac7012e04a2961f65af755a9ef44bc71c0bbedf535f2f3abb8e16",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    },
+    {
+      "date": "2026-11-02",
+      "mode": "off",
+      "bundle": "var/soak-optimized-20261102.yawwm75d",
+      "case": "normal",
+      "measurementValid": true,
+      "invalidReasons": [],
+      "measurementStartUTC": "2026-11-02T02:42:03.321863Z",
+      "measurementEndUTC": "2026-11-02T02:52:03.321863Z",
+      "scheduled": 60000,
+      "started": 60000,
+      "localFailures": {},
+      "responses": {
+        "BUSINESS": 60000
+      },
+      "unknownLogicalCommands": 0,
+      "requestP99Ms": 12.028417,
+      "scheduledP99Ms": 13.179,
+      "newOrderScheduledP99Ms": 14.327916,
+      "requestMaxMs": 57.200958,
+      "newOrdersPerSecond": 65.1,
+      "windowsOver20ms": 6,
+      "minuteP99Ms": [
+        6.142375,
+        6.455625,
+        6.523375,
+        6.543875,
+        6.277834,
+        6.070958,
+        6.291083,
+        7.754208,
+        25.782167,
+        6.203042
+      ],
+      "resourceMeasurementApprox": {
+        "available": true,
+        "osAvailable": true,
+        "cpuMs": 39691.178,
+        "gcCpuMs": 1536.1492110000002,
+        "gcCycles": 65,
+        "gcPauseLargestUpperMs": 0.65536,
+        "peakRssMiB": 105.765625,
+        "liveHeapMiB": 48.54424285888672,
+        "observedStartUTC": "2026-11-02T02:42:03.071652Z",
+        "observedEndUTC": "2026-11-02T02:52:03.061614Z",
+        "observedSeconds": 599.9899621009827,
+        "startBoundaryLagMs": 250.21100044250488,
+        "endBoundaryLagMs": 260.24889945983887
+      },
+      "snapshotEventsOverlappingMeasurement": 0,
+      "snapshotOutcomes": {},
+      "snapshotMeanMs": null,
+      "snapshotMedianMs": null,
+      "snapshotP99Ms": null,
+      "snapshotMaxMs": null,
+      "snapshotStagesApprox": {},
+      "snapshotFiles": 0,
+      "snapshotFileBytes": 0,
+      "walBytes": 13642468,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45280,
+        "results": 51385,
+        "trades": 12117
+      },
+      "snapshotSeq": "0",
+      "replayedCommands": "51385",
+      "restartReadyMs": 1150.836542,
+      "retryCount": 12,
+      "stateSHA256": "d75d5de022e402744128a7f0b3db7a6fee9a868450442d83ac76289ec2eba318",
+      "walSHA256": "2ecb11155f0b1b0b6d2358e9ba59414a21c593fbba888c4b8e05e45fa8dff10c",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    },
+    {
+      "date": "2026-11-02",
+      "mode": "on",
+      "bundle": "var/soak-optimized-20261102.yawwm75d",
+      "case": "snapshot",
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "measurementStartUTC": "2026-11-02T02:53:07.671323Z",
+      "measurementEndUTC": "2026-11-02T03:03:07.671323Z",
+      "scheduled": 60000,
+      "started": 59991,
+      "localFailures": {
+        "GENERATOR_LATE": 9
+      },
+      "responses": {
+        "BUSINESS": 59991
+      },
+      "unknownLogicalCommands": 0,
+      "requestP99Ms": 20.593042,
+      "scheduledP99Ms": 21.514333,
+      "newOrderScheduledP99Ms": 22.090291,
+      "requestMaxMs": 268.973833,
+      "newOrdersPerSecond": 65.09333333333333,
+      "windowsOver20ms": 23,
+      "minuteP99Ms": [
+        6.249333,
+        6.966042,
+        6.863042,
+        7.818709,
+        21.1755,
+        10.433083,
+        29.797625,
+        17.765125,
+        25.153334,
+        24.333583
+      ],
+      "resourceMeasurementApprox": {
+        "available": true,
+        "osAvailable": true,
+        "cpuMs": 73889.156,
+        "gcCpuMs": 12051.539361,
+        "gcCycles": 356,
+        "gcPauseLargestUpperMs": 2.0971520000000003,
+        "peakRssMiB": 200.140625,
+        "liveHeapMiB": 78.53504180908203,
+        "observedStartUTC": "2026-11-02T02:53:07.536874Z",
+        "observedEndUTC": "2026-11-02T03:03:07.538365Z",
+        "observedSeconds": 600.0014908313751,
+        "startBoundaryLagMs": 134.44900512695312,
+        "endBoundaryLagMs": 132.95817375183105
+      },
+      "snapshotEventsOverlappingMeasurement": 120,
+      "snapshotOutcomes": {
+        "COMPLETED": 120
+      },
+      "snapshotMeanMs": 333.81418333333335,
+      "snapshotMedianMs": 317.6715,
+      "snapshotP99Ms": 1267.655,
+      "snapshotMaxMs": 1399.127,
+      "snapshotStagesApprox": {
+        "capture.copy": {
+          "count": 120,
+          "meanMs": 21.570448991666666
+        },
+        "capture.sort": {
+          "count": 120,
+          "meanMs": 18.963579158333335
+        },
+        "publish.close": {
+          "count": 119,
+          "meanMs": 0.020827722689075633
+        },
+        "publish.createTemp": {
+          "count": 120,
+          "meanMs": 0.32896489166666665
+        },
+        "publish.directorySync": {
+          "count": 119,
+          "meanMs": 3.8985599159663864
+        },
+        "publish.encodeWrite": {
+          "count": 119,
+          "meanMs": 247.6434414789916
+        },
+        "publish.existing": {
+          "count": 120,
+          "meanMs": 0.08038120833333333
+        },
+        "publish.fileSync": {
+          "count": 119,
+          "meanMs": 9.69821605882353
+        },
+        "publish.measure": {
+          "count": 120,
+          "meanMs": 29.611894391666667
+        },
+        "publish.prepare": {
+          "count": 120,
+          "meanMs": 0.09048335833333333
+        },
+        "publish.rename": {
+          "count": 119,
+          "meanMs": 0.2614201932773109
+        }
+      },
+      "snapshotFiles": 122,
+      "snapshotFileBytes": 3236870441,
+      "walBytes": 13622015,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45275,
+        "results": 51379,
+        "trades": 12115
+      },
+      "snapshotSeq": "51379",
+      "replayedCommands": "0",
+      "restartReadyMs": 2503.841125,
+      "retryCount": 12,
+      "stateSHA256": "2a1bb45391df873fdab419cfe45e051721164375cedcda13b7a0c87a19686298",
+      "walSHA256": "218e76c8224c73424a4b712dd0090f1f08f1de2900faed727d7a3143293ede9a",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    },
+    {
+      "date": "2026-11-16",
+      "mode": "off",
+      "bundle": "var/diagnostics/soak-latest-10m-20261116",
+      "case": "off-1",
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "measurementStartUTC": "2026-11-16T07:55:15.149531Z",
+      "measurementEndUTC": "2026-11-16T08:05:15.149531Z",
+      "scheduled": 60000,
+      "started": 59997,
+      "localFailures": {
+        "GENERATOR_LATE": 3
+      },
+      "responses": {
+        "BUSINESS": 59997
+      },
+      "unknownLogicalCommands": 0,
+      "requestP99Ms": 7.442542,
+      "scheduledP99Ms": 8.292375,
+      "newOrderScheduledP99Ms": 8.45425,
+      "requestMaxMs": 179.750791,
+      "newOrdersPerSecond": 65.09666666666666,
+      "windowsOver20ms": 5,
+      "minuteP99Ms": [
+        7.065167,
+        7.970875,
+        8.538917,
+        6.979959,
+        10.317583,
+        6.761291,
+        7.107542,
+        7.318958,
+        7.077625,
+        7.050916
+      ],
+      "resourceMeasurementApprox": {
+        "available": true,
+        "osAvailable": true,
+        "cpuMs": 49883.706,
+        "gcCpuMs": 1277.780273,
+        "gcCycles": 62,
+        "gcPauseLargestUpperMs": 0.458752,
+        "peakRssMiB": 105.6875,
+        "liveHeapMiB": 48.26399230957031,
+        "observedStartUTC": "2026-11-16T07:55:15.023369Z",
+        "observedEndUTC": "2026-11-16T08:05:15.025434Z",
+        "observedSeconds": 600.0020649433136,
+        "startBoundaryLagMs": 126.16181373596191,
+        "endBoundaryLagMs": 124.09687042236328
+      },
+      "snapshotEventsOverlappingMeasurement": 0,
+      "snapshotOutcomes": {},
+      "snapshotMeanMs": null,
+      "snapshotMedianMs": null,
+      "snapshotP99Ms": null,
+      "snapshotMaxMs": null,
+      "snapshotStagesApprox": {},
+      "snapshotFiles": 0,
+      "snapshotFileBytes": 0,
+      "walBytes": 13644882,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45278,
+        "results": 51383,
+        "trades": 12117
+      },
+      "snapshotSeq": "0",
+      "replayedCommands": "51383",
+      "restartReadyMs": 469.604083,
+      "retryCount": 12,
+      "stateSHA256": "4dd6e1408d0f8b51549ff281a2e91942b1e83707113361b1aee0acbd6bc62e79",
+      "walSHA256": "8547ae44e32a38c2eefff2862600c11b174513329d4a679b45fd9830252ce2a6",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    },
+    {
+      "date": "2026-11-16",
+      "mode": "on",
+      "bundle": "var/diagnostics/soak-latest-10m-20261116",
+      "case": "on-1",
+      "measurementValid": false,
+      "invalidReasons": [
+        "GENERATOR_MISSED_REQUESTS"
+      ],
+      "measurementStartUTC": "2026-11-16T08:06:18.279731Z",
+      "measurementEndUTC": "2026-11-16T08:16:18.279731Z",
+      "scheduled": 60000,
+      "started": 59989,
+      "localFailures": {
+        "GENERATOR_LATE": 11
+      },
+      "responses": {
+        "BUSINESS": 59988,
+        "TRANSPORT_FAILURE": 1
+      },
+      "unknownLogicalCommands": 1,
+      "requestP99Ms": 18.49775,
+      "scheduledP99Ms": 20.510375,
+      "newOrderScheduledP99Ms": 21.9625,
+      "requestMaxMs": 176.7055,
+      "newOrdersPerSecond": 65.09166666666667,
+      "windowsOver20ms": 26,
+      "minuteP99Ms": [
+        7.217292,
+        7.692958,
+        9.585791,
+        12.86325,
+        12.155,
+        11.695125,
+        18.73225,
+        35.365917,
+        33.906458,
+        33.882416
+      ],
+      "resourceMeasurementApprox": {
+        "available": true,
+        "osAvailable": true,
+        "cpuMs": 64586.927,
+        "gcCpuMs": 7973.1057,
+        "gcCycles": 243,
+        "gcPauseLargestUpperMs": 2.62144,
+        "peakRssMiB": 186.5,
+        "liveHeapMiB": 77.86868286132812,
+        "observedStartUTC": "2026-11-16T08:06:17.810543Z",
+        "observedEndUTC": "2026-11-16T08:16:17.812342Z",
+        "observedSeconds": 600.0017988681793,
+        "startBoundaryLagMs": 469.18797492980957,
+        "endBoundaryLagMs": 467.3891067504883
+      },
+      "snapshotEventsOverlappingMeasurement": 120,
+      "snapshotOutcomes": {
+        "COMPLETED": 120
+      },
+      "snapshotMeanMs": 238.370275,
+      "snapshotMedianMs": 221.346,
+      "snapshotP99Ms": 610.149,
+      "snapshotMaxMs": 736.878,
+      "snapshotStagesApprox": {
+        "capture.copy": {
+          "count": 120,
+          "meanMs": 18.018829875
+        },
+        "capture.sort": {
+          "count": 120,
+          "meanMs": 17.013634716666665
+        },
+        "publish.close": {
+          "count": 120,
+          "meanMs": 0.025333
+        },
+        "publish.createTemp": {
+          "count": 120,
+          "meanMs": 0.45507984999999995
+        },
+        "publish.directorySync": {
+          "count": 120,
+          "meanMs": 5.503538541666667
+        },
+        "publish.encodeWrite": {
+          "count": 120,
+          "meanMs": 152.11117985833332
+        },
+        "publish.existing": {
+          "count": 120,
+          "meanMs": 0.05990170833333334
+        },
+        "publish.fileSync": {
+          "count": 120,
+          "meanMs": 9.313480216666667
+        },
+        "publish.measure": {
+          "count": 120,
+          "meanMs": 31.879690691666667
+        },
+        "publish.prepare": {
+          "count": 120,
+          "meanMs": 0.09829125833333333
+        },
+        "publish.rename": {
+          "count": 120,
+          "meanMs": 0.6105794666666666
+        }
+      },
+      "snapshotFiles": 122,
+      "snapshotFileBytes": 3238497022,
+      "walBytes": 13622387,
+      "fullRecovery": "PASSED",
+      "stateCounts": {
+        "balances": 4,
+        "orders": 45275,
+        "results": 51378,
+        "trades": 12116
+      },
+      "snapshotSeq": "51378",
+      "replayedCommands": "0",
+      "restartReadyMs": 1603.8245,
+      "retryCount": 12,
+      "stateSHA256": "951b8cbf67cd67469d07eff7df5db7cb0e45701686c59d136c845c102b2c6215",
+      "walSHA256": "a343a49f7b92501a23b620ff53d13c274d5a9365d974ccad4280f66af370265a",
+      "normalizedPlanSHA256": "6ff0b65e349f03295945dbcf238fa08512fa117ba26b115a1309d6dec10d3868",
+      "planRequests": 60520
+    }
+  ],
+  "normalizedPlanAllSixIdentical": true,
+  "comparisonReportSHA256": "656452b1b0a83e3a18f35e0311b7034fecdb36b1cf2d6b4d392867db2320f4b8",
+  "powerLossTested": false,
+  "performanceImprovementClaimed": false,
+  "methods": {
+    "latency": "current Go checker; scheduled MEASURE cohort, 120 five-second and ten one-minute windows; independent Python verifies latest",
+    "resource": "process counter delta between last observation no later than measurement start/end; unavailable if UTC observations not monotonic; no raw sorting; boundary lag retained",
+    "snapshot": "COMPLETED events overlapping measurement UTC; recorded timestamp elapsed, nearest-rank p99; UTC observations not monotonic in oldest on case, handle as restricted observation",
+    "memory": "peak RSS is process lifetime high-water observed before measurement end; live heap reflects last GC at that observation",
+    "plan": "all 60520 JSON rows; recursively omit only RunID/runId then sorted compact UTF8 JSON plus newline",
+    "limits": "single run per condition/shared host/warm cache; generator diagnostics 0 previously vs500ms now; descriptive only"
+  }
+}
