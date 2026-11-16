@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [최신 master 10분 비교](20261116-latest-ten-minute-comparison.md) | 2026-11-16 | e258b8f 끔/켬 각600초·전체 정상 재시작 복구·이전 두 캠페인 비교 | 응답받은51,383/51,378결과 일치·미전송3/11·켬 UNKNOWN1로 성능 미채택. 원본/창별 재계산·JSON/Markdown 재생성 일치·계측 조건 차이·전원 장애 보류 |
 | [정수 JSON 디코딩](20261113-integer-json-decoding.md) | 2026-11-13 | 일반 숫자 string 임시 할당 제거·이전 입력/오류/복구 계약 | 60 worker/327파일·273source·480최초응답/120재시도. 할당2.90~4.22%·고정 복구 시간7.37~9.01% 감소. portable241/native280/Python103·fuzz320만·전원 장애 보류 |
 | [최적화 후 프로파일 갱신](20261113-post-optimization-profiling.md) | 2026-11-13 | 최신 같은 두 상태·CPU40/alloc10·입력 producer 검증 | 50 worker/642파일·270source·재집계 일치·native279/portable240/Python100. 정수 decode/임시 DTO 후보·생산 변경 없음·전원 장애 보류 |
 | [복구 뒤 RSS 진단](20261113-recovery-rss.md) | 2026-11-13 | 두 decoder·같은 probe·20회/260표본의 idle/GC/반환·Go/Mach 메모리 대조 | 초기 증가4/5쌍→15초1/5쌍·heap 유사·압축/반환 계수 변화. native279/portable240·Python99·smoke/재집계 통과. 첫 공간 실패 보존·전원 장애 보류 |

@@ -146,6 +146,8 @@ snapshot은 전체 WAL·최초 결과 이력을 없애는 보존 정책이 아�
 
 2026-11-13 [정수 JSON 디코딩 임시 할당 최적화](benchmarks/integer-json-decoding.md)는 quoted ASCII digits 경로를 추가하고 escape/공백·오류 분류/receiver 보존·WAL/snapshot 정규형 계약을 유지했다. 차등 검증과30초·약320만 fuzz를 통과하고 동일 두 상태·세 tail 각 버전5회·60 worker에서 전체 bytes·최초480응답/재시도120건을 검증했다. Open TotalAlloc 중앙값2.90~4.22%·고정 상태 복구 시간7.37~9.01% 감소로 채택했다. history live heap은7.83~21.67KiB 증가했고 RSS는 중앙값6조건 감소/개별9쌍 증가라 일괄 메모리 개선은 주장하지 않는다. portable241/native race280·Python103·smoke/재집계 통과, 전원 장애는 미완료·보류다.
 
+2026-11-16 [최신 master 10분 비교](benchmarks/latest-soak-10m-comparison.md)는 clean e258b8f에서 끔/켬 각600초를 실행했다. 응답받은 최초51,383/51,378결과·전체 거래 상태·12개 재시도와 WAL 보존은 통과했지만 미전송3/11건으로 두 측정 모두 무효다. 켬에는 전송 오류/UNKNOWN1건도 있으며 별도 복구 사본의 GET은404 UNKNOWN이었다. 11/02 대비 p99는12.028→7.443/20.593→18.498ms지만 켬의20ms 초과5초 구간은23→26개다. 생성기500ms 진단 추가·각1회·공유 호스트 한계를 유지하며 성능 개선으로 채택하지 않는다. 자동 비교/새 폴더 재생성과 원본 검증을 마쳤고 전원 장애는 미완료·보류다.
+
 ## 6. 현재 검증·재현과 자료 보존
 
 2026-11-12 기준 master 3a23e1b의 [GitHub CI run 43170613569](https://github.com/gaon000/exchange/actions/runs/43170613569)는 `Go (portable)`·`Go (native)` 모두 success다. Go portable 215개·native race 249개, 각 Python 44개와 진단 smoke를 통과했다. native의 명시된 child-helper skip 1개는 일반 시험 누락과 구분한다. 이는 **해당 코드의 검증**이며 이 문서 변경의 새 원격 CI 결과나 성능 측정은 아니다.
