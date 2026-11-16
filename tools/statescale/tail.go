@@ -282,6 +282,10 @@ func measureTail(dir string, f tailFixture, tail int) (_ tailObservation, err er
 }
 
 func measureTailResident(dir string, f tailFixture, tail int, collectRSS bool) (_ tailObservation, err error) {
+	return measureTailObserved(dir, f, tail, collectRSS, nil)
+}
+
+func measureTailObserved(dir string, f tailFixture, tail int, collectRSS bool, observe func(string) error) (_ tailObservation, err error) {
 	cut := f.Commands - tail
 	name, _ := snapshot.Filename(d.Int(cut))
 	files, err := snapshot.List(dir)
@@ -302,6 +306,11 @@ func measureTailResident(dir string, f tailFixture, tail int, collectRSS bool) (
 	}
 	o := tailObservation{Version: 1, Kind: f.Kind, Commands: f.Commands, Tail: tail, GoVersion: runtime.Version(), GOMAXPROCS: runtime.GOMAXPROCS(0)}
 	runtime.GC()
+	if observe != nil {
+		if err = observe("before-open"); err != nil {
+			return o, err
+		}
+	}
 	o.Open.Before = mem()
 	start := time.Now()
 	r, err := rt.Open(dir, rt.DefaultOptions())
@@ -315,6 +324,11 @@ func measureTailResident(dir string, f tailFixture, tail int, collectRSS bool) (
 	if err != nil {
 		return o, err
 	}
+	if observe != nil {
+		if err = observe("after-open"); err != nil {
+			return o, err
+		}
+	}
 	runtime.GC()
 	o.Open.AfterGC = mem()
 	if collectRSS {
@@ -324,6 +338,11 @@ func measureTailResident(dir string, f tailFixture, tail int, collectRSS bool) (
 		}
 		if o.RSSAfterGCBytes > 2<<30 {
 			return o, errors.New("post-GC resident RSS exceeded 2GiB budget")
+		}
+	}
+	if observe != nil {
+		if err = observe("after-gc"); err != nil {
+			return o, err
 		}
 	}
 	runtime.KeepAlive(r)

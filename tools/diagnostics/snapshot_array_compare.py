@@ -37,8 +37,8 @@ def validate_receipt(case,row,f,fixtures):
         require(meta=={'sha256':f['Files'][name],'bytes':child(fixtures,name).stat().st_size},'scratch receipt state differs')
 
 
-def checked_builds(root):
-    builds=build_pair(root,CHANGES)
+def checked_builds(root,changes=CHANGES):
+    builds=build_pair(root,changes)
     for b in builds.values():
         require(b['go']['CGO_ENABLED']=='1' and b['go']['GOOS']=='darwin' and b['go']['GOARCH']=='arm64','requires native macOS arm64/cgo')
     for side,b in builds.items():
@@ -56,8 +56,8 @@ def validate_resident(o):
     require(0<o['Open']['AfterGC']['HeapAlloc']<=2*2**30,'invalid post-GC live heap')
 
 
-def analyze(root):
-    p=read(root/'protocol.json');order=schedule(p['smoke']);builds=checked_builds(root)
+def analyze(root,changes=CHANGES):
+    p=read(root/'protocol.json');order=schedule(p['smoke']);builds=checked_builds(root,changes)
     require(p['version']==1 and p['order']==order and set(p['environment'])==set(ENV_KEYS),'array protocol changed')
     require(p['environment']=={'GOMAXPROCS':p['environment']['GOMAXPROCS'],'GOGC':'100','GOMEMLIMIT':'2GiB'} and int(p['environment']['GOMAXPROCS'])>0,'array runtime budget changed')
     require(sorted(x.name for x in (root/'runs').iterdir())==[f'{i:03d}' for i in range(len(order))],'missing/extra array workers')
@@ -87,14 +87,14 @@ def analyze(root):
                          'pairs':[{'repeat':rep,'changesPercent':{name:(v['candidate'][name]/v['baseline'][name]-1)*100 for name in ('openMs','openAllocMiB','heapAfterGC_MiB','rssAfterGC_MiB','peakRSSMiB')}} for (k,t,rep),v in pairs.items() if (k,t)==(kind,tail)]})
     return {'version':1,'workersVerified':len(order),'repeats':1 if p['smoke'] else 5,'commands':order[0]['commands'],'smoke':p['smoke'],
             'rows':rows,'firstResponsesVerified':len(order)*8,'retriesVerified':len(order)*2,'sourceBundleManifestSHA256':p['sourceBundleManifestSHA256'],
-            'binarySHA256':{s:b['binarySHA256'] for s,b in builds.items()},'environment':p['environment'],'productionChanges':list(CHANGES),'platform':p['platform'],'hardware':p['hardware'],
+            'binarySHA256':{s:b['binarySHA256'] for s,b in builds.items()},'environment':p['environment'],'productionChanges':list(changes),'platform':p['platform'],'hardware':p['hardware'],
             'scope':'fresh worker public Open without observers; warm cache; successful owned scratch retired with receipts; post-GC live engine heap/current Mach resident_size and worker-start-through-Open peak RSS',
             'powerLossTested':False}
 
 
-def markdown(report):
+def markdown(report,title='스냅샷 배열 할당 비교'):
     cell=lambda v:f"{v['median']:.3f} [{v['min']:.3f}~{v['max']:.3f}]"
-    lines=['# 스냅샷 배열 할당 비교','',f"각 버전 {report['repeats']}회, {report['workersVerified']} worker. 중앙값 [최소~최대].",'',
+    lines=['# '+title,'',f"각 버전 {report['repeats']}회, {report['workersVerified']} worker. 중앙값 [최소~최대].",'',
            '| 상태 | 이후 명령 | 이전 Open ms | 이후 Open ms | 변화 % | 이전 TotalAlloc MiB | 이후 TotalAlloc MiB | 변화 % |',
            '| --- | ---: | --- | --- | ---: | --- | --- | ---: |']
     for r in report['rows']:
@@ -112,20 +112,31 @@ def markdown(report):
     return '\n'.join(lines)
 
 
-def run(bundle,baseline,candidate,output,smoke=False):
+def input_producer(bundle,smoke,kind):
+    """Validate a fixed-state producer before selecting its source metadata."""
+    require(read(bundle/'protocol.json')['smoke']==smoke,'input smoke/full mismatch')
+    if kind=='snapshot-tail':
+        analyze_tail(bundle);return read(bundle/'build.json')
+    if kind=='canonical-buffer':
+        from canonical_buffer import analyze as analyze_canonical
+        analyze_canonical(bundle);return read(bundle/'builds/candidate/build.json')
+    raise ValueError('unsupported comparison input kind')
+
+
+def run(bundle,baseline,candidate,output,smoke=False,*,changes=CHANGES,input_kind='snapshot-tail',title='스냅샷 배열 할당 비교'):
     bundle=bundle.resolve();baseline=baseline.resolve();candidate=candidate.resolve()
-    verify(bundle);analyze_tail(bundle);require(read(bundle/'protocol.json')['smoke']==smoke,'input smoke/full mismatch')
+    verify(bundle);producer=input_producer(bundle,smoke,input_kind)
     for path in (baseline,candidate):verify(path)
     output=new_output(output,[bundle,baseline,candidate]);env=environment();current=source_hashes();order=schedule(smoke)
-    save(output/'protocol.json',{'version':1,'smoke':smoke,'order':order,'sourceBundleManifestSHA256':digest(bundle/'manifest.json'),
+    save(output/'protocol.json',{'version':1,'smoke':smoke,'inputKind':input_kind,'order':order,'sourceBundleManifestSHA256':digest(bundle/'manifest.json'),
                                 'createdUTC':datetime.now(timezone.utc).isoformat(),'platform':platform.platform(),'hardware':{k:subprocess.check_output(['sysctl','-n',k],text=True).strip() for k in ('machdep.cpu.brand_string','hw.memsize','hw.logicalcpu')},'environment':{k:env[k] for k in ENV_KEYS}})
     try:
         budget(output,sum(p.stat().st_size for path in (baseline,candidate) for p in path.rglob('*') if p.is_file())+64*2**20)
         (output/'builds').mkdir()
         for side,path in [('baseline',baseline),('candidate',candidate)]:shutil.copytree(path,output/'builds'/side)
-        builds=checked_builds(output);require(current==builds['candidate']['sourceSHA256'],'source differs from frozen candidate')
+        builds=checked_builds(output,changes);require(current==builds['candidate']['sourceSHA256'],'source differs from frozen candidate')
         production=lambda src:{n:s for n,s in src.items() if (n.startswith(('internal/','cmd/')) and n.endswith('.go') and not n.endswith('_test.go')) or n in ('go.mod','.go-version')}
-        require(production(read(bundle/'build.json')['sourceSHA256'])==production(builds['baseline']['sourceSHA256']),'baseline differs from fixture production')
+        require(production(producer['sourceSHA256'])==production(builds['baseline']['sourceSHA256']),'baseline differs from fixture production')
         (output/'fixtures').mkdir();(output/'runs').mkdir();fixtures={}
         for kind in ('active','history'):
             f=read(bundle/'fixtures'/(kind+'.json'));target=output/'fixtures'/kind;target.mkdir()
@@ -143,7 +154,7 @@ def run(bundle,baseline,candidate,output,smoke=False):
             validate(read(case/'result.json'),row,f,builds[row['version']],{k:env[k] for k in ENV_KEYS});validate_resident(read(case/'result.json'))
             require(source_hashes()==current and digest(binary)==builds[row['version']]['binarySHA256'],'source/binary changed during comparison')
             retire_copy(case,row,f);print(json.dumps({'completed':i+1,'total':len(order),**row}),flush=True)
-        report=analyze(output);save(output/'report.json',report);(output/'report.md').write_text(markdown(report))
+        report=analyze(output,changes);save(output/'report.json',report);(output/'report.md').write_text(markdown(report,title))
         verify(bundle);require(digest(bundle/'manifest.json')==read(output/'protocol.json')['sourceBundleManifestSHA256'],'source evidence changed');seal(output,True);return report
     except BaseException as error:save(output/'failed.json',{'error':type(error).__name__,'message':str(error)});raise
 

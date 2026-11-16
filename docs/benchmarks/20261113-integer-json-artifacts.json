@@ -1,0 +1,420 @@
+{
+  "version": 1,
+  "bundle": "var/integer-json-full-20261113",
+  "verification": {
+    "filesVerified": 327,
+    "legacyInventory": false,
+    "completed": true
+  },
+  "manifestSHA256": "910dfad07d937c24a682c1dbaf9bf895b62ea82a72ff0e23478cf80470a0bb3c",
+  "reportSHA256": "9d62346befac33af65d0b5ad09f6b8978697f472eaf654a0e6da99c5886e76fb",
+  "sourceFilesPerArchive": {
+    "baseline": 273,
+    "candidate": 273
+  },
+  "allSourceDifferences": [
+    "internal/domain/integer.go"
+  ],
+  "currentSourceMatchesCandidate": true,
+  "builds": {
+    "baseline": {
+      "version": 1,
+      "label": "baseline",
+      "createdUTC": "2026-11-13T08:04:54.328445+00:00",
+      "revision": "dc7f10fe242f268f16233ee67eb4f4de698b4f06",
+      "workingTreeModified": true,
+      "binarySHA256": "93f69286d9ec977ac336a1b670412f6278563afe4a438655bedee7134b631af1",
+      "sourceArchiveSHA256": "ffa81932597e82317d742c213027b773c7ae5546a4f486e4328729418893971d",
+      "go": {
+        "CGO_ENABLED": "1",
+        "GOARCH": "arm64",
+        "GOOS": "darwin",
+        "GOVERSION": "go1.27.3"
+      }
+    },
+    "candidate": {
+      "version": 1,
+      "label": "candidate",
+      "createdUTC": "2026-11-13T08:06:31.378315+00:00",
+      "revision": "dc7f10fe242f268f16233ee67eb4f4de698b4f06",
+      "workingTreeModified": true,
+      "binarySHA256": "15147e44ca53de6f858ce2e05e655c34f1eb7efbf36dd5a3471bbbbe33ae787f",
+      "sourceArchiveSHA256": "b4f3ba1cf169c0d0b46d11dfaceb650f13970752a490eec977ba6dc1a24b51ea",
+      "go": {
+        "CGO_ENABLED": "1",
+        "GOARCH": "arm64",
+        "GOOS": "darwin",
+        "GOVERSION": "go1.27.3"
+      }
+    }
+  },
+  "input": {
+    "bundle": "var/canonical-buffer-full-20261113",
+    "verification": {
+      "filesVerified": 435,
+      "legacyInventory": false,
+      "completed": true
+    },
+    "manifestSHA256": "fd8c5cab8746f87784f44a36875289f82ba5ce7fae5d5c43e579b01509a23395"
+  },
+  "smoke": {
+    "bundle": "var/integer-json-smoke-20261113",
+    "verification": {
+      "filesVerified": 87,
+      "legacyInventory": false,
+      "completed": true
+    }
+  },
+  "reanalysis": {
+    "bundle": "var/integer-json-reanalysis-20261113",
+    "JSONAndMarkdownBytesIdentical": true
+  },
+  "pairedSummary": [
+    {
+      "kind": "active",
+      "tail": 0,
+      "medianChangePercent": {
+        "openMs": -7.372930227418173,
+        "openAllocMiB": -4.215089242339543,
+        "heapAfterGC_MiB": -0.37316224411956256,
+        "heapDeltaMiB": -0.4333169731623676,
+        "peakRSSMiB": -3.71000680735194,
+        "loadMs": -11.338004329803864,
+        "restoreMs": 2.910936235272965,
+        "replayMs": -9.715779773454836,
+        "confirmMs": -6.565588987940929,
+        "rssAfterGC_MiB": -3.71000680735194
+      },
+      "heapMedianDeltaKiB": -41.6953125,
+      "RSSMedianDeltaMiB": -1.703125,
+      "peakRSSMedianDeltaMiB": -1.703125,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 5
+    },
+    {
+      "kind": "active",
+      "tail": 1000,
+      "medianChangePercent": {
+        "openMs": -9.00608035277839,
+        "openAllocMiB": -4.046043499010709,
+        "heapAfterGC_MiB": -0.35984768649270915,
+        "heapDeltaMiB": -0.4148077109171533,
+        "peakRSSMiB": -1.6612495485734957,
+        "loadMs": -10.41180891318123,
+        "restoreMs": -0.42212012065521165,
+        "replayMs": -7.724873816167577,
+        "confirmMs": -1.4312322658847854,
+        "rssAfterGC_MiB": -1.7676767676767624
+      },
+      "heapMedianDeltaKiB": -40.015625,
+      "RSSMedianDeltaMiB": -0.765625,
+      "peakRSSMedianDeltaMiB": -0.71875,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 3
+    },
+    {
+      "kind": "active",
+      "tail": 5000,
+      "medianChangePercent": {
+        "openMs": -7.651226533183031,
+        "openAllocMiB": -3.3666168334221425,
+        "heapAfterGC_MiB": -0.18562345283961168,
+        "heapDeltaMiB": -0.14767686975121208,
+        "peakRSSMiB": -2.5720620842572095,
+        "loadMs": -9.704777711162683,
+        "restoreMs": 3.673868504376987,
+        "replayMs": -7.454462432320308,
+        "confirmMs": -1.6842292990264074,
+        "rssAfterGC_MiB": -2.483370288248332
+      },
+      "heapMedianDeltaKiB": -20.2578125,
+      "RSSMedianDeltaMiB": -0.875,
+      "peakRSSMedianDeltaMiB": -0.90625,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 2
+    },
+    {
+      "kind": "history",
+      "tail": 0,
+      "medianChangePercent": {
+        "openMs": -8.505447167057378,
+        "openAllocMiB": -3.832598162263945,
+        "heapAfterGC_MiB": 0.07943907451100074,
+        "heapDeltaMiB": 0.13821208066873147,
+        "peakRSSMiB": -2.2140221402214055,
+        "loadMs": -10.313378350920798,
+        "restoreMs": -3.751758800806815,
+        "replayMs": -7.9910524729097325,
+        "confirmMs": -1.1334199077751905,
+        "rssAfterGC_MiB": -2.286135693215341
+      },
+      "heapMedianDeltaKiB": 7.828125,
+      "RSSMedianDeltaMiB": -0.96875,
+      "peakRSSMedianDeltaMiB": -0.9375,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 4
+    },
+    {
+      "kind": "history",
+      "tail": 1000,
+      "medianChangePercent": {
+        "openMs": -8.557710838926202,
+        "openAllocMiB": -3.637996370778851,
+        "heapAfterGC_MiB": 0.10306326486706485,
+        "heapDeltaMiB": 0.09896498777011153,
+        "peakRSSMiB": -1.6393442622950838,
+        "loadMs": -10.365856361380843,
+        "restoreMs": -0.6465605034821076,
+        "replayMs": -7.7536291449840755,
+        "confirmMs": -2.208413105125473,
+        "rssAfterGC_MiB": -1.8273716951788477
+      },
+      "heapMedianDeltaKiB": 10.1796875,
+      "RSSMedianDeltaMiB": -0.734375,
+      "peakRSSMedianDeltaMiB": -0.65625,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 4
+    },
+    {
+      "kind": "history",
+      "tail": 5000,
+      "medianChangePercent": {
+        "openMs": -7.5830562583403704,
+        "openAllocMiB": -2.9033039253802295,
+        "heapAfterGC_MiB": 0.22272895155204253,
+        "heapDeltaMiB": 0.21544720838777565,
+        "peakRSSMiB": -0.7487131492746824,
+        "loadMs": -10.255591080559112,
+        "restoreMs": -3.794816174878113,
+        "replayMs": -6.611821565356268,
+        "confirmMs": -1.9327938808278544,
+        "rssAfterGC_MiB": -0.747663551401867
+      },
+      "heapMedianDeltaKiB": 21.671875,
+      "RSSMedianDeltaMiB": -0.25,
+      "peakRSSMedianDeltaMiB": -0.25,
+      "openFasterPairs": 5,
+      "allocLowerPairs": 5,
+      "RSSLowerPairs": 3
+    }
+  ],
+  "microbench": {
+    "log": "var/integer-json-microbench-isolated-20261113.log",
+    "sha256": "50f6b1a23d9b3320c261657f4cc0068d232f533da55ae3e215dd1387e35f513c",
+    "observations": {
+      "legacy/small": [
+        {
+          "nsPerOp": 79.47,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 143.5,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 76.08,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 75.97,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 75.97,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        }
+      ],
+      "legacy/max": [
+        {
+          "nsPerOp": 101.8,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 101.5,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 105.0,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 102.2,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        },
+        {
+          "nsPerOp": 102.9,
+          "bytesPerOp": 16,
+          "allocsPerOp": 1
+        }
+      ],
+      "legacy/escaped": [
+        {
+          "nsPerOp": 119.2,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 117.3,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 118.9,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 121.9,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 119.2,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        }
+      ],
+      "current/small": [
+        {
+          "nsPerOp": 10.55,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 10.91,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 10.84,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 10.92,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 11.03,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        }
+      ],
+      "current/max": [
+        {
+          "nsPerOp": 22.81,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 22.76,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 22.66,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 22.59,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        },
+        {
+          "nsPerOp": 22.72,
+          "bytesPerOp": 0,
+          "allocsPerOp": 0
+        }
+      ],
+      "current/escaped": [
+        {
+          "nsPerOp": 118.6,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 118.8,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 118.5,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 119.8,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        },
+        {
+          "nsPerOp": 118.2,
+          "bytesPerOp": 24,
+          "allocsPerOp": 2
+        }
+      ]
+    },
+    "excludedLog": "var/integer-json-microbench-20261113.log",
+    "excludedReason": "first run overlapped the compatibility fuzz process; retained, not used for timing evidence"
+  },
+  "fuzz": {
+    "log": "var/integer-json-fuzz-20261113.log",
+    "sha256": "637f02eccf8c3882d9fa1e15797cbffb5b5815a292bce925d13464388f918bb1",
+    "seconds": 30,
+    "executions": 3196674,
+    "passed": true
+  },
+  "bytes": 60745392,
+  "diskFreeBytes": 21201301504,
+  "firstResponsesVerified": 480,
+  "retriesVerified": 120,
+  "powerLossTested": false,
+  "HTTPPerformanceImprovementClaimed": false,
+  "localCI": {
+    "portable": {
+      "evidence": "var/ci/portable.ULWU7D",
+      "tests": 241,
+      "packages": 23,
+      "pythonTests": 103,
+      "exit": 0,
+      "diagnosticSmoke": "passed"
+    },
+    "native": {
+      "evidence": "var/ci/native.y5R7pO",
+      "tests": 280,
+      "packages": 23,
+      "explicitChildHelperSkips": 1,
+      "pythonTests": 103,
+      "exit": 0,
+      "diagnosticSmoke": "passed"
+    }
+  },
+  "historicalReportsUnchanged": {
+    "log": "var/integer-json-historical-reanalysis-v2-20261113.log",
+    "earlyInspectorLog": "var/integer-json-historical-reanalysis-20261113.log",
+    "scope": "resident-aware array schema and canonical-buffer full; pre-resident schema excluded"
+  },
+  "publication": {
+    "branch": "codex/integer-json-decoding",
+    "committed": false,
+    "mergedOrPushed": false,
+    "remoteCI": "not run",
+    "statusAsOf": "implementation completion; subsequent commit/push and remote CI tracked separately"
+  }
+}

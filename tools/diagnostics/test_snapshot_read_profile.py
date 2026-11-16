@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from common import digest, read, save, seal, verify
-from snapshot_read_profile import SCOPES, STAGES, collect, expected_counts, markdown, schedule, selected_files, summarize
+from snapshot_read_profile import SCOPES, STAGES, collect, expected_counts, input_build, markdown, schedule, selected_files, summarize
 
 
 class SnapshotReadProfileTests(unittest.TestCase):
@@ -45,6 +45,24 @@ class SnapshotReadProfileTests(unittest.TestCase):
             text+=f'0 0% 100% 20000000{unit} 100% caller\n'
         else:text='retained profile/caller data\n'
         output.write_text(text)
+
+    def test_input_producers_are_verified_before_selecting_current_build(self):
+        root=Path('/not-executed')
+        for kind,build_path in [('snapshot-tail',root/'build.json'),('canonical-buffer',root/'builds/candidate/build.json'),('recovery-rss',root/'builds/candidate/build.json')]:
+            protocol={'smoke':False}
+            if kind!='snapshot-tail':protocol['experiment']=kind
+            def read_input(path):
+                return protocol if path==root/'protocol.json' else {'binarySHA256':'expected','sourceSHA256':{'internal/snapshot/decode.go':'current'}} if path==build_path else self.fail('unexpected producer path')
+            with self.subTest(kind=kind),patch('snapshot_read_profile.read',side_effect=read_input),patch('snapshot_read_profile.analyze_tail') as tail,patch('canonical_buffer.analyze') as canonical,patch('recovery_rss.analyze') as rss:
+                name,b=input_build(root,False)
+                self.assertEqual(name,kind);self.assertEqual(b['binarySHA256'],'expected')
+                selected={'snapshot-tail':tail,'canonical-buffer':canonical,'recovery-rss':rss}[kind]
+                selected.assert_called_once_with(root)
+                self.assertEqual(sum(x.call_count for x in (tail,canonical,rss)),1)
+        for protocol in ({'smoke':True,'experiment':'recovery-rss'},{'smoke':False,'experiment':'unknown'}):
+            with patch('snapshot_read_profile.read',return_value=protocol),patch('snapshot_read_profile.analyze_tail') as execute:
+                with self.assertRaises(ValueError):input_build(root,False)
+                execute.assert_not_called()
 
     def test_two_states_have_twenty_cpu_and_five_alloc_workers(self):
         rows=schedule();self.assertEqual(len(rows),50);self.assertEqual(len({tuple(r.values()) for r in rows}),50)
