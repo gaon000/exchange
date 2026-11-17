@@ -21,7 +21,7 @@ sh scripts/random-recovery.sh --replay var/random-recovery-example42/scenario.js
 
 기본 출력은 `var/scenarios/<UTC 시각>/`이며 비어 있는 기존 폴더도 재사용하지 않는다. `--output`의 parent는 기존 실제 디렉터리여야 한다. 원본 run·봉인 묶음·기존 scenario 내부와 symlink parent에 출력하지 않는다. `/tmp` 같은 별칭은 `/private/tmp`로 풀어 지정한다. 입력 명세를 수정하거나 원래 run에 접속하지 않는다.
 
-`--replay`는 seed 생성기를 다시 호출하지 않고 저장된 전체 action list를 읽는다. `--seed`/`--actions`와 함께 지정할 수 없다. 새 runId와 port를 발급하므로 실행 간 raw 응답 bytes가 동일하다는 의미는 아니다. **같은 실행 안에서** 최초 응답의 bytes가 재시도·재시작 후에도 일치해야 한다. seed·명령열은 결정적이지만 OS 시간·포트·실행 속도까지 고정하지 않는다. 버그 수정이나 환경 변화 뒤에는 같은 명세가 통과할 수 있다. 이전 코드의 실패를 조사할 때는 `build.json`의 revision/dirty 상태·Go 버전·바이너리 해시도 확인한다.
+`--replay`는 seed 생성기를 다시 호출하지 않고 저장된 전체 action list를 읽는다. `--seed`/`--actions`/`--transport-loss`와 함께 지정할 수 없다. 새 runId와 port를 발급하므로 실행 간 raw 응답 bytes가 동일하다는 의미는 아니다. **같은 실행 안에서** 최초 응답의 bytes가 재시도·재시작 후에도 일치해야 한다. seed·명령열은 결정적이지만 OS 시간·포트·실행 속도까지 고정하지 않는다. 버그 수정이나 환경 변화 뒤에는 같은 명세가 통과할 수 있다. 이전 코드의 실패를 조사할 때는 `build.json`의 revision/dirty 상태·Go 버전·바이너리 해시도 확인한다.
 
 ## 명령열과 비교 기준
 
@@ -35,7 +35,7 @@ sh scripts/random-recovery.sh --replay var/random-recovery-example42/scenario.js
 - 자기 거래 차단과 잔고 부족 업무 거절.
 - snapshot 순번 6 뒤 새 명령 한 건을 저장하고 재시작해 snapshot6+WAL1 복구.
 
-그 뒤 seed가 정한 계정·가격·수량·취소 대상·과거 요청 재시도/변경·snapshot·재시작을 실행하고 마지막에는 반드시 재시작한다. 요청은 한 번에 하나씩 보내며 예상 밖 timeout/전송 실패는 전체 검사 실패로 보존한다. 이번 구현에는 동시 요청 스케줄링·의도적 응답 유실·SIGKILL 주입을 추가하지 않았다. 해당 기존 HTTP/프로세스 장애 검사는 계속 CI에 포함된다.
+그 뒤 seed가 정한 계정·가격·수량·취소 대상·과거 요청 재시도/변경·snapshot·재시작을 실행하고 마지막에는 반드시 재시작한다. 요청은 한 번에 하나씩 보내며 예상 밖 timeout/전송 실패는 전체 검사 실패로 보존한다. seed 생성 모드에는 동시 요청 스케줄링·의도적 응답 유실·SIGKILL 주입을 추가하지 않는다. 아래 고정 전송 장애 모드는 별도로 선택한다. 해당 기존 HTTP/프로세스 장애 검사는 계속 CI에 포함된다.
 
 각 snapshot/restart에서 다음을 확인한다.
 
@@ -49,6 +49,26 @@ restart의 선택 snapshot/tail을 확인한 **뒤**, 전체 상태를 읽기 �
 
 순차 비교 엔진은 거래 서버와 같은 매칭 구현을 쓴다. 저장/전송/복구 경로 비교의 기준이며 독립 매칭 모델이라고 주장하지 않는다. 기존 `internal/engine/reference_test.go`의 독립 모델·fuzz 검사를 함께 유지한다. 처리량·지연 개선이나 전원 장애 내구성을 이 검사로 증명하지 않는다.
 
+## 전송 오류·UNKNOWN 고정 재현
+
+```sh
+sh scripts/random-recovery.sh --transport-loss --output var/transport-unknown-example
+# 성공/실패 명세 모두 같은 명령으로 새 폴더에 재현
+sh scripts/random-recovery.sh --replay var/transport-unknown-example/scenario.json
+```
+
+`--transport-loss`는 seed/actions/replay와 함께 지정하지 않는다. 별도 loopback 중계가 실제 주문·취소를 서버에 전달하고 응답을 끊는다. 서버·저장소에 장애 hook을 넣지 않는다. 각 장애는 10초 context로 제한하고 채널 gate로 순서를 정한다. 무작위 네트워크 지연이나 과거 장애의 정확한 원인을 재현하는 검사는 아니다.
+
+| fault | 주입과 검증 |
+| --- | --- |
+| `held-original` | 중계가 원래 요청을 받은 뒤 클라이언트 연결을 닫고 서버 전달을 보류한다. 직접 결과 조회의 **404 UNKNOWN**을 보존한다. 같은 ID/내용 재시도로 한 번 체결한 후 gate를 열어 늦은 원래 요청도 같은 최초 응답을 반환하는지 확인한다. |
+| `drop-headers` | 잔량 취소가 저장·완료된 뒤 중계가 응답 헤더를 보내기 전에 연결을 닫는다. UNKNOWN 클라이언트가 조회·같은 ID 재시도로 최초 결과를 얻고 취소·예약금 반환이 중복되지 않아야 한다. |
+| `truncate-body` | 새 매수 주문의 저장된 최초 응답 중 절반만 보내고 연결을 닫는다. `Content-Length`보다 짧은 본문은 완전한 200 응답으로 인정하지 않는다. 같은 ID 조회·재시도와 후속 부분 체결 뒤에도 최초 OPEN 응답은 그대로여야 한다. |
+
+헤더 전 유실은 `TRANSPORT_FAILURE/UNKNOWN`, `response_headers/eof`로, 본문 절단은 `response_read/unexpected_eof`로 기록한다. 이 분류는 클라이언트가 관측한 실패이며 **접수 여부 증거가 아니다**. `404 {"state":"UNKNOWN"}`도 해당 조회 시점에 저장 결과를 찾지 못했다는 의미다. 보류 중인 원래 요청이 나중에 접수될 수 있으므로 새 ID로 바꾸지 않고 같은 run/계정/명령 종류/ID/내용을 유지한다. 관측되지 않은 실패 원인은 추정하지 않는다.
+
+8 actions는 주문 4개·취소 1개, 실제 체결 2개와 재시작 3회를 포함한다. 고유 WAL 명령/최초 결과는 5개여야 한다. 각 장애 뒤 조회·재시도·전체 상태를 확인하고, 재시작마다 전체 WAL 재생과 snapshot+tail 경로를 별도로 확인한다. 첫 재시작은 snapshot 없이 WAL2, 다음은 snapshot2+tail1, 마지막은 snapshot3+tail2다. 재시작 뒤 최초 결과 GET/POST와 잔고·예약금·현재 주문·FIFO·체결·전체 checkpoint를 비교하고 실제 WAL 레코드가 5개인지 검사한다. native 회귀 검사는 독립 정수 기대값으로 반환 잔고와 남은 매수 예약금 180 atoms도 확인한다. 정상 종료/재시작이며 SIGKILL·전원 장애 실험으로 해석하지 않는다.
+
 ## 보존 자료와 실패
 
 | 파일 | 내용 |
@@ -56,15 +76,16 @@ restart의 선택 snapshot/tail을 확인한 **뒤**, 전체 상태를 읽기 �
 | `scenario.json`, `config.json`, `build.json` | 전체 action list, 고정 초기 설정, Go/플랫폼·VCS 상태·실행 바이너리 SHA-256 |
 | `events.jsonl`, `http.jsonl` | 시작/성공 단계·복구 순번/상태 해시와 실제 HTTP 요청·상태·응답·오류 |
 | `snapshot-*-{expected,actual}.json`, `restart-*-{expected,actual}.json`, `final-*.json` | 전체 checkpoint 기대값/관측값 |
+| `transport-*.json` | 선택 fault·클라이언트 실패 단계/유형·404 UNKNOWN 증거·중계가 관측한 최초 응답·동일 ID 검증 |
 | `restart-*.json` | 선택 snapshot·WAL tail 건수와 실제 runtime 복구 report |
 | `run/`, `wal-only-*/` | 이번 실행에서만 생성한 실제 Genesis/WAL/snapshot과 별도 전체 재생 사본 |
 | `summary.json`, `manifest.json`, `completed.json` | 단계 실행 요약, 파일별 크기/해시, 모든 종료·기록이 끝난 뒤 성공 봉인 |
 | `failed.json` | 실패 step·오류·한 명령 재현 안내. 성공 완료 대신 생성하며 중간 자료 보존 |
 
-기본 전체 context는 2분, HTTP 요청은 5초, 종료 대기는 5초다. SIGINT/SIGTERM은 취소와 정상 정리를 시도한다. 디스크/출력 오류도 성공으로 숨기지 않으며 기록 자체가 불가능한 경우 stderr와 기존 `scenario.json`/중간 자료를 사용한다. 실행 전 검증에서 거절된 명세/출력에는 새 폴더를 만들지 않는다. 실패 자료는 불완전할 수 있어 성공 봉인 여부와 구분한다. 기존 실패를 재현 성공으로 덮어쓰지 않는다.
+기본 전체 context는 2분, HTTP 요청은 5초, 종료 대기는 5초다. 중계 종료는 gate 해제·context 취소 후 연결뿐 아니라 hijack한 핸들러의 반환도 기다린다. SIGINT/SIGTERM은 취소와 정상 정리를 시도한다. 디스크/출력 오류도 성공으로 숨기지 않으며 기록 자체가 불가능한 경우 stderr와 기존 `scenario.json`/중간 자료를 사용한다. 실행 전 검증에서 거절된 명세/출력에는 새 폴더를 만들지 않는다. 실패 자료는 불완전할 수 있어 성공 봉인 여부와 구분한다. 기존 실패를 재현 성공으로 덮어쓰지 않는다.
 
-CI native는 seed 17·42·701의 각 64 actions와 명세 replay·취소 실패 보존·순번 0 snapshot·의미 불일치 탐지를 검사한다. portable은 생성/입력/경로와 저장 미지원 시 무변경 실패를 검사한다. `scripts/ci.sh`는 테스트 전용 `EXCHANGE_SCENARIO_EVIDENCE_PARENT`를 지정해 소유 fixture를 `var/ci/<실행>/random-recovery-*/`에 보존한다. GitHub artifact에도 이 경로를 7일간 포함한다. 의도적 취소 검사의 `expected-cancelled-failure`는 검사 자체의 예상 실패 증거다. artifact를 내려받은 경우 그 안의 `scenario.json` 경로를 `--replay`에 지정한다.
+CI native는 고정 전송 장애 3개와 명세 replay·독립 잔고/중복 기대값, seed 17·42·701의 각 64 actions와 명세 replay·취소 실패 보존·순번 0 snapshot·의미 불일치 탐지를 검사한다. portable은 생성/입력/경로와 저장 미지원 시 무변경 실패를 검사한다. `scripts/ci.sh`는 테스트 전용 `EXCHANGE_SCENARIO_EVIDENCE_PARENT`를 지정해 소유 fixture를 `var/ci/<실행>/random-recovery-*/`에 보존한다. GitHub artifact에도 이 경로를 7일간 포함한다. 의도적 취소 검사의 `expected-cancelled-failure`는 검사 자체의 예상 실패 증거다. artifact를 내려받은 경우 그 안의 `scenario.json` 경로를 `--replay`에 지정한다.
 
-구현·실제 실행 결과와 로컬 CI 근거는 [완료 계획](exec-plans/completed/20261112-random-recovery.md)에 기록했다.
+seed 구현·실제 실행 결과는 [기존 완료 계획](exec-plans/completed/20261112-random-recovery.md), 응답 유실·UNKNOWN과 후속 검토/검증은 [진단 완료 계획](exec-plans/completed/20261116-transport-unknown-diagnostics.md)에 기록했다.
 
 CI artifact 수집은 선택한 테스트 자료 경로의 숨김 파일도 포함한다. 실제 run과 WAL-only 사본의 `.lock`이 봉인 목록에서 빠지지 않도록 보존하며, 저장소 전체나 별도 사용자 파일을 수집하는 설정은 아니다.

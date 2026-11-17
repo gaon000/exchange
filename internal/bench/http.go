@@ -55,26 +55,40 @@ func NewHTTPExecutor(base string, maxInFlight int) (*HTTPExecutor, error) {
 func (e *HTTPExecutor) Close() { e.transport.CloseIdleConnections() }
 
 type wireResponse struct {
-	status  int
-	body    []byte
-	written time.Time
-	err     error
-	invalid string
+	status       int
+	body         []byte
+	written      time.Time
+	err          error
+	invalid      string
+	failureStage FailureStage
+	errorType    TransportErrorType
+}
+
+type wireFailure struct {
+	stage FailureStage
+	err   error
 }
 
 func (e *HTTPExecutor) call(ctx context.Context, method, path, run, account, body string) wireResponse {
 	// Trace callbacks may run after a failed RoundTrip returns. A separate atomic
 	// cell prevents late callbacks from mutating the returned sample or racing it.
 	var written atomic.Pointer[time.Time]
-	trace := &httptrace.ClientTrace{WroteRequest: func(info httptrace.WroteRequestInfo) {
+	var failure atomic.Pointer[wireFailure]
+	trace := &httptrace.ClientTrace{ConnectDone: func(_, _ string, err error) {
+		if err != nil {
+			failure.Store(&wireFailure{FailureConnect, err})
+		}
+	}, WroteRequest: func(info httptrace.WroteRequestInfo) {
 		if info.Err == nil {
 			now := time.Now()
 			written.CompareAndSwap(nil, &now)
+		} else {
+			failure.Store(&wireFailure{FailureRequestWrite, info.Err})
 		}
 	}}
 	r, err := http.NewRequestWithContext(httptrace.WithClientTrace(ctx, trace), method, e.base+path, strings.NewReader(body))
 	if err != nil {
-		return wireResponse{err: err}
+		return wireResponse{err: err, failureStage: FailureRequestBuild, errorType: transportErrorType(err)}
 	}
 	r.Header.Set("X-Run-ID", run)
 	r.Header.Set("X-Account-ID", account)
@@ -84,10 +98,24 @@ func (e *HTTPExecutor) call(ctx context.Context, method, path, run, account, bod
 	}
 	resp, err := e.client.Do(r)
 	w := wireResponse{err: err}
+	if err != nil {
+		w.failureStage = FailureRoundTrip
+		if observed := failure.Load(); observed != nil && errors.Is(err, observed.err) {
+			w.failureStage = observed.stage
+		} else if written.Load() != nil {
+			w.failureStage = FailureResponseHeader
+		}
+		w.errorType = transportErrorType(err)
+	}
 	if resp != nil {
 		w.status = resp.StatusCode
 		data, readErr := io.ReadAll(io.LimitReader(resp.Body, maxResponseBytes+1))
 		closeErr := resp.Body.Close()
+		if w.failureStage == "" && readErr != nil {
+			w.failureStage, w.errorType = FailureResponseRead, transportErrorType(readErr)
+		} else if w.failureStage == "" && closeErr != nil {
+			w.failureStage, w.errorType = FailureResponseClose, transportErrorType(closeErr)
+		}
 		w.body, w.err = data, errors.Join(w.err, readErr, closeErr)
 		media, _, mediaErr := mime.ParseMediaType(resp.Header.Get("Content-Type"))
 		if len(data) > maxResponseBytes {
@@ -125,6 +153,13 @@ func (e *HTTPExecutor) Execute(ctx context.Context, req Request) Execution {
 func classify(req Request, w wireResponse) Outcome {
 	o := Outcome{HTTPStatus: w.status, Certainty: "UNKNOWN"}
 	if w.err != nil {
+		o.FailureStage, o.ErrorType = w.failureStage, w.errorType
+		if o.FailureStage == "" {
+			o.FailureStage = FailureRoundTrip
+		}
+		if o.ErrorType == "" {
+			o.ErrorType = transportErrorType(w.err)
+		}
 		o.Class, o.Detail = TransportFailure, "transport failed before a complete response"
 		var timeout net.Error
 		if errors.Is(w.err, context.DeadlineExceeded) || errors.As(w.err, &timeout) && timeout.Timeout() {

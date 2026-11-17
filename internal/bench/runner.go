@@ -28,15 +28,17 @@ const (
 // a validated complete business response, used to detect mutable retry results.
 // Detail is diagnostic text, never a reason to infer non-admission.
 type Outcome struct {
-	Class       ResponseClass `json:"class"`
-	HTTPStatus  int           `json:"httpStatus"`
-	Code        string        `json:"code"`
-	Certainty   string        `json:"certainty"`
-	CommandSeq  d.Int         `json:"commandSeq"`
-	TradeCount  d.Int         `json:"tradeCount"`
-	OrderStatus d.Status      `json:"orderStatus"`
-	Fingerprint string        `json:"fingerprint"`
-	Detail      string        `json:"detail,omitempty"`
+	Class        ResponseClass      `json:"class"`
+	HTTPStatus   int                `json:"httpStatus"`
+	Code         string             `json:"code"`
+	Certainty    string             `json:"certainty"`
+	CommandSeq   d.Int              `json:"commandSeq"`
+	TradeCount   d.Int              `json:"tradeCount"`
+	OrderStatus  d.Status           `json:"orderStatus"`
+	Fingerprint  string             `json:"fingerprint"`
+	Detail       string             `json:"detail,omitempty"`
+	FailureStage FailureStage       `json:"failureStage,omitempty"`
+	ErrorType    TransportErrorType `json:"errorType,omitempty"`
 }
 
 // Execution includes the time the request was written to the transport, when

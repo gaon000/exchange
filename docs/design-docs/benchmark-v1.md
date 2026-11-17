@@ -77,6 +77,19 @@ worker로 전달된 뒤 CPU 실행이 지연된 경우도 전송 전에 lateness
 
 빌드 정보가 없는 바이너리는 revisionKnown=false로 기록하며 현재 checkout의 Git 값으로 대신하지 않는다. 수정 중인 바이너리는 modified=true다. 이 정보만으로 CPU 모델·RAM·파일 시스템·서버 구간 비용을 측정했다고 주장하지 않는다.
 
+## 전송 실패 진단 필드
+
+`Outcome.failureStage`와 `Outcome.errorType`은 전송 실패/timeout 표본에만 함께 기록하는 선택 필드다. schema v1의 과거 표본은 둘 다 없어도 허용한다. 한쪽만 있거나 whitelist 밖 값, 다른 응답 분류에 붙인 진단은 재집계에서 거절한다. code·certainty·기존 Detail·측정 유효성/실패율 판정은 바꾸지 않는다. 임의의 오류 원문·URL·본문은 표본에 추가하지 않는다.
+
+| 필드 | 허용값 |
+| --- | --- |
+| `failureStage` | `request_build`, `connect`, `request_write`, `response_headers`, `response_read`, `response_close`, `round_trip` |
+| `errorType` | `deadline_exceeded`, `canceled`, `timeout`, `connection_refused`, `connection_reset`, `broken_pipe`, `unexpected_eof`, `eof`, `closed`, `network_unreachable`, `other` |
+
+ConnectDone/WroteRequest에서 관측한 오류가 반환 오류와 연결되면 connect/write로 기록한다. 성공한 쓰기가 관측된 뒤 Do가 실패하면 response_headers, 본문 읽기/닫기 오류는 각각 response_read/response_close다. 관측이 부족하면 round_trip/other로 남기며 늦은 callback은 반환 표본을 변경하지 않는다. 읽기/닫기의 복수 오류는 기존대로 Join하고, 진단은 먼저 실패한 작업을 기록한다. 따라서 전체 오류의 timeout 분류와 첫 작업의 errorType이 다를 수 있다.
+
+이 단계는 전송의 실패 위치이며 **거래 접수 여부가 아니다**. 쓰기 관측 부재, connection_refused/canceled 등도 NOT_ADMITTED로 재분류하지 않는다. `404 UNKNOWN` 조회는 결과 부재 관측이며 지연된 원래 요청의 접수를 배제하지 않는다. 같은 ID/내용 조회·재시도/재시작 재현은 [고정 장애 검사](../random-recovery.md#전송-오류unknown-고정-재현)를 따른다. 과거 표본에 원인 필드가 없으면 이번 코드로 소급 확정하지 않는다. 진단 추가 비용은 별도 성능 비교를 수행하지 않았다.
+
 ## 서버 구간과 자원 계측
 
 [telemetry](../../internal/telemetry/histogram.go)는 고정 크기 히스토그램을 사용한다. 경계는 0과 1/2/5×10ⁿ ns, 마지막은 MaxInt64다. 빈 bucket은 출력에서 생략한다. 서버 분위수는 해당 bucket 상한으로 근사하며 클라이언트의 정확한 p99와 구분한다. count·sum·min/max·bucket count는 정수 문자열이다. 합계 overflow는 포화 값과 flag로, 음수 입력은 별도 건수로 기록한다.

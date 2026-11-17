@@ -277,6 +277,9 @@ func validateSample(req Request, s Sample, elapsed time.Duration) error {
 }
 
 func validateOutcome(req Request, o Outcome) error {
+	if err := validateFailure(o); err != nil {
+		return err
+	}
 	if o.HTTPStatus != 0 && (o.HTTPStatus < 100 || o.HTTPStatus > 599) {
 		return fmt.Errorf("invalid HTTP status")
 	}

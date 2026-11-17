@@ -13,6 +13,7 @@ const maxActions = 256
 type action struct {
 	Kind    string               `json:"kind"`
 	Command *d.CheckpointCommand `json:"command,omitempty"`
+	Fault   string               `json:"fault,omitempty"`
 }
 
 type plan struct {
@@ -48,7 +49,21 @@ func clone(a action) action {
 		x := *c.Cancel
 		c.Cancel = &x
 	}
-	return action{Kind: a.Kind, Command: &c}
+	return action{Kind: a.Kind, Command: &c, Fault: a.Fault}
+}
+
+func transportPlan() plan {
+	loss := func(a action, fault string) action { a.Kind, a.Fault = "response-loss", fault; return a }
+	return plan{Version: 1, Actions: []action{
+		place("alice", "loss-maker", d.Sell, 100, 6),
+		loss(place("bob", "loss-taker", d.Buy, 100, 2), "held-original"),
+		{Kind: "restart"},
+		loss(cancelOrder("alice", "loss-cancel", "loss-maker"), "drop-headers"),
+		{Kind: "restart"},
+		loss(place("bob", "loss-rest", d.Buy, 90, 3), "truncate-body"),
+		place("carol", "loss-fill", d.Sell, 90, 1),
+		{Kind: "restart"},
+	}}
 }
 
 func generate(seed int64, count int) (plan, error) {
@@ -118,8 +133,17 @@ func validatePlan(p plan) error {
 	}
 	controls := 0
 	for i, a := range p.Actions {
+		if a.Kind == "response-loss" {
+			switch a.Fault {
+			case "held-original", "drop-headers", "truncate-body":
+			default:
+				return fmt.Errorf("action %d: unknown transport fault", i)
+			}
+		} else if a.Fault != "" {
+			return fmt.Errorf("action %d: fault requires response-loss", i)
+		}
 		switch a.Kind {
-		case "command":
+		case "command", "response-loss":
 			if a.Command == nil {
 				return fmt.Errorf("action %d: missing command", i)
 			}

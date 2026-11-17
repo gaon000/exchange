@@ -40,6 +40,7 @@ func command(args []string, stdout, stderr io.Writer) error {
 	seed := fs.Int64("seed", 17, "deterministic generator seed")
 	count := fs.Int("actions", 64, "32..256 actions, including mandatory prefix and final restart")
 	replay := fs.String("replay", "", "saved scenario.json; generator flags cannot be combined")
+	transportLoss := fs.Bool("transport-loss", false, "fixed response loss, UNKNOWN, retry and recovery scenario")
 	output := fs.String("output", "", "fresh output directory; parent must exist")
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -49,6 +50,16 @@ func command(args []string, stdout, stderr io.Writer) error {
 	}
 	var p plan
 	var err error
+	if *transportLoss {
+		fs.Visit(func(f *flag.Flag) {
+			if f.Name == "seed" || f.Name == "actions" || f.Name == "replay" {
+				err = errors.New("transport-loss cannot be combined with seed/actions/replay")
+			}
+		})
+		if err != nil {
+			return err
+		}
+	}
 	if *replay != "" {
 		fs.Visit(func(f *flag.Flag) {
 			if f.Name == "seed" || f.Name == "actions" {
@@ -65,6 +76,8 @@ func command(args []string, stdout, stderr io.Writer) error {
 		if err := strictjson.Decode(data, &p); err != nil {
 			return err
 		}
+	} else if *transportLoss {
+		p = transportPlan()
 	} else {
 		p, err = generate(*seed, *count)
 		if err != nil {

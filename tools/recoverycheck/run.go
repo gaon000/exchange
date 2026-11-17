@@ -20,21 +20,23 @@ import (
 )
 
 type scenarioRun struct {
-	dir, output string
-	g           wal.Genesis
-	model       *engine.Engine
-	s           *session
-	first       map[d.Key][]byte
-	records     []wal.Record
-	events      *json.Encoder
-	trace       *json.Encoder
-	step        *int
-	lastSnap    d.Int
-	haveSnap    bool
-	restarts    int
-	snapshots   int
-	retries     int
-	conflicts   int
+	dir, output    string
+	g              wal.Genesis
+	model          *engine.Engine
+	s              *session
+	first          map[d.Key][]byte
+	records        []wal.Record
+	events         *json.Encoder
+	trace          *json.Encoder
+	step           *int
+	lastSnap       d.Int
+	haveSnap       bool
+	restarts       int
+	snapshots      int
+	retries        int
+	conflicts      int
+	responseLosses int
+	unknownLookups int
 }
 
 func execute(ctx context.Context, p plan, output string, step *int, reproduce string) (err error) {
@@ -78,6 +80,8 @@ func execute(ctx context.Context, p plan, output string, step *int, reproduce st
 		switch a.Kind {
 		case "command":
 			err = r.submit(ctx, *a.Command)
+		case "response-loss":
+			err = r.responseLoss(ctx, a)
 		case "snapshot":
 			err = r.capture(ctx, r.s, r.dir, fmt.Sprintf("snapshot-%03d", i))
 			if err == nil {
@@ -124,6 +128,7 @@ func execute(ctx context.Context, p plan, output string, step *int, reproduce st
 		"snapshots": r.snapshots, "restarts": r.restarts, "genesisReplayChecks": r.restarts,
 		"walOnlySnapshots": r.restarts,
 		"retries":          r.retries, "conflicts": r.conflicts, "trades": len(r.model.Capture().Trades),
+		"responseLosses": r.responseLosses, "unknownLookups": r.unknownLookups,
 		"scenarioSHA256": scenarioHash, "reproduce": reproduce, "powerLossTested": false, "processKillTested": false}
 	return writeJSON(filepath.Join(output, "summary.json"), result)
 }
