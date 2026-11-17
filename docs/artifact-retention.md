@@ -81,3 +81,7 @@ bash scripts/ci.sh native
 2026-11-12 실제 조사와 기존 파일/해시 보존, 로컬 CI 및 마지막 경로 검증 회귀 결과는 [완료 계획](exec-plans/completed/20261112-artifact-retention.md)에 기록했다.
 
 [패키징·복원 도구](evidence-packages.md)는 보존할 원본과 고정 빌드·이전 실행을 새 패키지로 복사하고 복원 자료를 재검증한다. 보관 미리보기는 이들 package/restore index를 보호 표시로 인식하며 자동 삭제를 수행하지 않는다.
+
+## 명시적으로 보존을 종료한 과거 원본
+
+2026-11-17 사용자가 승인한 과거 원본 정리는 [실험 자료 보존 범위](experiment-retention.md)와 [가용성 목록](benchmarks/20261117-retired-experiments.json)에 별도로 기록한다. 참조된 과거 원본도 목록에 한해 요약·설정·고정 바이너리를 먼저 보존한 뒤 삭제했다. 이 도구의 보호 규칙·기본 정책은 변경하지 않았으며 일반 자동 삭제 승인으로 확대하지 않는다. 삭제된 원본의 역사적 JSON/spec과 수치는 변경하지 않는다.

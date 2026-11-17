@@ -1,0 +1,287 @@
+{
+  "version": 1,
+  "date": "2026-11-17",
+  "kind": "concurrent-campaign-validation",
+  "sourceBase": "f17d5c7b46f30a89d1af6426c5b57926c9bf73e8",
+  "workingTreeModified": true,
+  "priorPublication": {
+    "featureCommit": "a97d1e5",
+    "masterCommit": "f17d5c7",
+    "githubCIRun": 44023735396,
+    "conclusion": "success"
+  },
+  "campaign": {
+    "path": "var/concurrent-campaign-final-20261117",
+    "manifestSHA256": "16591148ef5b709338a8be51a287aeae93b333d64c4e30fce7aa18c81b944ec8",
+    "sealedFiles": 700,
+    "actualBytesIncludingSeal": 8909932,
+    "summary": {
+      "completedRuns": 12,
+      "elapsedNanos": 9447983209,
+      "observedBytesBeforeMetadata": 8782023,
+      "options": {
+        "seed": 17,
+        "seedCount": 2,
+        "repeats": 2,
+        "profile": "",
+        "durationNanos": 120000000000,
+        "diskBudgetBytes": 67108864
+      },
+      "performanceMeasurement": false,
+      "plannedRuns": 12,
+      "powerLossTested": false,
+      "results": [
+        {
+          "index": 0,
+          "seed": 17,
+          "repeat": 1,
+          "profile": "cancel-race",
+          "directory": "case-000-cancel-race",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "2d697a84325c28f36430bb0c38b2f8f6c93f178e685fd0461fc4abd9702f39a0",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-000-cancel-race/replay-005.json'"
+        },
+        {
+          "index": 1,
+          "seed": 17,
+          "repeat": 1,
+          "profile": "duplicate-storm",
+          "directory": "case-001-duplicate-storm",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 40,
+          "manifestSHA256": "f3e072caf9d19d31b3f8b444053a17bcd139fe5359aae671c35faf989da743d8",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-001-duplicate-storm/replay-005.json'"
+        },
+        {
+          "index": 2,
+          "seed": 17,
+          "repeat": 1,
+          "profile": "id-conflict",
+          "directory": "case-002-id-conflict",
+          "status": "PASSED",
+          "appliedSeq": "14",
+          "conflicts": 16,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "f704c44830675a11a376d208db1562ab69b56c7561dfff2207eb726eee93e563",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-002-id-conflict/replay-007.json'"
+        },
+        {
+          "index": 3,
+          "seed": 17,
+          "repeat": 2,
+          "profile": "cancel-race",
+          "directory": "case-003-cancel-race",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "6d5f8a95e678ef31f2f16142e75161fb7626ed29b672afa67f42f4bbaf14370a",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-003-cancel-race/replay-005.json'"
+        },
+        {
+          "index": 4,
+          "seed": 17,
+          "repeat": 2,
+          "profile": "duplicate-storm",
+          "directory": "case-004-duplicate-storm",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 40,
+          "manifestSHA256": "62f210d78e9b01d532fae63b714ca6850353f74e85ad33198465d93b7fc70106",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-004-duplicate-storm/replay-005.json'"
+        },
+        {
+          "index": 5,
+          "seed": 17,
+          "repeat": 2,
+          "profile": "id-conflict",
+          "directory": "case-005-id-conflict",
+          "status": "PASSED",
+          "appliedSeq": "14",
+          "conflicts": 16,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "2c051e556b7acd082134e1bd0a3442178e9c8559d19bf239488f1f59284dad54",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-005-id-conflict/replay-007.json'"
+        },
+        {
+          "index": 6,
+          "seed": 18,
+          "repeat": 1,
+          "profile": "cancel-race",
+          "directory": "case-006-cancel-race",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "ac1fe027896482417c64fc5b286ce549891dccb57bbb7a0c070ffa02a6e1a7e6",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-006-cancel-race/replay-005.json'"
+        },
+        {
+          "index": 7,
+          "seed": 18,
+          "repeat": 1,
+          "profile": "duplicate-storm",
+          "directory": "case-007-duplicate-storm",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 40,
+          "manifestSHA256": "625579e6499b107dfdec17b3e00b19a7715e257f805a40dbdbf9e26d78a9e480",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-007-duplicate-storm/replay-005.json'"
+        },
+        {
+          "index": 8,
+          "seed": 18,
+          "repeat": 1,
+          "profile": "id-conflict",
+          "directory": "case-008-id-conflict",
+          "status": "PASSED",
+          "appliedSeq": "14",
+          "conflicts": 16,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "e23308ae2d24967141c89a8ecd44f817d0c34a7b11d17a22369d5515935bfb64",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-008-id-conflict/replay-007.json'"
+        },
+        {
+          "index": 9,
+          "seed": 18,
+          "repeat": 2,
+          "profile": "cancel-race",
+          "directory": "case-009-cancel-race",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "9a46f51d8d08130a9a597b93851e38c867f36a46e0d2e946e6973e702e51af7d",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-009-cancel-race/replay-005.json'"
+        },
+        {
+          "index": 10,
+          "seed": 18,
+          "repeat": 2,
+          "profile": "duplicate-storm",
+          "directory": "case-010-duplicate-storm",
+          "status": "PASSED",
+          "appliedSeq": "12",
+          "conflicts": 0,
+          "originalUnknown": 6,
+          "sameIDRetries": 40,
+          "manifestSHA256": "983e816553462266e2ea90e90a82cbd32c7989bc9f863d0560c5475f7a0f9ed5",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-010-duplicate-storm/replay-005.json'"
+        },
+        {
+          "index": 11,
+          "seed": 18,
+          "repeat": 2,
+          "profile": "id-conflict",
+          "directory": "case-011-id-conflict",
+          "status": "PASSED",
+          "appliedSeq": "14",
+          "conflicts": 16,
+          "originalUnknown": 6,
+          "sameIDRetries": 8,
+          "manifestSHA256": "1b38d065d0ee3407d34555a5323ef007bbd18a3127e002451373f8bb65189ddb",
+          "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-campaign-final-20261117/case-011-id-conflict/replay-007.json'"
+        }
+      ],
+      "status": "PASSED",
+      "version": 1
+    }
+  },
+  "selectedRecordedReplays": [
+    {
+      "profile": "cancel-race",
+      "original": "var/concurrent-campaign-final-20261117/case-000-cancel-race",
+      "replay": "var/concurrent-campaign-replay-cancel-20261117",
+      "manifestSHA256": "d4e2489ce1ac999a756bdbb9bd9526f9daeec0a71d823ead16f1c172deda2f0e",
+      "sealedFiles": 54,
+      "normalizedCheckpointAndWALMatch": true,
+      "recordedPlanByteIdentical": true
+    },
+    {
+      "profile": "duplicate-storm",
+      "original": "var/concurrent-campaign-final-20261117/case-001-duplicate-storm",
+      "replay": "var/concurrent-campaign-replay-duplicate-20261117",
+      "manifestSHA256": "fb1b9c516c7eb414194d5406fe7eb478b5e3e6ba814d781107a4f40170d059ed",
+      "sealedFiles": 54,
+      "normalizedCheckpointAndWALMatch": true,
+      "recordedPlanByteIdentical": true
+    },
+    {
+      "profile": "id-conflict",
+      "original": "var/concurrent-campaign-final-20261117/case-002-id-conflict",
+      "replay": "var/concurrent-campaign-replay-conflict-20261117",
+      "manifestSHA256": "07431e65ac46a3b092c5f443b2582225ccf78eadab78af49a16e748085e14c06",
+      "sealedFiles": 54,
+      "normalizedCheckpointAndWALMatch": true,
+      "recordedPlanByteIdentical": true
+    }
+  ],
+  "analysisReports": [
+    {
+      "path": "var/concurrent-campaign-report-verified-20261117",
+      "manifestSHA256": "0f2c5945ad5bd5b46ff400a06b5e0d2f363bcd8bb168f4b66fd0267bb8156e73",
+      "filesSHA256": {
+        "report.json": "cce09c465b6315e1b783a98b2084c570880b48f105f62302a47776ae719eb34c",
+        "report.md": "324b11c69a94104e0c765d4d59e640303d58fc4dd74033bea5c02c325fb8c70a"
+      }
+    },
+    {
+      "path": "var/concurrent-campaign-report-verified-reproduced-20261117",
+      "manifestSHA256": "0f2c5945ad5bd5b46ff400a06b5e0d2f363bcd8bb168f4b66fd0267bb8156e73",
+      "filesSHA256": {
+        "report.json": "cce09c465b6315e1b783a98b2084c570880b48f105f62302a47776ae719eb34c",
+        "report.md": "324b11c69a94104e0c765d4d59e640303d58fc4dd74033bea5c02c325fb8c70a"
+      }
+    }
+  ],
+  "checks": {
+    "campaign12Passed": true,
+    "threeProfilesRecordedReplayMatched": true,
+    "jsonAndMarkdownAnalysisByteIdentical": true,
+    "originalUnknownPreserved": true,
+    "intentional409SeparateFromDuplicates": true,
+    "legacyV1FourAndV2CrashEightInputsSemanticallyUnchanged": true,
+    "completeEvidenceUnderBudget": true,
+    "runtimeStorageAndRecoveryContractsUnchanged": true
+  },
+  "localCI": {
+    "portable": {
+      "path": "var/ci/portable.AGxWmP",
+      "goTests": 259,
+      "pythonTests": 118,
+      "exit": 0
+    },
+    "native": {
+      "path": "var/ci/native.IHoMnt",
+      "goRaceTests": 306,
+      "explicitChildHelperSkip": 1,
+      "pythonTests": 118,
+      "exit": 0
+    }
+  },
+  "preservedEarlierVerification": {
+    "portableFailure": "var/ci/portable.ZUAx0u",
+    "reason": "portable test referenced a native-only failedWriter; replaced with a common campaignFailedWriter",
+    "earlierNativePassed": "var/ci/native.VC9mjr"
+  },
+  "powerLossTested": false,
+  "processKillTestedInThisCampaign": false,
+  "performanceMeasurement": false
+}

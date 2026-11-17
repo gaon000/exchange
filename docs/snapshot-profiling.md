@@ -1,3 +1,5 @@
+> **원본 가용성 변경 (2026-11-17):** 이 문서 또는 연결된 과거 명세가 참조하는 원본 중 일부는 보존을 종료했다. 과거 수치·판정은 요약으로 유지하지만, 삭제된 입력으로 해당 실험 전체를 재검증·재생성할 수 없다. 정확한 삭제 목록과 현재 재검증 가능 범위는 [실험 자료 보존 범위](experiment-retention.md)를 따른다.
+
 # 스냅샷 CPU·할당 프로파일링
 
 `tools/statescale profile`은 고정 fixture 사본 하나에서 `runtime.Open` 또는 새 `runtime.Snapshot`만 계측한다. `snapshot_profile.py`는 기존 상태 비용 자료를 검증하고 필요한 fixture를 복사해 새 프로세스에서 실행·집계한다. production 거래/저장/복구 계약과 의존성은 변경하지 않는다.

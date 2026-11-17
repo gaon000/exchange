@@ -354,6 +354,11 @@ def markdown(report):
                 for row in g['walOrder']:
                     out.append('| '+' | '.join(map(cell,[row['commandSeq'],f"{row['accountId']}/{row['kind']}/{row['requestId']}",row['segment']]))+' |')
                 out += ['']
+            if source['execution'].get('conflictObservations'):
+                out += ['', '| 충돌 phase/client | 계정/종류/ID | HTTP/판정 | 지연 ms |', '| --- | --- | --- | ---: |']
+                for row in source['execution']['conflictObservations']:
+                    out.append('| '+' | '.join(map(cell,[f"{row['phase']}/{row['client']}",f"{row['accountId']}/{row['kind']}/{row['requestId']}",
+                               f"{row['httpStatus']}/{row['certainty']}",ms(row['requestLatencyNanos'])]))+' |')
         out += ['']
     out += ['실제 전원 장애 검증: 미완료·보류.원본·성공 건수·실패율·measurementValid를 수정하지 않는다.', '']
     return '\n'.join(out)

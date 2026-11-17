@@ -4,6 +4,8 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [과거 실험 보존 범위 축소](20261117-history-retention.md) | 2026-11-17 | 과거8디렉터리/4archive 요약·설정/고정 빌드 선보존 후 원본 정리 | 삭제 전후 약18.20GiB 증가·최신/직전 두 그룹 재집계 정확히 일치·60 worker/11봉인 검증·구형 원본 재검증 불가 표시·전원 장애 보류 |
+| [동시 시나리오 캠페인](20261117-concurrent-scenario-campaign.md) | 2026-11-17 | v3 생성/취소 경쟁·집중 중복·내용 충돌의 bounded seed 반복·실패 재현 | 실제12회/700파일·기록 replay3회·UNKNOWN72·의도한충돌64/중복224 분리. portable259/native306·Python118·전원 장애 보류 |
 | [동시 자료 분석 보고서](20261117-concurrent-evidence-report.md) | 2026-11-17 | v2/SIGKILL의 client/UNKNOWN·첫 GET/retry·실제 저장 순서와 snapshot/tail 자동 표 | 실제8입력/276파일·JSON/Markdown 재생성 bytes 일치·기존4입력 관측 불변. portable255/native301·Python117·전원 장애 보류 |
 | [동시 요청 SIGKILL·복구](20261117-concurrent-crash-recovery.md) | 2026-11-17 | 실제 WAL sync 후·snapshot 게시 전후 SIGKILL, UNKNOWN/최초 결과·중복 방지와 기록 replay | 원본/재현 각84파일·세 경계2+1/2+4/5+1·UNKNOWN12 유지. portable255/native race301·Python111·전원 장애 보류 |
 | [동시 요청·장애 조합](20261117-concurrent-fault-recovery.md) | 2026-11-17 | 4클라이언트·유실/snapshot/정상 재시작, 실제 WAL 순서/기록 replay | seed17/42/701·실측/재현 각54파일·고유12/UNKNOWN6·전체 상태/경계 일치. portable252/native295·Python111·전원 장애 보류 |

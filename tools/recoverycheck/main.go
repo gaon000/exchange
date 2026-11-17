@@ -42,6 +42,12 @@ func command(args []string, stdout, stderr io.Writer) error {
 	replay := fs.String("replay", "", "saved scenario.json; generator flags cannot be combined")
 	transportLoss := fs.Bool("transport-loss", false, "fixed response loss, UNKNOWN, retry and recovery scenario")
 	concurrent := fs.Bool("concurrent", false, "four-client fault/snapshot/restart scenario; seed selects inputs")
+	campaign := fs.Bool("campaign", false, "bounded independent concurrent profile/seed/repeat campaign")
+	profile := fs.String("profile", "", "concurrent profile: cancel-race|duplicate-storm|id-conflict; campaign default all")
+	seedCount := fs.Int("seed-count", 2, "campaign consecutive seeds, 1..4")
+	repeats := fs.Int("repeats", 2, "campaign independent repeats, 1..3; at most 24 runs")
+	duration := fs.Duration("duration", 2*time.Minute, "campaign wall time budget, 10s..5m")
+	diskBudget := fs.Int64("disk-budget", 64<<20, "campaign evidence byte budget, 16..256 MiB")
 	output := fs.String("output", "", "fresh output directory; parent must exist")
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -51,6 +57,28 @@ func command(args []string, stdout, stderr io.Writer) error {
 	}
 	var p plan
 	var err error
+	fs.Visit(func(f *flag.Flag) {
+		if *campaign && (f.Name == "concurrent" || f.Name == "actions" || f.Name == "replay" || f.Name == "transport-loss") {
+			err = errors.New("campaign cannot be combined with other scenario modes/actions/replay")
+		}
+		if !*campaign && (f.Name == "seed-count" || f.Name == "repeats" || f.Name == "duration" || f.Name == "disk-budget") {
+			err = errors.New("campaign budgets/repeats require --campaign")
+		}
+		if f.Name == "profile" && !*campaign && !*concurrent {
+			err = errors.New("profile requires concurrent or campaign")
+		}
+	})
+	if err != nil {
+		return err
+	}
+	if *campaign {
+		if *output == "" {
+			*output = filepath.Join("var", "scenarios", time.Now().UTC().Format("20060102T150405.000000000"))
+		}
+		parent, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer stop()
+		return runCampaign(parent, campaignOptions{Seed: *seed, SeedCount: *seedCount, Repeats: *repeats, Profile: *profile, Duration: *duration, DiskBudget: *diskBudget}, *output, stdout)
+	}
 	if *transportLoss {
 		fs.Visit(func(f *flag.Flag) {
 			if f.Name == "seed" || f.Name == "actions" || f.Name == "replay" || f.Name == "concurrent" {
@@ -90,7 +118,11 @@ func command(args []string, stdout, stderr io.Writer) error {
 	} else if *transportLoss {
 		p = transportPlan()
 	} else if *concurrent {
-		p, err = concurrentPlan(*seed)
+		if *profile == "" {
+			p, err = concurrentPlan(*seed)
+		} else {
+			p, err = profilePlan(*seed, *profile)
+		}
 		if err != nil {
 			return err
 		}

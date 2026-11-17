@@ -139,6 +139,9 @@ func execute(ctx context.Context, p plan, output string, step *int) (err error) 
 		"responseLosses": r.responseLosses, "unknownLookups": r.unknownLookups,
 		"concurrentGroups": r.concurrentGroups,
 		"scenarioSHA256":   scenarioHash, "reproduce": reproduction(output), "powerLossTested": false, "processKillTested": false}
+	if p.Version == 3 {
+		result["profile"] = p.Profile
+	}
 	return writeJSON(filepath.Join(output, "summary.json"), result)
 }
 

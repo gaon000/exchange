@@ -13,8 +13,10 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/gaon000/exchange/internal/api"
 	"github.com/gaon000/exchange/internal/bench"
 	d "github.com/gaon000/exchange/internal/domain"
+	rt "github.com/gaon000/exchange/internal/runtime"
 )
 
 type onceGate struct {
@@ -38,6 +40,7 @@ type concurrentObservation struct {
 	Client              int                 `json:"client"`
 	Command             d.CheckpointCommand `json:"command"`
 	Fault               string              `json:"fault,omitempty"`
+	ExpectConflict      bool                `json:"expectConflict,omitempty"`
 	Outcome             bench.Outcome       `json:"outcome"`
 	RequestLatencyNanos int64               `json:"requestLatencyNanos"`
 	UpstreamStatus      int                 `json:"upstreamStatus"`
@@ -83,7 +86,7 @@ func startConcurrentWave(ctx context.Context, s *session, run, phase string, inp
 			return nil, err
 		}
 		task := &concurrentTask{command: c, upstreamDone: make(chan struct{}), clientDone: make(chan struct{}),
-			observation: concurrentObservation{Phase: phase, Client: input.Client, Command: input.Command, Fault: input.Fault}}
+			observation: concurrentObservation{Phase: phase, Client: input.Client, Command: input.Command, Fault: input.Fault, ExpectConflict: input.ExpectConflict}}
 		url, stop := startLossIntermediary(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			if task.requests.Add(1) != 1 {
 				http.Error(rw, "unexpected repeated attempt", 500)
@@ -141,7 +144,11 @@ func startConcurrentWave(ctx context.Context, s *session, run, phase string, inp
 					data, readErr := io.ReadAll(io.LimitReader(resp.Body, (1<<20)+1))
 					err = errors.Join(err, readErr, resp.Body.Close())
 					task.observation.UpstreamResponse = string(data)
-					if len(data) > 1<<20 || resp.StatusCode != 200 {
+					wantStatus := http.StatusOK
+					if input.ExpectConflict {
+						wantStatus = http.StatusConflict
+					}
+					if len(data) > 1<<20 || resp.StatusCode != wantStatus {
 						err = errors.Join(err, errors.New("unexpected upstream status/size"))
 					}
 				}
@@ -175,6 +182,7 @@ func startConcurrentWave(ctx context.Context, s *session, run, phase string, inp
 				cut()
 			default:
 				rw.Header().Set("Content-Type", "application/json")
+				rw.WriteHeader(task.observation.UpstreamStatus)
 				_, err = io.WriteString(rw, task.observation.UpstreamResponse)
 				failure = errors.Join(failure, err)
 			}
@@ -256,6 +264,13 @@ func (w *concurrentWave) observations() []concurrentObservation {
 	return result
 }
 func validateConcurrentOutcome(o concurrentObservation) error {
+	if o.ExpectConflict {
+		var response api.ErrorResponse
+		if o.Fault != "" || o.UpstreamError != "" || o.UpstreamStatus != 409 || json.Unmarshal([]byte(o.UpstreamResponse), &response) != nil || response.Error.Code != "IDEMPOTENCY_CONFLICT" || response.Error.Outcome != rt.NotAdmitted || o.Outcome.HTTPStatus != 409 || o.Outcome.Class != bench.ServerFailure || o.Outcome.Certainty != "NOT_ADMITTED" || o.Outcome.Code != "IDEMPOTENCY_CONFLICT" {
+			return fmt.Errorf("client %d invalid conflict observation", o.Client)
+		}
+		return nil
+	}
 	if o.UpstreamError != "" || o.UpstreamStatus != 200 {
 		return fmt.Errorf("client %d upstream failure: %s", o.Client, o.UpstreamError)
 	}

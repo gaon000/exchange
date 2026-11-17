@@ -187,9 +187,15 @@ func (r *scenarioRun) concurrent(parent context.Context, g concurrentGroup) (err
 	if err := writeJSON(filepath.Join(r.output, fmt.Sprintf("concurrent-%03d-live-order.json", step)), liveOrder); err != nil {
 		return err
 	}
+	conflictAttempts := 0
 	for _, o := range observed {
 		if err := validateConcurrentOutcome(o); err != nil {
 			return err
+		}
+		if o.ExpectConflict {
+			r.conflicts++
+			conflictAttempts++
+			continue
 		}
 		c, _ := o.Command.Command(r.g.RunID)
 		if !bytes.Equal([]byte(o.UpstreamResponse), first[c.Key()]) {
@@ -225,7 +231,7 @@ func (r *scenarioRun) concurrent(parent context.Context, g concurrentGroup) (err
 	r.model, r.records, r.first = model, records, first
 	r.lastSnap, r.haveSnap = savedSeq, true
 	r.snapshots++
-	r.retries += len(observed) - len(newOrder)
+	r.retries += len(observed) - len(newOrder) - conflictAttempts
 	for _, o := range observed {
 		if o.Fault != "" {
 			r.responseLosses++
@@ -246,6 +252,9 @@ func observedConcurrentOrder(prior []wal.Record, observations []concurrentObserv
 	for _, o := range observations {
 		if err := validateConcurrentOutcome(o); err != nil {
 			return nil, err
+		}
+		if o.ExpectConflict {
+			continue
 		}
 		c, err := o.Command.Command(run)
 		if err != nil {
@@ -281,6 +290,9 @@ func (r *scenarioRun) replayConcurrent(records []wal.Record, g concurrentGroup, 
 	}
 	for _, list := range [][]concurrentAttempt{g.Initial, g.Retries} {
 		for _, a := range list {
+			if a.ExpectConflict {
+				continue
+			}
 			c, err := a.Command.Command(r.g.RunID)
 			if err != nil {
 				return nil, nil, d.Checkpoint{}, nil, err
