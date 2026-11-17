@@ -61,7 +61,7 @@ snapshot 두 경계에서는 worker를 멈춘 동안 별도 후속 매도1 lot�
 | `recovered-*`, `final-*`, `second-recovery-http.json`, `run/` | 전체 checkpoint/HTTP 대조·재기동 후 최초 결과·실제 거래 저장소 |
 | `summary.json`, `manifest.json`, `completed.json`, `failed.json` | 결과/건수·모든 종료 뒤 파일 봉인 또는 실패 재현 명령 |
 
-기존 v1 전송 오류 보고서 입력으로 섞지 않으며 새 도구의 JSON/원본 증거를 사용한다. [실제 결과](benchmarks/concurrent-crash-recovery.md)를 함께 읽는다.
+기존 v1 전송 오류 보고서 입력으로 섞지 않는다. [동시 자료 보고서](concurrent-evidence-report.md)의 concurrent-crash 종류에서 case별 JSON/Markdown을 생성한다. [실제 SIGKILL 결과](benchmarks/concurrent-crash-recovery.md)를 함께 읽는다.
 
 ## 자동 검증
 

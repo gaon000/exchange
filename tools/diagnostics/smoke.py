@@ -93,6 +93,43 @@ def main():
             if (root/'plan-must-not-pass').exists():
                 raise RuntimeError('transport report accepted a resealed plan with changed attribution')
             print('transport report smoke passed: raw recomputation, failure/query separation, no-reuse', flush=True)
+            if os.environ.get('EXCHANGE_SCENARIO_EVIDENCE_PARENT'):
+                concurrent = list(options.parent.glob('random-recovery-TestNativeConcurrentFaultsAndRecordedReplay-*/seed-17'))
+                crashes = sorted(options.parent.glob('random-recovery-crash-*/original'))
+                if len(concurrent) != 1 or not crashes:
+                    raise RuntimeError('missing native concurrent/crash fixtures')
+                concurrent_spec = root/'concurrent-spec.json'
+                concurrent_entries = [{'name':'concurrent','kind':'concurrent','bundle':str(concurrent[0])}]
+                concurrent_entries += [{'name':case,'kind':'concurrent-crash','bundle':str(crashes[0]),'case':case}
+                                       for case in ('wal-after-sync','snapshot-before-publish','snapshot-after-publish')]
+                save(concurrent_spec, {'version':1,'inputs':concurrent_entries})
+                cli('transport-report','--spec',concurrent_spec,'--output',root/'concurrent-report')
+                cli('verify','--bundle',root/'concurrent-report','--output',root/'concurrent-verified.json')
+                records = read(root/'concurrent-report/report.json')['inputs']
+                if ([r['counts']['unknownAttempts'] for r in records] != [6,4,4,4]
+                        or any(a['measurementCertainty'] != 'UNKNOWN' for r in records for a in r['attempts'])
+                        or any(a['failureStage'] is not None or a['errorType'] is not None for r in records[1:] for a in r['attempts'])
+                        or not any(k['firstFollowupResolution'] == 'UNRESOLVED' and k['retryResolution'] == 'RESULT_OBSERVED'
+                                   for k in records[1]['unknownCommands'])):
+                    raise RuntimeError('concurrent report lost original/lookup/retry separation')
+                cli('transport-report','--spec',concurrent_spec,'--output',root/'concurrent-report',success=False)
+                # Rehashing is not sufficient: selected recovery metadata must
+                # still agree with actual stored order, checkpoint and case.
+                altered = root/'crash-tampered'
+                shutil.copytree(crashes[0],altered)
+                changed = altered/'wal-after-sync/recovery.json'
+                value = read(changed); value['SnapshotSeq'] = '999'; changed.write_text(json.dumps(value))
+                completion = read(altered/'completed.json')
+                (altered/'manifest.json').unlink(); (altered/'completed.json').unlink()
+                seal(altered,True)
+                completion['manifestSHA256'] = digest(altered/'manifest.json')
+                (altered/'completed.json').write_text(json.dumps(completion))
+                altered_spec = root/'crash-tampered-spec.json'
+                save(altered_spec,{'version':1,'inputs':[{'name':'bad crash','kind':'concurrent-crash','bundle':str(altered),'case':'wal-after-sync'}]})
+                cli('transport-report','--spec',altered_spec,'--output',root/'crash-must-not-pass',success=False)
+                if (root/'crash-must-not-pass').exists():
+                    raise RuntimeError('concurrent report accepted resealed recovery contradiction')
+                print('concurrent report smoke passed: actual concurrent/SIGKILL fixtures, UNKNOWN/query/retry separation, resealed tamper rejection',flush=True)
         # Package only this smoke's owned fixtures. Hide originals temporarily:
         # regeneration must use restored bytes, including archived native state.
         create(REPO, [], [spec], root/'package')
