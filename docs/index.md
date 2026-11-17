@@ -58,6 +58,8 @@
 
 [전송 오류·UNKNOWN 재현](random-recovery.md#전송-오류unknown-고정-재현)은 실제 응답 유실·404 조회 뒤 같은 ID 재시도·재시작의 중복 방지와 선택적 실패 단계/유형을 검사한다.
 
+[동시 요청·장애 조합](concurrent-recovery.md)은4클라이언트의 유실/재시도·snapshot·재시작을 실제 저장 순서로 확인하고 기록된 순서로 재현한다.
+
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 
 [정수 JSON 디코딩 최적화](integer-json-decoding.md)는 일반 숫자 입력의 임시 문자열 decode를 줄이고 공개 JSON·정규형/복구 계약을 차등 검증한다. [비교 결과](benchmarks/integer-json-decoding.md)는 동일 두 상태·세 tail 각 버전5회·총60 worker의 할당/시간·heap/RSS와 최초 응답/후속 거래를 확인한다.

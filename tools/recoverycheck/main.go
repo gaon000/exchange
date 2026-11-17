@@ -41,6 +41,7 @@ func command(args []string, stdout, stderr io.Writer) error {
 	count := fs.Int("actions", 64, "32..256 actions, including mandatory prefix and final restart")
 	replay := fs.String("replay", "", "saved scenario.json; generator flags cannot be combined")
 	transportLoss := fs.Bool("transport-loss", false, "fixed response loss, UNKNOWN, retry and recovery scenario")
+	concurrent := fs.Bool("concurrent", false, "four-client fault/snapshot/restart scenario; seed selects inputs")
 	output := fs.String("output", "", "fresh output directory; parent must exist")
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -52,8 +53,18 @@ func command(args []string, stdout, stderr io.Writer) error {
 	var err error
 	if *transportLoss {
 		fs.Visit(func(f *flag.Flag) {
-			if f.Name == "seed" || f.Name == "actions" || f.Name == "replay" {
-				err = errors.New("transport-loss cannot be combined with seed/actions/replay")
+			if f.Name == "seed" || f.Name == "actions" || f.Name == "replay" || f.Name == "concurrent" {
+				err = errors.New("transport-loss cannot be combined with seed/actions/replay/concurrent")
+			}
+		})
+		if err != nil {
+			return err
+		}
+	}
+	if *concurrent {
+		fs.Visit(func(f *flag.Flag) {
+			if f.Name == "actions" || f.Name == "replay" || f.Name == "transport-loss" {
+				err = errors.New("concurrent cannot be combined with actions/replay/transport-loss")
 			}
 		})
 		if err != nil {
@@ -62,8 +73,8 @@ func command(args []string, stdout, stderr io.Writer) error {
 	}
 	if *replay != "" {
 		fs.Visit(func(f *flag.Flag) {
-			if f.Name == "seed" || f.Name == "actions" {
-				err = errors.New("replay cannot be combined with seed/actions")
+			if f.Name == "seed" || f.Name == "actions" || f.Name == "concurrent" || f.Name == "transport-loss" {
+				err = errors.New("replay cannot be combined with generator flags")
 			}
 		})
 		if err != nil {
@@ -78,6 +89,11 @@ func command(args []string, stdout, stderr io.Writer) error {
 		}
 	} else if *transportLoss {
 		p = transportPlan()
+	} else if *concurrent {
+		p, err = concurrentPlan(*seed)
+		if err != nil {
+			return err
+		}
 	} else {
 		p, err = generate(*seed, *count)
 		if err != nil {
@@ -190,13 +206,14 @@ func run(ctx context.Context, p plan, output, replay string, stdout io.Writer) (
 	if err := os.Mkdir(output, 0700); err != nil {
 		return err
 	}
-	reproduce := "sh scripts/random-recovery.sh --replay " + shellQuote(filepath.Join(output, "scenario.json"))
+	reproduce := reproduction(output)
 	step := -1
 	defer func() {
 		if p := recover(); p != nil {
 			err = fmt.Errorf("panic: %v", p)
 		}
 		if err != nil {
+			reproduce = reproduction(output)
 			writeErr := writeJSON(filepath.Join(output, "failed.json"), map[string]any{"status": "FAILED", "step": step, "error": err.Error(), "reproduce": reproduce, "powerLossTested": false})
 			err = errors.Join(err, writeErr)
 			fmt.Fprintf(stdout, "FAILED: %s\nReproduce: %s\n", output, reproduce)
@@ -228,9 +245,10 @@ func run(ctx context.Context, p plan, output, replay string, stdout io.Writer) (
 	if err := writeJSON(filepath.Join(output, "config.json"), config()); err != nil {
 		return err
 	}
-	if err := execute(ctx, p, output, &step, reproduce); err != nil {
+	if err := execute(ctx, p, output, &step); err != nil {
 		return err
 	}
+	reproduce = reproduction(output)
 	// execute has closed the runtime and trace files before sealing. Never
 	// publish a completion while deferred shutdown/write errors remain pending.
 	files := map[string]any{}

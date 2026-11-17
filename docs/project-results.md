@@ -10,6 +10,8 @@
 
 2026-11-17 후속 구현: [전송 오류·UNKNOWN 보고서](transport-unknown-report.md)는 봉인 자료의 단계/유형별 건수·요청 ID/지연과 후속 GET을 JSON/Markdown으로 재생성한다. [실제 검증](benchmarks/transport-unknown-report.md)에서 기존10분 켬의 UNKNOWN1·404 미확정과 실패 판정을 유지했고, 기존/신규 장애 재현의 최초 UNKNOWN3과 이후 결과 관측을 구분했다.
 
+2026-11-17 후속 구현: [동시 요청·장애 조합](concurrent-recovery.md)은4개 클라이언트·응답 유실·snapshot/정상 재시작을 실제 WAL 순서로 대조하고 저장 순서/snapshot 경계를 별도 명세로 재현한다. 원래 client UNKNOWN과404 미확정은 유지하며, 성능·전원 장애 보장으로 확대하지 않는다.
+
 ## 1. 범위와 결과물
 
 개발자가 주문 처리·저장·복구를 학습하고, 성능 판단의 근거와 한계를 제시하기 위한 프로젝트다. [제품 명세](product-specs/exchange.md)가 제품 범위·정책을 소유한다.

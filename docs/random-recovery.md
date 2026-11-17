@@ -21,7 +21,7 @@ sh scripts/random-recovery.sh --replay var/random-recovery-example42/scenario.js
 
 기본 출력은 `var/scenarios/<UTC 시각>/`이며 비어 있는 기존 폴더도 재사용하지 않는다. `--output`의 parent는 기존 실제 디렉터리여야 한다. 원본 run·봉인 묶음·기존 scenario 내부와 symlink parent에 출력하지 않는다. `/tmp` 같은 별칭은 `/private/tmp`로 풀어 지정한다. 입력 명세를 수정하거나 원래 run에 접속하지 않는다.
 
-`--replay`는 seed 생성기를 다시 호출하지 않고 저장된 전체 action list를 읽는다. `--seed`/`--actions`/`--transport-loss`와 함께 지정할 수 없다. 새 runId와 port를 발급하므로 실행 간 raw 응답 bytes가 동일하다는 의미는 아니다. **같은 실행 안에서** 최초 응답의 bytes가 재시도·재시작 후에도 일치해야 한다. seed·명령열은 결정적이지만 OS 시간·포트·실행 속도까지 고정하지 않는다. 버그 수정이나 환경 변화 뒤에는 같은 명세가 통과할 수 있다. 이전 코드의 실패를 조사할 때는 `build.json`의 revision/dirty 상태·Go 버전·바이너리 해시도 확인한다.
+`--replay`는 seed 생성기를 다시 호출하지 않고 저장된 전체 action list를 읽는다. `--seed`/`--actions`/`--transport-loss`/`--concurrent`와 함께 지정할 수 없다. 새 runId와 port를 발급하므로 실행 간 raw 응답 bytes가 동일하다는 의미는 아니다. **같은 실행 안에서** 최초 응답의 bytes가 재시도·재시작 후에도 일치해야 한다. seed·명령열은 결정적이지만 OS 시간·포트·실행 속도까지 고정하지 않는다. 버그 수정이나 환경 변화 뒤에는 같은 명세가 통과할 수 있다. 이전 코드의 실패를 조사할 때는 `build.json`의 revision/dirty 상태·Go 버전·바이너리 해시도 확인한다.
 
 ## 명령열과 비교 기준
 
@@ -68,6 +68,10 @@ sh scripts/random-recovery.sh --replay var/transport-unknown-example/scenario.js
 헤더 전 유실은 `TRANSPORT_FAILURE/UNKNOWN`, `response_headers/eof`로, 본문 절단은 `response_read/unexpected_eof`로 기록한다. 이 분류는 클라이언트가 관측한 실패이며 **접수 여부 증거가 아니다**. `404 {"state":"UNKNOWN"}`도 해당 조회 시점에 저장 결과를 찾지 못했다는 의미다. 보류 중인 원래 요청이 나중에 접수될 수 있으므로 새 ID로 바꾸지 않고 같은 run/계정/명령 종류/ID/내용을 유지한다. 관측되지 않은 실패 원인은 추정하지 않는다.
 
 8 actions는 주문 4개·취소 1개, 실제 체결 2개와 재시작 3회를 포함한다. 고유 WAL 명령/최초 결과는 5개여야 한다. 각 장애 뒤 조회·재시도·전체 상태를 확인하고, 재시작마다 전체 WAL 재생과 snapshot+tail 경로를 별도로 확인한다. 첫 재시작은 snapshot 없이 WAL2, 다음은 snapshot2+tail1, 마지막은 snapshot3+tail2다. 재시작 뒤 최초 결과 GET/POST와 잔고·예약금·현재 주문·FIFO·체결·전체 checkpoint를 비교하고 실제 WAL 레코드가 5개인지 검사한다. native 회귀 검사는 독립 정수 기대값으로 반환 잔고와 남은 매수 예약금 180 atoms도 확인한다. 정상 종료/재시작이며 SIGKILL·전원 장애 실험으로 해석하지 않는다.
+
+## 동시 요청·장애 조합
+
+`sh scripts/random-recovery.sh --concurrent --seed 17`은 v2 명세로4개 클라이언트의 병행 주문·취소·재시도, 응답 유실·snapshot·정상 재시작을 조합한다. 실제 WAL 순서와 snapshot 경계를 별도 replay 명세에 저장한다. 기존 v1 seed/transport-loss와 실행/재현의 차이는 [동시 검증 안내](concurrent-recovery.md)를 따른다.
 
 ## 보존 자료와 실패
 
