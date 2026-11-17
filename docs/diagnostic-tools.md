@@ -148,3 +148,7 @@ bash scripts/ci.sh native
 ## 전송 오류·UNKNOWN 재현
 
 `sh scripts/random-recovery.sh --transport-loss`는 실제 loopback 중계에서 헤더 유실·본문 절단·원래 요청 전달 보류를 주입한다. 실패 단계/오류 유형을 보존하고 404 UNKNOWN 뒤 같은 ID 조회·재시도, WAL-only/snapshot+tail 정상 재시작에서 최초 응답·잔고·체결이 중복되지 않는지 검사한다. [명세와 replay](random-recovery.md#전송-오류unknown-고정-재현)를 따른다. 새 부하 측정이나 실제 전원 장애 실험은 아니다.
+
+## 전송 오류·UNKNOWN 보고서
+
+`experiment.py transport-report --spec ... --output ...`은 기존 부하/응답 유실 자료를 검증하고 단계·유형별 시도/논리 키·요청 ID·지연과 후속 GET 관측을 JSON/Markdown으로 생성한다. [명세·시점 분리](transport-unknown-report.md)와 [실제 결과](benchmarks/transport-unknown-report.md)를 따른다. 원래 측정의 실패/UNKNOWN·measurementValid와 404 미확정을 보존하며 서버 호출이나 자동 재시도는 하지 않는다.

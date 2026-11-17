@@ -133,13 +133,15 @@ func (r *scenarioRun) responseLoss(ctx context.Context, a action) error {
 		return err
 	}
 	defer executor.Close()
+	started := time.Now()
 	outcome := executor.Execute(ctx, bench.Request{Command: c, Path: path, Body: string(encoded)}).Outcome
+	requestLatency := time.Since(started).Nanoseconds()
 	wantStage, wantType := bench.FailureResponseHeader, bench.ErrorEOF
 	if a.Fault == "truncate-body" {
 		wantStage, wantType = bench.FailureResponseRead, bench.ErrorUnexpectedEOF
 	}
 	// Save the observed failure before verifying it, so failed runs retain its cause.
-	if err := r.events.Encode(map[string]any{"step": *r.step, "phase": "transport-observed", "fault": a.Fault, "outcome": outcome}); err != nil {
+	if err := r.events.Encode(map[string]any{"step": *r.step, "phase": "transport-observed", "fault": a.Fault, "outcome": outcome, "requestLatencyNanos": requestLatency}); err != nil {
 		return err
 	}
 	if outcome.Class != bench.TransportFailure || outcome.Certainty != "UNKNOWN" || outcome.FailureStage != wantStage || outcome.ErrorType != wantType {
@@ -205,5 +207,6 @@ func (r *scenarioRun) responseLoss(ctx context.Context, a action) error {
 	return writeJSON(filepath.Join(r.output, fmt.Sprintf("transport-%03d.json", *r.step)), map[string]any{
 		"fault": a.Fault, "outcome": outcome, "unknownLookup": string(unknown), "upstreamFirstResponse": json.RawMessage(forwarded.body),
 		"appliedSeq": r.model.AppliedSeq(), "forwardedRequests": calls.Load(), "sameIDVerified": true,
+		"requestLatencyNanos": requestLatency,
 	})
 }

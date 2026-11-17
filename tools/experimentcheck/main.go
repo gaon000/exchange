@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gaon000/exchange/internal/bench"
+	"github.com/gaon000/exchange/internal/strictjson"
 	"github.com/gaon000/exchange/internal/telemetry"
 	"io"
 	"os"
@@ -29,8 +30,12 @@ func main() {
 	}
 }
 func run(args []string, stdout io.Writer) error {
+	verifyPlan := len(args) == 3 && args[0] == "--verify-plan"
+	if verifyPlan {
+		args = args[1:]
+	}
 	if len(args) != 2 {
-		return fmt.Errorf("usage: experimentcheck LOADGEN_DIR NEW_OUTPUT")
+		return fmt.Errorf("usage: experimentcheck [--verify-plan] LOADGEN_DIR NEW_OUTPUT")
 	}
 	dir := args[0]
 	var diagnosticManifest struct {
@@ -114,6 +119,11 @@ func run(args []string, stdout io.Writer) error {
 	if plan.Digest() != seal.PlanDigest {
 		return fmt.Errorf("%s", "plan digest mismatch")
 	}
+	if verifyPlan {
+		if err := verifyPlanFile(filepath.Join(dir, "plan.jsonl"), plan); err != nil {
+			return err
+		}
+	}
 	var run bench.RunResult
 	if err := read(filepath.Join(dir, "run.json"), &run); err != nil {
 		return err
@@ -174,6 +184,9 @@ func run(args []string, stdout io.Writer) error {
 	}
 	value := map[string]any{"rawVerified": true, "loadgenComplete": complete, "inputSHA256": inputHashes, "planDigest": seal.PlanDigest, "measurementStartUTC": run.ScheduleEpoch.Add(manifest.Settings.Workload.Warmup),
 		"measurementEndUTC": run.ScheduleEpoch.Add(manifest.Settings.Workload.Warmup + manifest.Settings.Workload.Duration), "summary": summary, "windows": windows}
+	if verifyPlan {
+		value["planVerified"] = true
+	}
 	if err := json.NewEncoder(out).Encode(value); err != nil {
 		return err
 	}
@@ -199,6 +212,43 @@ func readJSON(path string, value any) error {
 	}
 	return json.Unmarshal(b, value)
 }
+
+// verifyPlanFile binds attribution (IDs, phase, timing and body) to the same
+// rebuilt plan used by Summarize. File hashes alone cannot detect a resealed
+// plan with different request identities. Keep this opt-in for old consumers
+// whose raw output must remain byte/schema compatible.
+func verifyPlanFile(path string, plan *bench.Plan) error {
+	preparation := plan.Preparation()
+	total := len(preparation) + plan.Count()
+	seen := 0
+	if err := jsonLines(path, func(b []byte) error {
+		if seen >= total {
+			return fmt.Errorf("too many plan rows")
+		}
+		var got bench.Request
+		if err := strictjson.Decode(b, &got); err != nil {
+			return fmt.Errorf("plan row %d: %w", seen, err)
+		}
+		var want bench.Request
+		if seen < len(preparation) {
+			want = preparation[seen]
+		} else {
+			want = plan.Request(seen - len(preparation))
+		}
+		if got != want {
+			return fmt.Errorf("plan row %d differs from rebuilt plan", seen)
+		}
+		seen++
+		return nil
+	}); err != nil {
+		return err
+	}
+	if seen != total {
+		return fmt.Errorf("missing plan rows: want %d got %d", total, seen)
+	}
+	return nil
+}
+
 func jsonLines(path string, fn func([]byte) error) error {
 	f, err := os.Open(path)
 	if err != nil {

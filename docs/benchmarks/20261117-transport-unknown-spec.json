@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "inputs": [
+    {
+      "name": "2026-11-16 10분 snapshot 끔",
+      "kind": "loadgen",
+      "bundle": "../../var/diagnostics/soak-latest-10m-20261116",
+      "case": "off-1"
+    },
+    {
+      "name": "2026-11-16 10분 snapshot 켬",
+      "kind": "loadgen",
+      "bundle": "../../var/diagnostics/soak-latest-10m-20261116",
+      "case": "on-1",
+      "followups": [
+        {
+          "bundle": "../../var/soak-latest-20261116",
+          "result": "unknown-followup/result.json",
+          "ready": "unknown-followup/server-query.json"
+        }
+      ]
+    },
+    {
+      "name": "기존 장애 재현 (지연 미계측)",
+      "kind": "recoverycheck",
+      "bundle": "../../var/transport-unknown-20261116"
+    },
+    {
+      "name": "2026-11-17 장애 재현 (지연 계측)",
+      "kind": "recoverycheck",
+      "bundle": "../../var/transport-report-fixture-20261117"
+    }
+  ]
+}

@@ -57,7 +57,7 @@ sh scripts/random-recovery.sh --transport-loss --output var/transport-unknown-ex
 sh scripts/random-recovery.sh --replay var/transport-unknown-example/scenario.json
 ```
 
-`--transport-loss`는 seed/actions/replay와 함께 지정하지 않는다. 별도 loopback 중계가 실제 주문·취소를 서버에 전달하고 응답을 끊는다. 서버·저장소에 장애 hook을 넣지 않는다. 각 장애는 10초 context로 제한하고 채널 gate로 순서를 정한다. 무작위 네트워크 지연이나 과거 장애의 정확한 원인을 재현하는 검사는 아니다.
+`--transport-loss`는 seed/actions/replay와 함께 지정하지 않는다. 별도 loopback 중계가 실제 주문·취소를 서버에 전달하고 응답을 끊는다. 서버·저장소에 장애 hook을 넣지 않는다. 각 장애는 10초 context로 제한하고 채널 gate로 순서를 정한다. 새 실행은 executor 호출의 monotonic 경과를 requestLatencyNanos로 남긴다. 기존 자료의 필드 부재는 지연 미계측이며 [보고서](transport-unknown-report.md)에서 null로 보존한다. 무작위 네트워크 지연이나 과거 장애의 정확한 원인을 재현하는 검사는 아니다.
 
 | fault | 주입과 검증 |
 | --- | --- |
