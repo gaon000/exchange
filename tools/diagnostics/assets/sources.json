@@ -9,7 +9,7 @@
   },
   "runner.go": {
     "source": "internal/bench/runner.go",
-    "sha256": "12a176212349900095073875b986f085b1b3fe3ec1d3bdecbed15cd0dfd7bb9f"
+    "sha256": "84b9ff7f4fc9700762c525703ac973064bcb7f2bc960579743e2147f2682d7ce"
   },
   "store.go": {
     "source": "internal/wal/store.go",

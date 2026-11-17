@@ -179,3 +179,27 @@ func TestSavedActionListDoesNotDependOnGenerator(t *testing.T) {
 		t.Fatal("unbounded restart count accepted")
 	}
 }
+
+func TestTransportPlanValidationAndFlagSeparation(t *testing.T) {
+	p := transportPlan()
+	if err := validatePlan(p); err != nil {
+		t.Fatal(err)
+	}
+	for _, a := range []action{
+		{Kind: "response-loss", Fault: "unknown", Command: p.Actions[1].Command},
+		{Kind: "command", Fault: "held-original", Command: p.Actions[1].Command},
+		{Kind: "restart", Fault: "held-original"},
+		{Kind: "response-loss", Fault: "drop-headers"},
+	} {
+		if validatePlan(plan{Version: 1, Actions: []action{a}}) == nil {
+			t.Fatal("invalid fault accepted", a)
+		}
+	}
+	for _, args := range [][]string{
+		{"--transport-loss", "--seed", "17"}, {"--transport-loss", "--actions", "32"}, {"--transport-loss", "--replay", "missing"},
+	} {
+		if command(args, io.Discard, io.Discard) == nil {
+			t.Fatal("mixed generators accepted", args)
+		}
+	}
+}

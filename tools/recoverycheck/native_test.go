@@ -178,3 +178,67 @@ func TestNativeOutputFailureCannotPublishCompletion(t *testing.T) {
 		t.Fatal("failure evidence lost", err)
 	}
 }
+
+func TestNativeTransportLossRecoveryAndReplay(t *testing.T) {
+	parent := scenarioParent(t)
+	output := filepath.Join(parent, "loss")
+	if err := command([]string{"--transport-loss", "--output", output}, io.Discard, io.Discard); err != nil {
+		t.Fatal(err)
+	}
+	var summary struct {
+		AppliedSeq                                       d.Int
+		ResponseLosses, UnknownLookups, Restarts, Trades int
+	}
+	decodeFile(t, filepath.Join(output, "summary.json"), &summary)
+	if summary.AppliedSeq != 5 || summary.ResponseLosses != 3 || summary.UnknownLookups != 1 || summary.Restarts != 3 || summary.Trades != 2 {
+		t.Fatal("dedup/coverage mismatch", summary)
+	}
+	cp := normalized(t, filepath.Join(output, "final-actual.json"))
+	if len(cp.Results) != 5 || len(cp.Orders) != 4 || len(cp.Trades) != 2 {
+		t.Fatal("duplicate persisted command/order/trade", cp)
+	}
+	for _, account := range cp.Accounts {
+		switch account.AccountID {
+		case "alice":
+			if account.AvailableBaseLots != 98 || account.ReservedBaseLots != 0 || account.AvailableQuoteAtoms != 100200 || account.ReservedQuoteAtoms != 0 {
+				t.Fatal("cancellation reservation not returned", account)
+			}
+		case "bob":
+			if account.AvailableBaseLots != 103 || account.ReservedBaseLots != 0 || account.AvailableQuoteAtoms != 99530 || account.ReservedQuoteAtoms != 180 {
+				t.Fatal("duplicate settlement/reservation", account)
+			}
+		case "carol":
+			if account.AvailableBaseLots != 99 || account.ReservedBaseLots != 0 || account.AvailableQuoteAtoms != 100090 || account.ReservedQuoteAtoms != 0 {
+				t.Fatal("followup fill mismatch", account)
+			}
+		}
+	}
+	for _, result := range cp.Results {
+		if result.Response.RequestID == "loss-rest" && (result.Response.Order.Status != d.Open || result.Response.Order.OpenQty != 3) {
+			t.Fatal("first OPEN response changed after fill", result)
+		}
+	}
+	for _, order := range cp.Orders {
+		if order.Order.ClientOrderID == "loss-rest" && (order.Order.Status != d.PartiallyFilled || order.Order.OpenQty != 2) {
+			t.Fatal("current partial order mismatch", order)
+		}
+	}
+	for _, i := range []string{"001", "003", "005"} {
+		var evidence struct {
+			Outcome           struct{ Class, Certainty, FailureStage, ErrorType string }
+			ForwardedRequests int
+			SameIDVerified    bool
+		}
+		decodeFile(t, filepath.Join(output, "transport-"+i+".json"), &evidence)
+		if evidence.Outcome.Certainty != "UNKNOWN" || evidence.Outcome.FailureStage == "" || evidence.Outcome.ErrorType == "" || evidence.ForwardedRequests != 1 || !evidence.SameIDVerified {
+			t.Fatal("missing transport evidence", evidence)
+		}
+	}
+	replay := filepath.Join(parent, "replay")
+	if err := command([]string{"--replay", filepath.Join(output, "scenario.json"), "--output", replay}, io.Discard, io.Discard); err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.DeepEqual(cp, normalized(t, filepath.Join(replay, "final-actual.json"))) {
+		t.Fatal("fault replay final state differs")
+	}
+}

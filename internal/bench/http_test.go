@@ -136,6 +136,15 @@ func TestHTTPTransportIdentityLimitsAndNoRedirect(t *testing.T) {
 			if x.Outcome.Class != want {
 				t.Fatalf("%+v", x)
 			}
+			if mode == "partial" && (x.Outcome.FailureStage != FailureResponseRead || x.Outcome.ErrorType != ErrorUnexpectedEOF) {
+				t.Fatalf("missing partial-body cause: %+v", x)
+			}
+			if mode == "timeout" && (x.Outcome.FailureStage != FailureResponseHeader || x.Outcome.ErrorType != ErrorDeadlineExceeded) {
+				t.Fatalf("missing header deadline cause: %+v", x)
+			}
+			if want != TransportFailure && want != TransportTimeout && (x.Outcome.FailureStage != "" || x.Outcome.ErrorType != "") {
+				t.Fatalf("transport metadata on complete response: %+v", x)
+			}
 			if x.WrittenAt.IsZero() {
 				t.Fatal("missing write observation")
 			}
