@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "seed": 17,
+  "readOnlyVerification": true,
+  "powerLossTested": false,
+  "inputs": [
+    {
+      "root": "var/concurrent-fault-final-20261117",
+      "filesVerified": 54,
+      "manifestSHA256": "128f54d374d8f0cbaaa8352f4ebba856011cffb0a99b2dcd9be86c34eeaa9fde",
+      "summary": {
+        "actions": 7,
+        "appliedSeq": "12",
+        "concurrentGroups": 2,
+        "conflicts": 0,
+        "genesisReplayChecks": 3,
+        "powerLossTested": false,
+        "processKillTested": false,
+        "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-fault-final-20261117/replay-005.json'",
+        "responseLosses": 6,
+        "restarts": 3,
+        "retries": 8,
+        "scenarioSHA256": "acf57b45b218d5f6b503273ffa040f4f5a18b7a014dd6210f7b89f06d3aa206c",
+        "seed": 17,
+        "snapshots": 6,
+        "status": "PASSED",
+        "trades": 3,
+        "unknownLookups": 2,
+        "walOnlySnapshots": 3
+      },
+      "restartBoundaries": {
+        "002": {
+          "SnapshotSeq": "3",
+          "ReplayedCommands": "3"
+        },
+        "005": {
+          "SnapshotSeq": "9",
+          "ReplayedCommands": "3"
+        },
+        "006": {
+          "SnapshotSeq": "12",
+          "ReplayedCommands": "0"
+        }
+      },
+      "normalizedCheckpointSHA256": "9a41471a5bf079f34b2dabd420b63e5b8fa78faf6af6876aac879e3b7dc571cb"
+    },
+    {
+      "root": "var/concurrent-fault-final-replay-20261117",
+      "filesVerified": 54,
+      "manifestSHA256": "767da7bfd2c1f16dd5348e7d8dcf0d13244adc164a662af770d7667bd5e7232a",
+      "summary": {
+        "actions": 7,
+        "appliedSeq": "12",
+        "concurrentGroups": 2,
+        "conflicts": 0,
+        "genesisReplayChecks": 3,
+        "powerLossTested": false,
+        "processKillTested": false,
+        "reproduce": "sh scripts/random-recovery.sh --replay '/Users/gaonhuh/personal/exchange/var/concurrent-fault-final-replay-20261117/replay-005.json'",
+        "responseLosses": 6,
+        "restarts": 3,
+        "retries": 8,
+        "scenarioSHA256": "7cb38818114ba1165381c1b16e0593991cd97f86681daeb05c85ca3fec2ca9b3",
+        "seed": 17,
+        "snapshots": 6,
+        "status": "PASSED",
+        "trades": 3,
+        "unknownLookups": 2,
+        "walOnlySnapshots": 3
+      },
+      "restartBoundaries": {
+        "002": {
+          "SnapshotSeq": "3",
+          "ReplayedCommands": "3"
+        },
+        "005": {
+          "SnapshotSeq": "9",
+          "ReplayedCommands": "3"
+        },
+        "006": {
+          "SnapshotSeq": "12",
+          "ReplayedCommands": "0"
+        }
+      },
+      "normalizedCheckpointSHA256": "9a41471a5bf079f34b2dabd420b63e5b8fa78faf6af6876aac879e3b7dc571cb"
+    }
+  ],
+  "normalizedStateAndWALMatch": true,
+  "recordedPlanBytesMatch": true
+}

@@ -20,26 +20,28 @@ import (
 )
 
 type scenarioRun struct {
-	dir, output    string
-	g              wal.Genesis
-	model          *engine.Engine
-	s              *session
-	first          map[d.Key][]byte
-	records        []wal.Record
-	events         *json.Encoder
-	trace          *json.Encoder
-	step           *int
-	lastSnap       d.Int
-	haveSnap       bool
-	restarts       int
-	snapshots      int
-	retries        int
-	conflicts      int
-	responseLosses int
-	unknownLookups int
+	dir, output      string
+	g                wal.Genesis
+	model            *engine.Engine
+	s                *session
+	first            map[d.Key][]byte
+	records          []wal.Record
+	events           *json.Encoder
+	trace            *json.Encoder
+	step             *int
+	lastSnap         d.Int
+	haveSnap         bool
+	restarts         int
+	snapshots        int
+	retries          int
+	conflicts        int
+	responseLosses   int
+	unknownLookups   int
+	concurrentGroups int
+	replayPlan       plan
 }
 
-func execute(ctx context.Context, p plan, output string, step *int, reproduce string) (err error) {
+func execute(ctx context.Context, p plan, output string, step *int) (err error) {
 	events, err := os.OpenFile(filepath.Join(output, "events.jsonl"), os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
 	if err != nil {
 		return err
@@ -52,6 +54,10 @@ func execute(ctx context.Context, p plan, output string, step *int, reproduce st
 	defer func() { err = errors.Join(err, trace.Sync(), trace.Close()) }()
 	r := &scenarioRun{dir: filepath.Join(output, "run"), output: output, step: step, first: make(map[d.Key][]byte),
 		events: json.NewEncoder(events), trace: json.NewEncoder(trace)}
+	encodedPlan, _ := json.Marshal(p)
+	if err := json.Unmarshal(encodedPlan, &r.replayPlan); err != nil {
+		return err
+	}
 	defer func() { err = errors.Join(err, r.s.close()) }()
 	store, err := wal.Init(r.dir, config())
 	if err != nil {
@@ -82,6 +88,8 @@ func execute(ctx context.Context, p plan, output string, step *int, reproduce st
 			err = r.submit(ctx, *a.Command)
 		case "response-loss":
 			err = r.responseLoss(ctx, a)
+		case "concurrent":
+			err = r.concurrent(ctx, *a.Concurrent)
 		case "snapshot":
 			err = r.capture(ctx, r.s, r.dir, fmt.Sprintf("snapshot-%03d", i))
 			if err == nil {
@@ -129,7 +137,8 @@ func execute(ctx context.Context, p plan, output string, step *int, reproduce st
 		"walOnlySnapshots": r.restarts,
 		"retries":          r.retries, "conflicts": r.conflicts, "trades": len(r.model.Capture().Trades),
 		"responseLosses": r.responseLosses, "unknownLookups": r.unknownLookups,
-		"scenarioSHA256": scenarioHash, "reproduce": reproduce, "powerLossTested": false, "processKillTested": false}
+		"concurrentGroups": r.concurrentGroups,
+		"scenarioSHA256":   scenarioHash, "reproduce": reproduction(output), "powerLossTested": false, "processKillTested": false}
 	return writeJSON(filepath.Join(output, "summary.json"), result)
 }
 

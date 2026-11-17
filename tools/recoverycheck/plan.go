@@ -11,9 +11,10 @@ import (
 const maxActions = 256
 
 type action struct {
-	Kind    string               `json:"kind"`
-	Command *d.CheckpointCommand `json:"command,omitempty"`
-	Fault   string               `json:"fault,omitempty"`
+	Kind       string               `json:"kind"`
+	Command    *d.CheckpointCommand `json:"command,omitempty"`
+	Fault      string               `json:"fault,omitempty"`
+	Concurrent *concurrentGroup     `json:"concurrent,omitempty"`
 }
 
 type plan struct {
@@ -128,11 +129,31 @@ func generate(seed int64, count int) (plan, error) {
 }
 
 func validatePlan(p plan) error {
-	if p.Version != 1 || len(p.Actions) < 1 || len(p.Actions) > maxActions {
+	if (p.Version != 1 && p.Version != 2) || len(p.Actions) < 1 || len(p.Actions) > maxActions {
 		return fmt.Errorf("unsupported scenario version or action count")
 	}
 	controls := 0
+	budget := 0
+	known := make(map[d.Key]d.Command)
 	for i, a := range p.Actions {
+		budget++
+		if a.Kind == "concurrent" {
+			if p.Version != 2 || a.Concurrent == nil || a.Command != nil || a.Fault != "" {
+				return fmt.Errorf("action %d: invalid concurrent action", i)
+			}
+			if err := validateConcurrent(*a.Concurrent, known); err != nil {
+				return fmt.Errorf("action %d: %w", i, err)
+			}
+			budget += len(a.Concurrent.Initial) + len(a.Concurrent.Retries)
+			controls += 2 // concurrent snapshot + restart
+			if budget > maxActions || controls > 32 {
+				return fmt.Errorf("concurrent budget exceeded")
+			}
+			continue
+		}
+		if a.Concurrent != nil {
+			return fmt.Errorf("concurrent payload on another action")
+		}
 		if a.Kind == "response-loss" {
 			switch a.Fault {
 			case "held-original", "drop-headers", "truncate-body":
@@ -151,6 +172,9 @@ func validatePlan(p plan) error {
 			if err != nil || c.AccountID != "alice" && c.AccountID != "bob" && c.AccountID != "carol" {
 				return fmt.Errorf("action %d: invalid command/account", i)
 			}
+			if _, exists := known[c.Key()]; !exists {
+				known[c.Key()] = c
+			}
 		case "snapshot", "restart":
 			controls++
 			if a.Command != nil || controls > 32 {
@@ -158,6 +182,9 @@ func validatePlan(p plan) error {
 			}
 		default:
 			return fmt.Errorf("action %d: unknown kind", i)
+		}
+		if budget > maxActions || controls > 32 {
+			return fmt.Errorf("scenario budget exceeded")
 		}
 	}
 	return nil
