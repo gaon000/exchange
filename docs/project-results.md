@@ -12,6 +12,8 @@
 
 2026-11-17 후속 구현: [동시 요청·장애 조합](concurrent-recovery.md)은4개 클라이언트·응답 유실·snapshot/정상 재시작을 실제 WAL 순서로 대조하고 저장 순서/snapshot 경계를 별도 명세로 재현한다. 원래 client UNKNOWN과404 미확정은 유지하며, 성능·전원 장애 보장으로 확대하지 않는다.
 
+2026-11-17 후속 구현: [동시 요청 SIGKILL·복구](concurrent-crash-recovery.md)는 기존 test-only 경계를 사용하는 자식 서버를 WAL 실제 동기화 뒤 적용/응답 전·snapshot 게시 전후에 종료한다. [세 경계·기록 replay 실측](benchmarks/concurrent-crash-recovery.md)은 각84파일 봉인·실제 WAL/전체 상태 일치, 원래 UNKNOWN12건 유지와 후속 같은 ID 재시도의 고유 명령17개/최초 결과 불변을 확인했다. portable255/native race301·각 Python111개와 전체 smoke가 로컬에서 통과했다. 일반 배포 바이너리/전원 장애·성능 측정과 구분한다.
+
 ## 1. 범위와 결과물
 
 개발자가 주문 처리·저장·복구를 학습하고, 성능 판단의 근거와 한계를 제시하기 위한 프로젝트다. [제품 명세](product-specs/exchange.md)가 제품 범위·정책을 소유한다.

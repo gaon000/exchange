@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "date": "2026-11-17",
+  "sourceBase": "1c204d2bb318b048265bcbaf480c9aa8d688ed32",
+  "workingTreeModified": true,
+  "kind": "concurrent-process-crash-recovery",
+  "status": "PASSED",
+  "processKillTested": true,
+  "powerLossTested": false,
+  "performanceMeasurement": false,
+  "original": {
+    "path": "var/concurrent-crash-final-20261117",
+    "manifestSHA256": "efd8d54d265411dc96fbc4141992060034d5c5c53dbfaca8c455d9845b5c6f76",
+    "sealedFiles": 84,
+    "build": {
+      "goVersion": "go1.27.3",
+      "goarch": "arm64",
+      "goos": "darwin",
+      "testBinarySHA256": "c7135b2fd3053d26ab9605c83332b64c8f5a87c0a1757b14e2b8b55e925fc630",
+      "testOnlyHooks": true
+    },
+    "cases": [
+      {
+        "boundary": "wal-after-sync",
+        "concurrentRetries": 4,
+        "crashCommands": 3,
+        "finalCommands": 5,
+        "followup404Unknown": 2,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 5,
+        "signal": "SIGKILL",
+        "snapshotSeq": "2",
+        "tailCommands": "1",
+        "trades": 2
+      },
+      {
+        "boundary": "snapshot-before-publish",
+        "concurrentRetries": 4,
+        "crashCommands": 6,
+        "finalCommands": 6,
+        "followup404Unknown": 0,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 6,
+        "signal": "SIGKILL",
+        "snapshotSeq": "2",
+        "tailCommands": "4",
+        "trades": 3
+      },
+      {
+        "boundary": "snapshot-after-publish",
+        "concurrentRetries": 4,
+        "crashCommands": 6,
+        "finalCommands": 6,
+        "followup404Unknown": 0,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 6,
+        "signal": "SIGKILL",
+        "snapshotSeq": "5",
+        "tailCommands": "1",
+        "trades": 3
+      }
+    ]
+  },
+  "recordedReplay": {
+    "path": "var/concurrent-crash-final-replay-20261117",
+    "manifestSHA256": "612de2533450fa4337f6f0e370e2b1879a00760db6e6c1d492793ca1098fdadd",
+    "sealedFiles": 84,
+    "build": {
+      "goVersion": "go1.27.3",
+      "goarch": "arm64",
+      "goos": "darwin",
+      "testBinarySHA256": "c7135b2fd3053d26ab9605c83332b64c8f5a87c0a1757b14e2b8b55e925fc630",
+      "testOnlyHooks": true
+    },
+    "cases": [
+      {
+        "boundary": "wal-after-sync",
+        "concurrentRetries": 4,
+        "crashCommands": 3,
+        "finalCommands": 5,
+        "followup404Unknown": 2,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 5,
+        "signal": "SIGKILL",
+        "snapshotSeq": "2",
+        "tailCommands": "1",
+        "trades": 2
+      },
+      {
+        "boundary": "snapshot-before-publish",
+        "concurrentRetries": 4,
+        "crashCommands": 6,
+        "finalCommands": 6,
+        "followup404Unknown": 0,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 6,
+        "signal": "SIGKILL",
+        "snapshotSeq": "2",
+        "tailCommands": "4",
+        "trades": 3
+      },
+      {
+        "boundary": "snapshot-after-publish",
+        "concurrentRetries": 4,
+        "crashCommands": 6,
+        "finalCommands": 6,
+        "followup404Unknown": 0,
+        "initialClients": 4,
+        "originalUnknown": 4,
+        "powerLossTested": false,
+        "secondRecoveryRetries": 6,
+        "signal": "SIGKILL",
+        "snapshotSeq": "5",
+        "tailCommands": "1",
+        "trades": 3
+      }
+    ]
+  },
+  "checks": {
+    "allSealedFilesVerified": true,
+    "sameTestBinary": true,
+    "normalizedCrashAndFinalWALMatch": true,
+    "normalizedCompleteFinalCheckpointMatch": true,
+    "recoveredAndFinalFullCheckpointMatchWALModel": true,
+    "finalRecordedPlanByteIdentical": true,
+    "originalUnknownRetained": true,
+    "followup404NotClassifiedAsNonAdmission": true,
+    "waitStatusSIGKILLVerified": true,
+    "sameIDRetriesDoNotDuplicatePersistedKeys": true
+  },
+  "localCI": {
+    "portable": {
+      "path": "var/ci/portable.PpotZe",
+      "goTests": 255,
+      "pythonTests": 111,
+      "exit": 0
+    },
+    "native": {
+      "path": "var/ci/native.bQ2WAu",
+      "goRaceTests": 301,
+      "explicitChildHelperSkip": 1,
+      "pythonTests": 111,
+      "exit": 0
+    }
+  },
+  "limits": [
+    "test-binary server with existing test-only hooks, not deployment binary",
+    "same matching engine used for journal oracle",
+    "unobserved interleavings and environment faults not guaranteed identical on replay",
+    "OS and drive caches survive process kill",
+    "bounded three-account fixtures; not throughput or long-duration coverage"
+  ]
+}
