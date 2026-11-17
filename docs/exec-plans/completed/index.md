@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [동시 자료 분석 보고서](20261117-concurrent-evidence-report.md) | 2026-11-17 | v2/SIGKILL의 client/UNKNOWN·첫 GET/retry·실제 저장 순서와 snapshot/tail 자동 표 | 실제8입력/276파일·JSON/Markdown 재생성 bytes 일치·기존4입력 관측 불변. portable255/native301·Python117·전원 장애 보류 |
 | [동시 요청 SIGKILL·복구](20261117-concurrent-crash-recovery.md) | 2026-11-17 | 실제 WAL sync 후·snapshot 게시 전후 SIGKILL, UNKNOWN/최초 결과·중복 방지와 기록 replay | 원본/재현 각84파일·세 경계2+1/2+4/5+1·UNKNOWN12 유지. portable255/native race301·Python111·전원 장애 보류 |
 | [동시 요청·장애 조합](20261117-concurrent-fault-recovery.md) | 2026-11-17 | 4클라이언트·유실/snapshot/정상 재시작, 실제 WAL 순서/기록 replay | seed17/42/701·실측/재현 각54파일·고유12/UNKNOWN6·전체 상태/경계 일치. portable252/native295·Python111·전원 장애 보류 |
 | [전송 오류·UNKNOWN 보고서](20261117-transport-unknown-report.md) | 2026-11-17 | 봉인 부하/장애 자료의 단계·유형·ID/지연과 후속 조회 JSON/Markdown | 실제4입력·재생성 bytes 일치·10분 UNKNOWN1/404 미확정 유지. 검토 후 portable247/native287·Python111·CLI/계획 변조 smoke·전원 장애 보류 |

@@ -64,7 +64,7 @@ sh scripts/random-recovery.sh --replay var/concurrent-example/scenario.json
 | `restart-*`, `wal-only-*`, `final-*`, `run/` | snapshot+tail·전체 WAL 재생/최종 상태와 이번 실행이 소유한 저장 파일 |
 | `summary.json`, `manifest.json`, `completed.json`, `failed.json` | 완료/실패와 검사 건수·재현 명령, 모든 종료/출력 뒤 성공 봉인 |
 
-기존 전송 오류 분석 보고서의 recoverycheck 입력은 v1 transport-loss 자료용이다. 새 v2 자료는 위의 summary/관측/WAL/상태 파일을 사용하며 기존 v1 분석 입력으로 섞지 않는다.
+기존 전송 오류 분석 보고서의 recoverycheck 입력은 v1 transport-loss 자료용이다. v2 자료는 [동시 자료 보고서](concurrent-evidence-report.md)의 concurrent 종류로 분석하며 기존 v1 분석 입력으로 섞지 않는다.
 
 ## 자동 검증
 

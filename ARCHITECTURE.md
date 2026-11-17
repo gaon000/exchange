@@ -32,6 +32,7 @@
 | [tools/statescale](tools/statescale/main.go), [state_scale.py](tools/diagnostics/state_scale.py) | 제한된 상태 fixture와 새 프로세스 메모리/snapshot/복구 비용·bytes 검증·JSON/Markdown 집계. production 의존 경로 밖 probe |
 | [tools/recoverycheck](tools/recoverycheck/main.go), [실행 안내](docs/random-recovery.md) | 고정 seed/동시 요청·응답 유실의 실제 HTTP/APFS 거래·UNKNOWN/같은 ID 재시도·snapshot/정상 재시작과 순차/전체 WAL 재생 비교, 실패 명세 재현. 서버 runtime의 의존 경로 밖 개발 도구 |
 | [scripts/concurrent-crash.sh](scripts/concurrent-crash.sh), [실행 안내](docs/concurrent-crash-recovery.md) | runtime test binary·기존 test-only 경계로 소유 서버의 동시 요청 중 실제 SIGKILL, WAL/snapshot 복구·UNKNOWN/최초 응답·중복 방지와 기록 순서 재현. 일반 서버에 장애 옵션을 추가하지 않음 |
+| [transport_report.py](tools/diagnostics/transport_report.py), [concurrent_report.py](tools/diagnostics/concurrent_report.py) | 봉인 부하/v1·동시 요청 v2/SIGKILL의 원래 UNKNOWN·후속 조회·재시도와 저장 순서/경계를 읽기 전용 분석. [보고서 경계](docs/concurrent-evidence-report.md)를 따르며 거래/복구를 다시 실행하지 않음 |
 | [tools/diagnostics/evidence.py](tools/diagnostics/evidence.py) | 봉인 자료·resume 부모·고정 빌드 패키징, 원본을 참조하지 않는 새 영역 복원·재검증/비교 생성. 현재 검사기만 실행하며 거래 runtime에서 사용하지 않음 |
 | [tools/diagnostics/artifacts.py](tools/diagnostics/artifacts.py), [보존 정책](config/artifact-retention.json) | var 용량·경로/해시 참조와 원본/고정 빌드 보호·읽기 전용 정리 미리보기. 거래 runtime에서 사용하지 않음 |
 | [tools/storageprobe/](tools/storageprobe/main.go) | macOS strict sync·잠금·임시 파일 정리 검증. 거래 저장소 구현이 아님 |

@@ -1,0 +1,279 @@
+{
+  "version": 1,
+  "kind": "concurrent-report-validation-summary",
+  "date": "2026-11-17",
+  "sourceBase": "2f9a7600a624016dabdf32e9002c76a40352b895",
+  "workingTreeModified": true,
+  "publicationBeforeImplementation": {
+    "featureCommit": "da984c7",
+    "masterCommit": "2f9a760",
+    "githubCIRun": 44018964216,
+    "githubCIConclusion": "success",
+    "portable": "success",
+    "native": "success"
+  },
+  "readOnly": true,
+  "powerLossTested": false,
+  "spec": "docs/benchmarks/20261117-concurrent-report-spec.json",
+  "specSHA256": "ccaf57865181d11213b4fefdb88db9324b3bbee45a3586b74d6924b5a74588cf",
+  "sourceBundles": [
+    {
+      "path": "var/concurrent-crash-final-20261117",
+      "manifestSHA256": "efd8d54d265411dc96fbc4141992060034d5c5c53dbfaca8c455d9845b5c6f76",
+      "sealedFiles": 84
+    },
+    {
+      "path": "var/concurrent-crash-final-replay-20261117",
+      "manifestSHA256": "612de2533450fa4337f6f0e370e2b1879a00760db6e6c1d492793ca1098fdadd",
+      "sealedFiles": 84
+    },
+    {
+      "path": "var/concurrent-fault-final-20261117",
+      "manifestSHA256": "128f54d374d8f0cbaaa8352f4ebba856011cffb0a99b2dcd9be86c34eeaa9fde",
+      "sealedFiles": 54
+    },
+    {
+      "path": "var/concurrent-fault-final-replay-20261117",
+      "manifestSHA256": "767da7bfd2c1f16dd5348e7d8dcf0d13244adc164a662af770d7667bd5e7232a",
+      "sealedFiles": 54
+    }
+  ],
+  "reports": [
+    {
+      "path": "var/concurrent-report-final-20261117",
+      "filesSHA256": {
+        "report.json": "b63bacaf030c18541c4cdfda123880e260c639d2925f2015cedb0641efca56a4",
+        "report.md": "d161fbe52397f40f1a77b8207cc2490e5dcc6db92a2a446415ea53c5b7aca369"
+      },
+      "manifestSHA256": "2563d6232c13958b59ab90e35ecbaab3df3812e5581a6cfd082229fcd3937879"
+    },
+    {
+      "path": "var/concurrent-report-final-reproduced-20261117",
+      "filesSHA256": {
+        "report.json": "b63bacaf030c18541c4cdfda123880e260c639d2925f2015cedb0641efca56a4",
+        "report.md": "d161fbe52397f40f1a77b8207cc2490e5dcc6db92a2a446415ea53c5b7aca369"
+      },
+      "manifestSHA256": "2563d6232c13958b59ab90e35ecbaab3df3812e5581a6cfd082229fcd3937879"
+    }
+  ],
+  "checks": {
+    "jsonAndMarkdownReproducedByteIdentically": true,
+    "allSourceBundlesSealedAndVerified": true,
+    "originalUnknownRetained": true,
+    "lookupAndRetrySeparate": true,
+    "missingCrashStageTypeRemainNull": true,
+    "legacyFourInputsMatchPriorSavedReport": true,
+    "matchingRecoveryNotRerun": true
+  },
+  "inputs": [
+    {
+      "name": "동시 요청 원본",
+      "kind": "concurrent",
+      "counts": {
+        "unknownAttempts": 6,
+        "unknownLogicalKeys": 4,
+        "transportFailureAttempts": 6,
+        "keysWithSubsequentResult": 4,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "normal-restart",
+          "snapshotSeq": "3",
+          "tailCommands": "3",
+          "originalUnknown": 3
+        },
+        {
+          "boundary": "normal-restart",
+          "snapshotSeq": "9",
+          "tailCommands": "3",
+          "originalUnknown": 3
+        }
+      ],
+      "originalUnknownAttempts": 6,
+      "missingStageTypeAttempts": 0,
+      "firstFollowupUnresolvedKeys": 2
+    },
+    {
+      "name": "동시 요청 기록 replay",
+      "kind": "concurrent",
+      "counts": {
+        "unknownAttempts": 6,
+        "unknownLogicalKeys": 4,
+        "transportFailureAttempts": 6,
+        "keysWithSubsequentResult": 4,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "normal-restart",
+          "snapshotSeq": "3",
+          "tailCommands": "3",
+          "originalUnknown": 3
+        },
+        {
+          "boundary": "normal-restart",
+          "snapshotSeq": "9",
+          "tailCommands": "3",
+          "originalUnknown": 3
+        }
+      ],
+      "originalUnknownAttempts": 6,
+      "missingStageTypeAttempts": 0,
+      "firstFollowupUnresolvedKeys": 2
+    },
+    {
+      "name": "SIGKILL WAL 원본",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "wal-after-sync",
+          "snapshotSeq": "2",
+          "tailCommands": "1",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 2
+    },
+    {
+      "name": "SIGKILL snapshot 전 원본",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "snapshot-before-publish",
+          "snapshotSeq": "2",
+          "tailCommands": "4",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 0
+    },
+    {
+      "name": "SIGKILL snapshot 후 원본",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "snapshot-after-publish",
+          "snapshotSeq": "5",
+          "tailCommands": "1",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 0
+    },
+    {
+      "name": "SIGKILL WAL replay",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "wal-after-sync",
+          "snapshotSeq": "2",
+          "tailCommands": "1",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 2
+    },
+    {
+      "name": "SIGKILL snapshot 전 replay",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "snapshot-before-publish",
+          "snapshotSeq": "2",
+          "tailCommands": "4",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 0
+    },
+    {
+      "name": "SIGKILL snapshot 후 replay",
+      "kind": "concurrent-crash",
+      "counts": {
+        "unknownAttempts": 4,
+        "unknownLogicalKeys": 3,
+        "transportFailureAttempts": 4,
+        "keysWithSubsequentResult": 3,
+        "keysWithoutObservedResult": 0
+      },
+      "groups": [
+        {
+          "boundary": "snapshot-after-publish",
+          "snapshotSeq": "5",
+          "tailCommands": "1",
+          "originalUnknown": 4
+        }
+      ],
+      "originalUnknownAttempts": 4,
+      "missingStageTypeAttempts": 4,
+      "firstFollowupUnresolvedKeys": 0
+    }
+  ],
+  "legacyRecheck": {
+    "path": "var/concurrent-report-legacy-recheck-20261117",
+    "countsUnchanged": true,
+    "originalMeasurementAndQueryObservationsUnchanged": true
+  },
+  "localCI": {
+    "portable": {
+      "path": "var/ci/portable.1B2ZjU",
+      "goTests": 255,
+      "pythonTests": 117,
+      "exit": 0
+    },
+    "native": {
+      "path": "var/ci/native.pqvvwK",
+      "goRaceTests": 301,
+      "explicitChildHelperSkip": 1,
+      "pythonTests": 117,
+      "concurrentReportSmoke": true,
+      "exit": 0
+    }
+  }
+}

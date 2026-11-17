@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "inputs": [
+    {"name": "동시 요청 원본", "kind": "concurrent", "bundle": "../../var/concurrent-fault-final-20261117"},
+    {"name": "동시 요청 기록 replay", "kind": "concurrent", "bundle": "../../var/concurrent-fault-final-replay-20261117"},
+    {"name": "SIGKILL WAL 원본", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-20261117", "case": "wal-after-sync"},
+    {"name": "SIGKILL snapshot 전 원본", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-20261117", "case": "snapshot-before-publish"},
+    {"name": "SIGKILL snapshot 후 원본", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-20261117", "case": "snapshot-after-publish"},
+    {"name": "SIGKILL WAL replay", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-replay-20261117", "case": "wal-after-sync"},
+    {"name": "SIGKILL snapshot 전 replay", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-replay-20261117", "case": "snapshot-before-publish"},
+    {"name": "SIGKILL snapshot 후 replay", "kind": "concurrent-crash", "bundle": "../../var/concurrent-crash-final-replay-20261117", "case": "snapshot-after-publish"}
+  ]
+}

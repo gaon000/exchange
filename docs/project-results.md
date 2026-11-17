@@ -14,6 +14,8 @@
 
 2026-11-17 후속 구현: [동시 요청 SIGKILL·복구](concurrent-crash-recovery.md)는 기존 test-only 경계를 사용하는 자식 서버를 WAL 실제 동기화 뒤 적용/응답 전·snapshot 게시 전후에 종료한다. [세 경계·기록 replay 실측](benchmarks/concurrent-crash-recovery.md)은 각84파일 봉인·실제 WAL/전체 상태 일치, 원래 UNKNOWN12건 유지와 후속 같은 ID 재시도의 고유 명령17개/최초 결과 불변을 확인했다. portable255/native race301·각 Python111개와 전체 smoke가 로컬에서 통과했다. 일반 배포 바이너리/전원 장애·성능 측정과 구분한다.
 
+2026-11-17 후속 구현: [동시 자료 분석 보고서](concurrent-evidence-report.md)는 v2/SIGKILL 원본·replay8입력의 client별 원래 UNKNOWN·재시도 전 조회·후속 결과/재시도를 분리하고 실제 WAL 순서·snapshot/tail을 JSON/Markdown으로 생성한다. [실제 검증](benchmarks/concurrent-evidence-report.md)은 고유4묶음276파일·두 보고서 bytes 일치, 기존 v1/10분4입력의 관측/측정 의미 불변과 native 실제 fixture smoke를 확인했다. portable255/native301·각 Python117개가 로컬 통과했고 전원 장애는 미완료·보류다.
+
 ## 1. 범위와 결과물
 
 개발자가 주문 처리·저장·복구를 학습하고, 성능 판단의 근거와 한계를 제시하기 위한 프로젝트다. [제품 명세](product-specs/exchange.md)가 제품 범위·정책을 소유한다.

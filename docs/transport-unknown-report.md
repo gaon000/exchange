@@ -39,6 +39,7 @@ python3 tools/diagnostics/experiment.py transport-report \
 
 - `loadgen`: manifest/completed 또는 기존 artifact-manifest가 있는 suite의 한 case를 선택한다. `case/loadgen/`의 plan·samples·preparation·summary·run과 선택적 생성기 진단을 현재 checker로 검증하고, 읽는 파일이 상위 manifest에 포함됐는지 확인한다. 보관된 바이너리는 실행하지 않는다.
 - `recoverycheck`: `sh scripts/random-recovery.sh --transport-loss`의 봉인된 성공 자료를 선택한다. scenario hash·완료/summary·동일한 최종 checkpoint·최초 결과·fault/event/지연·GET query trace를 대조한다. 실제 거래나 WAL 복구를 분석 명령에서 다시 실행하지 않는다. 원래 복구 검증 결과와 이번 자료 일관성 검증을 구분한다.
+- `concurrent` / `concurrent-crash`: 동시 요청 v2 전체 또는 SIGKILL 묶음의 case 하나를 분석한다. client/phase·원래 UNKNOWN/첫 조회/재시도와 실제 저장 순서·snapshot 경계의 추가 표는 [동시 자료 보고서 안내](concurrent-evidence-report.md)를 따른다. 기존 입력/출력 필드는 유지한다.
 
 부하 실행의 별도 후속 조회 자료는 다음처럼 선택한다. 입력 하나당 최대 64개다.
 

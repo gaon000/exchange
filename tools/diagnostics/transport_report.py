@@ -41,12 +41,15 @@ def spec_inputs(path):
         require(isinstance(entry, dict) and set(entry) <= {'name', 'kind', 'bundle', 'case', 'followups'}, 'invalid input fields')
         require(isinstance(entry.get('name'), str) and 0 < len(entry['name']) <= 200 and entry['name'] not in names, 'invalid/duplicate input name')
         names.add(entry['name'])
-        require(entry.get('kind') in ('loadgen', 'recoverycheck') and isinstance(entry.get('bundle'), str) and entry['bundle'], 'invalid input selector')
+        require(entry.get('kind') in ('loadgen', 'recoverycheck', 'concurrent', 'concurrent-crash') and isinstance(entry.get('bundle'), str) and entry['bundle'], 'invalid input selector')
         entry['bundle'] = str(real_path(path.parent/entry['bundle']))
         require(Path(entry['bundle']).is_dir(), 'input bundle is not a directory')
-        if entry['kind'] == 'loadgen':
+        if entry['kind'] in ('loadgen', 'concurrent-crash'):
             require(isinstance(entry.get('case'), str) and len(Path(entry['case']).parts) == 1, 'loadgen requires one case directory')
             child(entry['bundle'], entry['case'])
+            if entry['kind'] == 'concurrent-crash':
+                require(entry['case'] in ('wal-after-sync', 'snapshot-before-publish', 'snapshot-after-publish')
+                        and 'followups' not in entry, 'invalid crash case/followups')
         else:
             require('case' not in entry and 'followups' not in entry, 'scenario uses its own query trace')
         key = (entry['bundle'], entry.get('case'))
@@ -339,6 +342,18 @@ def markdown(report):
             for q in r['queries']:
                 out += ['| '+' | '.join(map(cell,[r['requestId'],f"{q['httpStatus']}/{q['state']}",q['resolution'],
                          f"{q.get('step','—')}/{q.get('line','—')}",q['observedUTC']]))+' |']
+        if 'execution' in source:
+            out += ['', '자료 검증: 봉인·입력/저장 순서·상태/최초 응답의 일관성. 매칭/복구를 다시 실행한 결과가 아니다.', '',
+                    '| 요청 ID | 재시도 전 첫 조회 | 같은 ID 재시도 관측 |', '| --- | --- | --- |']
+            for r in source['unknownCommands']:
+                out.append('| '+' | '.join(map(cell,[r['requestId'],r['firstFollowupResolution'],r['retryResolution']]))+' |')
+            for g in source['execution']['groups']:
+                out += ['', '| 경계/step | 클라이언트 | phase 시도 | 원래 UNKNOWN | snapshot seq | 복구 tail |', '| --- | ---: | ---: | ---: | ---: | ---: |']
+                out.append('| '+' | '.join(map(cell,[f"{g['boundary']}/{g.get('step','—')}",g['clients'],g['phaseAttempts'],g['originalUnknown'],g['snapshotSeq'],g['tailCommands']]))+' |')
+                out += ['', '| 실제 WAL seq | 계정/종류/요청 ID | 경계 구분 |', '| ---: | --- | --- |']
+                for row in g['walOrder']:
+                    out.append('| '+' | '.join(map(cell,[row['commandSeq'],f"{row['accountId']}/{row['kind']}/{row['requestId']}",row['segment']]))+' |')
+                out += ['']
         out += ['']
     out += ['실제 전원 장애 검증: 미완료·보류.원본·성공 건수·실패율·measurementValid를 수정하지 않는다.', '']
     return '\n'.join(out)
@@ -358,7 +373,9 @@ def generate(spec_path, output):
         scratch = Path(temp)
         checker = scratch/'experimentcheck'
         if any(x['kind'] == 'loadgen' for x in spec['inputs']): build_checker(checker)
-        records = [loadgen(x, inputs, checker, scratch) if x['kind'] == 'loadgen' else recoverycheck(x, inputs) for x in spec['inputs']]
+        from concurrent_report import concurrent, concurrent_crash
+        adapters = {'recoverycheck': recoverycheck, 'concurrent': concurrent, 'concurrent-crash': concurrent_crash}
+        records = [loadgen(x, inputs, checker, scratch) if x['kind'] == 'loadgen' else adapters[x['kind']](x, inputs) for x in spec['inputs']]
     report = {'version': 1, 'specSHA256': digest(spec_path), 'resolvedSpec': spec, 'sourceSHA256': source_hashes(),
               'inputs': records, 'readOnly': True, 'powerLossTested': False,
               'interpretation': {'measurementReclassified': False, 'unknown404ProvesNonAdmission': False,
