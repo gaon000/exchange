@@ -130,6 +130,19 @@ def main():
                 if (root/'crash-must-not-pass').exists():
                     raise RuntimeError('concurrent report accepted resealed recovery contradiction')
                 print('concurrent report smoke passed: actual concurrent/SIGKILL fixtures, UNKNOWN/query/retry separation, resealed tamper rejection',flush=True)
+                campaigns = list(options.parent.glob('random-recovery-TestNativeConcurrentCampaignAndProfileReplay-*/campaign'))
+                if len(campaigns) != 1:
+                    raise RuntimeError('missing native concurrent campaign fixture')
+                cli('transport-report','--spec',campaigns[0]/'transport-spec.json','--output',root/'campaign-report')
+                cli('verify','--bundle',root/'campaign-report','--output',root/'campaign-report-verified.json')
+                campaign_records = read(root/'campaign-report/report.json')['inputs']
+                by_profile = {r['execution']['profile']:r for r in campaign_records}
+                if (set(by_profile) != {'cancel-race','duplicate-storm','id-conflict'}
+                        or any(g['clients'] != 12 for g in by_profile['duplicate-storm']['execution']['groups'])
+                        or len(by_profile['id-conflict']['execution']['conflictObservations']) != 16
+                        or any(a['measurementCertainty'] != 'UNKNOWN' for r in campaign_records for a in r['attempts'])):
+                    raise RuntimeError('campaign report lost profile/conflict/UNKNOWN separation')
+                print('campaign report smoke passed: actual v3 profiles, concentrated duplicates, intentional conflicts',flush=True)
         # Package only this smoke's owned fixtures. Hide originals temporarily:
         # regeneration must use restored bytes, including archived native state.
         create(REPO, [], [spec], root/'package')

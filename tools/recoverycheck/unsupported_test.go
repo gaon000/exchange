@@ -23,3 +23,13 @@ func TestUnsupportedScenarioLeavesNoOutput(t *testing.T) {
 		}
 	}
 }
+
+func TestUnsupportedCampaignLeavesNoOutput(t *testing.T) {
+	out := filepath.Join(t.TempDir(), "new")
+	if err := runCampaign(context.Background(), testCampaignOptions(), out, io.Discard); err == nil {
+		t.Fatal("unsupported campaign succeeded")
+	}
+	if _, err := os.Stat(out); !os.IsNotExist(err) {
+		t.Fatal("unsupported campaign created output")
+	}
+}

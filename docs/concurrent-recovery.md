@@ -4,6 +4,8 @@
 
 동시 요청 중 실제 SIGKILL 경계는 별도 [프로세스 강제 종료 실행기](concurrent-crash-recovery.md)를 사용한다. 일반 서버에 장애 옵션을 추가하지 않고 runtime test binary와 기존 test-only hook으로 실행한다.
 
+생성/취소 경쟁·같은 ID 집중 요청·내용 충돌의 새 v3 profile과 seed/반복 실행은 [동시 캠페인 안내](concurrent-campaign.md)를 따른다. 기본 --concurrent의 v2 명세와4클라이언트 동작은 유지한다.
+
 ## 한 명령 실행·재현
 
 [지원 환경](development.md)의 Go·macOS arm64/APFS/cgo와 loopback 권한이 필요하다. 추가 dependency는 없다.

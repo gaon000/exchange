@@ -19,6 +19,7 @@ type action struct {
 
 type plan struct {
 	Version int      `json:"version"`
+	Profile string   `json:"profile,omitempty"`
 	Seed    int64    `json:"seed"`
 	Actions []action `json:"actions"`
 }
@@ -129,8 +130,15 @@ func generate(seed int64, count int) (plan, error) {
 }
 
 func validatePlan(p plan) error {
-	if (p.Version != 1 && p.Version != 2) || len(p.Actions) < 1 || len(p.Actions) > maxActions {
+	if (p.Version != 1 && p.Version != 2 && p.Version != 3) || len(p.Actions) < 1 || len(p.Actions) > maxActions {
 		return fmt.Errorf("unsupported scenario version or action count")
+	}
+	if p.Version == 3 {
+		if !validProfile(p.Profile) {
+			return fmt.Errorf("invalid v3 profile")
+		}
+	} else if p.Profile != "" {
+		return fmt.Errorf("profile requires v3")
 	}
 	controls := 0
 	budget := 0
@@ -138,10 +146,10 @@ func validatePlan(p plan) error {
 	for i, a := range p.Actions {
 		budget++
 		if a.Kind == "concurrent" {
-			if p.Version != 2 || a.Concurrent == nil || a.Command != nil || a.Fault != "" {
+			if (p.Version != 2 && p.Version != 3) || a.Concurrent == nil || a.Command != nil || a.Fault != "" {
 				return fmt.Errorf("action %d: invalid concurrent action", i)
 			}
-			if err := validateConcurrent(*a.Concurrent, known); err != nil {
+			if err := validateConcurrentVersion(*a.Concurrent, known, p.Version); err != nil {
 				return fmt.Errorf("action %d: %w", i, err)
 			}
 			budget += len(a.Concurrent.Initial) + len(a.Concurrent.Retries)

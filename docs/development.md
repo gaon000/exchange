@@ -58,6 +58,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 상태 크기별 비용 측정 | `python3 tools/diagnostics/state_scale.py run --output var/state-scale-new` ([조건·계측·재집계](state-size-costs.md)) |
 | 전송 오류·UNKNOWN 보고서 | `python3 tools/diagnostics/experiment.py transport-report --spec docs/benchmarks/20261117-transport-unknown-spec.json --output var/transport-report-new` ([입력·시점 분리](transport-unknown-report.md)) |
 | 동시 거래·장애·복구 조합 | `sh scripts/random-recovery.sh --concurrent --seed 17` ([실제 WAL 순서·기록 재현](concurrent-recovery.md)) |
+| 동시 시나리오 다양화·반복 | `sh scripts/random-recovery.sh --campaign --seed 17` ([세 v3 profile·시간/자료 예산·실패 재현](concurrent-campaign.md)) |
 | 동시 요청 중 SIGKILL·복구 | `sh scripts/concurrent-crash.sh --seed 17` ([test binary·세 저장 경계·UNKNOWN/기록 replay](concurrent-crash-recovery.md)) |
 | 동시 요청·강제 종료 자료 분석 | `python3 tools/diagnostics/experiment.py transport-report --spec docs/benchmarks/20261117-concurrent-report-spec.json --output var/concurrent-report-new` ([client/시점·실제 WAL/snapshot 표](concurrent-evidence-report.md)) |
 | 응답 유실·UNKNOWN·같은 ID 복구 검사 | `sh scripts/random-recovery.sh --transport-loss` ([실패 단계·고정 재현·404 계약](random-recovery.md#전송-오류unknown-고정-재현)) |

@@ -22,7 +22,7 @@ python3 tools/diagnostics/experiment.py transport-report \
 }
 ```
 
-- `concurrent`: 성공 봉인된 recoverycheck v2 묶음 전체. case/followups는 지정하지 않는다. wave마다 네 initial/네 retry 관측과 계획·live order/실제 WAL·snapshot prefix·재기동 metadata·최초 응답·최종 상태를 대조한다.
+- `concurrent`: 성공 봉인된 recoverycheck v2/v3 묶음 전체. case/followups는 지정하지 않는다. v2는 네 initial/네 retry, [v3 profile](concurrent-campaign.md)은4~12개 phase 관측을 계획·live order/실제 WAL·snapshot prefix·재기동 metadata·최초 응답·최종 상태에 대조한다. v3의 의도한409/NOT_ADMITTED는 conflictObservations/별도 표에 기록하며 canonical 키·중복 성공·원래 UNKNOWN으로 합치지 않는다.
 - `concurrent-crash`: 성공 봉인된 SIGKILL 묶음에서 독립 run인 case 하나를 선택한다. case는 `wal-after-sync`, `snapshot-before-publish`, `snapshot-after-publish` 중 하나이며 followups는 지정하지 않는다. 서로 다른 case는 같은 bundle에서도 별도 입력으로 지정할 수 있다. 동일 선택 중복은 거절한다.
 - 기존 `loadgen`/v1 `recoverycheck` 입력과 출력 필드는 유지한다. 여러 종류를 같은 명세에 넣어도 입력별 결과/분모를 합쳐 성능 판정하지 않는다.
 

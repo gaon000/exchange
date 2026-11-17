@@ -217,3 +217,37 @@ class ConcurrentReportTests(unittest.TestCase):
             with patch('transport_report.markdown',side_effect=OSError('expected failure')):
                 with self.assertRaises(OSError):generate(path,root/'failed')
             self.assertTrue((root/'failed/failed.json').exists());self.assertFalse((root/'failed/completed.json').exists())
+
+    def test_v3_storm_and_conflicts_keep_canonical_wal_and_original_unknown(self):
+        for profile,count in [('duplicate-storm',12),('id-conflict',8)]:
+            with self.subTest(profile=profile),tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp).resolve();normal_fixture(root/'source');source=root/'source';cs=commands()
+                plan=read(source/'scenario.json');plan['version']=3;plan['profile']=profile;g=plan['actions'][2]['concurrent']
+                obs=read(source/'concurrent-002-observations.json')
+                for phase,name in [('INITIAL','initial'),('RETRY','retries')]:
+                    for i in range(4,count):
+                        c=json.loads(raw(cs[2] if profile=='duplicate-storm' else cs[0]))
+                        a={'client':i,'command':c}
+                        response=raw(result(c,3))
+                        outcome={'class':'BUSINESS','certainty':'COMPLETED','httpStatus':200,'fingerprint':hashlib.sha256(response.encode()).hexdigest()}
+                        status=200
+                        if profile=='id-conflict':
+                            c['place']['quantityLots']=str(i);a['expectConflict']=True
+                            response=raw({'error':{'code':'IDEMPOTENCY_CONFLICT','outcome':'NOT_ADMITTED'}})
+                            outcome={'class':'SERVER_FAILURE','certainty':'NOT_ADMITTED','httpStatus':409,'code':'IDEMPOTENCY_CONFLICT'};status=409
+                        g[name].append(a)
+                        obs.append({**a,'phase':phase,'outcome':outcome,'upstreamStatus':status,'upstreamResponse':response,'requestLatencyNanos':1})
+                (source/'scenario.json').write_text(raw(plan));(source/'concurrent-002-observations.json').write_text(raw(obs))
+                summary=read(source/'summary.json');summary.update(profile=profile,conflicts=8 if profile=='id-conflict' else 0,retries=4 if profile=='id-conflict' else 20,scenarioSHA256=digest(source/'scenario.json'))
+                (source/'summary.json').write_text(raw(summary));reseal(source)
+                path=spec(root,[{'name':profile,'kind':'concurrent','bundle':'source'}]);r=generate(path,root/'report')['inputs'][0]
+                self.assertEqual(r['counts']['unknownAttempts'],3);self.assertEqual(r['execution']['groups'][0]['clients'],count)
+                if profile=='duplicate-storm':
+                    buy=next(k for k in r['unknownCommands'] if k['requestId']=='buy')
+                    self.assertEqual(buy['withinRunResolution'],'RESULT_OBSERVED')
+                    self.assertTrue(all(a['measurementCertainty']=='UNKNOWN' for a in r['attempts']))
+                else:
+                    self.assertEqual(len(r['execution']['conflictObservations']),8)
+                    self.assertIn('409/NOT_ADMITTED',(root/'report/report.md').read_text())
+                    obs[-1]['upstreamStatus']=200;(source/'concurrent-002-observations.json').write_text(raw(obs));reseal(source)
+                    with self.assertRaisesRegex(ValueError,'conflict response'):generate(path,root/'bad')

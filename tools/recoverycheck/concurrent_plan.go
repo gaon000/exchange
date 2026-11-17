@@ -17,9 +17,10 @@ import (
 const scenarioRunID = "00000000-0000-4000-8000-000000000001"
 
 type concurrentAttempt struct {
-	Client  int                 `json:"client"`
-	Command d.CheckpointCommand `json:"command"`
-	Fault   string              `json:"fault,omitempty"`
+	Client         int                 `json:"client"`
+	Command        d.CheckpointCommand `json:"command"`
+	Fault          string              `json:"fault,omitempty"`
+	ExpectConflict bool                `json:"expectConflict,omitempty"`
 }
 
 type concurrentSchedule struct {
@@ -50,8 +51,8 @@ func concurrentPlan(seed int64) (plan, error) {
 		held := place("carol", id+"-held", d.Buy, 90, d.Int(1+rng.Intn(3)))
 		tail := place([]string{"alice", "bob", "carol"}[rng.Intn(3)], id+"-tail", d.Sell, d.Int(90+rng.Intn(6)), d.Int(1+rng.Intn(3)))
 		g := &concurrentGroup{SnapshotClient: 0,
-			Initial: []concurrentAttempt{{0, *a.Command, "drop-headers"}, {1, *a.Command, "truncate-body"}, {2, *cancel.Command, ""}, {3, *held.Command, "held-original"}},
-			Retries: []concurrentAttempt{{0, *a.Command, ""}, {1, *cancel.Command, ""}, {2, *held.Command, ""}, {3, *tail.Command, ""}},
+			Initial: []concurrentAttempt{{Client: 0, Command: *a.Command, Fault: "drop-headers"}, {Client: 1, Command: *a.Command, Fault: "truncate-body"}, {Client: 2, Command: *cancel.Command}, {Client: 3, Command: *held.Command, Fault: "held-original"}},
+			Retries: []concurrentAttempt{{Client: 0, Command: *a.Command}, {Client: 1, Command: *cancel.Command}, {Client: 2, Command: *held.Command}, {Client: 3, Command: *tail.Command}},
 		}
 		p.Actions = append(p.Actions, maker, fill, action{Kind: "concurrent", Concurrent: g})
 	}
@@ -60,7 +61,12 @@ func concurrentPlan(seed int64) (plan, error) {
 }
 
 func validateConcurrent(g concurrentGroup, known map[d.Key]d.Command) error {
-	if len(g.Initial) != 4 || len(g.Retries) != 4 || g.SnapshotClient < 0 || g.SnapshotClient >= 4 {
+	return validateConcurrentVersion(g, known, 2)
+}
+
+func validateConcurrentVersion(g concurrentGroup, known map[d.Key]d.Command, version int) error {
+	n := len(g.Initial)
+	if n < 4 || n > 12 || len(g.Retries) != n || version == 2 && n != 4 || g.SnapshotClient < 0 || g.SnapshotClient >= n {
 		return errors.New("concurrent phase requires four clients 0..3")
 	}
 	before := make(map[d.Key]d.Command, len(known))
@@ -74,7 +80,7 @@ func validateConcurrent(g concurrentGroup, known map[d.Key]d.Command) error {
 	for phase, list := range [][]concurrentAttempt{g.Initial, g.Retries} {
 		clients := make(map[int]bool)
 		for _, a := range list {
-			if a.Client < 0 || a.Client >= 4 || clients[a.Client] {
+			if a.Client < 0 || a.Client >= n || clients[a.Client] {
 				return errors.New("invalid/duplicate concurrent client")
 			}
 			clients[a.Client] = true
@@ -92,6 +98,13 @@ func validateConcurrent(g concurrentGroup, known map[d.Key]d.Command) error {
 				held = c
 			default:
 				return errors.New("unknown concurrent fault")
+			}
+			if a.ExpectConflict {
+				old, exists := before[c.Key()]
+				if version != 3 || !exists || old == c || a.Fault != "" || phase == 0 && a.Client == g.SnapshotClient {
+					return errors.New("conflict requires a different payload for a previously completed key")
+				}
+				continue
 			}
 			if old, ok := known[c.Key()]; ok && old != c {
 				return errors.New("concurrent key reuses different payload")
@@ -136,7 +149,7 @@ func validateConcurrent(g concurrentGroup, known map[d.Key]d.Command) error {
 		var marker d.Key
 		for _, a := range g.Initial {
 			c, _ := a.Command.Command(scenarioRunID)
-			if a.Fault != "held-original" {
+			if a.Fault != "held-original" && !a.ExpectConflict {
 				initial[c.Key()] = true
 			}
 			if a.Client == g.SnapshotClient {

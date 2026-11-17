@@ -75,6 +75,8 @@ sh scripts/random-recovery.sh --replay var/transport-unknown-example/scenario.js
 
 실제 프로세스 SIGKILL을 동시 요청과 결합하려면 별도 [동시 요청 SIGKILL·복구 실행기](concurrent-crash-recovery.md)를 사용한다. 기존 명세/재현 flag와 섞지 않으며 전원 장애 검증과 구분한다.
 
+생성/취소 경쟁·집중 중복·내용 충돌을 독립 seed로 반복하려면 [v3 캠페인](concurrent-campaign.md)의 --campaign 또는 --concurrent --profile을 사용한다. 기존 v1/v2 명세는 유지한다.
+
 ## 보존 자료와 실패
 
 | 파일 | 내용 |

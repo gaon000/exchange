@@ -129,8 +129,11 @@ def concurrent(entry, inputs):
     root = Path(entry['bundle'])
     def file(name): return inputs.file(root, name)
     scenario, summary, config = (read(file(n)) for n in ('scenario.json', 'summary.json', 'config.json'))
-    require(scenario['version'] == 2 and 1 <= len(scenario['actions']) <= 256 and summary['status'] == read(root/'completed.json')['status'] == 'PASSED'
+    require(scenario['version'] in (2,3) and 1 <= len(scenario['actions']) <= 256 and summary['status'] == read(root/'completed.json')['status'] == 'PASSED'
             and summary['scenarioSHA256'] == digest(file('scenario.json')) and summary['powerLossTested'] is False and summary['processKillTested'] is False, 'concurrent completion/schema')
+    if scenario['version'] == 3:
+        require(scenario.get('profile') in ('cancel-race','duplicate-storm','id-conflict')
+                and scenario['profile'] == summary.get('profile'), 'v3 profile')
     final = read(file('final-actual.json'))
     require(final == read(file('final-expected.json')) and final['results'], 'final checkpoint mismatch')
     run = final['results'][0]['response']['runId']
@@ -138,6 +141,7 @@ def concurrent(entry, inputs):
     queries, retries, groups = collections.defaultdict(list), collections.defaultdict(list), []
     traces, events = lines(file('http.jsonl')), lines(file('events.jsonl'))
     loss_count = 0
+    conflicts = []
     for step, action in enumerate(scenario['actions']):
         if action['kind'] == 'command':
             k, c = command(action['command'], run)
@@ -148,16 +152,25 @@ def concurrent(entry, inputs):
             continue
         require(action['kind'] == 'concurrent', 'unsupported mixed concurrent plan')
         g = action['concurrent']
-        require(len(g['initial']) == len(g['retries']) == 4, 'concurrent clients')
+        clients = len(g['initial'])
+        require(4 <= clients <= 12 and len(g['retries']) == clients
+                and (scenario['version'] == 3 or clients == 4), 'concurrent clients')
         rows = read(file(f'concurrent-{step:03d}-observations.json'))
         expected = {}
         before_count = len(planned)
+        before = dict(planned)
         for phase, name in (('INITIAL', 'initial'), ('RETRY', 'retries')):
-            require({a['client'] for a in g[name]} == {0, 1, 2, 3} and all(type(a['client']) is int for a in g[name]), 'client IDs')
+            require({a['client'] for a in g[name]} == set(range(clients)) and all(type(a['client']) is int for a in g[name]), 'client IDs')
             for a in g[name]:
                 require(a.get('fault', '') in ('', 'drop-headers', 'truncate-body', 'held-original')
                         and (phase != 'RETRY' or not a.get('fault')), 'phase fault')
                 k, c = command(a['command'], run)
+                require(type(a.get('expectConflict',False)) is bool, 'conflict flag')
+                if a.get('expectConflict'):
+                    require(scenario['version'] == 3 and k in before and before[k] != c and not a.get('fault')
+                            and (phase != 'INITIAL' or a['client'] != g['snapshotClient']), 'conflict needs a completed canonical key')
+                    expected[(phase,a['client'])] = a
+                    continue
                 require(k not in planned or planned[k] == c, 'conflicting concurrent key')
                 planned[k] = c
                 expected[(phase, a['client'])] = a
@@ -181,12 +194,25 @@ def concurrent(entry, inputs):
         first = {command_key(r['command'], run):r['response'] for r in final['results']}
         require(len(rows) == len(expected), 'missing phase observations')
         seen, upstream, unknown = set(), [], 0
+        group_conflicts = 0
         for index, row in enumerate(rows):
             identity = (row['phase'], row['client'])
             require(identity in expected and identity not in seen, 'observation client/phase duplicate')
             seen.add(identity); a = expected[identity]
-            require(row['command'] == a['command'] and row.get('fault', '') == a.get('fault', ''), 'phase observation input')
+            require(row['command'] == a['command'] and row.get('fault', '') == a.get('fault', '')
+                    and row.get('expectConflict',False) == a.get('expectConflict',False), 'phase observation input')
             k, _ = command(row['command'], run)
+            if a.get('expectConflict'):
+                outcome = row['outcome']
+                error = decode(row['upstreamResponse'])
+                require(row['upstreamStatus'] == outcome['httpStatus'] == 409 and not row.get('upstreamError')
+                        and error.get('error',{}).get('code') == outcome.get('code') == 'IDEMPOTENCY_CONFLICT'
+                        and error['error'].get('outcome') == outcome['certainty'] == 'NOT_ADMITTED'
+                        and outcome['class'] == 'SERVER_FAILURE', 'conflict response changed')
+                if row.get('requestLatencyNanos') is not None: integer(row['requestLatencyNanos'],'conflict latency')
+                conflicts.append({**key_object(k),'step':step,'client':row['client'],'phase':row['phase'],'httpStatus':409,'certainty':'NOT_ADMITTED','requestLatencyNanos':row.get('requestLatencyNanos')})
+                group_conflicts += 1
+                continue
             require(row['upstreamStatus'] == 200, 'incomplete upstream response')
             obs, value = result(row['upstreamResponse'], k, first)
             require(number(value['commandSeq'], 'upstream seq') == stored[k][0], 'upstream/WAL sequence mismatch')
@@ -209,10 +235,13 @@ def concurrent(entry, inputs):
         held_key = command(held[0]['command'],run)[0]
         trace_queries(traces, run, first, queries, 'http.jsonl', step, before_key=held_key)
         require(any(q['httpStatus'] == 404 and q.get('stage') == 'BEFORE_RETRY' and q['step'] == step for q in queries[held_key]), 'missing pre-retry UNKNOWN witness')
-        groups.append({'step':step, 'boundary':'normal-restart', 'clients':4, 'phaseAttempts':len(rows), 'originalUnknown':unknown,
+        groups.append({'step':step, 'boundary':'normal-restart', 'clients':clients, 'phaseAttempts':len(rows), 'originalUnknown':unknown,
+                       'conflicts':group_conflicts, 'sameIDDuplicates':len(rows)-(len(records)-before_count)-group_conflicts,
                        'snapshotSeq':str(snap), 'tailCommands':str(len(records)-snap), 'walOrder':order_rows(records,run,snap), 'upstreamResults':upstream})
         previous = records
     require(groups and len(groups) == summary['concurrentGroups'] and loss_count == summary['responseLosses'], 'concurrent summary mismatch')
+    if scenario['version'] == 3:
+        require(summary['conflicts'] == len(conflicts) and summary['retries'] == sum(g['sameIDDuplicates'] for g in groups), 'v3 conflict/duplicate summary')
     stored = journal(previous, run, planned)
     require(number(summary['appliedSeq'], 'summary seq') == len(stored), 'final sequence mismatch')
     checkpoint(final, run, stored, config)
@@ -220,7 +249,8 @@ def concurrent(entry, inputs):
     for k in queries:
         queries[k] = list({(q['line'], q['source']):q for q in queries[k]}.values())
     return finish_concurrent(entry,run,all_attempts,business,queries,retries,
-                             {'verificationScope':'sealed evidence consistency; no matching/recovery rerun', 'processKillClaim':False, 'groups':groups},
+                             {'verificationScope':'sealed evidence consistency; no matching/recovery rerun', 'processKillClaim':False,
+                              'profile':scenario.get('profile'), 'conflictObservations':conflicts, 'groups':groups},
                              {'bundle':inputs.bundle(root)[1], 'scenarioSHA256':summary['scenarioSHA256'], 'fullRecoveryClaim':summary['status']})
 
 
