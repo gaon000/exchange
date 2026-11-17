@@ -22,6 +22,9 @@ def main():
     compare = commands.add_parser('compare', help='reverify retained inputs and write JSON/Markdown comparison')
     compare.add_argument('--spec', type=Path, required=True)
     compare.add_argument('--output', type=Path, required=True, help='new report directory outside every input bundle')
+    transport = commands.add_parser('transport-report', help='offline transport failure and UNKNOWN query observations')
+    transport.add_argument('--spec', type=Path, required=True)
+    transport.add_argument('--output', type=Path, required=True, help='fresh report directory outside all evidence')
     baseline = commands.add_parser('baseline', help='owned host observations and sequential P6 reference measurements')
     baseline.add_argument('--build-dir', type=Path, required=True, help='clean frozen build directory with build.json and bin/')
     baseline.add_argument('--output', type=Path, required=True)
@@ -40,7 +43,11 @@ def main():
         if name == 'verify':
             item.add_argument('--allow-failed', action='store_true', help='check sealed partial data, never mark completed')
     options = parser.parse_args()
-    if options.command == 'baseline-build':
+    if options.command == 'transport-report':
+        from transport_report import generate
+        result = generate(options.spec, options.output)
+        print(json.dumps({'reportDirectory': str(options.output.resolve()), 'status': 'reported', 'inputs': len(result['inputs'])}))
+    elif options.command == 'baseline-build':
         from baseline import freeze
         print(json.dumps({'buildDirectory': str(freeze(options.output)), 'status': 'frozen'}))
     elif options.command == 'baseline':

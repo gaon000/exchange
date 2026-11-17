@@ -56,6 +56,7 @@ CLI는 명시적인 flag와 [local.json](../config/examples/local.json)을 사�
 | 최신 스냅샷 읽기 프로파일링 | `python3 tools/diagnostics/snapshot_read_profile.py run --bundle var/recovery-rss-full-20261113 --output var/post-optimization-profile-new` ([계측·재집계](snapshot-read-profiling.md)) |
 | 스냅샷 이후 명령 복구·비용 | `python3 tools/diagnostics/snapshot_tail.py run --output var/snapshot-tail-new` ([조건·검증·재집계](snapshot-tail-recovery.md)) |
 | 상태 크기별 비용 측정 | `python3 tools/diagnostics/state_scale.py run --output var/state-scale-new` ([조건·계측·재집계](state-size-costs.md)) |
+| 전송 오류·UNKNOWN 보고서 | `python3 tools/diagnostics/experiment.py transport-report --spec docs/benchmarks/20261117-transport-unknown-spec.json --output var/transport-report-new` ([입력·시점 분리](transport-unknown-report.md)) |
 | 응답 유실·UNKNOWN·같은 ID 복구 검사 | `sh scripts/random-recovery.sh --transport-loss` ([실패 단계·고정 재현·404 계약](random-recovery.md#전송-오류unknown-고정-재현)) |
 | 고정 seed 거래·복구 검사 | `sh scripts/random-recovery.sh` ([seed·명세 replay·검증 범위](random-recovery.md)) |
 | 실험 자료 패키징·복원 | `python3 tools/diagnostics/evidence.py`의 `create`, `restore`, `reproduce` ([의존 수집·명령·검증 범위](evidence-packages.md)) |

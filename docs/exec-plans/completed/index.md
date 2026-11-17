@@ -4,6 +4,7 @@
 
 | 계획 | 완료일 | 결과 | 검증 근거와 한계 |
 | --- | --- | --- | --- |
+| [전송 오류·UNKNOWN 보고서](20261117-transport-unknown-report.md) | 2026-11-17 | 봉인 부하/장애 자료의 단계·유형·ID/지연과 후속 조회 JSON/Markdown | 실제4입력·재생성 bytes 일치·10분 UNKNOWN1/404 미확정 유지. 검토 후 portable247/native287·Python111·CLI/계획 변조 smoke·전원 장애 보류 |
 | [전송 오류·UNKNOWN 진단](20261116-transport-unknown-diagnostics.md) | 2026-11-16 | 선택적 실패 단계/유형·실제 응답 유실3종·같은 ID/재시작 재현 | 11/17 검토 후 portable245/native race285·Python103·양쪽 smoke. 고유명령5/체결2·복구/최초응답/WAL 일치·과거6실행 재집계 유지. 404 UNKNOWN 계약 유지·전원 장애 보류 |
 | [최신 master 10분 비교](20261116-latest-ten-minute-comparison.md) | 2026-11-16 | e258b8f 끔/켬 각600초·전체 정상 재시작 복구·이전 두 캠페인 비교 | 응답받은51,383/51,378결과 일치·미전송3/11·켬 UNKNOWN1로 성능 미채택. 원본/창별 재계산·JSON/Markdown 재생성 일치·계측 조건 차이·전원 장애 보류 |
 | [정수 JSON 디코딩](20261113-integer-json-decoding.md) | 2026-11-13 | 일반 숫자 string 임시 할당 제거·이전 입력/오류/복구 계약 | 60 worker/327파일·273source·480최초응답/120재시도. 할당2.90~4.22%·고정 복구 시간7.37~9.01% 감소. portable241/native280/Python103·fuzz320만·전원 장애 보류 |

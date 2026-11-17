@@ -54,6 +54,8 @@
 
 [복구 뒤 RSS 진단](recovery-rss.md)은 같은 두 생산 decoder·확장 probe로 유휴/추가 GC/OS 반환 단계의 Go 메모리와 Mach resident/footprint/reusable을 나누고 전체 상태를 검증한다. [분석](benchmarks/recovery-rss.md)은 이전 비계측 결과와 새 진단 관측을 구분한다.
 
+[전송 오류·UNKNOWN 보고서](transport-unknown-report.md)는 봉인된 부하·장애 자료의 단계/유형·요청/지연을 JSON/Markdown으로 생성하고 원래 UNKNOWN과 후속 관측을 구분한다. [실제 결과](benchmarks/transport-unknown-report.md)를 함께 읽는다.
+
 [전송 오류·UNKNOWN 재현](random-recovery.md#전송-오류unknown-고정-재현)은 실제 응답 유실·404 조회 뒤 같은 ID 재시도·재시작의 중복 방지와 선택적 실패 단계/유형을 검사한다.
 
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.

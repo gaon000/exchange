@@ -1,6 +1,7 @@
 """CI smoke: portable timer plus native trace/C-IO recovery and semantic tamper rejection."""
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import shutil
@@ -48,6 +49,50 @@ def main():
                 or 'SHARED_RUNS_BETWEEN_SIDES' not in comparison['judgement']['blockers']
                 or not (root/'comparison/report.md').is_file()):
             raise RuntimeError('retained-input comparison or duplicate-run rejection failed')
+        if options.mode == 'native':
+            transport_spec = root/'transport-spec.json'
+            entries = [{'name': 'fresh loadgen', 'kind': 'loadgen', 'bundle': str(bundle), 'case': 'on-1'}]
+            if os.environ.get('EXCHANGE_SCENARIO_EVIDENCE_PARENT'):
+                fixtures = list(options.parent.glob('random-recovery-TestNativeTransportLossRecoveryAndReplay-*/loss'))
+                if len(fixtures) != 1:
+                    raise RuntimeError('missing native transport loss fixture')
+                entries.append({'name': 'actual response loss', 'kind': 'recoverycheck', 'bundle': str(fixtures[0])})
+            save(transport_spec, {'version': 1, 'inputs': entries})
+            cli('transport-report', '--spec', transport_spec, '--output', root/'transport-report')
+            cli('verify', '--bundle', root/'transport-report', '--output', root/'transport-verified.json')
+            transport = read(root/'transport-report/report.json')
+            if transport['interpretation']['measurementReclassified'] or transport['interpretation']['unknown404ProvesNonAdmission']:
+                raise RuntimeError('transport report changed certainty contract')
+            if len(entries) == 2:
+                fault = transport['inputs'][1]
+                if (fault['counts']['unknownAttempts'] != 3 or fault['counts']['keysWithSubsequentResult'] != 3
+                        or any(a['requestLatencyNanos'] is None for a in fault['attempts'])
+                        or not any(q['httpStatus'] == 404 and q['resolution'] == 'UNRESOLVED'
+                                   for c in fault['unknownCommands'] for q in c['queries'])):
+                    raise RuntimeError('native transport report lost failure/404/query evidence')
+            cli('transport-report', '--spec', transport_spec, '--output', root/'transport-report', success=False)
+            # A resealed plan can still have valid sample aggregates. Verify
+            # attribution against Build instead of trusting those plan bytes.
+            tampered = root/'plan-tampered'
+            data = tampered/'on-1/loadgen'
+            shutil.copytree(bundle/'on-1/loadgen', data)
+            plan_rows = (data/'plan.jsonl').read_text().splitlines()
+            row = json.loads(plan_rows[-1])
+            row['phase'] = 'PREPARE'
+            plan_rows[-1] = json.dumps(row)
+            (data/'plan.jsonl').write_text('\n'.join(plan_rows)+'\n')
+            if (data/'completed.json').exists():
+                completed = read(data/'completed.json')
+                completed['sha256']['plan.jsonl'] = digest(data/'plan.jsonl')
+                (data/'completed.json').write_text(json.dumps(completed))
+            seal(tampered, True)
+            bad_spec = root/'plan-tampered-spec.json'
+            save(bad_spec, {'version': 1, 'inputs': [{'name': 'bad plan', 'kind': 'loadgen',
+                                                    'bundle': str(tampered), 'case': 'on-1'}]})
+            cli('transport-report', '--spec', bad_spec, '--output', root/'plan-must-not-pass', success=False)
+            if (root/'plan-must-not-pass').exists():
+                raise RuntimeError('transport report accepted a resealed plan with changed attribution')
+            print('transport report smoke passed: raw recomputation, failure/query separation, no-reuse', flush=True)
         # Package only this smoke's owned fixtures. Hide originals temporarily:
         # regeneration must use restored bytes, including archived native state.
         create(REPO, [], [spec], root/'package')
@@ -102,6 +147,10 @@ def main():
         cli('analyze', '--bundle', bundle, '--output', root/'must-not-pass.json', success=False)
         if (root/'must-not-pass.json').exists():
             raise RuntimeError('failed analysis emitted a successful report')
+        if options.mode == 'native':
+            cli('transport-report', '--spec', transport_spec, '--output', root/'transport-invalid', success=False)
+            if (root/'transport-invalid').exists():
+                raise RuntimeError('transport report published corrupt raw evidence')
         cli('compare', '--spec', spec, '--output', root/'comparison-invalid')
         comparison = read(root/'comparison-invalid/report.json')['comparisons'][0]
         if (comparison['baseline'][0]['status'] != 'error' or comparison['candidate'][0]['status'] != 'error'

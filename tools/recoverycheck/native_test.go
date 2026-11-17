@@ -225,12 +225,13 @@ func TestNativeTransportLossRecoveryAndReplay(t *testing.T) {
 	}
 	for _, i := range []string{"001", "003", "005"} {
 		var evidence struct {
-			Outcome           struct{ Class, Certainty, FailureStage, ErrorType string }
-			ForwardedRequests int
-			SameIDVerified    bool
+			Outcome             struct{ Class, Certainty, FailureStage, ErrorType string }
+			ForwardedRequests   int
+			SameIDVerified      bool
+			RequestLatencyNanos int64
 		}
 		decodeFile(t, filepath.Join(output, "transport-"+i+".json"), &evidence)
-		if evidence.Outcome.Certainty != "UNKNOWN" || evidence.Outcome.FailureStage == "" || evidence.Outcome.ErrorType == "" || evidence.ForwardedRequests != 1 || !evidence.SameIDVerified {
+		if evidence.Outcome.Certainty != "UNKNOWN" || evidence.Outcome.FailureStage == "" || evidence.Outcome.ErrorType == "" || evidence.ForwardedRequests != 1 || !evidence.SameIDVerified || evidence.RequestLatencyNanos <= 0 {
 			t.Fatal("missing transport evidence", evidence)
 		}
 	}
