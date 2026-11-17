@@ -2,6 +2,8 @@
 
 문서는 각자 하나의 책임을 갖는다. 작업 관련 문서를 선택해서 읽고, 같은 규칙을 여러 곳에서 따로 관리하지 않는다.
 
+현재 원본의 보존 종료·재집계 가능 범위는 [실험 자료 보존 범위](experiment-retention.md)에서 확인한다.
+
 | 문서 | 소유하는 내용 |
 | --- | --- |
 | [README](../README.md) | 프로젝트 소개와 시작 문서 연결 |
@@ -63,6 +65,8 @@
 [동시 요청 SIGKILL·복구](concurrent-crash-recovery.md)는 test-only 서버를 WAL 실제 동기화 뒤·snapshot 실제 게시 전후에 강제 종료하고 최초 응답·전체 상태·같은 ID 재시도를 검사한다. [실제 결과](benchmarks/concurrent-crash-recovery.md)는 세 경계와 기록 replay의 WAL/상태 일치, 원래 UNKNOWN과 후속 조회의 구분을 기록한다.
 
 [동시 요청·강제 종료 자료 보고서](concurrent-evidence-report.md)는 봉인된 v2/SIGKILL 자료의 client별 UNKNOWN·첫 조회·재시도와 실제 WAL 순서·snapshot/tail을 JSON·Markdown으로 읽기 전용 생성한다. [실제 결과](benchmarks/concurrent-evidence-report.md)는 원본/replay 8입력과 기존 v1/10분 자료 회귀를 기록한다.
+
+[동시 시나리오 캠페인](concurrent-campaign.md)은 생성/취소 경쟁·12클라이언트 집중 중복·내용 충돌의 v3 profile을 seed별 독립 반복하고 시간/용량 예산·실패 입력/기록 순서 재현과 실행표를 제공한다. [실제 결과](benchmarks/concurrent-campaign.md)는 기본12회와 세 기록 replay·v3 분석표를 검증한다.
 
 [고정 seed 거래·복구 검사](random-recovery.md)는 주문·취소·중복 ID·snapshot·정상 재시작을 조합하고 최초 응답/전체 상태를 대조하며 실패 명세를 한 명령으로 재현한다.
 

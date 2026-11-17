@@ -1,3 +1,5 @@
+> **원본 가용성 변경 (2026-11-17):** 이 문서 또는 연결된 과거 명세가 참조하는 원본 중 일부는 보존을 종료했다. 과거 수치·판정은 요약으로 유지하지만, 삭제된 입력으로 해당 실험 전체를 재검증·재생성할 수 없다. 정확한 삭제 목록과 현재 재검증 가능 범위는 [실험 자료 보존 범위](../experiment-retention.md)를 따른다.
+
 # 스냅샷 생성·복구 CPU·메모리 할당 분석
 
 2026-11-13, `codex/snapshot-profiling`에서 기존 [상태 비용 측정](state-size-costs.md)의 **동일한 active/history 각 10,000명령 fixture**를 사용했다. 새 worker 190개 모두 복구 경로·완전한 canonical snapshot/WAL/Genesis/lock bytes 검증을 통과했다. production 코드는 바꾸지 않았으며 **다음 최적화 후보는 WAL 레코드의 반복 JSON 검증 경로**다. 아래 비중은 관찰 근거이며 개선 폭의 예측이 아니다.

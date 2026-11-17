@@ -1,3 +1,5 @@
+> **자료 가용성 갱신 (2026-11-17):** 과거 탐색/초기 계측 원본 일부는 요약·설정·고정 빌드 보존 후 삭제했다. 최신/직전 10분·최신 처리량 캠페인 전체와 현재 비교/장애 근거는 유지한다. 과거 수치의 재검증 가능 여부는 [실험 자료 보존 범위](experiment-retention.md)를 먼저 확인한다. 과거 판정이나 실제 전원 장애 미완료 상태는 변경하지 않는다.
+
 # exchange 프로젝트 결과 보고서
 
 기준일: 2026-11-12 (Asia/Seoul). 구현 기준: master [`3a23e1b`](https://github.com/gaon000/exchange/commit/3a23e1b69853645d336e9a11702f7c42f006e38a). 이 문서는 해당 코드와 보관된 검증·실험을 종합한다. 이번 문서 작업에서 새 성능 측정은 수행하지 않았다.
@@ -15,6 +17,8 @@
 2026-11-17 후속 구현: [동시 요청 SIGKILL·복구](concurrent-crash-recovery.md)는 기존 test-only 경계를 사용하는 자식 서버를 WAL 실제 동기화 뒤 적용/응답 전·snapshot 게시 전후에 종료한다. [세 경계·기록 replay 실측](benchmarks/concurrent-crash-recovery.md)은 각84파일 봉인·실제 WAL/전체 상태 일치, 원래 UNKNOWN12건 유지와 후속 같은 ID 재시도의 고유 명령17개/최초 결과 불변을 확인했다. portable255/native race301·각 Python111개와 전체 smoke가 로컬에서 통과했다. 일반 배포 바이너리/전원 장애·성능 측정과 구분한다.
 
 2026-11-17 후속 구현: [동시 자료 분석 보고서](concurrent-evidence-report.md)는 v2/SIGKILL 원본·replay8입력의 client별 원래 UNKNOWN·재시도 전 조회·후속 결과/재시도를 분리하고 실제 WAL 순서·snapshot/tail을 JSON/Markdown으로 생성한다. [실제 검증](benchmarks/concurrent-evidence-report.md)은 고유4묶음276파일·두 보고서 bytes 일치, 기존 v1/10분4입력의 관측/측정 의미 불변과 native 실제 fixture smoke를 확인했다. portable255/native301·각 Python117개가 로컬 통과했고 전원 장애는 미완료·보류다.
+
+2026-11-17 후속 구현: [동시 캠페인](concurrent-campaign.md)은 생성/취소 경쟁·12클라이언트 집중 중복·주문/취소 ID 내용 충돌의 v3 profile을 시간/논리 bytes 예산 아래 독립 반복한다. [실제12회/기록 replay3회](benchmarks/concurrent-campaign.md)는700파일 봉인·원래 UNKNOWN72 유지·의도한409충돌64/중복224 분리와 전체 상태/저장 순서 일치,12입력 분석표 재생성 bytes 일치를 확인했다. 초기 portable helper 실패를 수정하고 최종 portable259/native race306·각 Python118개/모든 smoke가 통과했다. 성능·SIGKILL·전원 장애 추가 증거로 해석하지 않는다.
 
 ## 1. 범위와 결과물
 

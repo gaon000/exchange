@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "criteria": "../../config/benchmarks/criteria-v1.json",
+  "comparisons": [
+    {
+      "name": "2026-11-02 대비 최신 스냅샷 끔",
+      "baseline": [
+        {
+          "bundle": "../../var/soak-optimized-20261102.yawwm75d",
+          "case": "normal"
+        }
+      ],
+      "candidate": [
+        {
+          "bundle": "../../var/diagnostics/soak-latest-10m-20261116",
+          "case": "off-1"
+        }
+      ]
+    },
+    {
+      "name": "2026-11-02 대비 최신 스냅샷 켬",
+      "baseline": [
+        {
+          "bundle": "../../var/soak-optimized-20261102.yawwm75d",
+          "case": "snapshot"
+        }
+      ],
+      "candidate": [
+        {
+          "bundle": "../../var/diagnostics/soak-latest-10m-20261116",
+          "case": "on-1"
+        }
+      ]
+    }
+  ]
+}
