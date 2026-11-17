@@ -73,6 +73,8 @@ sh scripts/random-recovery.sh --replay var/transport-unknown-example/scenario.js
 
 `sh scripts/random-recovery.sh --concurrent --seed 17`은 v2 명세로4개 클라이언트의 병행 주문·취소·재시도, 응답 유실·snapshot·정상 재시작을 조합한다. 실제 WAL 순서와 snapshot 경계를 별도 replay 명세에 저장한다. 기존 v1 seed/transport-loss와 실행/재현의 차이는 [동시 검증 안내](concurrent-recovery.md)를 따른다.
 
+실제 프로세스 SIGKILL을 동시 요청과 결합하려면 별도 [동시 요청 SIGKILL·복구 실행기](concurrent-crash-recovery.md)를 사용한다. 기존 명세/재현 flag와 섞지 않으며 전원 장애 검증과 구분한다.
+
 ## 보존 자료와 실패
 
 | 파일 | 내용 |

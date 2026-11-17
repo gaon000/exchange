@@ -2,6 +2,8 @@
 
 `tools/recoverycheck --concurrent`는 실제 loopback HTTP 클라이언트4개에서 주문·취소·같은 ID 재시도와 응답 유실·snapshot·정상 재시작을 조합한다. 실제 WAL의 명령/순번으로 잔고·공급량·주문·호가/FIFO·체결·최초 응답과 중복 방지를 검사한다. 성능 측정이 아니며 실제 OS·전원 장애 검증은 미완료·보류다.
 
+동시 요청 중 실제 SIGKILL 경계는 별도 [프로세스 강제 종료 실행기](concurrent-crash-recovery.md)를 사용한다. 일반 서버에 장애 옵션을 추가하지 않고 runtime test binary와 기존 test-only hook으로 실행한다.
+
 ## 한 명령 실행·재현
 
 [지원 환경](development.md)의 Go·macOS arm64/APFS/cgo와 loopback 권한이 필요하다. 추가 dependency는 없다.
